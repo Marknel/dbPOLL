@@ -33,7 +33,7 @@ namespace DBPOLLDemo.Controllers
                 return View(new pollModel().displayPolls(user));
             }
             else {
-                return null;
+                return View();
             }
         }
 
