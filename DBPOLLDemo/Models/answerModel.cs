@@ -29,6 +29,7 @@ namespace DBPOLLDemo.Models
         //Properties for getters/setters
         public String Answer { get { return answer; } }
         public int AnswerNumber { get { return ansnum; } }
+        public int AnswerID { get { return answerid; } }
         //public int pollID { get { return pollid; } }
 
         public answerModel(int answerid, String answer, int correct, int weight, int ansnum, int updatedto, DateTime createdat)
@@ -42,11 +43,20 @@ namespace DBPOLLDemo.Models
             a.CREATEDAT = this.createdat;
         }
 
-        public answerModel(int ansnum, String answer)
+        public answerModel(int answerid, Nullable<int> ansnum, String answer)
         {
-            this.ansnum = ansnum;
+            this.answerid = answerid;
+            if (ansnum != null)
+            {
+                this.ansnum = ansnum.Value;
+            }
             this.answer = answer;
 
+        }
+
+        public answerModel(int answerid)
+        {
+            a.ANSWERID = this.answerid = answerid;
         }
 
         public answerModel()
@@ -58,7 +68,7 @@ namespace DBPOLLDemo.Models
         {
             var query = from a in db.ANSWERs
                         where a.QUESTIONID == questId
-                        select new answerModel((int)a.ANSWERID, a.ANSWER1);
+                        select new answerModel(a.ANSWERID, a.NUM, a.ANSWER1);
             
             return query.ToList();
         }
@@ -74,7 +84,9 @@ namespace DBPOLLDemo.Models
         }
 
         public void deleteAnswer() {
+            db.ANSWERs.Attach(a);
             db.ANSWERs.DeleteOnSubmit(a);
+            db.SubmitChanges();
         }
     }
 }

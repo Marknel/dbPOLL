@@ -122,7 +122,7 @@
       <Column Name="ANSWER" Member="ANSWER1" Type="System.String" DbType="VARCHAR2(256) NOT NULL" CanBeNull="false" MaxLength="256" ed:Guid="100e5098-745d-496b-aa55-b7f06bc4a7cb" />
       <Column Name="CORRECT" Type="System.Int32" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="100e638a-ea40-4f6f-85f3-6d79e2aa651f" />
       <Column Name="WEIGHT" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="5f1f87cb-ee68-4150-a101-b1efd9c88386" />
-      <Column Name="NUM" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="07e7fe85-8598-4492-a8bf-8432b707d18c" />
+      <Column Name="NUM" Type="System.Int32" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="07e7fe85-8598-4492-a8bf-8432b707d18c" />
       <Column Name="UPDATED_TO" Member="UPDATEDTO" Type="System.Int32" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="3035c96f-e646-453f-b1fa-8653745be25a" />
       <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="947ab6f1-4807-4a19-9e13-03b13622b184" />
       <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="fc718c23-b9e1-4873-8fb4-45ef55018014" />

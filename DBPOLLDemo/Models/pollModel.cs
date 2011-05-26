@@ -20,7 +20,7 @@ namespace DBPOLL.Models
         POLL poll = new POLL();
         public int pollid;
         public String pollname;
-
+        public DateTime modifiedat;
         public int createdby;
         public DateTime createdAt;
         public DateTime expiresat;
@@ -34,15 +34,21 @@ namespace DBPOLL.Models
 
         private DBPOLLDataContext db = new DBPOLLDataContext();
 
-        public pollModel(int pollid, String pollName, float longitude, float latitude, int createdBy, DateTime createdAt)
+        public pollModel(int pollid, String pollName, float longitude, float latitude, int createdBy, Nullable<DateTime> expiresat, DateTime createdAt, Nullable<DateTime> modifiedat)
         {
             poll.POLLID = this.pollid = pollid;
             poll.POLLNAME = this.pollname = pollName;
             poll.LATITUDE = this.latitude = latitude;
-            poll.LONGITUDE = this.longitude =longitude;
+            poll.LONGITUDE = this.longitude = longitude;
             poll.CREATEDAT = this.createdAt = createdAt;
+            if (expiresat != null)
+            {
+                poll.EXPIRESAT = this.expiresat = expiresat.Value;
+            }
             poll.CREATEDBY = this.createdby = createdBy;
-            poll.EXPIRESAT = DateTime.Today;
+            if (expiresat != null){
+                poll.MODIFIEDAT = this.modifiedat = modifiedat.Value;
+            }
         }
 
         public pollModel(int pollid)
@@ -52,7 +58,6 @@ namespace DBPOLL.Models
         
         public pollModel(int pollid, String name)
         {
-            db.POLLs.Attach(poll);
             poll.POLLID = this.pollid = pollid;
             poll.POLLNAME = this.pollname = name;
         }
@@ -75,7 +80,7 @@ namespace DBPOLL.Models
             List<POLL> pollList = new List<POLL>();
             var query = from u in db.POLLs
                         where u.CREATEDBY == sessionID
-                        select new pollModel(u.POLLID, u.POLLNAME, u.CREATEDAT);
+                        select new pollModel(u.POLLID, u.POLLNAME, u.LONGITUDE, u.LATITUDE, u.CREATEDBY, u.EXPIRESAT, u.CREATEDAT, u.MODIFIEDAT);
             return query.ToList();
         }
 
@@ -88,8 +93,15 @@ namespace DBPOLL.Models
 
         public void updatePoll()
         {
-            
-            db.SubmitChanges();
+            try
+            {
+                db.POLLs.Attach(poll);
+                db.SubmitChanges();
+            }
+            catch(Exception e)
+            {
+                throw (e);
+            }
         }
         
         public void deletePoll()

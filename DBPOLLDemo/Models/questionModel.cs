@@ -44,6 +44,11 @@ namespace DBPOLLDemo.Models
         {
         }
 
+        public questionModel(int qid)
+        {
+            q.QUESTIONID = this.questionid = qid;
+        }
+
         // empty constructer for utility
         //public questionModel()
       // {
@@ -74,7 +79,7 @@ namespace DBPOLLDemo.Models
         }
 
         // Retrieves Question relating to a specified poll
-        public List<questionModel> displayAnswers(int poll)
+        public List<questionModel> displayQuestions(int poll)
         {
             var query = from q in db.QUESTIONs
                         where q.POLLID == poll
@@ -95,6 +100,7 @@ namespace DBPOLLDemo.Models
 
         public void deleteQuestion()
         {
+            db.QUESTIONs.Attach(q);
             db.QUESTIONs.DeleteOnSubmit(q);
             db.SubmitChanges();
         }

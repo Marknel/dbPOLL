@@ -10,33 +10,35 @@ using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Controllers
 {
-    public class PollController : Controller
+    public class QuestionController : Controller
     {
         //
-        // GET: /Poll/
+        // GET: /Question/
 
-        public ActionResult Index()
+        public ActionResult Index(int id, String name)
         {
-            return View();
-        }
-
-        public ActionResult Delete(int pollid)
-        {
-            pollModel poll = new pollModel(pollid);
-            poll.deletePoll();
-            return View();
+            ViewData["name"] = name;
+            ViewData["id"] = id;
+            return View(new questionModel().displayQuestions(id));
         }
 
         //
-        // GET: /Poll/Details/5
+        // GET: /Question/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, String name)
         {
-            return View();
+            return RedirectToAction("../Answer/Index/" + id.ToString() + "?name=" + name);
+        }
+
+        public ActionResult Delete(int questionid, int id, String name)
+        {
+            questionModel q = new questionModel(questionid);
+            q.deleteQuestion();
+            return RedirectToAction("Index", "Question", new { id = id, name = name });
         }
 
         //
-        // GET: /Poll/Create
+        // GET: /Question/Create
 
         public ActionResult Create()
         {
@@ -44,7 +46,7 @@ namespace DBPOLLDemo.Controllers
         } 
 
         //
-        // POST: /Poll/Create
+        // POST: /Question/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(FormCollection collection)
@@ -62,7 +64,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         //
-        // GET: /Poll/Edit/5
+        // GET: /Question/Edit/5
  
         public ActionResult Edit(int id)
         {
@@ -70,7 +72,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         //
-        // POST: /Poll/Edit/5
+        // POST: /Question/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int id, FormCollection collection)

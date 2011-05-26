@@ -10,7 +10,7 @@
 
     <table>
         <tr>
-            <th>Possible Actions</th>
+            <th>Actions</th>
              <th>Poll Name</th>
              <th>Creation Date</th>
         </tr>
@@ -22,9 +22,9 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Delete", "Delete", new {pollid=item.pollID}) %> |
-                <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID, longitude = item.longitude, latitude = item.latitude, createdby = item.createdby, createdat = item.createdAt}) %> |
+                <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID, longitude = item.longitude, latitude = item.latitude, createdby = item.createdby, createdat = item.createdAt, expiresat = item.expiresat,  modifiedat = item.modifiedat}) %> |
                 
-                <%= Html.ActionLink(" View Questions", "questionDetails", new {id=item.pollID, name=item.Name})%>
+                <%= Html.ActionLink(" View Questions", "Details", new {id=item.pollID, name=item.Name})%>
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>

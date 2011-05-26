@@ -38,10 +38,9 @@ namespace DBPOLLDemo.Controllers
 
         //
         // GET: /Main/pollDetails/5
-        public ActionResult questionDetails(int id, String name)
+        public ActionResult Details(int id, String name)
         {
-            ViewData["name"] = name;
-            return View(new questionModel().displayAnswers(id));
+            return RedirectToAction("../Question/Index/" + id.ToString() + "?name=" + name);
         }
 
 
@@ -52,8 +51,8 @@ namespace DBPOLLDemo.Controllers
         {
             ViewData["name"] = name;
 
-                return View(new answerModel().displayAnswers(id));
-
+                //return View(new answerModel().displayAnswers(id));
+                return RedirectToAction("../Answer/Index/" + id.ToString() + "?name=" + name);
         }
 
         //
@@ -86,11 +85,16 @@ namespace DBPOLLDemo.Controllers
 
         //
         // GET: /Main/Edit/5
- 
-        public ActionResult Edit(int id, String name)
+
+        public ActionResult Edit(int id, String name, float longitude, float latitude, int createdby, DateTime createdat)
         {
+
             ViewData["name"] = name;
             ViewData["id"] = id;
+            ViewData["longitude"] = longitude;
+            ViewData["latitude"] = latitude;
+            ViewData["createdby"] = createdby;
+            ViewData["createdat"] = createdat;
 
             return View();
         }
@@ -99,16 +103,23 @@ namespace DBPOLLDemo.Controllers
         // POST: /Main/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int pollid, String pollname, float longitude, float latitude, int createdby, DateTime createdat)
+        public ActionResult Edit(int pollid, String pollname, float longitude, float latitude, int createdby, DateTime createdat, DateTime expiresat, DateTime modifiedat, int test)
         {
+            try
+            {
+                //pollModel poll = new pollModel(pollid, pollname, longitude, latitude, createdby, expiresat, createdat, modifiedat);
+                pollModel poll = new pollModel(pollid, pollname);
+                poll.updatePoll();
 
-            pollModel poll = new pollModel(pollid, pollname, longitude, latitude, createdby, createdat);
-            poll.updatePoll();
- 
                 return RedirectToAction("Index");
- 
+
                 //return View();
-            
+            }
+            catch (Exception e)
+            {
+                ViewData["error1"] = e.Message;
+                return View();
+            }
         }
     }
 }

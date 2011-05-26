@@ -62,9 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainController.cs" />
-    <Compile Include="Controllers\PollController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -91,6 +92,7 @@
     <Content Include="Content\turningPoint_banner.jpg" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Answer\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Main\answerDetails.aspx" />
     <Content Include="Views\Main\Create.aspx" />
@@ -99,6 +101,7 @@
     <Content Include="Views\Main\IndexREF.aspx" />
     <Content Include="Views\Main\questionDetails.aspx" />
     <Content Include="Views\Main\QuestionEdit.aspx" />
+    <Content Include="Views\Question\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery-1.3.2.js" />
@@ -153,7 +156,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3664</DevelopmentServerPort>
+          <DevelopmentServerPort>4311</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
