@@ -22,3 +22,6 @@ H:\dbPOll\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
 H:\dbPOll\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb
 H:\dbPOll\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.dll
 H:\dbPOll\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.pdb
+H:\dbpollWorking\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache
+H:\dbpollWorking\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll.licenses
+H:\dbpollWorking\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
