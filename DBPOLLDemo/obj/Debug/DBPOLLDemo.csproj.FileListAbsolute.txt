@@ -1,0 +1,18 @@
+C:\Documents and Settings\s4206201\My Documents\DBPOLLDemo\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\s4206201\My Documents\DBPOLLDemo\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll.licenses
+C:\Documents and Settings\s4206201\My Documents\DBPOLLDemo\DBPOLLDemo\bin\DBPOLLDemo.dll
+C:\Documents and Settings\s4206201\My Documents\DBPOLLDemo\DBPOLLDemo\bin\DBPOLLDemo.pdb
+C:\Documents and Settings\s4206201\My Documents\DBPOLLDemo\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
+C:\Documents and Settings\s4206201\My Documents\DBPOLLDemo\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb
+G:\csse3004gG\DBPOLLDemo\DBPOLLDemo\bin\DBPOLLDemo.dll
+G:\csse3004gG\DBPOLLDemo\DBPOLLDemo\bin\DBPOLLDemo.pdb
+G:\csse3004gG\DBPOLLDemo\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache
+G:\csse3004gG\DBPOLLDemo\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll.licenses
+G:\csse3004gG\DBPOLLDemo\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
+G:\csse3004gG\DBPOLLDemo\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb
+H:\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.dll
+H:\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.pdb
+H:\dbPOLL\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache
+H:\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll.licenses
+H:\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
+H:\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb

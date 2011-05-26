@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Database Name="CSSE3004GG" EntityNamespace="DBPOLLContext" ContextNamespace="DBPOLLContext" Class="DBPOLLDataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="e800cb4a-281c-4c5d-b8f1-c62061bb8470" Provider="Devart.Data.Oracle.Linq.Provider.OracleDataProvider, Devart.Data.Oracle.Linq" Extended="true" xmlns="http://schemas.devart.com/linqconnect/mapping">
+  <Connection Mode="ConnectionString" ConnectionString="User Id=csse3004gg;Password=groupg;Server=TEACH;Home=oraclient10g_home1;Persist Security Info=True" Provider="Devart.Data.Oracle" />
+  <Table Name="CSSE3004GG.SYSADMINS" Member="SYSADMINs">
+    <Type Name="SYSADMIN" ed:Guid="3c6d22e0-fbfd-4c29-9f85-5c4e042c0d8c">
+      <Column Name="SYSADMINS_ID" Member="SYSADMINSID" Type="System.Decimal" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="a9d5d298-1e39-4681-a59b-743e485c9692" />
+      <Column Name="NAME" Type="System.String" DbType="VARCHAR2(30) NOT NULL" CanBeNull="false" MaxLength="30" ed:Guid="cfd2c72c-624b-4efe-bdf1-928fb778c0f8" />
+      <Column Name="USERNAME" Type="System.String" DbType="VARCHAR2(30) NULL" CanBeNull="true" MaxLength="30" ed:Guid="07cc4a92-fbe0-4ad5-b679-f6083de4b818" />
+      <Column Name="PASSWORD" Type="System.String" DbType="VARCHAR2(30) NULL" CanBeNull="true" MaxLength="30" ed:Guid="fca7aea1-8eb7-42ff-aa84-ff1679696130" />
+      <Column Name="SALT" Type="System.String" DbType="VARCHAR2(16) NULL" CanBeNull="true" MaxLength="16" ed:Guid="789ef200-ba44-483e-9d89-fb6e54ec9561" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="1f4775f3-3a56-4914-84d1-1f7702d5aec2" />
+      <Association Name="SYSADMIN_USER" ed:AssociationGuid="c9448601-0ea4-44d9-8eb6-bde344c5b475" Member="USERs" ed:Guid="0447190d-d055-4a67-8829-01e7c3595684" ThisKey="SYSADMINSID" OtherKey="SYSADMINID" Type="USER" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.USERS" Member="USERs">
+    <Type Name="USER" ed:Guid="7606cabb-cd29-46ac-bb7f-50df32ab8c95">
+      <Column Name="USER_ID" Member="USERID" Type="System.Decimal" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="37acdb8f-7f1e-4613-96c7-ef03179e20b8" />
+      <Column Name="USER_TYPE" Member="USERTYPE" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="863abc16-4e30-40cf-9303-90693769f4a7" />
+      <Column Name="NAME" Type="System.String" DbType="VARCHAR2(64) NULL" CanBeNull="true" MaxLength="64" ed:Guid="60526213-a06f-443d-8270-84f8763eef7a" />
+      <Column Name="USERNAME" Type="System.String" DbType="VARCHAR2(64) NULL" CanBeNull="true" MaxLength="64" ed:Guid="c596c476-80fb-4f34-b060-48edb85f42ec" />
+      <Column Name="PASSWORD" Type="System.String" DbType="VARCHAR2(64) NULL" CanBeNull="true" MaxLength="64" ed:Guid="eabd107d-6034-40d2-a442-c238e80bc3b8" />
+      <Column Name="SALT" Type="System.String" DbType="VARCHAR2(16) NULL" CanBeNull="true" MaxLength="16" ed:Guid="b89c6899-36aa-494c-9e0e-2742c26da3d3" />
+      <Column Name="EXPIRES_AT" Member="EXPIRESAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="51391b9f-41e0-4970-a088-162e8377c340" />
+      <Column Name="CREATED_BY" Member="CREATEDBY" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="77c44b8e-722e-4d21-9867-a034a1d0e05e" />
+      <Column Name="RESET_PASSWORD_KEY" Member="RESETPASSWORDKEY" Type="System.String" DbType="VARCHAR2(16) NULL" CanBeNull="true" MaxLength="16" ed:Guid="b2178b83-df42-4e98-96cd-4a8aed84dbce" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="56193b42-859b-44c2-a154-33b13f058af3" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="f27a3953-979b-4d52-b0a5-ff1430a11d16" />
+      <Column Name="SYSADMIN_ID" Member="SYSADMINID" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="d2f9225c-4e8c-49c8-bfa0-ec1da11c777e" />
+      <Association Name="SYSADMIN_USER" ed:AssociationGuid="c9448601-0ea4-44d9-8eb6-bde344c5b475" Member="SYSADMIN" ed:Guid="3e345122-0320-4273-a77d-1d77500ec625" ThisKey="SYSADMINID" OtherKey="SYSADMINSID" Type="SYSADMIN" IsForeignKey="true" />
+      <Association Name="USER_USER" ed:AssociationGuid="7fd05cb8-7021-41e6-b220-f2c955a5d95d" Member="USERs" ed:Guid="66d6b166-a8db-4607-ae25-98f7e5fe4412" ThisKey="USERID" OtherKey="CREATEDBY" Type="USER" />
+      <Association Name="USER_USER" ed:AssociationGuid="7fd05cb8-7021-41e6-b220-f2c955a5d95d" Member="USER1" ed:Guid="079b9352-b3d5-4ae6-9ac5-ee1658fd043a" ThisKey="CREATEDBY" OtherKey="USERID" Type="USER" IsForeignKey="true" />
+      <Association Name="USER_POLL" ed:AssociationGuid="477cd188-52b8-437e-9f78-edb918bc0eb6" Member="POLLs" ed:Guid="c0cc713c-49a6-4628-8ede-bd30bff14d41" ThisKey="USERID" OtherKey="CREATEDBY" Type="POLL" />
+      <Association Name="USER_MANAGEMENT" ed:AssociationGuid="33f58567-aa75-45b0-be62-b50e43164c0d" Member="MANAGEMENTs" ed:Guid="c15a268c-d9db-484a-a55a-6189a6e1d540" ThisKey="USERID" OtherKey="USERID" Type="MANAGEMENT" />
+      <Association Name="USER_PARTICIPANT" ed:AssociationGuid="45f30312-3cd4-4c0f-8807-8c6d2faf0f62" Member="PARTICIPANTs" ed:Guid="568ce0f0-c208-4258-b71c-f2c19d7f80fc" ThisKey="USERID" OtherKey="USERID" Type="PARTICIPANT" />
+      <Association Name="USER_RESPONSE" ed:AssociationGuid="3930b62b-907e-40fa-9dcd-c7c22b4f9813" Member="RESPONSEs" ed:Guid="d619c4d3-9a24-4be6-ad85-0f2b9c9825fb" ThisKey="USERID" OtherKey="USERID" Type="RESPONSE" />
+      <Association Name="USER_MESSAGE" ed:AssociationGuid="9cb8727b-4669-4ba2-83aa-a5e238d0a761" Member="MESSAGEs" ed:Guid="748791e8-c0d0-4c6c-b91f-4fec860c27db" ThisKey="USERID" OtherKey="USERID" Type="MESSAGE" />
+      <Association Name="USER_MESSAGE1" ed:AssociationGuid="8e077820-aa97-44dd-ad7d-43ce331d9db6" Member="MESSAGEs1" ed:Guid="a3c2c3c8-5223-4d77-9cd0-20adfdfd1544" ThisKey="USERID" OtherKey="CREATEDBY" Type="MESSAGE" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.POLLS" Member="POLLs">
+    <Type Name="POLL" ed:Guid="78e529cd-d3c9-4a3d-8993-1256e548b114">
+      <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="141e82ed-ae61-4652-ae33-9c3a448fd24b" />
+      <Column Name="POLL_NAME" Member="POLLNAME" Type="System.String" DbType="VARCHAR2(256) NULL" CanBeNull="true" MaxLength="256" ed:Guid="50b3144f-50b7-4299-90fa-aa897f4308b4" />
+      <Column Name="LONGITUDE" Type="System.Decimal" DbType="FLOAT(126) NOT NULL" CanBeNull="false" MaxLength="22" Precision="126" ed:Guid="49f02b50-e584-49a5-a5b5-009b1bc50bf2" />
+      <Column Name="LATITUDE" Type="System.Decimal" DbType="FLOAT(126) NOT NULL" CanBeNull="false" MaxLength="22" Precision="126" ed:Guid="05a3e353-8109-4f82-974f-f0f7cd3d291b" />
+      <Column Name="CREATED_BY" Member="CREATEDBY" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="935363bc-131e-4f78-b3ce-d34d2c2cd5df" />
+      <Column Name="EXPIRES_AT" Member="EXPIRESAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="6335164d-8a90-4916-9cf2-8460af4ffdd5" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="6b1af213-a435-48a5-8278-525c39cd27b5" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="ffd57425-9618-446a-9d34-a676c9352021" />
+      <Association Name="USER_POLL" ed:AssociationGuid="477cd188-52b8-437e-9f78-edb918bc0eb6" Member="USER" ed:Guid="8855bf25-fc50-466d-92a8-f8e3b48208a1" ThisKey="CREATEDBY" OtherKey="USERID" Type="USER" IsForeignKey="true" />
+      <Association Name="POLL_MANAGEMENT" ed:AssociationGuid="209ed1a1-1d0e-40c1-9ee8-47ba5fc9c06a" Member="MANAGEMENTs" ed:Guid="085742f4-b536-42de-a204-dcfb23df5400" ThisKey="POLLID" OtherKey="POLLID" Type="MANAGEMENT" />
+      <Association Name="POLL_QUESTION" ed:AssociationGuid="709626d7-08a4-49ac-a8a1-3736d3985097" Member="QUESTIONs" ed:Guid="3fdeaa46-b877-4694-90d1-f20dbe049211" ThisKey="POLLID" OtherKey="POLLID" Type="QUESTION" />
+      <Association Name="POLL_PARTICIPANT" ed:AssociationGuid="db81f535-c584-447b-9141-16dd5dc02991" Member="PARTICIPANTs" ed:Guid="5a780656-9fa4-4aca-b226-0991d23f0496" ThisKey="POLLID" OtherKey="POLLID" Type="PARTICIPANT" />
+      <Association Name="POLL_MESSAGE" ed:AssociationGuid="4b7c1e54-8acb-46e5-b4eb-dbff9bed0664" Member="MESSAGEs" ed:Guid="52e0533b-70f8-4aef-82de-8eaae5082a04" ThisKey="POLLID" OtherKey="POLLID" Type="MESSAGE" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.MANAGEMENTS" Member="MANAGEMENTs">
+    <Type Name="MANAGEMENT" ed:Guid="8fd84ef8-1a34-4098-92e1-cfe6e199f1ea">
+      <Column Name="USER_ID" Member="USERID" Type="System.Decimal" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="9e5d96ab-222c-426c-af93-59d568a8381a" />
+      <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="0832dc71-61ac-4e8a-9d39-9490b9c7bef9" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="ecc29da5-f20e-4ff3-af12-1071e5365583" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="f3137ae7-ecc1-486b-97ea-ab529b126d22" />
+      <Association Name="USER_MANAGEMENT" ed:AssociationGuid="33f58567-aa75-45b0-be62-b50e43164c0d" Member="USER" ed:Guid="9d79832e-9023-4471-89ba-d7a3b4c41c9b" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
+      <Association Name="POLL_MANAGEMENT" ed:AssociationGuid="209ed1a1-1d0e-40c1-9ee8-47ba5fc9c06a" Member="POLL" ed:Guid="ad2e3c8c-aa29-4d76-bab5-6e2ddb68c4a5" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.QUESTIONS" Member="QUESTIONs">
+    <Type Name="QUESTION" ed:Guid="06a4aa88-ef4a-41c5-9ca2-4661434d1b7a">
+      <Column Name="QUESTION_ID" Member="QUESTIONID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="f36f2fae-cf31-4b1d-98f3-2ee1b8599f98" />
+      <Column Name="QUESTION_TYPE" Member="QUESTIONTYPE" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="bfc46fc3-88cd-4a50-a674-3b231c3124b9" />
+      <Column Name="QUESTION" Member="QUESTION1" Type="System.String" DbType="VARCHAR2(256) NOT NULL" CanBeNull="false" MaxLength="256" ed:Guid="0c433b03-7321-4ea0-b479-84aaf6d69d11" />
+      <Column Name="NUMBER_OF_RESPONSES" Member="NUMBEROFRESPONSES" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="4a09a906-e848-4092-9f5c-69478f8849b0" />
+      <Column Name="CHART_STYLE" Member="CHARTSTYLE" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="8209923b-9fbb-4b12-9dde-68bee5a626e2" />
+      <Column Name="SHORT_ANSWER_TYPE" Member="SHORTANSWERTYPE" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="59861ac4-9e33-4f52-bff2-a850bac0051d" />
+      <Column Name="NUM" Type="System.Int32" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="4b47d179-be3f-4048-b929-dab0684b2fb2" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="06f8bbd4-7733-42d8-9084-b24fa8c6f152" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="9c9c36c9-b4fb-4830-837d-9912699a94e2" />
+      <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="1e901779-0c2f-4157-acdd-6535900756f4" />
+      <Association Name="POLL_QUESTION" ed:AssociationGuid="709626d7-08a4-49ac-a8a1-3736d3985097" Member="POLL" ed:Guid="02ab8029-017a-4671-a4a9-4e3e36307c86" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+      <Association Name="QUESTION_OBJECT" ed:AssociationGuid="aea22d31-8d56-44cb-ab6c-4ddd5ad0dcda" Member="OBJECTs" ed:Guid="3385132b-57ee-4845-9bfb-408d1eb96d09" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="OBJECT" />
+      <Association Name="QUESTION_ANSWER" ed:AssociationGuid="b3c7cd4e-1419-45dd-bfeb-b885b7d70d46" Member="ANSWERs" ed:Guid="5a5e6eeb-67fb-4ede-bd2e-1542a11d6ae5" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="ANSWER" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.OBJECTS" Member="OBJECTs">
+    <Type Name="OBJECT" ed:Guid="988db1ce-15bb-4ccf-80aa-96c036938e32">
+      <Column Name="OBJ_ID" Member="OBJID" Type="System.Decimal" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="ced26e7e-850f-451a-b093-f05a76e9a794" />
+      <Column Name="OBJ_TYPE" Member="OBJTYPE" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="f82010b1-78a3-407f-9180-c157b39bb889" />
+      <Column Name="ATTRIBUTE" Type="System.String" DbType="VARCHAR2(64) NOT NULL" CanBeNull="false" MaxLength="64" ed:Guid="938a9677-bef6-41a3-94a5-7c88afff676f" />
+      <Column Name="QUESTION_ID" Member="QUESTIONID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="b6593e4d-8547-4f39-b152-c552d964222a" />
+      <Association Name="QUESTION_OBJECT" ed:AssociationGuid="aea22d31-8d56-44cb-ab6c-4ddd5ad0dcda" Member="QUESTION" ed:Guid="10e25a86-1703-448d-a189-20824ebe2412" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.ANSWERS" Member="ANSWERs">
+    <Type Name="ANSWER" ed:Guid="70b4b76e-2b51-4185-9da5-681da670b5c2">
+      <Column Name="ANSWER_ID" Member="ANSWERID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="459fbed7-5e26-48d4-9bc1-14290e373bf6" />
+      <Column Name="ANSWER" Member="ANSWER1" Type="System.String" DbType="VARCHAR2(256) NOT NULL" CanBeNull="false" MaxLength="256" ed:Guid="65440930-128f-45a4-a5a2-14c15e0ed890" />
+      <Column Name="CORRECT" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="25b750f2-5fd3-4d57-98a0-858f3787b190" />
+      <Column Name="WEIGHT" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="fadf46fe-a1c0-45f9-b758-3570a9ab03af" />
+      <Column Name="NUM" Type="System.Int32" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="6587ba2d-0afa-4683-a1e1-66d8d0a4d795" />
+      <Column Name="UPDATED_TO" Member="UPDATEDTO" Type="System.Int32" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="79603ef9-6ba4-41f5-a511-1a50dd6c266a" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="e2989dd8-633b-465b-8ab5-2436b33da450" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="2bc3d94e-6750-4e71-b712-cf5be1daf791" />
+      <Column Name="QUESTION_ID" Member="QUESTIONID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="b3e93525-69bc-45d1-bb99-a108069afb91" />
+      <Association Name="QUESTION_ANSWER" ed:AssociationGuid="b3c7cd4e-1419-45dd-bfeb-b885b7d70d46" Member="QUESTION" ed:Guid="a862657c-79f4-445b-a116-e8b42a63941b" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+      <Association Name="ANSWER_ANSWER" ed:AssociationGuid="b30036c6-70f6-454a-bf88-ecdcf5864b32" Member="ANSWERs" ed:Guid="024a291c-6e09-4d19-aa00-acdeff38ba23" ThisKey="ANSWERID" OtherKey="UPDATEDTO" Type="ANSWER" />
+      <Association Name="ANSWER_ANSWER" ed:AssociationGuid="b30036c6-70f6-454a-bf88-ecdcf5864b32" Member="ANSWER2" ed:Guid="743cdf6a-e1e9-4732-8936-e59e5e0ed74a" ThisKey="UPDATEDTO" OtherKey="ANSWERID" Type="ANSWER" IsForeignKey="true" />
+      <Association Name="ANSWER_RESPONSE" ed:AssociationGuid="5b4541f5-c0f2-4015-a2a6-39ebaa4166bf" Member="RESPONSEs" ed:Guid="5a3ec011-54bc-4ed7-b320-3807f456dba5" ThisKey="ANSWERID" OtherKey="ANSWERID" Type="RESPONSE" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.PARTICIPANTS" Member="PARTICIPANTs">
+    <Type Name="PARTICIPANT" ed:Guid="6b120050-aeae-4087-8f58-8561fcd894e7">
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="3c46f3aa-2b93-4c5d-993b-e7e5e7cef5f8" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="0c03812d-b561-4d12-addb-5ee84cbf8a66" />
+      <Column Name="USER_ID" Member="USERID" Type="System.Decimal" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="0fd05b62-472d-4fdf-93f9-626541120399" />
+      <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="aa3edf51-d8e8-4a9c-b669-8a0c02b29156" />
+      <Association Name="USER_PARTICIPANT" ed:AssociationGuid="45f30312-3cd4-4c0f-8807-8c6d2faf0f62" Member="USER" ed:Guid="b661d770-ff4e-4c51-b8a5-4e44c8ae546c" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
+      <Association Name="POLL_PARTICIPANT" ed:AssociationGuid="db81f535-c584-447b-9141-16dd5dc02991" Member="POLL" ed:Guid="079e6ff6-a47b-4a3e-84d6-df1a8eaa7316" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.RESPONSES" Member="RESPONSEs">
+    <Type Name="RESPONSE" ed:Guid="567ae686-a0cd-4463-8151-1d42f137dce1">
+      <Column Name="RESPONSE_ID" Member="RESPONSEID" Type="System.Decimal" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="6756288d-9919-4586-b7b7-0c887f421865" />
+      <Column Name="FEEDBACK" Type="System.String" DbType="VARCHAR2(256) NOT NULL" CanBeNull="false" MaxLength="256" ed:Guid="c5936e4e-6ca1-42d7-91f0-8f47b22aec51" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="445d47ef-b887-4618-833d-a71b59035fae" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="3d6c9837-7271-4f72-97be-0af2eaf86447" />
+      <Column Name="USER_ID" Member="USERID" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="24818cb4-4cf2-46b0-a39b-7e06fe307303" />
+      <Column Name="ANSWER_ID" Member="ANSWERID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="9ac5041b-f683-4643-bd0a-484090b34f06" />
+      <Association Name="USER_RESPONSE" ed:AssociationGuid="3930b62b-907e-40fa-9dcd-c7c22b4f9813" Member="USER" ed:Guid="99c4baa5-a609-48f0-8582-4c2f99c8fb2b" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
+      <Association Name="ANSWER_RESPONSE" ed:AssociationGuid="5b4541f5-c0f2-4015-a2a6-39ebaa4166bf" Member="ANSWER" ed:Guid="d705b439-52bf-4add-91f0-730e12b8d433" ThisKey="ANSWERID" OtherKey="ANSWERID" Type="ANSWER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="CSSE3004GG.MESSAGES" Member="MESSAGEs">
+    <Type Name="MESSAGE" ed:Guid="6a6645c5-a7ec-454b-82d8-6e2b60e0d479">
+      <Column Name="MESSAGE_ID" Member="MESSAGEID" Type="System.Decimal" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="aece34e7-3fd8-4141-aaf3-cfbb5af0ff26" />
+      <Column Name="MESSAGE" Member="MESSAGE1" Type="System.String" DbType="VARCHAR2(256) NULL" CanBeNull="true" MaxLength="256" ed:Guid="722df7f7-6e64-4e2a-8f52-4d0fba54b773" />
+      <Column Name="CREATED_BY" Member="CREATEDBY" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="51339130-070b-43b7-8520-dd943e3e9673" />
+      <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="560d2535-8475-44f5-839a-31010da402bc" />
+      <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="8e06c38d-0cc3-4dbb-8a23-fc7b0e38f6fa" />
+      <Column Name="USER_ID" Member="USERID" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="f36df442-c122-41d7-9b56-437f011d6617" />
+      <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="d01c1961-8e24-4ac0-a010-2d2cacd06105" />
+      <Association Name="USER_MESSAGE" ed:AssociationGuid="9cb8727b-4669-4ba2-83aa-a5e238d0a761" Member="USER" ed:Guid="2de477f3-75f7-44b2-b176-a5e3400b0fd9" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
+      <Association Name="USER_MESSAGE1" ed:AssociationGuid="8e077820-aa97-44dd-ad7d-43ce331d9db6" Member="USER1" ed:Guid="59144650-a666-43a6-93a5-78a0b878b2c0" ThisKey="CREATEDBY" OtherKey="USERID" Type="USER" IsForeignKey="true" />
+      <Association Name="POLL_MESSAGE" ed:AssociationGuid="4b7c1e54-8acb-46e5-b4eb-dbff9bed0664" Member="POLL" ed:Guid="e5fdcdca-b2da-4786-ad70-57d95eaf682e" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
