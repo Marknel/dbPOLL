@@ -18,14 +18,14 @@ namespace DBPOLL.Models
     public class pollModel : System.Web.UI.Page
     {
         POLL poll = new POLL();
-        private int pollid;
-        private String pollname;
+        public int pollid;
+        public String pollname;
 
-        private int createdby;
-        private DateTime createdAt;
-        private DateTime expiresat;
-        private float longitude;
-        private float latitude;
+        public int createdby;
+        public DateTime createdAt;
+        public DateTime expiresat;
+        public float longitude;
+        public float latitude;
 
         //Properties for getters/setters
         public String Name { get { return pollname; } }
@@ -48,6 +48,13 @@ namespace DBPOLL.Models
         public pollModel(int pollid)
         {
             poll.POLLID = this.pollid = pollid;
+        }
+        
+        public pollModel(int pollid, String name)
+        {
+            db.POLLs.Attach(poll);
+            poll.POLLID = this.pollid = pollid;
+            poll.POLLNAME = this.pollname = name;
         }
         
         public pollModel()
@@ -74,12 +81,14 @@ namespace DBPOLL.Models
 
         public void createPoll()
         {
+            db.POLLs.Attach(poll);
             db.POLLs.InsertOnSubmit(poll);
             db.SubmitChanges();
         }
 
         public void updatePoll()
         {
+            
             db.SubmitChanges();
         }
         
@@ -89,6 +98,5 @@ namespace DBPOLL.Models
             db.POLLs.DeleteOnSubmit(poll);
             db.SubmitChanges();
         }
-
     }
 }

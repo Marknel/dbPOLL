@@ -93,6 +93,8 @@
     <Content Include="Global.asax" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Main\answerDetails.aspx" />
+    <Content Include="Views\Main\Create.aspx" />
+    <Content Include="Views\Main\Edit.aspx" />
     <Content Include="Views\Main\Index.aspx" />
     <Content Include="Views\Main\IndexREF.aspx" />
     <Content Include="Views\Main\questionDetails.aspx" />
@@ -151,7 +153,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3980</DevelopmentServerPort>
+          <DevelopmentServerPort>3664</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

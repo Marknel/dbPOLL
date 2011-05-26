@@ -22,7 +22,7 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Delete", "Delete", new {pollid=item.pollID}) %> |
-                <%= Html.ActionLink("Edit", "Edit", new {id=item.pollID}) %> |
+                <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID, longitude = item.longitude, latitude = item.latitude, createdby = item.createdby, createdat = item.createdAt}) %> |
                 
                 <%= Html.ActionLink(" View Questions", "questionDetails", new {id=item.pollID, name=item.Name})%>
             </td>

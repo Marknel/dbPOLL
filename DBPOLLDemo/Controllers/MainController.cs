@@ -33,7 +33,7 @@ namespace DBPOLLDemo.Controllers
         {
             pollModel poll = new pollModel(pollid);
             poll.deletePoll();
-            return RedirectToAction("Main", "Index");
+            return RedirectToAction("Index", "Main");
         }
 
         //
@@ -87,8 +87,11 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Main/Edit/5
  
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, String name)
         {
+            ViewData["name"] = name;
+            ViewData["id"] = id;
+
             return View();
         }
 
@@ -96,18 +99,16 @@ namespace DBPOLLDemo.Controllers
         // POST: /Main/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int pollid, String pollname, float longitude, float latitude, int createdby, DateTime createdat)
         {
-            try
-            {
-                // TODO: Add update logic here
+
+            pollModel poll = new pollModel(pollid, pollname, longitude, latitude, createdby, createdat);
+            poll.updatePoll();
  
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+ 
+                //return View();
+            
         }
     }
 }
