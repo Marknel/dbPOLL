@@ -31,8 +31,10 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Edit Question", "Edit", new { /* id=item.PrimaryKey */ }) %> |
-                <%= Html.ActionLink("View Answers", "answerDetails", new { id = item.QuestionNumber, name = item.Question })%>
+                <%= Html.ActionLink("Delete", "answerDetails", new { id = item.QuestionNumber, name = item.Question })%> 
+                <%= Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) %> |
+                <%= Html.ActionLink("View Answers", "answerDetails", new { id = item.QuestionNumber, name = item.Question })%> 
+                
             </td>
             <td>
                 <%= Html.Encode(item.QuestionNumber) %>
