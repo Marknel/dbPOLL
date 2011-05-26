@@ -53,9 +53,6 @@ namespace DBPOLL.Models
 
         }
 
-
-
-
         public pollModel(int pollId, String pollName, DateTime createdAt)
         {
             this.pollid = pollId;
@@ -72,9 +69,10 @@ namespace DBPOLL.Models
 
         public List<pollModel> displayPolls(userModel user)
         {
-            decimal sesh = (decimal)Session["uid"];
+            int sesh = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from u in db.POLLs
+                        where u.CREATEDBY == sesh
                         select new pollModel(u.POLLID, u.POLLNAME, u.CREATEDAT);
 
             /*var query = from u in db.USERs 
@@ -104,6 +102,35 @@ namespace DBPOLL.Models
             db.POLLs.InsertOnSubmit(poll);
             db.SubmitChanges();
         }
+
+        public void updatePoll()
+        {
+            POLL poll = new POLL();
+            poll.POLLID = this.pollid;
+            poll.POLLNAME = this.pollname;
+            poll.LATITUDE = this.latitude;
+            poll.LONGITUDE = this.longitude;
+            poll.CREATEDAT = this.createdAt;
+            poll.CREATEDBY = this.createdby;
+
+            db.SubmitChanges();
+        }
+        
+        public void deletePoll()
+        {
+            POLL poll = new POLL();
+            poll.POLLID = this.pollid;
+            poll.POLLNAME = this.pollname;
+            poll.LATITUDE = this.latitude;
+            poll.LONGITUDE = this.longitude;
+            poll.CREATEDAT = this.createdAt;
+            poll.CREATEDBY = this.createdby;
+
+            db.POLLs.DeleteOnSubmit(poll);
+            db.SubmitChanges();
+        }
+
+
 
         public void destroyPoll(POLL poll)
         {

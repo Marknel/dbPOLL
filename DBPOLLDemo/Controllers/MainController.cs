@@ -19,7 +19,7 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index()
         {
-            userModel user = new userModel("John", "John");
+            userModel user = new userModel("Terrance", "Terrance");
             //return View(pollModel.displayPolls(user));
             //return View(db.POLLs.ToList());
             //return View(new pollModel().displayPolls(user));

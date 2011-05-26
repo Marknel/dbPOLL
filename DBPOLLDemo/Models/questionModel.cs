@@ -17,6 +17,7 @@ namespace DBPOLLDemo.Models
 
     public class questionModel
     {
+        private QUESTION q = new QUESTION();
         private int questionid;
         private int questiontype;
         private String question;
@@ -48,14 +49,27 @@ namespace DBPOLLDemo.Models
            
        //}
         //Constructor for fetched questions
-        public questionModel(int pollid, int questnum, String question, int questiontype, DateTime createdate)
+        public questionModel(int qid, int questiontype, String question, int pollid, int questnum, DateTime createdat, DateTime modifiedat, int numberofresponses, int chartstyle)
         {
-            this.pollid = pollid;
-            this.questnum = questnum;
-            this.question = question;
-            this.questiontype = questiontype;
-            this.createdat = createdate;
+            q.QUESTIONID = this.questionid = qid;
+            q.QUESTIONTYPE = this.questiontype = questiontype;
+            q.QUESTION1 = this.question = question;
+            q.NUMBEROFRESPONSES = this.numberofresponses = numberofresponses;
+            q.CREATEDAT = this.createdat = createdat;
+            q.POLLID = this.pollid = pollid;
+            q.CHARTSTYLE = this.chartstyle = chartstyle;
+            q.SHORTANSWERTYPE = this.shortanswertype;
+            q.NUM = this.questnum = questnum;
+            q.MODIFIEDAT = this.modifiedat;
+        }
 
+        public questionModel(int pollid, int qid, String question, int questiontype, DateTime createdat, int questnum) {
+            this.questionid = qid;
+            this.question = question;
+            this.pollid = pollid;
+            this.questiontype = questiontype;
+            this.createdat = createdat;
+            this.questnum = questnum;
         }
 
         // Retrieves Question relating to a specified poll
@@ -63,12 +77,25 @@ namespace DBPOLLDemo.Models
         {
             var query = from q in db.QUESTIONs
                         where q.POLLID == poll
-                        select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT);
+                        select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
 
             return query.ToList();
         }
 
+        public void createQuestion() {
+            db.QUESTIONs.InsertOnSubmit(q);
+            db.SubmitChanges();
+        }
 
+        public void updateQuestion()
+        {
+            db.SubmitChanges();
+        }
 
+        public void deleteQuestion()
+        {
+            db.QUESTIONs.DeleteOnSubmit(q);
+            db.SubmitChanges();
+        }
     }
 }
