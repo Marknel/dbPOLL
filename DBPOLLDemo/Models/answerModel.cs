@@ -24,21 +24,23 @@ namespace DBPOLLDemo.Models
 	    private int updatedto;
         private DateTime createdat;
         private DBPOLLDataContext db = new DBPOLLDataContext();
+        ANSWER a = new ANSWER();
 
         //Properties for getters/setters
         public String Answer { get { return answer; } }
         public int AnswerNumber { get { return ansnum; } }
         //public int pollID { get { return pollid; } }
 
-        public answerModel(int answerid, String answer, int correct, int weight, int questnum, int updatedto, DateTime createdat)
+        public answerModel(int answerid, String answer, int correct, int weight, int ansnum, int updatedto, DateTime createdat)
         {
-            this.answerid = answerid;
-            this.answer = answer;
-            this.correct = correct;
-            this.weight = weight;
-            this.ansnum = questnum;
-            this.updatedto = updatedto;
-            this.createdat = createdat;
+            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER1 = this.answer = answer;
+            a.CORRECT = this.correct = correct;
+            a.WEIGHT = this.weight = weight;
+            a.NUM = this.ansnum = ansnum;
+            a.UPDATEDTO = this.updatedto;
+            a.CREATEDAT = this.createdat;
+
 
         }
 
@@ -65,22 +67,16 @@ namespace DBPOLLDemo.Models
 
         public void createAnswer(POLL poll)
         {
-            ANSWER answer = new ANSWER();
-            answer.ANSWERID = this.answerid;
-            //answer.ANSWER1 = this.answer;
-            answer.CORRECT = this.correct;
-            answer.WEIGHT = this.weight;
-            answer.NUM = this.ansnum;
-            answer.UPDATEDTO = this.updatedto;
-            answer.CREATEDAT = this.createdat;
-
-
-            db.ANSWERs.InsertOnSubmit(answer);
+            db.ANSWERs.InsertOnSubmit(a);
             db.SubmitChanges();
- 
         }
 
+        public void updateAnswer() {
+            db.SubmitChanges();
+        }
 
-
+        public void deleteAnswer() {
+            db.ANSWERs.DeleteOnSubmit(a);
+        }
     }
 }
