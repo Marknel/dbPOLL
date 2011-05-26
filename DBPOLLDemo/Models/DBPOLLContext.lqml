@@ -10,7 +10,7 @@
       <Column Name="USER_ID" Member="USERID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="37de7092-3302-4674-94e9-1e68179b8713" />
       <Column Name="ANSWER_ID" Member="ANSWERID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="f539891b-c5c4-4543-8631-70a00709b0e7" />
       <Association Name="USER_RESPONSE" ed:AssociationGuid="936d5846-3b4a-423d-a5aa-da919834aeb5" Member="USER" ed:Guid="6aa24b6b-ace5-427f-a615-f4e41eaa67c8" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
-      <Association Name="ANSWER_RESPONSE" ed:AssociationGuid="090e0faf-0d83-424f-bf57-42d463055701" Member="ANSWER" ed:Guid="3113d3fd-0701-4ca3-ae16-fc45ad655956" ThisKey="ANSWERID" OtherKey="ANSWERID" Type="ANSWER" IsForeignKey="true" />
+      <Association Name="ANSWER_RESPONSE" ed:AssociationGuid="090e0faf-0d83-424f-bf57-42d463055701" Member="ANSWER" ed:Guid="3113d3fd-0701-4ca3-ae16-fc45ad655956" ThisKey="ANSWERID" OtherKey="ANSWERID" Type="ANSWER" DeleteRule="CASCADE" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="CSSE3004GG.MESSAGES" Member="MESSAGEs">
@@ -23,7 +23,7 @@
       <Column Name="USER_ID" Member="USERID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="30c1a7b7-9b2e-4fff-80d4-6c5c52f91d65" />
       <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="4ae0d385-0e22-440d-8422-09925cc907ea" />
       <Association Name="USER_MESSAGE" ed:AssociationGuid="20a4ff3d-f710-437e-88be-40c7846bd99b" Member="USER" ed:Guid="151282ab-3c63-489e-be3e-ba0e58023dad" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
-      <Association Name="POLL_MESSAGE" ed:AssociationGuid="7b9a701b-624c-4512-8f94-055cd88f3b87" Member="POLL" ed:Guid="86273780-a701-424f-9f21-ca68812bd572" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+      <Association Name="POLL_MESSAGE" ed:AssociationGuid="7b9a701b-624c-4512-8f94-055cd88f3b87" Member="POLL" ed:Guid="86273780-a701-424f-9f21-ca68812bd572" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" DeleteRule="CASCADE" IsForeignKey="true" />
       <Association Name="USER_MESSAGE1" ed:AssociationGuid="11cc5795-279b-40f7-ad51-86c646334a68" Member="USER1" ed:Guid="298d8aca-56f8-4ac9-9e58-c8cd684be91c" ThisKey="CREATEDBY" OtherKey="USERID" Type="USER" IsForeignKey="true" />
     </Type>
   </Table>
@@ -87,7 +87,7 @@
       <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="a9a845ed-4a18-4cef-a441-a029fff96f86" />
       <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="b4217b96-ae2c-4faf-89f5-282038b54783" />
       <Association Name="USER_MANAGEMENT" ed:AssociationGuid="9fd483ec-b5e3-481c-914f-498a266b6363" Member="USER" ed:Guid="f92fb1fe-e893-4786-bffe-1d397dc39934" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
-      <Association Name="POLL_MANAGEMENT" ed:AssociationGuid="a87a9a8a-9b7d-479f-b7d8-1edce52fd449" Member="POLL" ed:Guid="b57f82ef-c513-4752-9ec4-72e8bd52e70b" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+      <Association Name="POLL_MANAGEMENT" ed:AssociationGuid="a87a9a8a-9b7d-479f-b7d8-1edce52fd449" Member="POLL" ed:Guid="b57f82ef-c513-4752-9ec4-72e8bd52e70b" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" DeleteRule="CASCADE" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="CSSE3004GG.QUESTIONS" Member="QUESTIONs">
@@ -102,7 +102,7 @@
       <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="3ad966aa-21ee-4719-83f6-af09361cd253" />
       <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="06988a3b-44c7-4836-9d52-c789d8edc875" />
       <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="dfc96c36-ca19-47d4-b853-7e5cc65bac9d" />
-      <Association Name="POLL_QUESTION" ed:AssociationGuid="e3bcb347-d523-4b7d-b827-9f336698b5d7" Member="POLL" ed:Guid="c261e46b-f448-4028-893d-fccfd18d4602" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+      <Association Name="POLL_QUESTION" ed:AssociationGuid="e3bcb347-d523-4b7d-b827-9f336698b5d7" Member="POLL" ed:Guid="c261e46b-f448-4028-893d-fccfd18d4602" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" DeleteRule="CASCADE" IsForeignKey="true" />
       <Association Name="QUESTION_OBJECT" ed:AssociationGuid="ed229086-53f5-4ea2-bda0-bbeea9c6c67a" Member="OBJECTs" ed:Guid="88f56731-8892-4249-b388-4f550549f82a" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="OBJECT" />
       <Association Name="QUESTION_ANSWER" ed:AssociationGuid="42c7bfb8-242f-4b8b-a093-ee6c2b01a855" Member="ANSWERs" ed:Guid="6672965a-0e6b-4369-848b-d4ca60aa031b" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="ANSWER" />
     </Type>
@@ -113,7 +113,7 @@
       <Column Name="OBJ_TYPE" Member="OBJTYPE" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="7baee609-79e3-475f-b6f8-a666e2d1050c" />
       <Column Name="ATTRIBUTE" Type="System.String" DbType="VARCHAR2(64) NOT NULL" CanBeNull="false" MaxLength="64" ed:Guid="7de504da-d497-4593-821f-9bc676960167" />
       <Column Name="QUESTION_ID" Member="QUESTIONID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="84f1b96f-05ac-4bb2-aba1-791a2a5ff9a6" />
-      <Association Name="QUESTION_OBJECT" ed:AssociationGuid="ed229086-53f5-4ea2-bda0-bbeea9c6c67a" Member="QUESTION" ed:Guid="f52dc853-0095-4ea1-b906-add6c7e5e598" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+      <Association Name="QUESTION_OBJECT" ed:AssociationGuid="ed229086-53f5-4ea2-bda0-bbeea9c6c67a" Member="QUESTION" ed:Guid="f52dc853-0095-4ea1-b906-add6c7e5e598" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" DeleteRule="CASCADE" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="CSSE3004GG.ANSWERS" Member="ANSWERs">
@@ -128,9 +128,9 @@
       <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="fc718c23-b9e1-4873-8fb4-45ef55018014" />
       <Column Name="QUESTION_ID" Member="QUESTIONID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="e082f031-45b4-48e2-8a67-e0efadcfbe12" />
       <Association Name="ANSWER_RESPONSE" ed:AssociationGuid="090e0faf-0d83-424f-bf57-42d463055701" Member="RESPONSEs" ed:Guid="be924e44-7240-4c03-9c68-5bc2b9183172" ThisKey="ANSWERID" OtherKey="ANSWERID" Type="RESPONSE" />
-      <Association Name="QUESTION_ANSWER" ed:AssociationGuid="42c7bfb8-242f-4b8b-a093-ee6c2b01a855" Member="QUESTION" ed:Guid="1364a6aa-9296-4ee7-99ea-53a9ac95dd46" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" IsForeignKey="true" />
+      <Association Name="QUESTION_ANSWER" ed:AssociationGuid="42c7bfb8-242f-4b8b-a093-ee6c2b01a855" Member="QUESTION" ed:Guid="1364a6aa-9296-4ee7-99ea-53a9ac95dd46" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" DeleteRule="CASCADE" IsForeignKey="true" />
       <Association Name="ANSWER_ANSWER" ed:AssociationGuid="a2d19fe1-1065-4ee4-bf00-3f781fd5a457" Member="ANSWERs" ed:Guid="6dabb5cb-ac3e-464c-98ac-55c89255a39a" ThisKey="ANSWERID" OtherKey="UPDATEDTO" Type="ANSWER" />
-      <Association Name="ANSWER_ANSWER" ed:AssociationGuid="a2d19fe1-1065-4ee4-bf00-3f781fd5a457" Member="ANSWER2" ed:Guid="b2338457-1c80-41d7-b2d2-edfcb7ec763a" ThisKey="UPDATEDTO" OtherKey="ANSWERID" Type="ANSWER" IsForeignKey="true" />
+      <Association Name="ANSWER_ANSWER" ed:AssociationGuid="a2d19fe1-1065-4ee4-bf00-3f781fd5a457" Member="ANSWER2" ed:Guid="b2338457-1c80-41d7-b2d2-edfcb7ec763a" ThisKey="UPDATEDTO" OtherKey="ANSWERID" Type="ANSWER" DeleteRule="CASCADE" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="CSSE3004GG.PARTICIPANTS" Member="PARTICIPANTs">
@@ -140,7 +140,7 @@
       <Column Name="USER_ID" Member="USERID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="31b65c30-7c83-4272-8efa-e6342355289f" />
       <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="257262cf-43c3-47b5-85ec-7fd5f1415e8f" />
       <Association Name="USER_PARTICIPANT" ed:AssociationGuid="4f851611-f3d1-4aef-a440-0c400b869fba" Member="USER" ed:Guid="7e4813cb-feb5-4f3e-92de-d6709fe91c2e" ThisKey="USERID" OtherKey="USERID" Type="USER" IsForeignKey="true" />
-      <Association Name="POLL_PARTICIPANT" ed:AssociationGuid="61db94c4-e272-4ffc-bd9d-b26ca180d0aa" Member="POLL" ed:Guid="e2e24802-7d96-411c-ba67-56b69eb3c781" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" IsForeignKey="true" />
+      <Association Name="POLL_PARTICIPANT" ed:AssociationGuid="61db94c4-e272-4ffc-bd9d-b26ca180d0aa" Member="POLL" ed:Guid="e2e24802-7d96-411c-ba67-56b69eb3c781" ThisKey="POLLID" OtherKey="POLLID" Type="POLL" DeleteRule="CASCADE" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

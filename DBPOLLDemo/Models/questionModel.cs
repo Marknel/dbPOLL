@@ -32,6 +32,7 @@ namespace DBPOLLDemo.Models
         public String Question { get { return question; } }
         public DateTime QuestionCreated { get { return createdat; } }
         public int QuestionNumber { get { return questnum; } }
+        public int QuestionID { get { return questionid; } }
         public int QuestionType { get { return questiontype; } }
 
 

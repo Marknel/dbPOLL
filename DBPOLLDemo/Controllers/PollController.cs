@@ -8,66 +8,43 @@ using DBPOLL.Models;
 using DBPOLLContext;
 using DBPOLLDemo.Models;
 
-
 namespace DBPOLLDemo.Controllers
 {
-    public class MainController : Controller
+    public class PollController : Controller
     {
-        private DBPOLLDataContext db = new DBPOLLDataContext();
         //
-        // GET: /Main/
+        // GET: /Poll/
 
         public ActionResult Index()
         {
-            //return View(pollModel.displayPolls(user));
-            //return View(db.POLLs.ToList());
-            //return View(new pollModel().displayPolls(user));
-           
-
-            //pollModel p = new pollModel(356672, "advdav", (decimal)76.54, (decimal)2.54, 1, DateTime.Now);
-            //p.createPoll();
-                return View(new pollModel().displayPolls());
+            return View();
         }
 
         public ActionResult Delete(int pollid)
         {
             pollModel poll = new pollModel(pollid);
             poll.deletePoll();
-            return RedirectToAction("Main", "Index");
+            return View();
         }
 
         //
-        // GET: /Main/pollDetails/5
-        public ActionResult questionDetails(int id, String name)
+        // GET: /Poll/Details/5
+
+        public ActionResult Details(int id)
         {
-            ViewData["name"] = name;
-            return View(new questionModel().displayAnswers(id));
-        }
-
-
-        //
-        // GET: /Main/answerDetails/5
-
-        public ActionResult answerDetails(int id, String name)
-        {
-            ViewData["name"] = name;
-
-                return View(new answerModel().displayAnswers(id));
-
+            return View();
         }
 
         //
-        // GET: /Main/Create
+        // GET: /Poll/Create
 
         public ActionResult Create()
         {
-
-
             return View();
         } 
 
         //
-        // POST: /Main/Create
+        // POST: /Poll/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(FormCollection collection)
@@ -85,7 +62,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         //
-        // GET: /Main/Edit/5
+        // GET: /Poll/Edit/5
  
         public ActionResult Edit(int id)
         {
@@ -93,7 +70,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         //
-        // POST: /Main/Edit/5
+        // POST: /Poll/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int id, FormCollection collection)

@@ -36,14 +36,6 @@ namespace DBPOLL.Models
 
         public pollModel(int pollid, String pollName, float longitude, float latitude, int createdBy, DateTime createdAt)
         {
-           
-            this.pollid = pollid;
-            this.pollname = pollName;
-            this.longitude = longitude;
-            this.latitude = latitude;
-            this.createdby = createdBy;
-            this.expiresat = DateTime.Now;
-
             poll.POLLID = this.pollid = pollid;
             poll.POLLNAME = this.pollname = pollName;
             poll.LATITUDE = this.latitude = latitude;
@@ -53,6 +45,11 @@ namespace DBPOLL.Models
             poll.EXPIRESAT = DateTime.Today;
         }
 
+        public pollModel(int pollid)
+        {
+            poll.POLLID = this.pollid = pollid;
+        }
+        
         public pollModel()
         {
 
@@ -65,7 +62,7 @@ namespace DBPOLL.Models
             this.createdAt = createdAt;
         }
 
-        public List<pollModel> displayPolls(userModel user)
+        public List<pollModel> displayPolls()
         {
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
@@ -88,6 +85,7 @@ namespace DBPOLL.Models
         
         public void deletePoll()
         {
+            db.POLLs.Attach(poll);
             db.POLLs.DeleteOnSubmit(poll);
             db.SubmitChanges();
         }

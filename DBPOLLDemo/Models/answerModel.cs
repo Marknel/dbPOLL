@@ -40,8 +40,6 @@ namespace DBPOLLDemo.Models
             a.NUM = this.ansnum = ansnum;
             a.UPDATEDTO = this.updatedto;
             a.CREATEDAT = this.createdat;
-
-
         }
 
         public answerModel(int ansnum, String answer)

@@ -31,9 +31,9 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Delete", "answerDetails", new { id = item.QuestionNumber, name = item.Question })%> 
+                <%= Html.ActionLink("Delete", "answerDetails", new { id = item.QuestionID})%> |
                 <%= Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) %> |
-                <%= Html.ActionLink("View Answers", "answerDetails", new { id = item.QuestionNumber, name = item.Question })%> 
+                <%= Html.ActionLink("View Answers", "answerDetails", new { id = item.QuestionID, name = item.Question })%> 
                 
             </td>
             <td>

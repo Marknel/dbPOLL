@@ -21,8 +21,9 @@
     
         <tr>
             <td>
+                <%= Html.ActionLink("Delete", "Delete", new {pollid=item.pollID}) %> |
+                <%= Html.ActionLink("Edit", "Edit", new {id=item.pollID}) %> |
                 
-                <%= Html.ActionLink("Edit Poll", "Edit", new {id=item.pollID}) %> |
                 <%= Html.ActionLink(" View Questions", "questionDetails", new {id=item.pollID, name=item.Name})%>
             </td>
             <td>
