@@ -57,7 +57,7 @@
       <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="c3a569fb-f185-4e10-9a7e-66c43299cf02" />
       <Column Name="POLL_NAME" Member="POLLNAME" Type="System.String" DbType="VARCHAR2(256) NULL" CanBeNull="true" MaxLength="256" ed:Guid="42e0d10d-283f-45de-9fee-8463405035c9" />
       <Column Name="LONGITUDE" Type="System.Single" DbType="FLOAT(126) NOT NULL" CanBeNull="false" MaxLength="22" Precision="126" ed:Guid="2b21e244-13fb-42a4-9014-27ed8528091e" />
-      <Column Name="LATITUDE" Type="System.Int64" DbType="FLOAT(126) NOT NULL" CanBeNull="false" MaxLength="22" Precision="126" ed:Guid="aeb6ce2d-83bc-46db-aedc-f7ec113647cd" />
+      <Column Name="LATITUDE" Type="System.Single" DbType="FLOAT(126) NOT NULL" CanBeNull="false" MaxLength="22" Precision="126" ed:Guid="aeb6ce2d-83bc-46db-aedc-f7ec113647cd" />
       <Column Name="CREATED_BY" Member="CREATEDBY" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="9d5c5ca5-e513-46b6-9c01-50cb29dfec35" />
       <Column Name="EXPIRES_AT" Member="EXPIRESAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="eb5b91dd-804c-4ed2-954f-9002c1771006" />
       <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="6b5bfe78-81c4-452a-a292-8ad9298072d2" />
@@ -93,12 +93,12 @@
   <Table Name="CSSE3004GG.QUESTIONS" Member="QUESTIONs">
     <Type Name="QUESTION" ed:Guid="bea2b368-d1ac-46ef-9596-53f3b4d9293f">
       <Column Name="QUESTION_ID" Member="QUESTIONID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="3bb8ee80-0d45-4a02-978a-947896bfa040" />
-      <Column Name="QUESTION_TYPE" Member="QUESTIONTYPE" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="410678a7-39bf-487f-a643-45684b4ac7f0" />
+      <Column Name="QUESTION_TYPE" Member="QUESTIONTYPE" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="410678a7-39bf-487f-a643-45684b4ac7f0" />
       <Column Name="QUESTION" Member="QUESTION1" Type="System.String" DbType="VARCHAR2(256) NOT NULL" CanBeNull="false" MaxLength="256" ed:Guid="e203358e-ab08-4b5e-9434-131c26cb18f9" />
       <Column Name="NUMBER_OF_RESPONSES" Member="NUMBEROFRESPONSES" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="9710e200-d910-4123-bf92-5704973a53de" />
       <Column Name="CHART_STYLE" Member="CHARTSTYLE" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="435175db-d3de-494b-9c86-10f373b66f30" />
       <Column Name="SHORT_ANSWER_TYPE" Member="SHORTANSWERTYPE" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="967b1109-c77c-4ada-935d-cf516cce85b9" />
-      <Column Name="NUM" Type="System.Decimal" DbType="NUMBER NULL" CanBeNull="true" MaxLength="22" Scale="0" ed:Guid="aa02b568-e6bd-4af9-86cf-4f3a5f54557c" />
+      <Column Name="NUM" Type="System.Int32" DbType="NUMBER NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="aa02b568-e6bd-4af9-86cf-4f3a5f54557c" />
       <Column Name="CREATED_AT" Member="CREATEDAT" Type="System.DateTime" DbType="DATE NOT NULL" CanBeNull="false" MaxLength="7" ed:Guid="3ad966aa-21ee-4719-83f6-af09361cd253" />
       <Column Name="MODIFIED_AT" Member="MODIFIEDAT" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" MaxLength="7" ed:Guid="06988a3b-44c7-4836-9d52-c789d8edc875" />
       <Column Name="POLL_ID" Member="POLLID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="dfc96c36-ca19-47d4-b853-7e5cc65bac9d" />
