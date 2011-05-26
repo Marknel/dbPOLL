@@ -12,18 +12,31 @@ namespace DBPOLLDemo.Controllers
     public class HomeController : Controller
     {
         private DBPOLLDataContext db = new DBPOLLDataContext();
-        public ActionResult Index()
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Index(String username, String password)
         {
-            userModel barry = new userModel("John", "John");
-            bool result = barry.verify();
 
+            userModel user = new userModel(username, password);
 
-            ViewData["Message"] = "Welcome to AS2P.NET MVC! " + result.ToString() + Session["uid"] + " BLAH";
-
-            return View();
+            if (user.verify() == true)
+            {
+                return RedirectToAction("Index", "Main");
+            }
+            else
+            {
+                ViewData["Message"] = "Username / password is incorrect";
+                return View();  
+            }
+           
+            //return View();
         }
 
         public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult Index()
         {
             return View();
         }
