@@ -24,7 +24,7 @@ namespace DBPOLLDemo.Models
 	    private int updatedto;
         private DateTime createdat;
         private DBPOLLDataContext db = new DBPOLLDataContext();
-        ANSWER answer = new ANSWER();
+        ANSWER a = new ANSWER();
 
         //Properties for getters/setters
         public String Answer { get { return answer; } }
@@ -33,13 +33,13 @@ namespace DBPOLLDemo.Models
 
         public answerModel(int answerid, String answer, int correct, int weight, int ansnum, int updatedto, DateTime createdat)
         {
-            answer.ANSWERID = this.answerid = anwserId;
-            answer.ANSWER1 = this.answer = answer;
-            answer.CORRECT = this.correct = correct;
-            answer.WEIGHT = this.weight = weight;
-            answer.NUM = this.ansnum = ansnum;
-            answer.UPDATEDTO = this.updatedto;
-            answer.CREATEDAT = this.createdat;
+            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER1 = this.answer = answer;
+            a.CORRECT = this.correct = correct;
+            a.WEIGHT = this.weight = weight;
+            a.NUM = this.ansnum = ansnum;
+            a.UPDATEDTO = this.updatedto;
+            a.CREATEDAT = this.createdat;
 
 
         }
@@ -67,7 +67,7 @@ namespace DBPOLLDemo.Models
 
         public void createAnswer(POLL poll)
         {
-            db.ANSWERs.InsertOnSubmit(answer);
+            db.ANSWERs.InsertOnSubmit(a);
             db.SubmitChanges();
         }
 
@@ -76,7 +76,7 @@ namespace DBPOLLDemo.Models
         }
 
         public void deleteAnswer() {
-            db.ANSWERs.DeleteOnSubmit(answer);
+            db.ANSWERs.DeleteOnSubmit(a);
         }
     }
 }
