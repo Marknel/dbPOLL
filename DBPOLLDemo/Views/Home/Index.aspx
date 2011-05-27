@@ -14,7 +14,7 @@
     <% using (Html.BeginForm("Login","Index", FormMethod.Post)) {%>
 
         <fieldset>
-            <legend>Fields</legend>
+            <legend>Please Login</legend>
             <p>
                 <label for="USERNAME">USERNAME:</label>
                 <%= Html.TextBox("USERNAME") %>
@@ -29,7 +29,6 @@
                 <input type="submit" value="Login" />
             </p>
         </fieldset>
-
-    <% } %>
+<% } %>
 </asp:Content>
 

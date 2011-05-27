@@ -20,7 +20,8 @@ namespace DBPOLLDemo.Controllers
 
             if (user.verify() == true)
             {
-                return RedirectToAction("Index", "Main");
+                //return RedirectToAction("../Answer/Index/" + id.ToString() + "?name=" + name);
+                return RedirectToAction("Home?username=" + username, "Home");
             }
             else
             {
@@ -38,6 +39,12 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Home(String username)
+        {
+            ViewData["Message"] = "Welcome "+username;
             return View();
         }
 

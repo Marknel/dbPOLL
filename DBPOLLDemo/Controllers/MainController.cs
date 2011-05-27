@@ -28,6 +28,42 @@ namespace DBPOLLDemo.Controllers
             //p.createPoll();
                 return View(new pollModel().displayPolls());
         }
+        
+        public ActionResult viewPolls()
+        {
+            return View(new pollModel().displayPolls());
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult viewPolls(String date1, String date2)
+        {
+            bool valid = true;
+            DateTime startdate;
+            DateTime enddate;
+
+            if (!DateTime.TryParse(date1, out startdate))
+            {
+                ViewData["date1"] = "Please Enter a correct Date";
+                valid = false;
+            }
+
+            if (!DateTime.TryParse(date2, out enddate))
+            {
+                ViewData["date2"] = "Please Enter a correct Date";
+                valid = false;
+            }
+            if (valid == true)
+            {
+                return View(new pollModel().displayPolls(startdate, enddate));
+            }
+            else
+            {
+                return View(new pollModel().displayPolls());
+            }
+        }
+        /*public ActionResult viewPolls()
+        {
+            return View(new pollModel().displayPolls());
+        }*/
 
         public ActionResult Delete(int pollid)
         {

@@ -101,6 +101,7 @@
     <Content Include="Views\Main\IndexREF.aspx" />
     <Content Include="Views\Main\questionDetails.aspx" />
     <Content Include="Views\Main\QuestionEdit.aspx" />
+    <Content Include="Views\Main\viewPolls.aspx" />
     <Content Include="Views\Question\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />
@@ -117,7 +118,7 @@
     <Content Include="Views\Account\LogOn.aspx" />
     <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Home\About.aspx" />
-    <Content Include="Views\Home\Login.aspx" />
+    <Content Include="Views\Home\Home.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\Shared\Site.Master" />

@@ -24,8 +24,10 @@
             <div id="menucontainer">
             
                 <ul id="menu">              
-                    <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
-                    <li><%= Html.ActionLink("About", "About", "Home")%></li>
+                    <li><%= Html.ActionLink("Home", "Home", "Home")%></li>
+                    <li><%= Html.ActionLink("View Polls", "viewPolls", "Main")%></li>
+                    <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li>
+                    
                 </ul>
             
             </div>

@@ -84,6 +84,16 @@ namespace DBPOLL.Models
             return query.ToList();
         }
 
+        public List<pollModel> displayPolls(DateTime start, DateTime end)
+        {
+            int sessionID = (int)Session["uid"];
+            List<POLL> pollList = new List<POLL>();
+            var query = from u in db.POLLs
+                        where u.CREATEDBY == sessionID && u.CREATEDAT >= start && u.CREATEDAT <= end
+                        select new pollModel(u.POLLID, u.POLLNAME, u.LONGITUDE, u.LATITUDE, u.CREATEDBY, u.EXPIRESAT, u.CREATEDAT, u.MODIFIEDAT);
+            return query.ToList();
+        }
+
         public void createPoll()
         {
             db.POLLs.Attach(poll);
