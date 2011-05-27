@@ -24,9 +24,7 @@
             </tr>
             </table>
         </fieldset>
-    
-    
-    
+     
     <table>
         <tr>
             <th>Actions</th>
@@ -43,7 +41,7 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink(" Poll Questions By Date", "Details", new {id=item.pollID})%>
+                <%= Html.ActionLink(" Poll Questions By Date", "../Question/viewQuestions", new {pollid=item.pollID})%>
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>

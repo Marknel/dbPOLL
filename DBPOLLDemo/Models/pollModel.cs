@@ -12,6 +12,8 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using DBPOLLContext;
 using DBPOLL.Models;
+using System.Threading;
+using System.Globalization;
 
 namespace DBPOLL.Models
 {
@@ -36,6 +38,10 @@ namespace DBPOLL.Models
 
         public pollModel(int pollid, String pollName, float longitude, float latitude, int createdBy, Nullable<DateTime> expiresat, DateTime createdAt, Nullable<DateTime> modifiedat)
         {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+            
             poll.POLLID = this.pollid = pollid;
             poll.POLLNAME = this.pollname = pollName;
             poll.LATITUDE = this.latitude = latitude;
@@ -69,6 +75,10 @@ namespace DBPOLL.Models
 
         public pollModel(int pollId, String pollName, DateTime createdAt)
         {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+            
             this.pollid = pollId;
             this.pollname = pollName;
             this.createdAt = createdAt;

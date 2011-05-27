@@ -7,7 +7,8 @@ using System.Web.Mvc.Ajax;
 using DBPOLL.Models;
 using DBPOLLContext;
 using DBPOLLDemo.Models;
-
+using System.Threading;
+using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
 {
@@ -36,6 +37,10 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult viewPolls(String date1, String date2)
         {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
             bool valid = true;
             DateTime startdate;
             DateTime enddate;
@@ -141,6 +146,10 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int pollid, String pollname, float longitude, float latitude, int createdby, DateTime createdat, DateTime expiresat, DateTime modifiedat, int test)
         {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
             try
             {
                 //pollModel poll = new pollModel(pollid, pollname, longitude, latitude, createdby, expiresat, createdat, modifiedat);

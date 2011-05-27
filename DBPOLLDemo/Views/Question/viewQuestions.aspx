@@ -7,7 +7,25 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Questions for Poll: <%= Html.Encode(ViewData["name"]) %></h2>
-
+    <h2>View Questions for Poll: <%= Html.Encode(ViewData["name"]) %> By Date (mm/dd/yyyy 00:00:00)</h2>
+        <% using (Html.BeginForm("Edit","Edit", FormMethod.Post)) {%>
+        <fieldset>
+            <legend>Search</legend>
+                <table>
+                    <tr>
+                         <th>Start Date and Time</th>
+                         <th>End Date and Time</th>
+                         <th></th>
+                    </tr>
+                    <tr>
+                <td><%= Html.TextBox("date1")%><br /> <%= ViewData["date1"]%></td>
+                 <td><%= Html.TextBox("date2")%><br /> <%= ViewData["date2"]%></td>
+                 <td><input type="submit" value="Search" /></td>
+                </tr>
+                </table>
+            </fieldset>
+        
+        
     <table>
         <tr>
             <th nowrap="nowrap">Actions</th>
@@ -55,10 +73,11 @@
     <% } %>
 
     </table>
-
-    <p>
-        <%= Html.ActionLink("Create New", "Create") %>
+<% } %>
+   <p>
+        <%= Html.ActionLink("Back to Menu", "../Home/Home") %>
     </p>
+    
 
 </asp:Content>
 

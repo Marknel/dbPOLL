@@ -11,6 +11,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using DBPOLLContext;
+using System.Threading;
+using System.Globalization;
 
 namespace DBPOLLDemo.Models
 {
@@ -35,6 +37,8 @@ namespace DBPOLLDemo.Models
         public int QuestionID { get { return questionid; } }
         public int QuestionType { get { return questiontype; } }
 
+        
+
 
 
         private static DBPOLLDataContext db = new DBPOLLDataContext();
@@ -57,6 +61,10 @@ namespace DBPOLLDemo.Models
         //Constructor for fetched questions
         public questionModel(int qid, int questiontype, String question, int pollid, int questnum, DateTime createdat, DateTime modifiedat, int numberofresponses, int chartstyle)
         {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
             q.QUESTIONID = this.questionid = qid;
             q.QUESTIONTYPE = this.questiontype = questiontype;
             q.QUESTION1 = this.question = question;
@@ -70,6 +78,10 @@ namespace DBPOLLDemo.Models
         }
 
         public questionModel(int pollid, int qid, String question, int questiontype, DateTime createdat, int questnum) {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
             this.questionid = qid;
             this.question = question;
             this.pollid = pollid;
@@ -83,6 +95,15 @@ namespace DBPOLLDemo.Models
         {
             var query = from q in db.QUESTIONs
                         where q.POLLID == poll
+                        select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
+
+            return query.ToList();
+        }
+
+        public List<questionModel> displayQuestions(int poll, DateTime start, DateTime end)
+        {
+            var query = from q in db.QUESTIONs
+                        where q.POLLID == poll && q.CREATEDAT >= start && q.CREATEDAT <= end
                         select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
 
             return query.ToList();
