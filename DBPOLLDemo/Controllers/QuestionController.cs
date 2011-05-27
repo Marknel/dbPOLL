@@ -98,14 +98,24 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(FormCollection collection)
         {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+
+            
             try
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                questionModel q = new questionModel(213, 2, "How many are in the room2?", 2, 1, 1, 4, DateTime.Now, DateTime.Now, 2);
+                q.createQuestion();
+                ViewData["error1"] = "! DONE! " + q.Question;
+                return View();
+
+                //return RedirectToAction("Index/"+2);
             }
-            catch
+            catch (Exception e)
             {
+                ViewData["error1"] = "!ERROR: "+e.Message;
                 return View();
             }
         }
@@ -124,8 +134,10 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int id, FormCollection collection)
         {
+
             try
             {
+                
                 // TODO: Add update logic here
  
                 return RedirectToAction("Index");

@@ -37,10 +37,6 @@ namespace DBPOLLDemo.Models
         public int QuestionID { get { return questionid; } }
         public int QuestionType { get { return questiontype; } }
 
-        
-
-
-
         private static DBPOLLDataContext db = new DBPOLLDataContext();
 
         // question main constructor
@@ -59,7 +55,7 @@ namespace DBPOLLDemo.Models
            
        //}
         //Constructor for fetched questions
-        public questionModel(int qid, int questiontype, String question, int pollid, int questnum, DateTime createdat, DateTime modifiedat, int numberofresponses, int chartstyle)
+        public questionModel(int qid, int questiontype, String question, int numberofresponses,  int chartstyle, int shortanswertype, int questnum, DateTime createdat, DateTime modifiedat, int pollid)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
@@ -69,12 +65,13 @@ namespace DBPOLLDemo.Models
             q.QUESTIONTYPE = this.questiontype = questiontype;
             q.QUESTION1 = this.question = question;
             q.NUMBEROFRESPONSES = this.numberofresponses = numberofresponses;
-            q.CREATEDAT = this.createdat = createdat;
-            q.POLLID = this.pollid = pollid;
             q.CHARTSTYLE = this.chartstyle = chartstyle;
-            q.SHORTANSWERTYPE = this.shortanswertype;
+            q.SHORTANSWERTYPE = this.shortanswertype = shortanswertype;
             q.NUM = this.questnum = questnum;
-            q.MODIFIEDAT = this.modifiedat;
+            q.CREATEDAT = this.createdat = createdat;
+            q.MODIFIEDAT = this.modifiedat = modifiedat;
+            q.POLLID = this.pollid = pollid;
+
         }
 
         public questionModel(int pollid, int qid, String question, int questiontype, DateTime createdat, int questnum) {
@@ -121,8 +118,16 @@ namespace DBPOLLDemo.Models
         }
 
         public void createQuestion() {
-            db.QUESTIONs.InsertOnSubmit(q);
-            db.SubmitChanges();
+            try
+            {
+                db.QUESTIONs.Attach(q);
+                db.QUESTIONs.InsertOnSubmit(q);
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
         }
 
         public void updateQuestion()

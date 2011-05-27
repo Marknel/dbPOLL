@@ -104,6 +104,7 @@
     <Content Include="Views\Main\questionDetails.aspx" />
     <Content Include="Views\Main\QuestionEdit.aspx" />
     <Content Include="Views\Main\viewPolls.aspx" />
+    <Content Include="Views\Question\Create.aspx" />
     <Content Include="Views\Question\Index.aspx" />
     <Content Include="Views\Question\viewQuestions.aspx" />
     <Content Include="Web.config" />

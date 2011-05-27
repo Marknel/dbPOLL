@@ -7,32 +7,37 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
  
  
-    <h2>View Polls By Date (mm/dd/yyyy 00:00:00)</h2>
+    <h2>Polls</h2>
     <% using (Html.BeginForm("Edit","Edit", FormMethod.Post)) {%>
-    <fieldset>
-        <legend>Search</legend>
-            <table>
-                <tr>
-                     <th>Start Date and Time</th>
-                     <th>End Date and Time</th>
-                     <th></th>
-                </tr>
-                <tr>
-            <td><%= Html.TextBox("date1")%><br /> <%= ViewData["date1"]%></td>
-             <td><%= Html.TextBox("date2")%><br /> <%= ViewData["date2"]%></td>
-             <td><input type="submit" value="Search" /></td>
-            </tr>
-            </table>
+        <fieldset>
+            <legend>Search by Date and Time (dd/mm/yyyy hh:mm)</legend>
+                <div style="float:left; padding-right:25px;"> 
+                    <label for="date1">Start Date and Time</label> 
+                    <%= Html.TextBox("date1")%><br /> 
+                    <%= ViewData["date1"]%>
+                </div>
+                
+                <div>
+                    <label for="date2">End Date and Time</label> 
+                    <%= Html.TextBox("date2")%><br /> 
+                    <%= ViewData["date2"]%>
+                </div>
+                <br />
+                <div>
+                    <input type="submit" value="Search" />
+                </div>
         </fieldset>
      
     <table>
         <tr>
             <th>Actions</th>
              <th>Poll Name</th>
-             <th>Creation Date</th>
+             <th>Date Poll Created</th>
         </tr>
         <tr>
-        <td><%= Html.ActionLink(" All Questions By Date", "../Question/viewQuestions", new {pollid=0 })%></td>
+            <td><%= Html.ActionLink(" Search All Questions", "../Question/viewQuestions", new {pollid=0 })%></td>
+            <td></td>
+            <td></td>
         </tr>
 
     <%
@@ -41,7 +46,7 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink(" Poll Questions By Date", "../Question/viewQuestions", new {pollid=item.pollID})%>
+                <%= Html.ActionLink("Search Questions", "../Question/viewQuestions", new {pollid=item.pollID})%>
             </td>
             <td>
                 <%= Html.Encode(item.Name) %>

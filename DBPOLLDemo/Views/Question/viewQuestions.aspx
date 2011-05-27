@@ -7,28 +7,27 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Questions for Poll: <%= Html.Encode(ViewData["name"]) %></h2>
-    <h2>View Questions for Poll: <%= Html.Encode(ViewData["name"]) %> By Date (mm/dd/yyyy 00:00:00)</h2>
         <% using (Html.BeginForm("Edit","Edit", FormMethod.Post)) {%>
         <fieldset>
-            <legend>Search</legend>
-                <table>
-                    <tr>
-                         <th>Start Date and Time</th>
-                         <th>End Date and Time</th>
-                         <th></th>
-                    </tr>
-                    <tr>
-                <td><%= Html.TextBox("date1")%><br /> <%= ViewData["date1"]%></td>
-                 <td><%= Html.TextBox("date2")%><br /> <%= ViewData["date2"]%></td>
-                 <td><input type="submit" value="Search" /></td>
-                </tr>
-                </table>
-            </fieldset>
-        
-        
+            <legend>Search by Date and Time (dd/mm/yyyy hh:mm)</legend>
+                <div style="float:left; padding-right:25px;"> 
+                    <label for="date1">Start Date and Time</label> 
+                    <%= Html.TextBox("date1")%><br /> 
+                    <%= ViewData["date1"]%>
+                </div>
+                <div>
+                    <label for="date2">End Date and Time</label> 
+                    <%= Html.TextBox("date2")%><br /> 
+                    <%= ViewData["date2"]%>
+                </div>
+                <br />
+                <div>
+                    <input type="submit" value="Search" />
+                </div>
+        </fieldset>
+            
     <table>
         <tr>
-            <th nowrap="nowrap">Actions</th>
             <th nowrap="nowrap">
                 Question Number
             </th>
@@ -48,12 +47,6 @@
     <% foreach (var item in Model) { %>
     
         <tr>
-            <td nowrap="nowrap">
-                <%= Html.ActionLink("Delete", "Delete", new { questionid = item.QuestionID, id = ViewData["id"], name = ViewData["name"] })%> |
-                <%= Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) %> |
-                <%= Html.ActionLink("View Answers", "Details", new { id = item.QuestionID, name = item.Question })%> 
-                
-            </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.QuestionNumber) %>
             </td>
