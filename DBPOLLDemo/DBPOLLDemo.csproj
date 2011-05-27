@@ -82,7 +82,9 @@
     <Compile Include="Models\pollModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Models\questionModel.cs" />
+    <Compile Include="Models\questionModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\userModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

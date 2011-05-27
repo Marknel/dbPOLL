@@ -29,7 +29,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult viewQuestions(int pollid)
         {
-            return View(new questionModel().displayQuestions(pollid));
+            if (pollid == 0)
+            {
+                return View(new questionModel().displayAllQuestions());
+            }
+            else
+            {
+                return View(new questionModel().displayQuestions(pollid));
+            }
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -54,6 +61,7 @@ namespace DBPOLLDemo.Controllers
                 ViewData["date2"] = "Please Enter a correct Date";
                 valid = false;
             }
+
             if (valid == true)
             {
                 return View(new questionModel().displayQuestions(pollid, startdate, enddate));

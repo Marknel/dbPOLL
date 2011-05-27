@@ -32,7 +32,7 @@
              <th>Creation Date</th>
         </tr>
         <tr>
-        <td><%= Html.ActionLink(" All Questions By Date", "Details", new { id = 0 })%></td>
+        <td><%= Html.ActionLink(" All Questions By Date", "../Question/viewQuestions", new {pollid=0 })%></td>
         </tr>
 
     <%

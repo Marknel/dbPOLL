@@ -88,7 +88,7 @@ namespace DBPOLL.Models
         {
             if (Session["uid"] == null)
             {
-
+                
             }
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();

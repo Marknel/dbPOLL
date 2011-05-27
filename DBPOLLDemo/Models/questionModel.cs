@@ -17,7 +17,7 @@ using System.Globalization;
 namespace DBPOLLDemo.Models
 {
 
-    public class questionModel
+    public class questionModel : System.Web.UI.Page
     {
         private QUESTION q = new QUESTION();
         private int questionid;
@@ -104,6 +104,17 @@ namespace DBPOLLDemo.Models
         {
             var query = from q in db.QUESTIONs
                         where q.POLLID == poll && q.CREATEDAT >= start && q.CREATEDAT <= end
+                        select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
+
+            return query.ToList();
+        }
+
+        public List<questionModel> displayAllQuestions()
+        {
+            int sessionID = (int)Session["uid"];
+            var query = from q in db.QUESTIONs
+                        join p in db.POLLs on q.POLLID equals p.POLLID
+                        where p.CREATEDBY == sessionID
                         select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
 
             return query.ToList();
