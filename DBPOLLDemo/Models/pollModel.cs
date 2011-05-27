@@ -76,6 +76,10 @@ namespace DBPOLL.Models
 
         public List<pollModel> displayPolls()
         {
+            if (Session["uid"] == null)
+            {
+
+            }
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from u in db.POLLs

@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
  
  
-    <h2>View Polls By Date</h2>
+    <h2>View Polls By Date (mm/dd/yyyy 00:00:00)</h2>
     <% using (Html.BeginForm("Edit","Edit", FormMethod.Post)) {%>
     <fieldset>
         <legend>Search</legend>
