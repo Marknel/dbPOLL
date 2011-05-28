@@ -19,7 +19,7 @@ namespace DBPOLL.Models
 {
     public class pollModel : System.Web.UI.Page
     {
-        POLL poll = new POLL();
+        private POLL poll = new POLL();
         public int pollid;
         public String pollname;
         public DateTime modifiedat;
@@ -52,7 +52,8 @@ namespace DBPOLL.Models
                 poll.EXPIRESAT = this.expiresat = expiresat.Value;
             }
             poll.CREATEDBY = this.createdby = createdBy;
-            if (expiresat != null){
+            if (modifiedat != null)
+            {
                 poll.MODIFIEDAT = this.modifiedat = modifiedat.Value;
             }
         }
@@ -70,6 +71,23 @@ namespace DBPOLL.Models
         
         public pollModel()
         {
+
+        }
+
+        //pollModel(356672, "TEST", (decimal)76.54, (decimal)2.54, 1, DateTime.Now);
+        
+        public pollModel(int pollid, String pollName, float longitude, float latitude, int createdBy, DateTime createdAt)
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            poll.POLLID = this.pollid = pollid;
+            poll.POLLNAME = this.pollname = pollName;
+            poll.LATITUDE = this.latitude = latitude;
+            poll.LONGITUDE = this.longitude = longitude;
+            poll.CREATEDAT = this.createdAt = createdAt;
+            poll.CREATEDBY = this.createdby = createdBy;
 
         }
 
@@ -98,6 +116,20 @@ namespace DBPOLL.Models
             return query.ToList();
         }
 
+        public pollModel displayPolls(int pollid)
+        {
+            if (Session["uid"] == null)
+            {
+
+            }
+            int sessionID = (int)Session["uid"];
+            List<POLL> pollList = new List<POLL>();
+            var query = from u in db.POLLs
+                        where u.CREATEDBY == sessionID && u.POLLID == pollid
+                        select new pollModel(u.POLLID, u.POLLNAME, u.LONGITUDE, u.LATITUDE, u.CREATEDBY, u.EXPIRESAT, u.CREATEDAT, u.MODIFIEDAT);
+            return query.First();
+        }
+
         public List<pollModel> displayPolls(DateTime start, DateTime end)
         {
             int sessionID = (int)Session["uid"];
@@ -119,7 +151,10 @@ namespace DBPOLL.Models
         {
             try
             {
-                db.POLLs.Attach(poll);
+                //pollModel poll1 = new pollModel(pollid, pollname).displayPolls(pollid);
+                //poll1.POLLNAME = "CHANGE";
+                //db.POLLs.Attach(poll);
+                //poll.POLLNAME = "HELLO";
                 db.SubmitChanges();
             }
             catch(Exception e)

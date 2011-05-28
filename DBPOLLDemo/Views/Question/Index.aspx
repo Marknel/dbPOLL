@@ -43,7 +43,9 @@
                 <%= Html.Encode(item.Question) %>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.QuestionType) %>
+                <%  string test;
+                if(item.QuestionType == 1){test = "Multiple Choice";}else{test = "Short Answer";}%>
+                 <%=Html.Encode(test) %>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(String.Format("{0:g}", item.QuestionCreated)) %>
@@ -57,7 +59,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create") %>
+        <%= Html.ActionLink("Create New", "Create", new { pollid = ViewData["id"] })%>
     </p>
 
 </asp:Content>

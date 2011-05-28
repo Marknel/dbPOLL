@@ -37,7 +37,7 @@ namespace DBPOLLDemo.Models
         public int QuestionID { get { return questionid; } }
         public int QuestionType { get { return questiontype; } }
 
-        private static DBPOLLDataContext db = new DBPOLLDataContext();
+        private DBPOLLDataContext db = new DBPOLLDataContext();
 
         // question main constructor
         public questionModel()
@@ -79,12 +79,26 @@ namespace DBPOLLDemo.Models
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
 
-            this.questionid = qid;
-            this.question = question;
-            this.pollid = pollid;
-            this.questiontype = questiontype;
-            this.createdat = createdat;
-            this.questnum = questnum;
+            q.QUESTIONID = this.questionid = qid;
+            q.QUESTION1 = this.question = question;
+            q.POLLID = this.pollid = pollid;
+            q.QUESTIONTYPE = this.questiontype = questiontype;
+            q.CREATEDAT =  this.createdat = createdat;
+            q.NUM = this.questnum = questnum;
+        }
+
+        public questionModel(int qid, int questiontype, String question,  DateTime createdat, int pollid)
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            q.QUESTIONID = this.questionid = qid;
+            q.QUESTION1 = this.question = question;
+            q.POLLID = this.pollid = pollid;
+            q.QUESTIONTYPE = this.questiontype = questiontype;
+            q.CREATEDAT = this.createdat = createdat;
+            //q.NUM = this.questnum = questnum;
         }
 
         // Retrieves Question relating to a specified poll
@@ -117,10 +131,17 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
+        public int getMaxID()
+        {
+            int query = (from q in db.QUESTIONs
+                         select q.QUESTIONID).Max();
+
+            return query;
+        }
+
         public void createQuestion() {
             try
             {
-                db.QUESTIONs.Attach(q);
                 db.QUESTIONs.InsertOnSubmit(q);
                 db.SubmitChanges();
             }

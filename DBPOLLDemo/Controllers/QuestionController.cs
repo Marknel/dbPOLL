@@ -86,8 +86,13 @@ namespace DBPOLLDemo.Controllers
 
         //
         // GET: /Question/Create
+        public ActionResult Create(int pollid)
+        {
+            ViewData["id"] = pollid;
+            return View();
+        } 
 
-        public ActionResult Create()
+        public ActionResult CreateShortAnswer()
         {
             return View();
         } 
@@ -96,18 +101,54 @@ namespace DBPOLLDemo.Controllers
         // POST: /Question/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateShortAnswer(int shortanswertype, String num, String question, int chartstyle, int pollid)
+        {
+            // Allows insertion of aussie dates
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+
+            //returns the max question ID in the questions table
+            int maxqid = new questionModel().getMaxID();
+            
+            try
+            {
+                //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
+                questionModel q = new questionModel((maxqid + 1), 1, question, DateTime.Now, pollid);
+                q.createQuestion();
+
+                ViewData["error1"] = "! DONE! " + q.Question;
+                return View();
+                //return RedirectToAction("Index/"+pollid);
+            }
+            catch (Exception e)
+            {
+                ViewData["error1"] = "!ERROR: "+e.Message;
+                return View();
+            }
+        }
+
+        public ActionResult CreateMultipleChoice()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Question/Create
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateMultipleChoice(FormCollection collection)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
 
-            
+
             try
             {
                 // TODO: Add insert logic here
 
-                questionModel q = new questionModel(213, 2, "How many are in the room2?", 2, 1, 1, 4, DateTime.Now, DateTime.Now, 2);
+                questionModel q = new questionModel(213, 2, "How many are in the room2?", DateTime.Now, 2);
                 q.createQuestion();
+
                 ViewData["error1"] = "! DONE! " + q.Question;
                 return View();
 
@@ -115,7 +156,7 @@ namespace DBPOLLDemo.Controllers
             }
             catch (Exception e)
             {
-                ViewData["error1"] = "!ERROR: "+e.Message;
+                ViewData["error1"] = "!ERROR: " + e.Message;
                 return View();
             }
         }
