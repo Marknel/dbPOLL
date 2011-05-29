@@ -7,122 +7,104 @@ using System.Web.Mvc.Ajax;
 using DBPOLL.Models;
 using DBPOLLContext;
 using DBPOLLDemo.Models;
-
 using System.Threading;
 using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
 {
-    public class AnswerController : Controller
+    public class ObjectController : Controller
     {
-
-
         //
-        // GET: /Answer/
+        // GET: /Object/
 
-        public ActionResult Index(int id, String name)
+        public ActionResult Index(int questionid)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewData["name"] = name;
-            ViewData["id"] = id;
-
-            return View(new answerModel().displayAnswers(id));
+            ViewData["questionid"] = questionid;
+            return View(new objectModel().indexObjects(questionid));
         }
 
         //
-        // GET: /Answer/Details/5
+        // GET: /Object/Details/5
 
         public ActionResult Details(int id)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
+           
             return View();
         }
 
-        public ActionResult Delete(int answerid, int id, String name)
+        public ActionResult Delete(int objectid, int questionid)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+            objectModel ob = new objectModel(questionid);
+            ob.deleteObject();
 
-            answerModel a = new answerModel(answerid);
-            a.deleteAnswer();
-            return RedirectToAction("Index", "Answer", new {id = id, name = name  });
+            return RedirectToAction("Index", "Object", new { questionid = questionid});
         }
-        
 
         //
-        // GET: /Answer/Create
+        // GET: /Object/Create
 
-        public ActionResult Create(int questionid, String name)
+        public ActionResult Create(int questionid)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["name"] = name;
             ViewData["questionid"] = questionid;
             return View();
         } 
 
         //
-        // POST: /Answer/Create
+        // POST: /Object/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(int obtype, String attribute, int questionid)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            int maxobid = new objectModel().getMaxID(); 
 
             try
             {
                 // TODO: Add insert logic here
+                objectModel ob = new objectModel((maxobid + 1),obtype, attribute, questionid);
+                ob.createObject();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { questionid = questionid });
             }
-            catch
+            catch(Exception e)
             {
+                ViewData["error1"] = "!ERROR: " + e.Message;
                 return View();
             }
         }
 
         //
-        // GET: /Answer/Edit/5
+        // GET: /Object/Edit/5
  
         public ActionResult Edit(int id)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-
             return View();
         }
 
         //
-        // POST: /Answer/Edit/5
+        // POST: /Object/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-
             try
             {
                 // TODO: Add update logic here

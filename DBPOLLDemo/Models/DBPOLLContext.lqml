@@ -110,7 +110,7 @@
   <Table Name="CSSE3004GG.OBJECTS" Member="OBJECTs">
     <Type Name="OBJECT" ed:Guid="bee7100b-18ad-48e6-a52e-03d1f555f6e3">
       <Column Name="OBJ_ID" Member="OBJID" Type="System.Int32" DbType="NUMBER NOT NULL" IsPrimaryKey="true" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="e1503f15-bfb4-4766-855f-4b21757dc17a" />
-      <Column Name="OBJ_TYPE" Member="OBJTYPE" Type="System.Decimal" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="7baee609-79e3-475f-b6f8-a666e2d1050c" />
+      <Column Name="OBJ_TYPE" Member="OBJTYPE" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="7baee609-79e3-475f-b6f8-a666e2d1050c" />
       <Column Name="ATTRIBUTE" Type="System.String" DbType="VARCHAR2(64) NOT NULL" CanBeNull="false" MaxLength="64" ed:Guid="7de504da-d497-4593-821f-9bc676960167" />
       <Column Name="QUESTION_ID" Member="QUESTIONID" Type="System.Int32" DbType="NUMBER NOT NULL" CanBeNull="false" MaxLength="22" Scale="0" ed:Guid="84f1b96f-05ac-4bb2-aba1-791a2a5ff9a6" />
       <Association Name="QUESTION_OBJECT" ed:AssociationGuid="ed229086-53f5-4ea2-bda0-bbeea9c6c67a" Member="QUESTION" ed:Guid="f52dc853-0095-4ea1-b906-add6c7e5e598" ThisKey="QUESTIONID" OtherKey="QUESTIONID" Type="QUESTION" DeleteRule="CASCADE" IsForeignKey="true" />

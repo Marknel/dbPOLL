@@ -19,7 +19,7 @@
     
         <tr>
             <td><%= Html.ActionLink("Delete", "Delete", new { answerid = item.AnswerID, id = ViewData["id"], name = ViewData["name"] })%> |
-                <%= Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) %> |
+                <%= Html.ActionLink("Edit", "Edit", new { questionid = ViewData["id"] })%> |
                 <%= Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })%>
             
             </td>
@@ -37,7 +37,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create") %>
+        <%= Html.ActionLink("Create New", "Create", new { questionid = ViewData["id"], name = ViewData["name"] })%>
     </p>
 
 </asp:Content>

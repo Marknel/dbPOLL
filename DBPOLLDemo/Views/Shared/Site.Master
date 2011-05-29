@@ -18,16 +18,35 @@
             </div>
               
             <div id="logindisplay">
-                <%= Html.ActionLink("Log Off", "LogOff", "Account") %>
+                <%if (!(Session["uid"] == null)){%>
+                                
+                        <%=Html.ActionLink("Log Off", "LogOff", "Home") %>
+                    <%}else{ %>
+                        <%=Html.ActionLink("Log On", "LogOff", "Home") %>
+                    <%} %>
             </div> 
             
             <div id="menucontainer">
-            
-                <ul id="menu">              
-                    <li><%= Html.ActionLink("Home", "Home", "Home")%></li>
-                    <li><%= Html.ActionLink("View Polls", "viewPolls", "Main")%></li>
-                    <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li>
-                    
+                
+                <ul id="menu">
+                              <%if(Session["uid"]==null)
+                                {%>
+                                    <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
+                                    <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
+                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
+                                <%}
+                                else if (Session["uid"].ToString().Trim() == "")
+                                {%>
+                                    <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
+                                    <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
+                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
+                                <%}
+                                else
+                                {%>
+                                    <li><%= Html.ActionLink("Home", "Home", "Home")%></li>
+                                    <li><%= Html.ActionLink("View Polls", "viewPolls", "Main")%></li>
+                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Main")%></li> 
+                                <%} %>
                 </ul>
             
             </div>

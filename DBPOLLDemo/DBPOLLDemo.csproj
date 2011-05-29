@@ -65,6 +65,7 @@
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -78,6 +79,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBPOLLContext.lqml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\objectModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\pollModel.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -94,6 +98,7 @@
     <Content Include="Content\turningPoint_banner.jpg" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Answer\Create.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Main\answerDetails.aspx" />
@@ -104,6 +109,8 @@
     <Content Include="Views\Main\questionDetails.aspx" />
     <Content Include="Views\Main\QuestionEdit.aspx" />
     <Content Include="Views\Main\viewPolls.aspx" />
+    <Content Include="Views\Object\Create.aspx" />
+    <Content Include="Views\Object\Index.aspx" />
     <Content Include="Views\Question\Create.aspx" />
     <Content Include="Views\Question\CreateMultipleChoice.aspx" />
     <Content Include="Views\Question\CreateShortAnswer.aspx" />

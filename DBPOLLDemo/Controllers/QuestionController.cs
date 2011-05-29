@@ -19,6 +19,12 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index(int id, String name)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             ViewData["name"] = name;
             ViewData["id"] = id;
             return View(new questionModel().displayQuestions(id));
@@ -29,6 +35,11 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult viewQuestions(int pollid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (pollid == 0)
             {
                 return View(new questionModel().displayAllQuestions());
@@ -52,13 +63,27 @@ namespace DBPOLLDemo.Controllers
 
             if (!DateTime.TryParse(date1, out startdate))
             {
-                ViewData["date1"] = "Please Enter a correct Date";
+                if (date1 == "" || date1 == null)
+                {
+                    ViewData["date1"] = "Above field must contain a date";
+                }
+                else
+                {
+                    ViewData["date1"] = "Please Enter a correct Date";
+                }
                 valid = false;
             }
 
             if (!DateTime.TryParse(date2, out enddate))
             {
-                ViewData["date2"] = "Please Enter a correct Date";
+                if (date1 == "" || date1 == null)
+                {
+                    ViewData["date2"] = "Above field must contain a date";
+                }
+                else
+                {
+                    ViewData["date2"] = "Please Enter a correct Date";
+                }
                 valid = false;
             }
 
@@ -74,11 +99,23 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Details(int id, String name)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             return RedirectToAction("../Answer/Index/" + id.ToString() + "?name=" + name);
         }
 
         public ActionResult Delete(int questionid, int id, String name)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             questionModel q = new questionModel(questionid);
             q.deleteQuestion();
             return RedirectToAction("Index", "Question", new { id = id, name = name });
@@ -88,6 +125,12 @@ namespace DBPOLLDemo.Controllers
         // GET: /Question/Create
         public ActionResult Create(int pollid, String name)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             ViewData["name"] = name;
             ViewData["id"] = pollid;
             return View();
@@ -95,6 +138,12 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult CreateShortAnswer(int pollid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             ViewData["id"] = pollid;
             return View();
         } 
@@ -105,44 +154,70 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateShortAnswer(int shortanswertype, String num, String question, int chartstyle, int pollid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             // Allows insertion of aussie dates
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             int numInt = 0;
+            ViewData["id"] = pollid;
+            bool errorspresent = false;
+            int result = 0;
 
             //returns the max question ID in the questions table
             int maxqid = new questionModel().getMaxID();
 
-            try
+            // VALIDATE FORM DATA!
+            if (!int.TryParse(num,out numInt) || num == null)
             {
-                numInt = int.Parse(num);
+                ViewData["numerror"] = "Above field must contain a number!";
+                errorspresent = true;
             }
-            catch
+
+            if (question == null)
             {
-                //Not an int. do not insert and throw view error to user. 
+                ViewData["questionerror"] = "Above field must contain a question!";
+                errorspresent = true;
             }
             
-            try
+            
+            if(errorspresent == false)
             {
-                //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
-                questionModel q = new questionModel((maxqid + 1), shortanswertype, numInt, question,chartstyle, DateTime.Now, pollid);
-                q.createQuestion();
+                try
+                {
+                    //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
+                    questionModel q = new questionModel((maxqid + 1), shortanswertype, numInt, question,chartstyle, DateTime.Now, pollid);
+                    q.createQuestion();
 
-                ViewData["error1"] = "! DONE! " + q.Question;
-                ViewData["id"] = pollid;
-                return View();
-                //return RedirectToAction("Index/"+pollid);
-            }
-            catch (Exception e)
-            {
-                ViewData["error1"] = "!ERROR: "+e.Message;
-                ViewData["id"] = pollid;
+                    ViewData["created"] = "Created Question: " + q.Question;
+                    
+                    return View();
+                    //return RedirectToAction("Index/"+pollid);
+                }
+                catch (Exception e)
+                {
+                    ViewData["error1"] = "!ERROR: "+e.Message;
+                    ViewData["id"] = pollid;
+                    return View();
+                }
+            }else{
+                // We have errors. sent to user posthaste!
+                ViewData["mastererror"] = "There are errors marked in the form. Please correct these and resubmit";
                 return View();
             }
         }
 
         public ActionResult CreateMultipleChoice(int pollid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewData["id"] = pollid;
             return View();
         }
@@ -153,6 +228,12 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateMultipleChoice(String num,int questiontype, String question, int chartstyle, int pollid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             int numInt = 0;
@@ -191,6 +272,11 @@ namespace DBPOLLDemo.Controllers
  
         public ActionResult Edit(int questionid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(new questionModel().getQuestion(questionid));
         }
 
@@ -202,6 +288,10 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int questionid, int questiontype, String question, int chartstyle, int num, DateTime createdat, int pollid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             try
             {

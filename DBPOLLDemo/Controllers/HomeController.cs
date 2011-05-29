@@ -34,6 +34,12 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult About()
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             return View();
         }
 
@@ -44,8 +50,19 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Home(String username)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewData["Message"] = "Welcome "+username;
             return View();
+        }
+
+        public ActionResult LogOff()
+        {
+            Session["uid"] = null;
+            return RedirectToAction("Index", "Home");
         }
 
             

@@ -1,30 +1,30 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLContext.USER>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Login
+	dbPOLL Login
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Login</h2>
+    <h2>Poll Creator Login</h2>
 
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
-    <p><%= Html.Encode(ViewData["Message"]) %></p>
 
     <% using (Html.BeginForm("Login","Index", FormMethod.Post)) {%>
 
         <fieldset>
             <legend>Please Login</legend>
             <p>
-                <label for="USERNAME">USERNAME:</label>
+                <label for="USERNAME">Username:</label>
                 <%= Html.TextBox("USERNAME") %>
                 <%= Html.ValidationMessage("USERNAME", "*") %>
             </p>
             <p>
-                <label for="PASSWORD">PASSWORD:</label>
+                <label for="PASSWORD">Password:</label>
                 <%= Html.Password("PASSWORD") %>
                 <%= Html.ValidationMessage("PASSWORD", "*") %>
             </p>
+            <p style ="color: Red;"><%= Html.Encode(ViewData["Message"]) %></p>
             <p>
                 <input type="submit" value="Login" />
             </p>

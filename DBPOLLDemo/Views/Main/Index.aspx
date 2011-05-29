@@ -22,8 +22,7 @@
         <tr>
             <td>
                 <%= Html.ActionLink("Delete", "Delete", new {pollid=item.pollID}) %> |
-                <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID, longitude = item.longitude, latitude = item.latitude, createdby = item.createdby, createdat = item.createdAt, expiresat = item.expiresat,  modifiedat = item.modifiedat}) %> |
-                
+                <!-- <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID, longitude = item.longitude, latitude = item.latitude, createdby = item.createdby, createdat = item.createdAt, expiresat = item.expiresat,  modifiedat = item.modifiedat}) %> | -->
                 <%= Html.ActionLink(" View Questions", "Details", new {id=item.pollID, name=item.Name})%>
             </td>
             <td>
@@ -39,7 +38,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create") %>
+        <!--<%= Html.ActionLink("Create New", "Create") %> -->
     </p>
 
 </asp:Content>

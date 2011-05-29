@@ -171,6 +171,7 @@ namespace DBPOLLDemo.Models
         {
             var query = from q in db.QUESTIONs
                         where q.POLLID == poll
+                        orderby q.CREATEDAT ascending
                         select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
 
             return query.ToList();
@@ -180,6 +181,7 @@ namespace DBPOLLDemo.Models
         {
             var query = from q in db.QUESTIONs
                         where q.POLLID == poll && q.CREATEDAT >= start && q.CREATEDAT <= end
+                        orderby q.CREATEDAT ascending
                         select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
 
             return query.ToList();
@@ -191,6 +193,7 @@ namespace DBPOLLDemo.Models
             var query = from q in db.QUESTIONs
                         join p in db.POLLs on q.POLLID equals p.POLLID
                         where p.CREATEDBY == sessionID
+                        orderby q.CREATEDAT ascending
                         select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
 
             return query.ToList();

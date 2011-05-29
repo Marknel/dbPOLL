@@ -13,7 +13,7 @@
     <% using (Html.BeginForm()) {%>
 
         <fieldset>
-            <legend>Fields</legend>
+            <legend>New Question</legend>
             <p>
                 <label for="shortanswertype">Short Answer Type:</label>
                 <select id="shortanswertype" name="shortanswertype">
@@ -26,17 +26,17 @@
                 
             </p>
             <p>
-                <label for="num">Question in sequence:</label>
+                <label for="num">Number of question in sequence:</label>
                 <%= Html.TextBox("num") %>
-                
-                <%= Html.ValidationMessage("num", "*") %>
-            <p>
+            </p>
+            <p style ="color: Red;"><%=ViewData["numerror"]%></p>
             
             <p>
                 <label for="question">Question Text:</label>
                 <%= Html.TextBox("question") %>
                 <%= Html.ValidationMessage("question", "*") %>
             </p>
+            <p style ="color: Red;"><%=ViewData["questionerror"]%></p>
             <p>
                 <label for="chartstyle">Response Chart</label>
                 <select id="chartstyle" name="chartstyle">
@@ -49,6 +49,9 @@
                 
                 <%= Html.ValidationMessage("chartstyle", "*")%>
             </p>
+            <p><%=ViewData["created"]%></p>
+            <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
+            <p>
                 <input type="submit" value="Create Question" />
             </p>
         </fieldset>

@@ -33,7 +33,8 @@
             <td nowrap="nowrap">
                 <%= Html.ActionLink("Delete", "Delete", new { questionid = item.QuestionID, id = ViewData["id"], name = ViewData["name"] })%> |
                 <%= Html.ActionLink("Edit", "Edit", new { questionid = item.QuestionID })%> |
-                <%= Html.ActionLink("View Answers", "Details", new { id = item.QuestionID, name = item.Question })%> 
+                <%= Html.ActionLink("View Answers", "Details", new { id = item.QuestionID, name = item.Question })%> |
+                <%= Html.ActionLink("View objects", "../Object/Index", new { questionid = item.QuestionID})%> 
                 
             </td>
             <td nowrap="nowrap">
@@ -84,7 +85,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create", new { pollid = ViewData["id"], name = ViewData["name"] })%>
+        <%= Html.ActionLink("Create New Question", "Create", new { pollid = ViewData["id"], name = ViewData["name"] })%>
     </p>
 
 </asp:Content>

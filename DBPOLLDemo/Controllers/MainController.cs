@@ -27,11 +27,21 @@ namespace DBPOLLDemo.Controllers
 
             //pollModel p = new pollModel(356672, "advdav", (decimal)76.54, (decimal)2.54, 1, DateTime.Now);
             //p.createPoll();
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
                 return View(new pollModel().displayPolls());
         }
         
         public ActionResult viewPolls()
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(new pollModel().displayPolls());
         }
         [AcceptVerbs(HttpVerbs.Post)]
@@ -43,17 +53,32 @@ namespace DBPOLLDemo.Controllers
 
             bool valid = true;
             DateTime startdate;
-            DateTime enddate;
+            DateTime enddate; 
 
+            
+            
+            
             if (!DateTime.TryParse(date1, out startdate))
             {
-                ViewData["date1"] = "Please Enter a correct Date";
+
+                if(date1 == "" || date1 == null){
+                     ViewData["date1"] = "Above field must contain a date";
+                }else{
+                    ViewData["date1"] = "Please Enter a correct Date";
+                }
                 valid = false;
             }
 
             if (!DateTime.TryParse(date2, out enddate))
             {
-                ViewData["date2"] = "Please Enter a correct Date";
+                if (date1 == "" || date1 == null)
+                {
+                    ViewData["date2"] = "Above field must contain a date";
+                }
+                else
+                {
+                    ViewData["date2"] = "Please Enter a correct Date";
+                }
                 valid = false;
             }
             if (valid == true)
@@ -72,8 +97,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Delete(int pollid)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             pollModel poll = new pollModel(pollid);
             poll.deletePoll();
+
             return RedirectToAction("Index", "Main");
         }
 
@@ -81,6 +112,12 @@ namespace DBPOLLDemo.Controllers
         // GET: /Main/pollDetails/5
         public ActionResult Details(int id, String name)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             return RedirectToAction("../Question/Index/" + id.ToString() + "?name=" + name);
         }
 
@@ -90,6 +127,12 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult answerDetails(int id, String name)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             ViewData["name"] = name;
 
                 //return View(new answerModel().displayAnswers(id));
@@ -101,7 +144,10 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Create()
         {
-
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View();
         } 
@@ -112,6 +158,11 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(FormCollection collection)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             try
             {
                 // TODO: Add insert logic here
@@ -129,6 +180,11 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Edit(int id, String name, float longitude, float latitude, int createdby, DateTime createdat)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
 
             //ViewData["name"] = name;
             ViewData["id"] = id;
@@ -146,6 +202,11 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int pollid, String pollname, float longitude, float latitude, int createdby, DateTime createdat, DateTime expiresat, DateTime modifiedat, int test)
         {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
