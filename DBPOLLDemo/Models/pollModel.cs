@@ -65,6 +65,11 @@ namespace DBPOLL.Models
         
         public pollModel(int pollid, String name)
         {
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
             poll.POLLID = this.pollid = pollid;
             poll.POLLNAME = this.pollname = name;
         }
@@ -108,6 +113,11 @@ namespace DBPOLL.Models
             {
                 
             }
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from u in db.POLLs
@@ -122,6 +132,11 @@ namespace DBPOLL.Models
             {
 
             }
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from u in db.POLLs
@@ -132,6 +147,11 @@ namespace DBPOLL.Models
 
         public List<pollModel> displayPolls(DateTime start, DateTime end)
         {
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from u in db.POLLs

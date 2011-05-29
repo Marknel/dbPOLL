@@ -55,22 +55,28 @@ namespace DBPOLLDemo.Controllers
             DateTime startdate;
             DateTime enddate; 
 
-            
-            
-            
             if (!DateTime.TryParse(date1, out startdate))
             {
 
-                if(date1 == "" || date1 == null){
-                     ViewData["date1"] = "Above field must contain a date";
-                }else{
+                if (date1 == "" || date1 == null)
+                {
+                    ViewData["date1"] = "Above field must contain a date";
+                }
+                else
+                {
                     ViewData["date1"] = "Please Enter a correct Date";
                 }
+                valid = false;
+            }
+            if (startdate > DateTime.Now)
+            {
+                ViewData["date1"] = "Date incorrectly in the future.";
                 valid = false;
             }
 
             if (!DateTime.TryParse(date2, out enddate))
             {
+                
                 if (date1 == "" || date1 == null)
                 {
                     ViewData["date2"] = "Above field must contain a date";
@@ -81,6 +87,18 @@ namespace DBPOLLDemo.Controllers
                 }
                 valid = false;
             }
+            if (enddate > DateTime.Now)
+            {
+                ViewData["date2"] = "Date incorrectly in the future.";
+                valid = false;
+            }
+
+            if (enddate > startdate)
+            {
+                ViewData["date2"] = "Date needs to be after start date";
+                valid = false;
+            }
+
             if (valid == true)
             {
                 return View(new pollModel().displayPolls(startdate, enddate));
