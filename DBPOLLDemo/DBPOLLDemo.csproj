@@ -99,6 +99,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Views\Answer\Create.aspx" />
+    <Content Include="Views\Answer\Edit.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Main\answerDetails.aspx" />

@@ -28,7 +28,7 @@ namespace DBPOLLDemo.Controllers
             }
 
             ViewData["name"] = name;
-            ViewData["id"] = id;
+            ViewData["questionid"] = id;
 
             return View(new answerModel().displayAnswers(id));
         }
@@ -68,6 +68,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             ViewData["name"] = name;
             ViewData["questionid"] = questionid;
             return View();
@@ -77,57 +78,110 @@ namespace DBPOLLDemo.Controllers
         // POST: /Answer/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(String answer, int correct, String weight, int questionid)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+            bool errorspresent = false;
+            int weightInt = 0;
 
 
-            try
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+
+            int maxAns = new answerModel().getMaxID();
+
+            if (!int.TryParse(weight, out weightInt) || weight == null)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                ViewData["weighterror"] = "Above field must contain a number!";
+                errorspresent = true;
             }
-            catch
+
+            if (answer == null)
             {
+                ViewData["answererror"] = "Above field must contain an answer!";
+                errorspresent = true;
+            }
+
+            if (errorspresent == false)
+            {
+
+                try
+                {
+                    // TODO: Add insert logic here
+                    answerModel a = new answerModel((maxAns + 1), answer, correct, weightInt, DateTime.Now, questionid);
+                    a.createAnswer();
+
+                    ViewData["created"] = "Created Answer: " + a.answer;
+
+                    ViewData["questionid"] = questionid;
+                    return View();
+                }
+                catch (Exception e)
+                {
+                    ViewData["error1"] = "!ERROR: " + e.Message;
+                    ViewData["questionid"] = questionid;
+                    return View();
+                }
+            }
+            else
+            {
+                // We have errors. sent to user posthaste!
+                ViewData["mastererror"] = "There are errors marked in the form. Please correct these and resubmit";
+                ViewData["questionid"] = questionid;
                 return View();
             }
         }
 
         //
         // GET: /Answer/Edit/5
- 
-        public ActionResult Edit(int id)
+
+        public ActionResult Edit(int answerid, int questionid)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-
-
-            return View();
+            ViewData["questionid"] = questionid;
+            return View(new answerModel().getAnswer(answerid));
         }
 
         //
         // POST: /Answer/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int answerid, String answer, int correct, String weight,DateTime createdat, int questionid)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+            int weightInt = 0;
+            if (!int.TryParse(weight, out weightInt) || weight == null)
+            {
+                ViewData["weighterror"] = "Above field must contain a number!";
+                //errorspresent = true;
+            }
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+
+            int maxAns = new answerModel().getMaxID();
+
+            answerModel oldanswer = new answerModel(answerid);
+            oldanswer.deleteAnswer();
+            answerModel newanswer = new answerModel(answerid, answer, correct, weightInt, createdat, DateTime.Now, questionid);
+            newanswer.createAnswer();
+
 
 
             try
             {
                 // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "Answer", new { id = questionid });
             }
             catch
             {

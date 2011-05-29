@@ -16,14 +16,16 @@ namespace DBPOLLDemo.Models
 {
     public class answerModel
     {
-        private int answerid;
-	    private String answer;
-	    private int correct;
-	    private int weight;
-	    private int ansnum;
-	    private int updatedto;
-        private DateTime createdat;
-        private DBPOLLDataContext db = new DBPOLLDataContext();
+        public int answerid;
+        public String answer;
+	    public int correct;
+        public int weight;
+        public int ansnum;
+        public int updatedto;
+        public DateTime createdat;
+        public DateTime modifiedat;
+        public int questionid;
+        public DBPOLLDataContext db = new DBPOLLDataContext();
         ANSWER a = new ANSWER();
 
         //Properties for getters/setters
@@ -41,18 +43,77 @@ namespace DBPOLLDemo.Models
             a.NUM = this.ansnum = ansnum;
             a.UPDATEDTO = this.updatedto;
             a.CREATEDAT = this.createdat;
+           
         }
 
-        public answerModel(int answerid, Nullable<int> ansnum, String answer)
+        public answerModel(int answerid, String ansnum, String answer)
         {
-            this.answerid = answerid;
-            if (ansnum != null)
-            {
-                this.ansnum = ansnum.Value;
-            }
-            this.answer = answer;
+            int ansnumber = 0;
+            a.ANSWERID = this.answerid = answerid;
+
+
+
+            try { ansnumber = int.Parse(ansnum); }
+            catch { ansnumber = 0; };
+            a.NUM = this.ansnum = ansnumber;
+
+            a.ANSWER1 = this.answer = answer;
 
         }
+
+        public answerModel(int answerid, String ansnum, String answer, String correct,String weight, String updatedto, DateTime createdat)
+        {
+            int ansnumber = 0;
+            int correctnumber = 0;
+            int updatedtonum = 0;
+            int weightnum = 0;
+
+            a.ANSWERID = this.answerid = answerid;
+
+            try { ansnumber = int.Parse(ansnum); }
+            catch { ansnumber = 0; };
+            a.NUM = this.ansnum = ansnumber;
+
+            a.ANSWER1 = this.answer = answer;
+
+            try { correctnumber = int.Parse(correct); }
+            catch { correctnumber = 0; };
+            a.CORRECT = this.correct = correctnumber;
+
+            try { weightnum = int.Parse(weight); }
+            catch { weightnum = 0; };
+            a.WEIGHT = this.weight = weightnum;
+
+            try { updatedtonum = int.Parse(updatedto); }
+            catch { updatedtonum = 0; };
+            a.UPDATEDTO = this.updatedto = updatedtonum;
+
+            a.CREATEDAT = this.createdat = createdat;
+
+        }
+
+        public answerModel(int answerid, String answer, int correct, int weight, DateTime createdat, DateTime modifiedat, int questionid)
+        {
+            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER1 = this.answer = answer;
+            a.CORRECT = this.correct = correct;
+            a.CREATEDAT = this.createdat = createdat;
+            a.MODIFIEDAT = this.modifiedat = modifiedat;
+            a.WEIGHT = this.weight = weight;
+            a.QUESTIONID = this.questionid = questionid;
+        }
+
+        public answerModel(int answerid, String answer, int correct, int weight, DateTime createdat, int questionid)
+        {
+            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER1 = this.answer = answer;
+            a.CORRECT = this.correct = correct;
+            a.CREATEDAT = this.createdat = createdat;
+            a.MODIFIEDAT = this.modifiedat = modifiedat;
+            a.WEIGHT = this.weight = weight;
+            a.QUESTIONID = this.questionid = questionid;
+        }
+
 
         public answerModel(int answerid)
         {
@@ -68,21 +129,46 @@ namespace DBPOLLDemo.Models
         {
             var query = from a in db.ANSWERs
                         where a.QUESTIONID == questId
-                        select new answerModel(a.ANSWERID, a.NUM, a.ANSWER1);
+                        orderby a.QUESTIONID descending
+                        select new answerModel(a.ANSWERID, a.NUM.ToString(), a.ANSWER1, a.CORRECT.ToString(),a.WEIGHT.ToString(), a.UPDATEDTO.ToString(), a.CREATEDAT);
             
             return query.ToList();
         }
 
-        public void createAnswer(POLL poll)
+        public answerModel getAnswer(int answerid)
+        {
+            var query = from a in db.ANSWERs
+                        where a.ANSWERID == answerid
+                        select new answerModel(a.ANSWERID, a.NUM.ToString(), a.ANSWER1, a.CORRECT.ToString(), a.WEIGHT.ToString(), a.UPDATEDTO.ToString(), a.CREATEDAT);
+
+            return query.First();
+        }
+
+        public int getMaxID()
+        {
+            int query = (from a in db.ANSWERs
+                         select a.ANSWERID).Max();
+
+            return query;
+        }
+
+        public void createAnswer()
         {
             db.ANSWERs.InsertOnSubmit(a);
             db.SubmitChanges();
         }
 
         public void updateAnswer() {
-            db.SubmitChanges();
+            try
+            {
+                db.ANSWERs.InsertOnSubmit(a);
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
         }
-
         public void deleteAnswer() {
             db.ANSWERs.Attach(a);
             db.ANSWERs.DeleteOnSubmit(a);

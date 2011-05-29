@@ -166,7 +166,6 @@ namespace DBPOLLDemo.Controllers
             int numInt = 0;
             ViewData["id"] = pollid;
             bool errorspresent = false;
-            int result = 0;
 
             //returns the max question ID in the questions table
             int maxqid = new questionModel().getMaxID();
@@ -228,6 +227,7 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateMultipleChoice(String num,int questiontype, String question, int chartstyle, int pollid)
         {
+            bool errorspresent = false;
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -241,28 +241,43 @@ namespace DBPOLLDemo.Controllers
             //returns the max question ID in the questions table
             int maxqid = new questionModel().getMaxID();
 
-            try
+            if (question == null)
             {
-                //converts user num into string
-                numInt = int.Parse(num);
-            }
-            catch
-            {
-                //Not an int. do not insert and throw view error to user. 
+                ViewData["questionerror"] = "Above field must contain a question!";
+                errorspresent = true;
             }
 
-            try
-            {
-                questionModel q = new questionModel((maxqid + 1), questiontype, numInt, question, chartstyle, DateTime.Now, pollid);
-                q.createQuestion();
+            if(errorspresent == false)
+                {
+                try
+                {
+                    //converts user num into string
+                    numInt = int.Parse(num);
+                }
+                catch
+                {
+                    //Not an int. do not insert and throw view error to user. 
+                }
 
-                ViewData["error1"] = "! DONE! " + q.Question;
-                ViewData["id"] = pollid;
-                return View();
+                try
+                {
+                    questionModel q = new questionModel((maxqid + 1), questiontype, numInt, question, chartstyle, DateTime.Now, pollid);
+                    q.createQuestion();
+
+                    ViewData["id"] = pollid;
+                    ViewData["created"] = "Created Question: " + q.Question;
+                    return View();
+                }
+                catch (Exception e)
+                {
+                    ViewData["error1"] = "!ERROR: " + e.Message;
+                    return View();
+                }
             }
-            catch (Exception e)
+            else
             {
-                ViewData["error1"] = "!ERROR: " + e.Message;
+                // We have errors. sent to user posthaste!
+                ViewData["mastererror"] = "There are errors marked in the form. Please correct these and resubmit";
                 return View();
             }
         }
@@ -292,6 +307,9 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
 
             try
             {

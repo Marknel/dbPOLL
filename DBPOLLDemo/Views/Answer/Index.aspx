@@ -11,23 +11,36 @@
     <table>
         <tr>
             <th>Actions</th>
-            <th>Answer Number</th>
             <th>Answer</th>
+            <th>Weight</th>
+            <th>Correct</th>
+            <th>Updated To</th>
         </tr>
 
     <% foreach (var item in Model) { %>
     
         <tr>
             <td><%= Html.ActionLink("Delete", "Delete", new { answerid = item.AnswerID, id = ViewData["id"], name = ViewData["name"] })%> |
-                <%= Html.ActionLink("Edit", "Edit", new { questionid = ViewData["id"] })%> |
-                <%= Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })%>
+                <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%> |
             
             </td>
-            <td>
-                <%= Html.Encode(String.Format("{0}", item.AnswerNumber)) %>
-            </td>
+            
             <td>
                 <%= Html.Encode(item.Answer) %>
+            </td>
+            
+            <td>
+                <%= Html.Encode(item.weight) %>
+            </td>
+            
+            <td><%String correct;
+                  if (item.correct == 0) { correct = ""; }
+                  else { correct = "Yes"; }
+            %>
+                <%= Html.Encode(correct)%>
+            </td>
+            <td>
+                <%= Html.Encode(item.updatedto) %>
             </td>
             
         </tr>

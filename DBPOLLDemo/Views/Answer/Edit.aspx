@@ -1,51 +1,51 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLContext.ANSWER>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.answerModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Create
+	Edit
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Create</h2>
+    <h2>Edit</h2>
 
-    <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
+    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
 
     <% using (Html.BeginForm()) {%>
 
         <fieldset>
-            <legend>Create Answer</legend>
+            <legend>Edit Answer</legend>
             <p>
                 <label for="answer">Answer Text:</label>
-                <%= Html.TextBox("answer")%>
-                <%= Html.ValidationMessage("answer", "*")%>
+                 <%= Html.TextBox("answer", Model.answer) %>
+                <%= Html.ValidationMessage("ANSWER1", "*") %>
             </p>
             <p style ="color: Red;"><%=ViewData["answererror"]%></p>
+            <%=Html.Hidden("questionid", ViewData["questionid"])%>
+             <%=Html.Hidden("answerid", Model.answerid)%>
+             <%=Html.Hidden("createdat", Model.createdat)%>
             <p>
-                <label for="correct">Correct Answer:</label>
+               <label for="correct">Correct Answer:</label>
                 <select id="correct" name="correct">
                 <option value="0">No</option>
                 <option value="1">yes</option>
                 </select>
-                <%= Html.ValidationMessage("correct", "*")%>
-                <%=Html.Hidden("questionid", ViewData["questionid"])%>
             </p>
             <p>
                 <label for="weight">Answer Weight:</label>
-                <%= Html.TextBox("weight")%>
+                <%= Html.TextBox("weight", Model.weight)%>
                 <%= Html.ValidationMessage("weight", "*")%>
             </p>
-            <p style ="color: Red;"><%=ViewData["weighterror"]%></p>
             <p><%=ViewData["created"]%></p>
             <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
             <p>
-                <input type="submit" value="Create" />
+                <input type="submit" value="Save" />
             </p>
         </fieldset>
 
     <% } %>
 
     <div>
-        <%=Html.ActionLink("Back to Answer List", "Index", new { id = ViewData["questionid"]})%>
+        <%=Html.ActionLink("Back to List", "Index") %>
     </div>
 
 </asp:Content>

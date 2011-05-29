@@ -38,6 +38,7 @@
                 <%= Html.TextBox("question")%>
                 <%= Html.ValidationMessage("question", "*")%>
             </p>
+            <p style ="color: Red;"><%=ViewData["questionerror"]%></p>
             <p>
                 <label for="chartstyle">Response Chart</label>
                 <select id="chartstyle" name="chartstyle">
@@ -49,7 +50,8 @@
   
                 <%= Html.ValidationMessage("chartstyle", "*")%>
             </p>
-            
+            <p><%=ViewData["created"]%></p>
+            <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
                 <input type="submit" value="Create Question" />
             </p>
         </fieldset>
