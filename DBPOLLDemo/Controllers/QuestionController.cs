@@ -86,14 +86,16 @@ namespace DBPOLLDemo.Controllers
 
         //
         // GET: /Question/Create
-        public ActionResult Create(int pollid)
+        public ActionResult Create(int pollid, String name)
         {
+            ViewData["name"] = name;
             ViewData["id"] = pollid;
             return View();
         } 
 
-        public ActionResult CreateShortAnswer()
+        public ActionResult CreateShortAnswer(int pollid)
         {
+            ViewData["id"] = pollid;
             return View();
         } 
 
@@ -106,29 +108,42 @@ namespace DBPOLLDemo.Controllers
             // Allows insertion of aussie dates
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
+            int numInt = 0;
 
             //returns the max question ID in the questions table
             int maxqid = new questionModel().getMaxID();
+
+            try
+            {
+                numInt = int.Parse(num);
+            }
+            catch
+            {
+                //Not an int. do not insert and throw view error to user. 
+            }
             
             try
             {
                 //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
-                questionModel q = new questionModel((maxqid + 1), 1, question, DateTime.Now, pollid);
+                questionModel q = new questionModel((maxqid + 1), shortanswertype, numInt, question,chartstyle, DateTime.Now, pollid);
                 q.createQuestion();
 
                 ViewData["error1"] = "! DONE! " + q.Question;
+                ViewData["id"] = pollid;
                 return View();
                 //return RedirectToAction("Index/"+pollid);
             }
             catch (Exception e)
             {
                 ViewData["error1"] = "!ERROR: "+e.Message;
+                ViewData["id"] = pollid;
                 return View();
             }
         }
 
-        public ActionResult CreateMultipleChoice()
+        public ActionResult CreateMultipleChoice(int pollid)
         {
+            ViewData["id"] = pollid;
             return View();
         }
 
@@ -136,23 +151,33 @@ namespace DBPOLLDemo.Controllers
         // POST: /Question/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateMultipleChoice(FormCollection collection)
+        public ActionResult CreateMultipleChoice(String num,int questiontype, String question, int chartstyle, int pollid)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
+            int numInt = 0;
 
+            //returns the max question ID in the questions table
+            int maxqid = new questionModel().getMaxID();
 
             try
             {
-                // TODO: Add insert logic here
+                //converts user num into string
+                numInt = int.Parse(num);
+            }
+            catch
+            {
+                //Not an int. do not insert and throw view error to user. 
+            }
 
-                questionModel q = new questionModel(213, 2, "How many are in the room2?", DateTime.Now, 2);
+            try
+            {
+                questionModel q = new questionModel((maxqid + 1), questiontype, numInt, question, chartstyle, DateTime.Now, pollid);
                 q.createQuestion();
 
                 ViewData["error1"] = "! DONE! " + q.Question;
+                ViewData["id"] = pollid;
                 return View();
-
-                //return RedirectToAction("Index/"+2);
             }
             catch (Exception e)
             {

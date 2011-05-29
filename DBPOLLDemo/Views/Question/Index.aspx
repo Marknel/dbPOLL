@@ -32,7 +32,7 @@
         <tr>
             <td nowrap="nowrap">
                 <%= Html.ActionLink("Delete", "Delete", new { questionid = item.QuestionID, id = ViewData["id"], name = ViewData["name"] })%> |
-                <%= Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) %> |
+                <%= Html.ActionLink("Edit", "Edit", new { questionid = item.QuestionID })%> |
                 <%= Html.ActionLink("View Answers", "Details", new { id = item.QuestionID, name = item.Question })%> 
                 
             </td>
@@ -43,9 +43,34 @@
                 <%= Html.Encode(item.Question) %>
             </td>
             <td nowrap="nowrap">
-                <%  string test;
-                if(item.QuestionType == 1){test = "Multiple Choice";}else{test = "Short Answer";}%>
-                 <%=Html.Encode(test) %>
+                <%  
+                string test;
+                switch(item.QuestionType)       
+                  {         
+                     case 1:   
+                        test = "Short Answer: Numeric Responses Only";
+                        break;                  
+                     case 2:            
+                        test = "Short Answer: Alphanumeric Responses Only";
+                        break;           
+                     case 3:            
+                        test = "Multiple Choice: Standard";
+                        break; 
+                     case 4:            
+                        test = "Multiple Choice: Demographic";
+                        break;   
+                     case 5:            
+                        test = "Multiple Choice: Comparative";
+                        break;  
+                     case 6:            
+                        test = "Multiple Choice: Ranking";
+                        break;         
+                     default:            
+                        test ="";         
+                        break;      
+                   }
+           %>
+                 <%=Html.Encode(test)%>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(String.Format("{0:g}", item.QuestionCreated)) %>
@@ -59,7 +84,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create", new { pollid = ViewData["id"] })%>
+        <%= Html.ActionLink("Create New", "Create", new { pollid = ViewData["id"], name = ViewData["name"] })%>
     </p>
 
 </asp:Content>

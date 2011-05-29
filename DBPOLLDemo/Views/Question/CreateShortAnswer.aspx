@@ -22,11 +22,13 @@
                 </select>
                 
                 <%= Html.ValidationMessage("shortanswertype", "*")%>
+                <%=Html.Hidden("pollid", ViewData["id"])%>
                 
             </p>
             <p>
                 <label for="num">Question in sequence:</label>
                 <%= Html.TextBox("num") %>
+                
                 <%= Html.ValidationMessage("num", "*") %>
             <p>
             
@@ -54,7 +56,7 @@
     <% } %>
 
     <div>
-        <%=Html.ActionLink("Back to Question List", "Index", new { pollid = ViewData["id"] }) %>
+        <%=Html.ActionLink("Back to Question List", "Index", new { id = ViewData["id"] }) %>
     </div>
 
 </asp:Content>

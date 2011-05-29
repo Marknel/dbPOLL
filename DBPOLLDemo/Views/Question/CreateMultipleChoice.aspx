@@ -15,32 +15,32 @@
         <fieldset>
             <legend>Fields</legend>
             <p>
-                <label for="Question Type">QUESTIONTYPE:</label>
-                <select id="QUESTIONTYPE" name="QUESTIONTYPE">
-                <option value="2">Multiple Choice</option>
-                <option value="3">Demographic</option>
-                <option value="4">Comparative</option>
-                <option value="5">Ranking</option>
+                <label for="questiontype">Multiple Choice Type:</label>
+                <select id="questiontype" name="questiontype">
+                <option value="3">Standard</option>
+                <option value="4">Demographic</option>
+                <option value="5">Comparative</option>
+                <option value="6">Ranking</option>
                 </select>
                 
-                <%= Html.ValidationMessage("QUESTIONTYPE", "*") %>
+                <%= Html.ValidationMessage("questiontype", "*")%>
                 
             </p>
             
             <p>
-                <label for="NUM">Question in sequence:</label>
-                <%= Html.TextBox("NUM") %>
-                <%= Html.ValidationMessage("NUM", "*") %>
+                <label for="num">Question in sequence:</label>
+                <%= Html.TextBox("num")%>
+                <%= Html.ValidationMessage("num", "*")%>
             <p>
             
             <p>
-                <label for="QUESTION1">Question Text:</label>
-                <%= Html.TextBox("QUESTION1") %>
-                <%= Html.ValidationMessage("QUESTION1", "*") %>
+                <label for="question">Question Text:</label>
+                <%= Html.TextBox("question")%>
+                <%= Html.ValidationMessage("question", "*")%>
             </p>
             <p>
-                <label for="CHARTSTYLE">Response Chart</label>
-                <select id="CHARTSTYLE" name="CHARTSTYLE">
+                <label for="chartstyle">Response Chart</label>
+                <select id="chartstyle" name="chartstyle">
                 <option value="">(Select one)</option>
                 <option value="1">Horizontal Bar Graph</option>
                 <option value="2">Vertical Bar Graph</option>
@@ -48,7 +48,7 @@
                 <option value="4">Pie Chart</option>
                 </select>
   
-                <%= Html.ValidationMessage("CHARTSTYLE", "*") %>
+                <%= Html.ValidationMessage("chartstyle", "*")%>
             </p>
             
                 <input type="submit" value="Create Question" />
@@ -58,7 +58,7 @@
     <% } %>
 
     <div>
-        <%=Html.ActionLink("Back to Question List", "Index", new { pollid = ViewData["id"] })%>
+         <%=Html.ActionLink("Back to Question List", "Index", new { id = ViewData["id"] }) %>
     </div>
 
 </asp:Content>

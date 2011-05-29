@@ -74,6 +74,24 @@ namespace DBPOLLDemo.Models
 
         }
 
+        //Question contructor for short answer questions! WILL NOT WORK FOR MULTIPLE CHOICE!!
+        public questionModel(int qid, int questiontype, int questnum, String question, int chartstyle, DateTime createdat, int pollid)
+        {
+            q.QUESTIONID = this.questionid = qid;
+            q.QUESTIONTYPE = this.questiontype = questiontype;
+            q.QUESTION1 = this.question = question;
+            q.CHARTSTYLE = this.chartstyle = chartstyle;
+            // IF question is short answer we will need to set type. BORK BORK BORK
+            if (questiontype <= 2)
+            {
+                q.SHORTANSWERTYPE = this.shortanswertype = questiontype;
+            }
+            q.NUM = this.questnum = questnum;
+            q.CREATEDAT = this.createdat = createdat;
+            q.POLLID = this.pollid = pollid;
+
+        }
+
         public questionModel(int pollid, int qid, String question, int questiontype, DateTime createdat, int questnum) {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
