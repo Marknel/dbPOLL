@@ -41,7 +41,6 @@
             <p>
                 <label for="chartstyle">Response Chart</label>
                 <select id="chartstyle" name="chartstyle">
-                <option value="">(Select one)</option>
                 <option value="1">Horizontal Bar Graph</option>
                 <option value="2">Vertical Bar Graph</option>
                 <option value="3">Line Graph</option>

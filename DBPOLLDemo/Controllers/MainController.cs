@@ -130,7 +130,7 @@ namespace DBPOLLDemo.Controllers
         public ActionResult Edit(int id, String name, float longitude, float latitude, int createdby, DateTime createdat)
         {
 
-            ViewData["name"] = name;
+            //ViewData["name"] = name;
             ViewData["id"] = id;
             ViewData["longitude"] = longitude;
             ViewData["latitude"] = latitude;

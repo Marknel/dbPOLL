@@ -20,16 +20,16 @@ namespace DBPOLLDemo.Models
     public class questionModel : System.Web.UI.Page
     {
         private QUESTION q = new QUESTION();
-        private int questionid;
-        private int questiontype;
-        private String question;
-        private int numberofresponses;
-        private int chartstyle;
-        private int shortanswertype;
-        private int questnum;
-        private DateTime createdat;
-        private DateTime modifiedat;
-        private int pollid;
+        public int questionid;
+        public int questiontype;
+        public String question;
+        public int numberofresponses;
+        public int chartstyle;
+        public int shortanswertype;
+        public int questnum;
+        public DateTime createdat;
+        public DateTime modifiedat;
+        public int pollid;
 
         public String Question { get { return question; } }
         public DateTime QuestionCreated { get { return createdat; } }
@@ -118,6 +118,53 @@ namespace DBPOLLDemo.Models
             q.CREATEDAT = this.createdat = createdat;
             //q.NUM = this.questnum = questnum;
         }
+        
+
+        //Used for getting question for editing
+        public questionModel(int qid, int questiontype, String question, String chartstyle, String questnum, DateTime createdat, int pollid)
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+            int chart = 0;
+            int qnum = 0;
+
+
+            q.QUESTIONID = this.questionid = qid;
+            q.QUESTIONTYPE = this.questiontype = questiontype;
+            q.QUESTION1 = this.question = question;
+
+            try { chart = int.Parse(chartstyle); }
+            catch { chart = 0; };
+            q.CHARTSTYLE = this.chartstyle = chart;
+
+            try { qnum = int.Parse(questnum); }
+            catch { qnum = 0; };
+            q.NUM = this.questnum = qnum;
+
+            q.CREATEDAT = this.createdat = createdat;
+            q.POLLID = this.pollid = pollid;
+        }
+
+        public questionModel(int qid, int questiontype, String question, int chartstyle, int questnum, DateTime createdat, DateTime editedat, int pollid)
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+           
+
+
+            q.QUESTIONID = this.questionid = qid;
+            q.QUESTIONTYPE = this.questiontype = questiontype;
+            q.QUESTION1 = this.question = question;
+            q.CHARTSTYLE = this.chartstyle = chartstyle;
+            q.NUM = this.questnum = questnum;
+            q.MODIFIEDAT = this.modifiedat = editedat;
+            q.CREATEDAT = this.createdat = createdat;
+            q.POLLID = this.pollid = pollid;
+        }
+
+
 
         // Retrieves Question relating to a specified poll
         public List<questionModel> displayQuestions(int poll)
@@ -147,6 +194,18 @@ namespace DBPOLLDemo.Models
                         select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
 
             return query.ToList();
+        }
+
+
+
+
+        public questionModel getQuestion(int quid)
+        {
+            var query = from q in db.QUESTIONs
+                         where q.QUESTIONID == quid
+                                  select new questionModel(q.QUESTIONID, q.QUESTIONTYPE, q.QUESTION1, q.CHARTSTYLE.ToString(), q.NUM.ToString(), q.CREATEDAT, q.POLLID);
+
+            return query.First();
         }
 
         public int getMaxID()

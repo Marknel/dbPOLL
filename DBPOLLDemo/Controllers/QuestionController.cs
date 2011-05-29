@@ -189,24 +189,32 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Question/Edit/5
  
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int questionid)
         {
-            return View();
+            return View(new questionModel().getQuestion(questionid));
         }
 
         //
         // POST: /Question/Edit/5
 
+        //qid x, questiontype, question, chart, short answer type (if short answer), qnum, created_at x, edited at x, pollid x, 
+
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int questionid, int questiontype, String question, int chartstyle, int num, DateTime createdat, int pollid)
         {
 
             try
             {
+                questionModel oldquest = new questionModel(questionid);
+                oldquest.deleteQuestion();
+
+                questionModel newquest = new questionModel(questionid, questiontype, question, chartstyle, num, createdat, DateTime.Now, pollid);
+                newquest.createQuestion();
                 
                 // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
+                ViewData["quest"] = question;
+                
+                return View(new questionModel().getQuestion(questionid));
             }
             catch
             {

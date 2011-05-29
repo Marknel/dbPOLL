@@ -35,7 +35,7 @@
                 
                 <%= Html.Hidden("CREATEDAT", ViewData["createdat"])%>
                 
-                <%= Html.TextBox("POLLNAME", ViewData["name"]) %>
+                <%= Html.TextBox("pollname") %>
                 <%= Html.ValidationMessage("POLLNAME", "*") %>
             </p>
             <p>

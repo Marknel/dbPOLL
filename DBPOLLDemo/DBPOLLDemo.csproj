@@ -107,6 +107,7 @@
     <Content Include="Views\Question\Create.aspx" />
     <Content Include="Views\Question\CreateMultipleChoice.aspx" />
     <Content Include="Views\Question\CreateShortAnswer.aspx" />
+    <Content Include="Views\Question\Edit.aspx" />
     <Content Include="Views\Question\Index.aspx" />
     <Content Include="Views\Question\viewQuestions.aspx" />
     <Content Include="Web.config" />
