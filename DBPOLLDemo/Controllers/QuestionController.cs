@@ -106,7 +106,7 @@ namespace DBPOLLDemo.Controllers
                 valid = false;
             }
 
-            if (enddate > startdate)
+            if (enddate < startdate)
             {
                 ViewData["date2"] = "End date needs to be after start date";
                 valid = false;

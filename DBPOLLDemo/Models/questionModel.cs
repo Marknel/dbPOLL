@@ -179,12 +179,25 @@ namespace DBPOLLDemo.Models
 
         public List<questionModel> displayQuestions(int poll, DateTime start, DateTime end)
         {
-            var query = from q in db.QUESTIONs
-                        where q.POLLID == poll && q.CREATEDAT >= start && q.CREATEDAT <= end
-                        orderby q.CREATEDAT ascending
-                        select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
+            
+            if (poll == 0)
+            {
+                var query = from q in db.QUESTIONs
+                            where q.CREATEDAT >= start && q.CREATEDAT <= end
+                            orderby q.CREATEDAT ascending
+                            select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
+                return query.ToList();
 
-            return query.ToList();
+            }
+            else
+            {
+                var query = from q in db.QUESTIONs
+                            where q.POLLID == poll && q.CREATEDAT >= start && q.CREATEDAT <= end
+                            orderby q.CREATEDAT ascending
+                            select new questionModel(q.POLLID, q.QUESTIONID, q.QUESTION1, q.QUESTIONTYPE, q.CREATEDAT, q.NUM);
+                return query.ToList();
+            }
+            //return query.ToList();
         }
 
         public List<questionModel> displayAllQuestions()

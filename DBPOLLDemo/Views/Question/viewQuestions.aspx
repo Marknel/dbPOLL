@@ -21,7 +21,7 @@
                     <label for="date2">End Date and Time</label> 
                     <%= Html.TextBox("date2")%><br /> 
                     <%= ViewData["date2"]%>
-                </div
+                </div>
                 </div>
                 <br />
                   <br />
