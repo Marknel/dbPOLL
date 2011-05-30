@@ -44,7 +44,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            objectModel ob = new objectModel(questionid);
+            objectModel ob = new objectModel(objectid);
             ob.deleteObject();
 
             return RedirectToAction("Index", "Object", new { questionid = questionid});

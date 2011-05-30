@@ -9,17 +9,24 @@
     <h2>Questions for Poll: <%= Html.Encode(ViewData["name"]) %></h2>
         <% using (Html.BeginForm("Edit","Edit", FormMethod.Post)) {%>
         <fieldset>
-            <legend>Search by Date and Time (dd/mm/yyyy hh:mm)</legend>
+            <legend>Search by Date and Time (mm/dd/yyyy (mm/dd/yyyy [hh:mm]))</legend>
+             <div>
                 <div style="float:left; padding-right:25px;"> 
                     <label for="date1">Start Date and Time</label> 
                     <%= Html.TextBox("date1")%><br /> 
                     <%= ViewData["date1"]%>
                 </div>
-                <div>
+                
+                <div style="float:left; padding-left:10px;">
                     <label for="date2">End Date and Time</label> 
                     <%= Html.TextBox("date2")%><br /> 
                     <%= ViewData["date2"]%>
+                </div
                 </div>
+                <br />
+                  <br />
+                   <br />
+                    <br />
                 <br />
                 <div>
                     <input type="submit" value="Search" />

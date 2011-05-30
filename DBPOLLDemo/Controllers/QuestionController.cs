@@ -74,11 +74,6 @@ namespace DBPOLLDemo.Controllers
                 }
                 valid = false;
             }
-            if (startdate > DateTime.Now)
-            {
-                ViewData["date1"] = "Date incorrectly in the future.";
-                valid = false;
-            }
 
             if (!DateTime.TryParse(date2, out enddate))
             {
@@ -93,6 +88,18 @@ namespace DBPOLLDemo.Controllers
                 }
                 valid = false;
             }
+
+            if (valid == false)
+            {
+                return View(new questionModel().displayQuestions(pollid));
+            }
+
+            if (startdate > DateTime.Now)
+            {
+                ViewData["date1"] = "Date incorrectly in the future.";
+                valid = false;
+            }
+
             if (enddate > DateTime.Now)
             {
                 ViewData["date2"] = "Date incorrectly in the future.";
@@ -101,7 +108,7 @@ namespace DBPOLLDemo.Controllers
 
             if (enddate > startdate)
             {
-                ViewData["date2"] = "Date needs to be after start date";
+                ViewData["date2"] = "End date needs to be after start date";
                 valid = false;
             }
 

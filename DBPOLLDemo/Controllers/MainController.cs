@@ -23,10 +23,10 @@ namespace DBPOLLDemo.Controllers
             //return View(pollModel.displayPolls(user));
             //return View(db.POLLs.ToList());
             //return View(new pollModel().displayPolls(user));
-           
 
             //pollModel p = new pollModel(356672, "advdav", (decimal)76.54, (decimal)2.54, 1, DateTime.Now);
             //p.createPoll();
+
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -67,11 +67,7 @@ namespace DBPOLLDemo.Controllers
                     ViewData["date1"] = "Please Enter a correct Date";
                 }
                 valid = false;
-            }
-            if (startdate > DateTime.Now)
-            {
-                ViewData["date1"] = "Date incorrectly in the future.";
-                valid = false;
+
             }
 
             if (!DateTime.TryParse(date2, out enddate))
@@ -86,16 +82,29 @@ namespace DBPOLLDemo.Controllers
                     ViewData["date2"] = "Please Enter a correct Date";
                 }
                 valid = false;
+                
             }
+
+            if (valid == false)
+            {
+                return View(new pollModel().displayPolls());
+            }
+
+            if (startdate > DateTime.Now)
+            {
+                ViewData["date1"] = "Date incorrectly in the future.";
+                valid = false;
+            }
+
             if (enddate > DateTime.Now)
             {
                 ViewData["date2"] = "Date incorrectly in the future.";
                 valid = false;
             }
 
-            if (enddate > startdate)
+            if (enddate < startdate)
             {
-                ViewData["date2"] = "Date needs to be after start date";
+                ViewData["date2"] = "End date needs to be after start date";
                 valid = false;
             }
 

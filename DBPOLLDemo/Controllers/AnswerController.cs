@@ -46,7 +46,7 @@ namespace DBPOLLDemo.Controllers
             return View();
         }
 
-        public ActionResult Delete(int answerid, int id, String name)
+        public ActionResult Delete(int answerid, int questionid, String name)
         {
             if (Session["uid"] == null)
             {
@@ -55,7 +55,7 @@ namespace DBPOLLDemo.Controllers
 
             answerModel a = new answerModel(answerid);
             a.deleteAnswer();
-            return RedirectToAction("Index", "Answer", new {id = id, name = name  });
+            return RedirectToAction("Index", "Answer", new {id = questionid, name = name  });
         }
         
 

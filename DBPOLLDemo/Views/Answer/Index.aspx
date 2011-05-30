@@ -20,7 +20,7 @@
     <% foreach (var item in Model) { %>
     
         <tr>
-            <td><%= Html.ActionLink("Delete", "Delete", new { answerid = item.AnswerID, id = ViewData["id"], name = ViewData["name"] })%> |
+            <td><%= Html.ActionLink("Delete", "Delete", new { answerid = item.answerid, questionid = ViewData["questionid"], name = ViewData["name"] })%> |
                 <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%> |
             
             </td>
@@ -50,7 +50,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create", new { questionid = ViewData["id"], name = ViewData["name"] })%>
+        <%= Html.ActionLink("Create New", "Create", new { questionid = ViewData["questionid"], name = ViewData["name"] })%>
     </p>
 
 </asp:Content>
