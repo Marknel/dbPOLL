@@ -10,7 +10,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using DBPOLLContext;
+using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Models
 {
@@ -25,7 +25,8 @@ namespace DBPOLLDemo.Models
         public DateTime createdat;
         public DateTime modifiedat;
         public int questionid;
-        public DBPOLLDataContext db = new DBPOLLDataContext();
+        private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
+
         ANSWER a = new ANSWER();
 
         //Properties for getters/setters
@@ -36,22 +37,20 @@ namespace DBPOLLDemo.Models
 
         public answerModel(int answerid, String answer, int correct, int weight, int ansnum, int updatedto, DateTime createdat)
         {
-            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER_ID = this.answerid = answerid;
             a.ANSWER1 = this.answer = answer;
             a.CORRECT = this.correct = correct;
             a.WEIGHT = this.weight = weight;
             a.NUM = this.ansnum = ansnum;
-            a.UPDATEDTO = this.updatedto;
-            a.CREATEDAT = this.createdat;
+            a.UPDATED_TO = this.updatedto;
+            a.CREATED_AT = this.createdat;
            
         }
 
         public answerModel(int answerid, String ansnum, String answer)
         {
             int ansnumber = 0;
-            a.ANSWERID = this.answerid = answerid;
-
-
+            a.ANSWER_ID = this.answerid = answerid;
 
             try { ansnumber = int.Parse(ansnum); }
             catch { ansnumber = 0; };
@@ -68,7 +67,7 @@ namespace DBPOLLDemo.Models
             int updatedtonum = 0;
             int weightnum = 0;
 
-            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER_ID = this.answerid = answerid;
 
             try { ansnumber = int.Parse(ansnum); }
             catch { ansnumber = 0; };
@@ -86,83 +85,129 @@ namespace DBPOLLDemo.Models
 
             try { updatedtonum = int.Parse(updatedto); }
             catch { updatedtonum = 0; };
-            a.UPDATEDTO = this.updatedto = updatedtonum;
+            a.UPDATED_TO = this.updatedto = updatedtonum;
 
-            a.CREATEDAT = this.createdat = createdat;
+            a.CREATED_AT = this.createdat = createdat;
 
         }
 
+        /// <summary>
+        /// Full Constructor for answerModel
+        /// </summary>
+        /// <param name="answerid"></param>
+        /// <param name="answer"></param>
+        /// <param name="correct"></param>
+        /// <param name="weight"></param>
+        /// <param name="createdat"></param>
+        /// <param name="modifiedat"></param>
+        /// <param name="questionid"></param>
         public answerModel(int answerid, String answer, int correct, int weight, DateTime createdat, DateTime modifiedat, int questionid)
         {
-            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER_ID = this.answerid = answerid;
             a.ANSWER1 = this.answer = answer;
             a.CORRECT = this.correct = correct;
-            a.CREATEDAT = this.createdat = createdat;
-            a.MODIFIEDAT = this.modifiedat = modifiedat;
+            a.CREATED_AT = this.createdat = createdat;
+            a.MODIFIED_AT = this.modifiedat = modifiedat;
             a.WEIGHT = this.weight = weight;
-            a.QUESTIONID = this.questionid = questionid;
+            a.QUESTION_ID = this.questionid = questionid;
         }
 
+        /// <summary>
+        /// Constructor for 5 Argument answer
+        /// </summary>
+        /// <param name="answerid"></param>
+        /// <param name="answer"></param>
+        /// <param name="correct"></param>
+        /// <param name="weight"></param>
+        /// <param name="createdat"></param>
+        /// <param name="questionid"></param>
         public answerModel(int answerid, String answer, int correct, int weight, DateTime createdat, int questionid)
         {
-            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER_ID = this.answerid = answerid;
             a.ANSWER1 = this.answer = answer;
             a.CORRECT = this.correct = correct;
-            a.CREATEDAT = this.createdat = createdat;
-            a.MODIFIEDAT = this.modifiedat = modifiedat;
+            a.CREATED_AT = this.createdat = createdat;
             a.WEIGHT = this.weight = weight;
-            a.QUESTIONID = this.questionid = questionid;
+            a.QUESTION_ID = this.questionid = questionid;
         }
 
 
         public answerModel(int answerid)
         {
-            a.ANSWERID = this.answerid = answerid;
+            a.ANSWER_ID = this.answerid = answerid;
         }
 
         public answerModel()
         {
         }
 
-        // Retrieves Answers relating to a specified Question
+        /// <summary>
+        /// Retrieves ANSWERS relating to a specified Question
+        /// </summary>
+        /// <param name="questId">ID of the question</param>
+        /// <returns>A List of Answers</returns>
         public List<answerModel> displayAnswers(int questId)
         {
-            var query = from a in db.ANSWERs
-                        where a.QUESTIONID == questId
-                        orderby a.QUESTIONID descending
-                        select new answerModel(a.ANSWERID, a.NUM.ToString(), a.ANSWER1, a.CORRECT.ToString(),a.WEIGHT.ToString(), a.UPDATEDTO.ToString(), a.CREATEDAT);
-            
+            var query = from a in dbpollContext.ANSWERS
+                        where a.QUESTION_ID == questId
+                        orderby a.QUESTION_ID descending
+                        select new answerModel
+                        {
+                            answerid = a.ANSWER_ID,
+                            ansnum = (int)a.NUM, 
+                            answer = a.ANSWER1, 
+                            correct = (int)a.CORRECT,
+                            weight = (int)a.WEIGHT, 
+                            updatedto = (int)a.UPDATED_TO, 
+                            createdat = a.CREATED_AT
+                        };
             return query.ToList();
         }
 
+        /// <summary>
+        /// Rereives detailes about a specific answer
+        /// </summary>
+        /// <param name="answerid">ID of the requested answer</param>
+        /// <returns>AnswerModel containing all relevent data</returns>
         public answerModel getAnswer(int answerid)
         {
-            var query = from a in db.ANSWERs
-                        where a.ANSWERID == answerid
-                        select new answerModel(a.ANSWERID, a.NUM.ToString(), a.ANSWER1, a.CORRECT.ToString(), a.WEIGHT.ToString(), a.UPDATEDTO.ToString(), a.CREATEDAT);
+            var query = from a in dbpollContext.ANSWERS
+                        where a.ANSWER_ID == answerid
+                        select new answerModel
+                            {
+                                answerid = a.ANSWER_ID,
+                                ansnum = (int)a.NUM, 
+                                answer = a.ANSWER1, 
+                                correct = (int)a.CORRECT,
+                                weight = (int)a.WEIGHT, 
+                                updatedto = (int)a.UPDATED_TO, 
+                                createdat = a.CREATED_AT
+                            };
 
             return query.First();
         }
 
         public int getMaxID()
         {
-            int query = (from a in db.ANSWERs
-                         select a.ANSWERID).Max();
+            int query = (from a in dbpollContext.ANSWERS
+                         select a.ANSWER_ID).Max();
 
             return query;
         }
 
         public void createAnswer()
         {
-            db.ANSWERs.InsertOnSubmit(a);
-            db.SubmitChanges();
+            // Taken out to test ADO.NET Searching. 
+            //dbpollContext.ANSWERS.InsertOnSubmit(a);
+            //dbpollContext.SubmitChanges();
         }
 
         public void updateAnswer() {
             try
             {
-                db.ANSWERs.InsertOnSubmit(a);
-                db.SubmitChanges();
+                // Taken out to test ADO.NET Searching. 
+                //dbpollContext.ANSWERS.InsertOnSubmit(a);
+                //dbpollContext.SubmitChanges();
             }
             catch (Exception e)
             {
@@ -170,9 +215,10 @@ namespace DBPOLLDemo.Models
             }
         }
         public void deleteAnswer() {
-            db.ANSWERs.Attach(a);
-            db.ANSWERs.DeleteOnSubmit(a);
-            db.SubmitChanges();
+            // Taken out to test ADO.NET Searching. 
+            //dbpollContext.ANSWERS.Attach(a);
+            //dbpollContext.ANSWERS.DeleteOnSubmit(a);
+            //dbpollContext.SubmitChanges();
         }
     }
 }

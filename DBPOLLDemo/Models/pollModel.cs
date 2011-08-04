@@ -10,10 +10,9 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using DBPOLLContext;
-using DBPOLL.Models;
 using System.Threading;
 using System.Globalization;
+using DBPOLLDemo.Models;
 
 namespace DBPOLL.Models
 {
@@ -26,41 +25,41 @@ namespace DBPOLL.Models
         public int createdby;
         public DateTime createdAt;
         public DateTime expiresat;
-        public float longitude;
-        public float latitude;
+        public decimal longitude;
+        public decimal latitude;
 
         //Properties for getters/setters
         public String Name { get { return pollname; } }
         public DateTime CreateDate { get { return createdAt; } }
         public int pollID { get { return (int)pollid; } }
 
-        private DBPOLLDataContext db = new DBPOLLDataContext();
+        private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
 
-        public pollModel(int pollid, String pollName, float longitude, float latitude, int createdBy, Nullable<DateTime> expiresat, DateTime createdAt, Nullable<DateTime> modifiedat)
+        public pollModel(int pollid, String pollName, decimal longitude, decimal latitude, int createdBy, Nullable<DateTime> expiresat, DateTime createdAt, Nullable<DateTime> modifiedat)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
             
-            poll.POLLID = this.pollid = pollid;
-            poll.POLLNAME = this.pollname = pollName;
+            poll.POLL_ID = this.pollid = pollid;
+            poll.POLL_NAME = this.pollname = pollName;
             poll.LATITUDE = this.latitude = latitude;
             poll.LONGITUDE = this.longitude = longitude;
-            poll.CREATEDAT = this.createdAt = createdAt;
+            poll.CREATED_AT = this.createdAt = createdAt;
             if (expiresat != null)
             {
-                poll.EXPIRESAT = this.expiresat = expiresat.Value;
+                poll.EXPIRES_AT = this.expiresat = expiresat.Value;
             }
-            poll.CREATEDBY = this.createdby = createdBy;
+            poll.CREATED_BY = this.createdby = createdBy;
             if (modifiedat != null)
             {
-                poll.MODIFIEDAT = this.modifiedat = modifiedat.Value;
+                poll.MODIFIED_AT = this.modifiedat = modifiedat.Value;
             }
         }
 
         public pollModel(int pollid)
         {
-            poll.POLLID = this.pollid = pollid;
+            poll.POLL_ID = this.pollid = pollid;
         }
         
         public pollModel(int pollid, String name)
@@ -70,8 +69,8 @@ namespace DBPOLL.Models
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
 
-            poll.POLLID = this.pollid = pollid;
-            poll.POLLNAME = this.pollname = name;
+            poll.POLL_ID = this.pollid = pollid;
+            poll.POLL_NAME = this.pollname = name;
         }
         
         public pollModel()
@@ -81,18 +80,18 @@ namespace DBPOLL.Models
 
         //pollModel(356672, "TEST", (decimal)76.54, (decimal)2.54, 1, DateTime.Now);
         
-        public pollModel(int pollid, String pollName, float longitude, float latitude, int createdBy, DateTime createdAt)
+        public pollModel(int pollid, String pollName, decimal longitude, decimal latitude, int createdBy, DateTime createdAt)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
 
-            poll.POLLID = this.pollid = pollid;
-            poll.POLLNAME = this.pollname = pollName;
+            poll.POLL_ID = this.pollid = pollid;
+            poll.POLL_NAME = this.pollname = pollName;
             poll.LATITUDE = this.latitude = latitude;
             poll.LONGITUDE = this.longitude = longitude;
-            poll.CREATEDAT = this.createdAt = createdAt;
-            poll.CREATEDBY = this.createdby = createdBy;
+            poll.CREATED_AT = this.createdAt = createdAt;
+            poll.CREATED_BY = this.createdby = createdBy;
 
         }
 
@@ -107,44 +106,71 @@ namespace DBPOLL.Models
             this.createdAt = createdAt;
         }
 
+        /// <summary>
+        /// Returns all polls in the database which have been created by the searching user.
+        /// </summary>
+        /// <returns>List of polls associated with the user</returns>
         public List<pollModel> displayPolls()
         {
-            if (Session["uid"] == null)
-            {
-                
-            }
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
 
-
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
-            var query = from u in db.POLLs
-                        where u.CREATEDBY == sessionID
-                        select new pollModel(u.POLLID, u.POLLNAME, u.LONGITUDE, u.LATITUDE, u.CREATEDBY, u.EXPIRESAT, u.CREATEDAT, u.MODIFIEDAT);
+            var query = from p in dbpollContext.POLLS
+                        where p.CREATED_BY == sessionID
+                        select new pollModel
+                        {
+                            pollid = p.POLL_ID, 
+                            pollname = p.POLL_NAME, 
+                            longitude = p.LONGITUDE, 
+                            latitude = p.LATITUDE, 
+                            createdby = p.CREATED_BY, 
+                            expiresat = (DateTime)p.EXPIRES_AT,
+                            createdAt = p.CREATED_AT,
+                            modifiedat = (DateTime)p.MODIFIED_AT
+                        };
+
+
             return query.ToList();
         }
 
+        /// <summary>
+        /// Returns poll data of poll with given id.
+        /// </summary>
+        /// <param name="pollid">Id of the poll</param>
+        /// <returns>Poll associated with the given id.</returns>
         public pollModel displayPolls(int pollid)
         {
-            if (Session["uid"] == null)
-            {
-
-            }
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
 
-
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
-            var query = from u in db.POLLs
-                        where u.CREATEDBY == sessionID && u.POLLID == pollid
-                        select new pollModel(u.POLLID, u.POLLNAME, u.LONGITUDE, u.LATITUDE, u.CREATEDBY, u.EXPIRESAT, u.CREATEDAT, u.MODIFIEDAT);
+            var query = from p in dbpollContext.POLLS
+                        where p.CREATED_BY == sessionID && p.POLL_ID == pollid
+                        select new pollModel
+                        {
+                            pollid = p.POLL_ID, 
+                            pollname = p.POLL_NAME, 
+                            longitude = p.LONGITUDE, 
+                            latitude = p.LATITUDE, 
+                            createdby = p.CREATED_BY, 
+                            expiresat = (DateTime)p.EXPIRES_AT,
+                            createdAt = p.CREATED_AT,
+                            modifiedat = (DateTime)p.MODIFIED_AT
+                        };
             return query.First();
         }
 
+        /// <summary>
+        /// Returns polls between two dates.
+        /// </summary>
+        /// <param name="start">Date to search from</param>
+        /// <param name="end">Date to finish search at</param>
+        /// <returns>List of polls between given dates</returns>
         public List<pollModel> displayPolls(DateTime start, DateTime end)
         {
 
@@ -154,17 +180,29 @@ namespace DBPOLL.Models
 
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
-            var query = from u in db.POLLs
-                        where u.CREATEDBY == sessionID && u.CREATEDAT >= start && u.CREATEDAT <= end
-                        select new pollModel(u.POLLID, u.POLLNAME, u.LONGITUDE, u.LATITUDE, u.CREATEDBY, u.EXPIRESAT, u.CREATEDAT, u.MODIFIEDAT);
+            var query = from p in dbpollContext.POLLS
+                        where p.CREATED_BY == sessionID && p.CREATED_AT >= start && p.CREATED_AT <= end
+                        select new pollModel
+                        {
+                        pollid = p.POLL_ID, 
+                        pollname = p.POLL_NAME, 
+                        longitude = p.LONGITUDE, 
+                        latitude = p.LATITUDE, 
+                        createdby = p.CREATED_BY, 
+                        expiresat = (DateTime)p.EXPIRES_AT,
+                        createdAt = p.CREATED_AT,
+                        modifiedat = (DateTime)p.MODIFIED_AT  
+                        };
             return query.ToList();
         }
 
         public void createPoll()
         {
-            db.POLLs.Attach(poll);
-            db.POLLs.InsertOnSubmit(poll);
-            db.SubmitChanges();
+            /*
+            dbpollContext.POLLS.Attach(poll);
+            dbpollContext.POLLS.InsertOnSubmit(poll);
+            dbpollContext.SubmitChanges();
+            */
         }
 
         public void updatePoll()
@@ -173,9 +211,11 @@ namespace DBPOLL.Models
             {
                 //pollModel poll1 = new pollModel(pollid, pollname).displayPolls(pollid);
                 //poll1.POLLNAME = "CHANGE";
-                //db.POLLs.Attach(poll);
-                //poll.POLLNAME = "HELLO";
-                db.SubmitChanges();
+                //db.POLLS.Attach(poll);
+                //poll.POLL_NAME = "HELLO";
+                /*
+                dbpollContext.SubmitChanges();
+                 */
             }
             catch(Exception e)
             {
@@ -185,9 +225,11 @@ namespace DBPOLL.Models
         
         public void deletePoll()
         {
-            db.POLLs.Attach(poll);
-            db.POLLs.DeleteOnSubmit(poll);
-            db.SubmitChanges();
+            /*
+            dbpollContext.POLLS.Attach(poll);
+            dbpollContext.POLLS.DeleteOnSubmit(poll);
+            dbpollContext.SubmitChanges();
+             */
         }
     }
 }

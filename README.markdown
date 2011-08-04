@@ -2,7 +2,7 @@ Introduction
 ============
 
 dbPOLL is a database enabled, online polling system that interacts synchronously and asynchronously to receive user input from both RF ResponseCards and online users. THe system is to be completed and ready for deployment online, integrating with Keepad  Interactive's existing systems by the 10th of October, 2011. This system is being built to improve Keepad Interactive's current product offering, filling the niche market of long term polls, providing detailed analysis and reporting.
-test
+
 Team
 ====
 

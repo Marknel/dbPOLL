@@ -4,14 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DBPOLL.Models;
-using DBPOLLContext;
+using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Controllers
 {
     [HandleError]
     public class HomeController : Controller
     {
-        private DBPOLLDataContext db = new DBPOLLDataContext();
+
+        private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Index(String username, String password)
         {
@@ -19,9 +20,8 @@ namespace DBPOLLDemo.Controllers
             userModel user = new userModel(username, password);
 
             if (user.verify() == true)
-            {
-                //return RedirectToAction("../Answer/Index/" + id.ToString() + "?name=" + name);
-                return RedirectToAction("Home?username=" + username, "Home");
+            {       
+                return RedirectToAction("Home", "Home", new { username });
             }
             else
             {

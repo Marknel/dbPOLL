@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using DBPOLL.Models;
-using DBPOLLContext;
 using DBPOLLDemo.Models;
 using System.Threading;
 using System.Globalization;
@@ -14,7 +13,7 @@ namespace DBPOLLDemo.Controllers
 {
     public class MainController : Controller
     {
-        private DBPOLLDataContext db = new DBPOLLDataContext();
+        private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
         //
         // GET: /Main/
 
@@ -143,9 +142,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
-
-            return RedirectToAction("../Question/Index/" + id.ToString() + "?name=" + name);
+            return RedirectToAction("Index", "Question", new { id, name });
         }
 
 
@@ -162,8 +159,7 @@ namespace DBPOLLDemo.Controllers
 
             ViewData["name"] = name;
 
-                //return View(new answerModel().displayAnswers(id));
-                return RedirectToAction("../Answer/Index/" + id.ToString() + "?name=" + name);
+                return RedirectToAction("Index", "Answer", new {id, name});
         }
 
         //

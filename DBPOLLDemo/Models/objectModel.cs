@@ -10,8 +10,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using DBPOLLContext;
-using DBPOLL.Models;
+using DBPOLLDemo.Models;
 using System.Threading;
 using System.Globalization;
 
@@ -25,61 +24,69 @@ namespace DBPOLLDemo.Models
         public String attribute;
         public int questionid;
 
-        private DBPOLLDataContext db = new DBPOLLDataContext();
+        private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
 
         public objectModel(int obid, int obtype, String attribute, int questionid)
         {
-            ob.OBJID = this.obid = obid;
-            ob.OBJTYPE = this.obtype = obtype;
+            ob.OBJ_ID = this.obid = obid;
+            ob.OBJ_TYPE = this.obtype = obtype;
             ob.ATTRIBUTE = this.attribute = attribute;
-            ob.QUESTIONID = this.questionid = questionid;
+            ob.QUESTION_ID = this.questionid = questionid;
         }
 
-        public objectModel()
-        {
-            
-        }
+        /// <summary>
+        /// Empty Constructor for object model. Used to call methods.
+        /// </summary>
+        public objectModel(){}
 
         public objectModel(int obid)
         {
-            ob.OBJID = this.obid = obid;
+            ob.OBJ_ID = this.obid = obid;
         }
 
         public objectModel(int obtype, String attribute, int questionid)
         {
-            ob.OBJTYPE = this.obtype = obtype;
+            ob.OBJ_TYPE = this.obtype = obtype;
             ob.ATTRIBUTE = this.attribute = attribute;
-            ob.QUESTIONID = this.questionid = questionid;
+            ob.QUESTION_ID = this.questionid = questionid;
         }
 
         public List<objectModel> indexObjects(int questionid)
         {
-            var query = from o in db.OBJECTs
-                        where o.QUESTIONID == questionid
-                        orderby o.OBJID ascending
-                        select new objectModel(o.OBJID, o.OBJTYPE, o.ATTRIBUTE, o.QUESTIONID);
+            var query = from o in dbpollContext.OBJECTS
+                        where o.QUESTION_ID == questionid
+                        orderby o.OBJ_ID ascending
+                        select new objectModel
+                        {
+                            obid = o.OBJ_ID,
+                            obtype = o.OBJ_TYPE,
+                            attribute = o.ATTRIBUTE,
+                            questionid = o.QUESTION_ID
+                        };
+
             return query.ToList();
         }
 
         public int getMaxID()
         {
-            int query = (from o in db.OBJECTs
-                         select o.OBJID).Max();
+            int query = (from o 
+                         in dbpollContext.OBJECTS
+                         select o.OBJ_ID).Max();
 
             return query;
         }
 
         public void createObject()
         {
-            db.OBJECTs.InsertOnSubmit(ob);
-            db.SubmitChanges();
+            //dbpollContext.OBJECTS.InsertOnSubmit(ob);
+            //dbpollContext.SubmitChanges();
         }
 
         public void deleteObject()
         {
-            db.OBJECTs.Attach(ob);
-            db.OBJECTs.DeleteOnSubmit(ob);
-            db.SubmitChanges();
+            //dbpollContext.OBJECTS.Attach(ob);
+           // dbpollContext.OBJECTS.DeleteOnSubmit(ob);
+           //dbpollContext.SubmitChanges();
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using DBPOLL.Models;
-using DBPOLLContext;
 using DBPOLLDemo.Models;
 using System.Threading;
 using System.Globalization;
@@ -129,8 +128,7 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
-            return RedirectToAction("../Answer/Index/" + id.ToString() + "?name=" + name);
+            return RedirectToAction("Index", "Answer", new{id, name});
         }
 
         public ActionResult Delete(int questionid, int id, String name)
@@ -338,14 +336,21 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                questionModel oldquest = new questionModel(questionid);
-                oldquest.deleteQuestion();
+                /* BELOW IS CRAP FROM LINQ. 
+                 * 
+                 * questionModel oldquest = new questionModel(questionid);
+                 oldquest.deleteQuestion();
 
-                questionModel newquest = new questionModel(questionid, questiontype, question, chartstyle, num, createdat, DateTime.Now, pollid);
-                newquest.createQuestion();
-                
+                 questionModel newquest = new questionModel(questionid, questiontype, question, chartstyle, num, createdat, DateTime.Now, pollid);
+                 newquest.createQuestion();
+                 */
                 // TODO: Add update logic here
+
                 ViewData["quest"] = question;
+
+                questionModel q = new questionModel(questionid);
+
+                q.updateQuestion(questionid, questiontype, question, chartstyle, num, DateTime.Now, pollid);
                 
                 return View(new questionModel().getQuestion(questionid));
             }
