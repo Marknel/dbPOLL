@@ -34,3 +34,9 @@ H:\csse3004\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
 H:\csse3004\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb
 H:\csse3004\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.dll
 H:\csse3004\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.pdb
+H:\testingmerge\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.dll
+H:\testingmerge\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.pdb
+H:\testingmerge\dbPOLL\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache
+H:\testingmerge\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll.licenses
+H:\testingmerge\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
+H:\testingmerge\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb

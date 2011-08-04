@@ -16,6 +16,12 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Question/
 
+        /// <summary>
+        /// Returns a view listing all the questions associated with a poll.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public ActionResult Index(int id, String name)
         {
             if (Session["uid"] == null)
@@ -121,6 +127,12 @@ namespace DBPOLLDemo.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns the answers associated with the chosen question.
+        /// </summary>
+        /// <param name="id">Selected Question ID</param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public ActionResult Details(int id, String name)
         {
             if (Session["uid"] == null)
@@ -131,8 +143,20 @@ namespace DBPOLLDemo.Controllers
             return RedirectToAction("Index", "Answer", new{id, name});
         }
 
+
+        /// <summary>
+        /// Calls the model method to delete Questions based on the Question ID and refreshes the view to display the updated list of questions.
+        /// Currently all logged in user can delete question associated with their account. Need to enforce some type of
+        /// Authorization based on user type.
+        /// </summary>
+        /// <param name="questionid"></param>
+        /// <param name="id">Question ID to be deleted</param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public ActionResult Delete(int questionid, int id, String name)
         {
+
+            // Basic check to see if the user is Authenticated.
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -144,14 +168,15 @@ namespace DBPOLLDemo.Controllers
             return RedirectToAction("Index", "Question", new { id = id, name = name });
         }
 
-        //
-        // GET: /Question/Create
+        /// <summary>
+        /// Returns the view with a choice between creating a short answer and multiple choice question.
+        /// </summary>
+        /// <param name="pollid">Poll to create question for</param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public ActionResult Create(int pollid, String name)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
 
 
             ViewData["name"] = name;
@@ -159,34 +184,40 @@ namespace DBPOLLDemo.Controllers
             return View();
         } 
 
+        /// <summary>
+        /// Returns view to create short answer questions. NOTE: Creation is not done here. Creation is performed in the 
+        /// [AcceptVerbs(HttpVerbs.Post)] which is the POST version of this method.
+        /// </summary>
+        /// <param name="pollid"></param>
+        /// <returns></returns>
         public ActionResult CreateShortAnswer(int pollid)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
+            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
 
             ViewData["id"] = pollid;
             return View();
         } 
 
-        //
-        // POST: /Question/Create
-
+        /// <summary>
+        /// POST method that creates short answer questions from a set of given data.
+        /// </summary>
+        /// <param name="shortanswertype"></param>
+        /// <param name="num"></param>
+        /// <param name="question"></param>
+        /// <param name="chartstyle"></param>
+        /// <param name="pollid"></param>
+        /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateShortAnswer(int shortanswertype, String num, String question, int chartstyle, int pollid)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
 
-
-            // Allows insertion of aussie dates
+            // Allows insertion of Australian formatted dates
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             int numInt = 0;
+
+            // Contains pollid number for display. i.e "Creating question for poll 1"
             ViewData["id"] = pollid;
             bool errorspresent = false;
 
@@ -205,20 +236,14 @@ namespace DBPOLLDemo.Controllers
                 ViewData["questionerror"] = "Above field must contain a question!";
                 errorspresent = true;
             }
-            
-            
             if(errorspresent == false)
             {
                 try
                 {
                     //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
-                    questionModel q = new questionModel((maxqid + 1), shortanswertype, numInt, question,chartstyle, DateTime.Now, pollid);
-                    q.createQuestion();
-
-                    ViewData["created"] = "Created Question: " + q.Question;
-                    
+                    new questionModel().createQuestion((maxqid + 1), shortanswertype, question, chartstyle, numInt, pollid);
+                    ViewData["created"] = "Created Question: " + question;
                     return View();
-                    //return RedirectToAction("Index/"+pollid);
                 }
                 catch (Exception e)
                 {
@@ -235,10 +260,7 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult CreateMultipleChoice(int pollid)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
 
             ViewData["id"] = pollid;
             return View();
@@ -250,16 +272,12 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateMultipleChoice(String num,int questiontype, String question, int chartstyle, int pollid)
         {
-            bool errorspresent = false;
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
+            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             int numInt = 0;
+            bool errorspresent = false;
 
             //returns the max question ID in the questions table
             int maxqid = new questionModel().getMaxID();
@@ -277,22 +295,25 @@ namespace DBPOLLDemo.Controllers
                     //converts user num into string
                     numInt = int.Parse(num);
                 }
-                catch
+                catch (Exception e)
                 {
                     //Not an int. do not insert and throw view error to user. 
+                    ViewData["error1"] = "!ERROR: " + e.Message;
+                    return View();
                 }
 
                 try
                 {
-                    questionModel q = new questionModel((maxqid + 1), questiontype, numInt, question, chartstyle, DateTime.Now, pollid);
-                    q.createQuestion();
+
+                    new questionModel().createQuestion((maxqid + 1), questiontype, question, chartstyle, numInt, pollid);
 
                     ViewData["id"] = pollid;
-                    ViewData["created"] = "Created Question: " + q.Question;
+                    ViewData["created"] = "Created Question: " + question;
                     return View();
                 }
                 catch (Exception e)
                 {
+                    // Something went bad and we couldn't edit.
                     ViewData["error1"] = "!ERROR: " + e.Message;
                     return View();
                 }
@@ -305,9 +326,11 @@ namespace DBPOLLDemo.Controllers
             }
         }
 
-        //
-        // GET: /Question/Edit/5
- 
+        /// <summary>
+        /// Redirects to Edit view to allow modification of Question details.
+        /// </summary>
+        /// <param name="questionid">Question designated to be edited</param>
+        /// <returns></returns>
         public ActionResult Edit(int questionid)
         {
             if (Session["uid"] == null)
@@ -318,38 +341,23 @@ namespace DBPOLLDemo.Controllers
             return View(new questionModel().getQuestion(questionid));
         }
 
-        //
-        // POST: /Question/Edit/5
-
-        //qid x, questiontype, question, chart, short answer type (if short answer), qnum, created_at x, edited at x, pollid x, 
-
+        /// <summary>
+        /// Where the actual edit takes place.
+        /// Should turn params into a form collection object if we get the time.
+        /// </summary>
+        /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int questionid, int questiontype, String question, int chartstyle, int num, DateTime createdat, int pollid)
         {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
 
             try
             {
-                /* BELOW IS CRAP FROM LINQ. 
-                 * 
-                 * questionModel oldquest = new questionModel(questionid);
-                 oldquest.deleteQuestion();
-
-                 questionModel newquest = new questionModel(questionid, questiontype, question, chartstyle, num, createdat, DateTime.Now, pollid);
-                 newquest.createQuestion();
-                 */
-                // TODO: Add update logic here
-
                 ViewData["quest"] = question;
-
-                questionModel q = new questionModel(questionid);
-
+                questionModel q = new questionModel();
                 q.updateQuestion(questionid, questiontype, question, chartstyle, num, DateTime.Now, pollid);
                 
                 return View(new questionModel().getQuestion(questionid));

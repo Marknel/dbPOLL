@@ -268,11 +268,25 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
-        public void createQuestion() {
+        public void createQuestion(int qid, int questiontype, String question, int chartstyle, int questnum, int pollid)
+        {
             try
             {
-                //dbpollContext.QUESTIONS.InsertOnSubmit(q);
-                //dbpollContext.SubmitChanges();
+
+                QUESTION create = new QUESTION();
+
+                create.QUESTION_ID = qid;
+                create.QUESTION_TYPE = questiontype;
+                create.NUM = questnum;
+                create.QUESTION1 = question;
+                create.CHART_STYLE = chartstyle;
+                create.CREATED_AT = DateTime.Now;
+                create.MODIFIED_AT = DateTime.Now;
+                create.POLL_ID = pollid;
+
+                dbpollContext.AddToQUESTIONS(create);
+
+                dbpollContext.SaveChanges();
             }
             catch (Exception e)
             {
