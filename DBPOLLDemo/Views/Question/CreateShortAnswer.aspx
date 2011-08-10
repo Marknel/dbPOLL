@@ -37,6 +37,12 @@
                 <%= Html.ValidationMessage("question", "*") %>
             </p>
             <p style ="color: Red;"><%=ViewData["questionerror"]%></p>
+
+            <!--start of map modifications
+                This is here just for testing. move to Poll views once created.   -->
+            <div><%Html.RenderPartial("../Map/mapView"); %></div>
+            <!--start of map modifications  -->
+
             <p>
                 <label for="chartstyle">Response Chart</label>
                 <select id="chartstyle" name="chartstyle">
@@ -45,7 +51,6 @@
                 <option value="3">Line Graph</option>
                 <option value="4">Pie Chart</option>
                 </select>
-                
                 
                 <%= Html.ValidationMessage("chartstyle", "*")%>
             </p>
