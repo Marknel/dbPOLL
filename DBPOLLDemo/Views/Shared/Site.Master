@@ -4,8 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
     <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+    
 
 
 </head>

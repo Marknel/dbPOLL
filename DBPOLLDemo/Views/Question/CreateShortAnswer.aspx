@@ -80,12 +80,6 @@ void Page_Load(object source, EventArgs e){
                 <%= Html.ValidationMessage("question", "*") %>
             </p>
             <p style ="color: Red;"><%=ViewData["questionerror"]%></p>
-
-            <!--start of map modifications
-                This is here just for testing. move to Poll views once created.   -->
-            <div><%Html.RenderPartial("../Map/mapView"); %></div>
-            <!--start of map modifications  -->
-
             <p>
                 <label for="chartstyle">Response Chart</label>
                 <select id="chartstyle" name="chartstyle">
@@ -98,6 +92,12 @@ void Page_Load(object source, EventArgs e){
                 <%= Html.ValidationMessage("chartstyle", "*")%>
             </p>
             <p><%=ViewData["created"]%></p>
+
+    <!--start of map modifications
+                This is here just for testing. move to Poll views once created.   -->
+    <div id="map_canvas" style="width:360px; height:200px"></div>
+     <!--end of map modifications  -->
+
             <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
             <p>
                 <input type="submit" value="Create Question" />
