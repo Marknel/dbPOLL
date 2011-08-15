@@ -16,15 +16,42 @@
     src="http://maps.googleapis.com/maps/api/js?sensor=false">
 </script>
 <script type="text/javascript">
+    var map;
+    var marker = null;
     function initialize() {
-        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        // Map is centered over brisbane
+        var latlng = new google.maps.LatLng(-27.28, 153.01);
         var myOptions = {
-            zoom: 8,
+            zoom: 9,
             center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById("map_canvas"),
+        map = new google.maps.Map(document.getElementById("map_canvas"),
         myOptions);
+
+         google.maps.event.addListener(map, 'click', function(event) {
+         placeMarker(event.latLng);
+     });
+     
+    }
+
+    //As there is only one point. Returns the Geogrpahical Location of the poll to a createpoll / update poll 
+    function getPollLocation() {
+        if (marker = null) {
+            return null;
+        } else {return marker.getPosition;}
+    }
+
+    // Adds a marker or moves the markers position on the map.
+    function placeMarker(location) {
+        if (marker == null) {
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        } else {
+            marker.setPosition(location);
+        }
     }
 
 </script>
