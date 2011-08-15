@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Edit Question: <%="i need to be fixed!" /*Model.question*/%></h2>
+    <h2>Edit Question: <%=Model.question + " " + ViewData["quest"]%></h2>
 
     <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
     <script type="text/javascript">

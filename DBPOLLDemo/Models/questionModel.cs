@@ -309,7 +309,7 @@ namespace DBPOLLDemo.Models
 
             var questionList =
             from questions in dbpollContext.QUESTIONS
-            where questions.QUESTION_ID == this.questionid
+            where questions.QUESTION_ID == questionid
             select questions;
 
             QUESTION editobj = questionList.First<QUESTION>();

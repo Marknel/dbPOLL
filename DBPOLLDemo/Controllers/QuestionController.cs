@@ -356,14 +356,14 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                ViewData["quest"] = question;
                 questionModel q = new questionModel();
                 q.updateQuestion(questionid, questiontype, question, chartstyle, num, DateTime.Now, pollid);
                 
                 return View(new questionModel().getQuestion(questionid));
             }
-            catch
+            catch(Exception e)
             {
+                ViewData["quest"] = "ERROR: "+e.Message;
                 return View();
             }
         }
