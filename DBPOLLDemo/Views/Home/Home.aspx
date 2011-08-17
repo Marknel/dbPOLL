@@ -12,4 +12,6 @@
     <%= Html.ActionLink("Report", "../Report/Index")%> <br />
     <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%> <br />
     </p>
+
+    <% Html.RenderPartial("PollsToDo"); %>
 </asp:Content>
