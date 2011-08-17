@@ -30,6 +30,14 @@ namespace DBPOLLDemo.Models
         public DateTime modifiedat;
         public int pollid;
 
+
+        // for the answer
+        public int answerid;
+        public String answer;
+        public int correct;
+        public int answerforquestionnum;
+        public String updatedto;
+
         public String Question { get { return question; } }
         public DateTime QuestionCreated { get { return createdat; } }
         public int QuestionNumber { get { return questnum; } }
@@ -50,11 +58,7 @@ namespace DBPOLLDemo.Models
             q.QUESTION_ID = this.questionid = qid;
         }
 
-        // empty constructer for utility
-        //public questionModel()
-      // {
-           
-       //}
+
         //Constructor for fetched QUESTIONS
         public questionModel(int qid, int questiontype, String question, int numberofresponses,  int chartstyle, int shortanswertype, int questnum, DateTime createdat, DateTime modifiedat, int pollid)
         {
@@ -182,6 +186,26 @@ namespace DBPOLLDemo.Models
 
             return query.ToList();
         }
+
+
+        //public List<questionModel> displayQuestionsAnswer()
+        //{
+        //    var query = from q in dbpollContext.QUESTIONS
+        //                from p in dbpollContext.ANSWERS
+        //                where q.QUESTION_ID == p.QUESTION_ID
+        //                orderby q.QUESTION_ID ascending
+        //                select new questionModel
+        //                {
+        //                    pollid = q.POLL_ID,
+        //                    questionid = q.QUESTION_ID,
+        //                    question = q.QUESTION1,
+        //                    questiontype = q.QUESTION_TYPE,
+        //                    createdat = q.CREATED_AT,
+        //                    questnum = q.NUM
+        //                };
+
+        //    return query.ToList();
+        //}
 
         public List<questionModel> displayQuestions(int poll, DateTime start, DateTime end)
         {

@@ -13,6 +13,9 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using DBPOLLDemo.Models;
+using System.Globalization;
+using System.Threading;
+using System.Collections.Generic;
 
 namespace DBPOLL.Models
 {
@@ -24,6 +27,17 @@ namespace DBPOLL.Models
         private string username;
         private string password;
 
+        private USER user = new USER();
+        public String name;
+        public int usertype;
+        public DateTime createdat;
+        public DateTime modifiedat;
+        public String createdby;
+  
+        public DateTime expiredat;
+
+
+
         /// <summary>
         /// Constructor for userModel Object.
         /// </summary>
@@ -32,6 +46,59 @@ namespace DBPOLL.Models
         public userModel(string username, string password) {
             this.username = username;
             this.password = password;
+        }
+
+        public userModel(String userName, int userType, DateTime createdAt, Nullable<DateTime> modifiedAt, int createdBy, Nullable<DateTime> expiredAt)
+        {
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            user.NAME = this.name = userName;
+            user.USER_TYPE = this.usertype = userType;
+            user.CREATED_AT = this.createdat = createdAt;
+
+            if (expiredAt.HasValue)
+            {
+                user.EXPIRES_AT = this.expiredat = expiredAt.Value;
+            }
+           
+
+            if (modifiedAt.HasValue)
+            {
+                user.MODIFIED_AT = this.modifiedat = modifiedAt.Value;
+            }
+            
+            
+        }
+
+        public userModel()
+        {
+            // TODO: Complete member initialization
+        }
+
+        public List<userModel> displayAllUsers()
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;            
+            List<USER> userList = new List<USER>();
+            var query = from u in dbpollContext.USERS
+                        orderby u.USER_TYPE
+                        select new userModel
+                        {
+                            name = u.NAME,
+                            usertype = u.USER_TYPE,
+                            createdat = u.CREATED_AT,
+                            modifiedat = (DateTime)u.MODIFIED_AT,
+                            createdby = (String)(from u1 in dbpollContext.USERS
+                                                 where (u1.USER_ID == u.CREATED_BY)
+                                                 select u1.NAME).FirstOrDefault(),
+                            expiredat = (DateTime)u.EXPIRES_AT,
+                        };
+
+            return query.ToList();
         }
         
         public bool verify() {

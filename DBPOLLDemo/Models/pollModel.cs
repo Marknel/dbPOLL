@@ -27,6 +27,10 @@ namespace DBPOLL.Models
         public DateTime expiresat;
         public decimal longitude;
         public decimal latitude;
+        public String createdmaster;
+        public String createdcreator1;
+        public int total;
+        
 
         //Properties for getters/setters
         public String Name { get { return pollname; } }
@@ -40,17 +44,22 @@ namespace DBPOLL.Models
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
-            
+
             poll.POLL_ID = this.pollid = pollid;
             poll.POLL_NAME = this.pollname = pollName;
             poll.LATITUDE = this.latitude = latitude;
             poll.LONGITUDE = this.longitude = longitude;
             poll.CREATED_AT = this.createdAt = createdAt;
+            //this.createdmaster = dbpollContext.
+
+
+
             if (expiresat != null)
             {
                 poll.EXPIRES_AT = this.expiresat = expiresat.Value;
             }
             poll.CREATED_BY = this.createdby = createdBy;
+
             if (modifiedat != null)
             {
                 poll.MODIFIED_AT = this.modifiedat = modifiedat.Value;
@@ -61,7 +70,7 @@ namespace DBPOLL.Models
         {
             poll.POLL_ID = this.pollid = pollid;
         }
-        
+
         public pollModel(int pollid, String name)
         {
 
@@ -72,14 +81,15 @@ namespace DBPOLL.Models
             poll.POLL_ID = this.pollid = pollid;
             poll.POLL_NAME = this.pollname = name;
         }
-        
+
         public pollModel()
         {
 
         }
 
+
         //pollModel(356672, "TEST", (decimal)76.54, (decimal)2.54, 1, DateTime.Now);
-        
+
         public pollModel(int pollid, String pollName, decimal longitude, decimal latitude, int createdBy, DateTime createdAt)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
@@ -93,6 +103,7 @@ namespace DBPOLL.Models
             poll.CREATED_AT = this.createdAt = createdAt;
             poll.CREATED_BY = this.createdby = createdBy;
 
+
         }
 
         public pollModel(int pollId, String pollName, DateTime createdAt)
@@ -100,7 +111,7 @@ namespace DBPOLL.Models
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
-            
+
             this.pollid = pollId;
             this.pollname = pollName;
             this.createdAt = createdAt;
@@ -122,11 +133,11 @@ namespace DBPOLL.Models
                         where p.CREATED_BY == sessionID
                         select new pollModel
                         {
-                            pollid = p.POLL_ID, 
-                            pollname = p.POLL_NAME, 
-                            longitude = p.LONGITUDE, 
-                            latitude = p.LATITUDE, 
-                            createdby = p.CREATED_BY, 
+                            pollid = p.POLL_ID,
+                            pollname = p.POLL_NAME,
+                            longitude = p.LONGITUDE,
+                            latitude = p.LATITUDE,
+                            createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
                             modifiedat = (DateTime)p.MODIFIED_AT
@@ -134,6 +145,40 @@ namespace DBPOLL.Models
 
 
             return query.ToList();
+        }
+
+        public List<pollModel> displayAllPolls()
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+
+            int sessionID = (int)Session["uid"];
+            List<POLL> pollList = new List<POLL>();
+            var query = from p in dbpollContext.POLLS
+                        from it in dbpollContext.USERS
+                        where (p.CREATED_BY == it.USER_ID)
+                        select new pollModel
+                        {
+                            pollid = p.POLL_ID,
+                            pollname = p.POLL_NAME,
+                            longitude = p.LONGITUDE,
+                            latitude = p.LATITUDE,
+                            createdby = p.CREATED_BY,
+                            expiresat = (DateTime)p.EXPIRES_AT,
+                            createdAt = p.CREATED_AT,
+                            modifiedat = (DateTime)p.MODIFIED_AT,
+                            createdmaster = it.NAME,
+                            createdcreator1 = (String)(from g in dbpollContext.USERS
+                                                       where (g.USER_ID == it.CREATED_BY)
+                                                       select g.NAME).FirstOrDefault(),
+                            total = (int)(from par in dbpollContext.PARTICIPANTS
+                                          where (par.POLL_ID==p.POLL_ID)
+                                          select par.USER_ID).Count(),            
+                        };
+        
+            return query.ToList(); 
         }
 
         /// <summary>
@@ -153,15 +198,17 @@ namespace DBPOLL.Models
                         where p.CREATED_BY == sessionID && p.POLL_ID == pollid
                         select new pollModel
                         {
-                            pollid = p.POLL_ID, 
-                            pollname = p.POLL_NAME, 
-                            longitude = p.LONGITUDE, 
-                            latitude = p.LATITUDE, 
-                            createdby = p.CREATED_BY, 
+                            pollid = p.POLL_ID,
+                            pollname = p.POLL_NAME,
+                            longitude = p.LONGITUDE,
+                            latitude = p.LATITUDE,
+                            createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
                             modifiedat = (DateTime)p.MODIFIED_AT
                         };
+
+
             return query.First();
         }
 
@@ -184,15 +231,17 @@ namespace DBPOLL.Models
                         where p.CREATED_BY == sessionID && p.CREATED_AT >= start && p.CREATED_AT <= end
                         select new pollModel
                         {
-                        pollid = p.POLL_ID, 
-                        pollname = p.POLL_NAME, 
-                        longitude = p.LONGITUDE, 
-                        latitude = p.LATITUDE, 
-                        createdby = p.CREATED_BY, 
-                        expiresat = (DateTime)p.EXPIRES_AT,
-                        createdAt = p.CREATED_AT,
-                        modifiedat = (DateTime)p.MODIFIED_AT  
+                            pollid = p.POLL_ID,
+                            pollname = p.POLL_NAME,
+                            longitude = p.LONGITUDE,
+                            latitude = p.LATITUDE,
+                            createdby = p.CREATED_BY,
+                            expiresat = (DateTime)p.EXPIRES_AT,
+                            createdAt = p.CREATED_AT,
+                            modifiedat = (DateTime)p.MODIFIED_AT
                         };
+
+
             return query.ToList();
         }
 
@@ -217,12 +266,12 @@ namespace DBPOLL.Models
                 dbpollContext.SubmitChanges();
                  */
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw (e);
             }
         }
-        
+
         public void deletePoll()
         {
             /*
