@@ -4,6 +4,7 @@ using System.Data.Objects;
 using System.Data.Objects.DataClasses;
 using System.Configuration;
 using System.Linq;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.Security;
@@ -20,36 +21,34 @@ namespace DBPOLL.Models
     public class userModel : System.Web.UI.Page
     {
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
-        
-        private string username;
-        private string password;
 
         /// <summary>
         /// Constructor for userModel Object.
         /// </summary>
         /// <param name="username">Username of user </param>
         /// <param name="password">Password of user</param>
-        public userModel(string username, string password) {
-            this.username = username;
-            this.password = password;
+        public userModel() {
         }
         
-        public bool verify() {
-
+        public int verify(string username, string password) {
             var query = from u in dbpollContext.USERS 
-                           where (u.USERNAME == this.username && u.PASSWORD == this.password) 
+                           where (u.USERNAME == username && u.PASSWORD == password) 
                            select u;
 
-            //var query = from u in db.USERs where (u.USERNAME == this.username && u.PASSWORD == this.password) select u; << OLD LINQ QUERY
+            if ( query.ToArray().Length == 1 ) {
+                return query.ToArray()[0].USER_ID;
+            } else {
+                return 0;
+            }
+        }
 
-            if (query.ToArray().Length == 1)
-            {
-                Session["uid"] = query.ToArray()[0].USER_ID;
-                return true;
-            }
-            else {
-                return false;
-            }
+        public USER get_details (int uid)
+        {
+            var query = from u in dbpollContext.USERS
+                        where u.USER_ID == uid
+                        select u;
+            USER user = query.First();
+            return user;
         }
     }
 }

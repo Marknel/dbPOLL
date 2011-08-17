@@ -115,6 +115,7 @@
     <Content Include="Views\Answer\Edit.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\PollsToDo.ascx" />
     <Content Include="Views\Main\answerDetails.aspx" />
     <Content Include="Views\Main\Create.aspx" />
     <Content Include="Views\Main\Edit.aspx" />

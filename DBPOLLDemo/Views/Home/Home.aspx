@@ -10,4 +10,6 @@
     <%= Html.ActionLink("Edit Create and Delete Polls", "../Main/Index") %> <br />
     <%= Html.ActionLink("View Polls and Questions", "../Main/viewPolls")%>
     </p>
+
+    <% Html.RenderPartial("PollsToDo"); %>
 </asp:Content>
