@@ -12,8 +12,8 @@ namespace DBPOLLDemo.Controllers
     public class HomeController : Controller
     {
         private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
+        
         [AcceptVerbs(HttpVerbs.Post)]
-
         public ActionResult Index(String username, String password)
         {
             userModel user = new userModel();
@@ -51,8 +51,7 @@ namespace DBPOLLDemo.Controllers
             userModel user = new userModel();
             var userDetails = user.get_details((int)Session["uid"]);
             ViewData["Message"] = "Welcome " + userDetails.NAME;
-            PartialView();
-
+            ViewData["User"] = userDetails;
             return View();
         }
 
