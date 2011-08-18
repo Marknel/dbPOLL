@@ -17,7 +17,7 @@
         
         
     </resources>
-    <applet-desc height="300" main-class="pollapplet.PollApplet" name="PollApplet" width="300">
+    <applet-desc height="600" main-class="pollapplet.PollApplet" name="PollApplet" width="800">
         
     </applet-desc>
 </jnlp>
