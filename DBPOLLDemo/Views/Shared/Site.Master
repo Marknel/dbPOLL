@@ -48,8 +48,8 @@
                                 else
                                 {%>
                                     <li><%= Html.ActionLink("Home", "Home", "Home")%></li>
-                                    <li><%= Html.ActionLink("View Polls", "viewPolls", "Main")%></li>
-                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Main")%></li> 
+                                    <li><%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
+                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Poll")%></li> 
                                 <%} %>
                 </ul>
             
