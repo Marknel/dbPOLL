@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
 {
-    public class MainController : Controller
+    public class PollController : Controller
     {
         private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
         //
@@ -249,6 +249,11 @@ namespace DBPOLLDemo.Controllers
                 ViewData["error1"] = e.Message;
                 return View();
             }
+        }
+
+        public ActionResult TestDevices()
+        {
+            return View();
         }
     }
 }
