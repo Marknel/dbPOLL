@@ -149,7 +149,7 @@ namespace DBPOLLDemo.Models
         public List<answerModel> displayAnswers(int questId)
         {
             var query = from a in dbpollContext.ANSWERS
-                        where a.QUESTION_ID == questId
+                        where a.QUESTION_ID == questId /*&& a.answerid == a.updatedto*/
                         orderby a.QUESTION_ID descending
                         select new answerModel
                         {
@@ -161,6 +161,19 @@ namespace DBPOLLDemo.Models
                             updatedto = (int)a.UPDATED_TO, 
                             createdat = a.CREATED_AT
                         };
+            /**
+            List<answerModel> answers = query.ToList();
+
+            foreach (answerModel answer in answers) 
+            {
+                if (answer.AnswerID != answer.updatedto) 
+                {
+                    answers.Remove(answer);
+                }
+            }
+
+            return answers;
+            **/
             return query.ToList();
         }
 
@@ -206,7 +219,7 @@ namespace DBPOLLDemo.Models
                 a.CORRECT = correct;
                 a.WEIGHT = weight;
                 a.NUM = ansnum;
-                a.UPDATED_TO = updatedto;
+                a.UPDATED_TO = updatedto; //Every answer created will be the latest version of that answer
                 a.CREATED_AT = DateTime.Now;
                 a.MODIFIED_AT = DateTime.Now;
                 a.QUESTION_ID = qid;
@@ -230,15 +243,15 @@ namespace DBPOLLDemo.Models
                 select answers;
 
 
-                /* If an answer is update the old answer is kept and points to a new answer with the same properties and updated answer field, 
-                 * pointed by the field updatedto
+                /* If an answer is updated, it is archived and points to a new answer with the same properties and updated answer field, 
+                 * pointed by the field updatedto in the archived record
                  */
                 ANSWER a = answerList.First<ANSWER>();
                 if (a.ANSWER1 != answer)
                 {
                     answerModel newanswer = new answerModel();
                     newanswer.createAnswer(answer, correct, weight, ansnum, questionid);
-                    a.UPDATED_TO = newanswer.AnswerID;
+                    a.UPDATED_TO = newanswer.AnswerID; // 
                 }
                 else {
                     a.CORRECT = correct;

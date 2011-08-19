@@ -245,21 +245,6 @@ namespace DBPOLLDemo.Controllers
             }
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete(int pollid)
-        {
-
-            // Basic check to see if the user is Authenticated.
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            pollModel p = new pollModel(pollid);
-            p.deletePoll();
-            return RedirectToAction("Index");
-        }
-
         public ActionResult TestDevices()
         {
             return View();

@@ -10,12 +10,33 @@
  */
 package pollapplet;
 
+import com.turningtech.test.Test;
+import com.turningtech.test.DeviceWakeup;
+import com.turningtech.test.Examination;
+import com.turningtech.test.Question;
+import com.turningtech.test.TestService;
+import com.turningtech.test.ResponseTest;
+import com.turningtech.test.ResponseListenerTest; 
+import com.turningtech.receiver.Receiver;
+import com.turningtech.receiver.ReceiverService;
+import com.turningtech.receiver.ResponseCardLibrary;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 /**
  *
  * @author s4200943
  */
 public class PollApplet extends javax.swing.JApplet {
 
+    private ReceiverListModel receiverListModel = new ReceiverListModel();
+    private ResponseListModel responseListModel = new ResponseListModel();
+    private DefaultCategoryDataset dataset;
+    
     /** Initializes the applet PollApplet */
     @Override
     public void init() {
@@ -26,7 +47,7 @@ public class PollApplet extends javax.swing.JApplet {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -46,13 +67,147 @@ public class PollApplet extends javax.swing.JApplet {
         try {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
 
+                @Override
                 public void run() {
+                    ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
+                    initReceivers();
                     initComponents();
                 }
             });
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    private void initReceivers() {
+        try {
+            receiverListModel.addAll(ReceiverService.findReceivers());
+        } catch (Exception e) {
+            //showError("Could not initialize receivers.", e);
+        }
+        dataset = createDataset();
+    }
+    
+    private void initModel() {
+        //responseChart.setDataset(dataset);
+
+        //ReceiverTable.setc
+       
+        
+       DefaultTableModel recModel = new DefaultTableModel();
+       int column = 0;
+       int row = 0;
+       for(int i = 0; i < receiverListModel.getSize(); i++){
+           if((i % 4) == 0){
+               column++;
+               row = 0;
+           }
+              
+           recModel.setValueAt(receiverListModel.get(i).getId(), row, column);
+           row++;
+       }
+
+       ReceiverTable.setModel(recModel);
+       ReceiverTable.setValueAt("Hello", 1, 1);
+       System.out.println("Changed!!!!");
+        
+        //receiverList.setModel(receiverListModel);
+
+        /*receiverList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()) {
+                    return;
+                }
+                int selection = receiverList.getSelectedIndex();
+                try {
+                    Receiver receiver = receiverListModel.get(selection);
+                    lblChannel.setText(Integer.toString(receiver.getChannel()));
+                    lblDescription.setText(receiver.getDescription());
+                    lblId.setText(receiver.getId());
+                    lblId1.setText(receiver.getVersion());
+                } catch (Exception ex) {
+                    //ignore
+                }
+
+            }
+        });
+        receiverList.setCellRenderer(receiverCellRenderer);*/
+    }
+    
+    
+    private class ReceiverListModel extends DefaultListModel {
+
+        private List<Receiver> receivers = new ArrayList();
+
+        @Override
+        public void clear() {
+            receivers.clear();
+            fireContentsChanged(this, 0, 0);
+        }
+
+        public void addAll(Collection newData) {
+            receivers.addAll(newData);
+            fireContentsChanged(this, 0, 0);
+        }
+
+        @Override
+        public int getSize() {
+            return receivers.size();
+        }
+
+        @Override
+        public Object getElementAt(int index) {
+            return receivers.get(index);
+        }
+
+        @Override
+        public Receiver get(int index) {
+            return receivers.get(index);
+        }
+
+        public List<Receiver> getReceivers() {
+            return receivers;
+        }
+    }
+    
+    private class ResponseListModel extends DefaultListModel {
+
+        List<ResponseTest> responses = new ArrayList();
+
+        @Override
+        public void clear() {
+            responses.clear();
+            fireContentsChanged(this, 0, 0);
+        }
+
+        public void add(ResponseTest newData) {
+            responses.add(newData);
+            fireContentsChanged(this, getSize() - 2, getSize() - 1);
+        }
+
+        @Override
+        public int getSize() {
+            return responses.size();
+        }
+
+        @Override
+        public Object getElementAt(int index) {
+            return responses.get(index);
+        }
+    }
+    
+    private DefaultCategoryDataset createDataset() {
+        DefaultCategoryDataset newDataset = new DefaultCategoryDataset();
+        List<Receiver> receivers = receiverListModel.getReceivers();
+        for (Receiver receiver : receivers) {
+            for (int i = 0; i < 10; i++) {
+                newDataset.addValue(0, receiver.getId(), Integer.toString(i));
+            }
+        }
+
+        return newDataset;
+
     }
 
     /** This method is called from within the init() method to
@@ -66,40 +221,83 @@ public class PollApplet extends javax.swing.JApplet {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ReceiverTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        AnsweredLbl = new javax.swing.JLabel();
+        detectedLbl = new javax.swing.JLabel();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel1.setText("I Am a Poll");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setText("Testing");
 
-        jPanel2.setBackground(java.awt.SystemColor.window);
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        ReceiverTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"", "", "", ""},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Receiver", "Receiver", "Receiver", "Receiver"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        jLabel2.setBackground(new java.awt.Color(0, 153, 0));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("0xA43D");
-        jLabel2.setOpaque(true);
-        jLabel2.setPreferredSize(new java.awt.Dimension(100, 50));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(666, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(448, Short.MAX_VALUE))
-        );
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        ReceiverTable.getTableHeader().setResizingAllowed(false);
+        ReceiverTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(ReceiverTable);
+
+        jLabel2.setText("Tested");
+
+        jLabel3.setText("Detected");
+
+        AnsweredLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        AnsweredLbl.setText("0");
+
+        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detectedLbl.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,18 +307,39 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(177, 177, 177)
+                        .addComponent(detectedLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(37, 37, 37)
+                        .addComponent(AnsweredLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(78, 78, 78))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(AnsweredLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(detectedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -136,9 +355,15 @@ public class PollApplet extends javax.swing.JApplet {
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AnsweredLbl;
+    private javax.swing.JTable ReceiverTable;
+    private javax.swing.JLabel detectedLbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
+
+

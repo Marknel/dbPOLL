@@ -7,16 +7,26 @@
         <description>PollApplet</description>
         <description kind="short">PollApplet</description>
         
-        
+       
     </information>
+	<security>
+        <all-permissions/>
+    </security> 
     <update check="always"/>
-    
+    <security>
+<all-permissions/>
+</security>
     <resources>
         <j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.6+"/>
         <jar href="PollApplet.jar" main="true"/>
         
         
-    </resources>
+    <jar href="lib/jna.jar"/>
+<jar href="lib/orson-0.5.0.jar"/>
+<jar href="lib/jcommon-1.0.10.jar"/>
+<jar href="lib/jfreechart-1.0.6.jar"/>
+<<extension name="jnlpcomponent1" href="jnlpcomponent1.jnlp"/>
+</resources>
     <applet-desc height="600" main-class="pollapplet.PollApplet" name="PollApplet" width="800">
         
     </applet-desc>
