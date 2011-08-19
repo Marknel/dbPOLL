@@ -27,6 +27,10 @@
           }
         }
       }
+      function questiontype_onclick() {
+
+      }
+
     </script>
     <% using (Html.BeginForm()){%>
 
@@ -38,7 +42,7 @@
             <p>
                 <label for="questiontype">Question Type:</label>
                 
-                <select onload ="PreselectMyItem(<%= Model.questiontype %>)" id="questiontype" name="questiontype">
+                <select onload ="PreselectMyItem(<%= Model.questiontype %>)" id="questiontype" name="questiontype" onclick="return questiontype_onclick()">
                 <option value="1">Short Answer: Numeric Responses Only</option>
                 <option value="2">Short Answer: Alphanumeric Responses Only</option>
                 <option value="3">Multiple Choice: Standard</option>
