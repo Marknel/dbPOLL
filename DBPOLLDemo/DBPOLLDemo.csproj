@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
@@ -115,6 +116,18 @@
     <Content Include="Views\Answer\Create.aspx" />
     <Content Include="Views\Answer\Edit.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
+    <Content Include="Views\Help\AnswerEdit.aspx" />
+    <Content Include="Views\Help\AnswerIndex.aspx" />
+    <Content Include="Views\Help\HomeHome.aspx" />
+    <Content Include="Views\Help\Index.aspx" />
+    <Content Include="Views\Help\ObjectIndex.aspx" />
+    <Content Include="Views\Help\PollIndex.aspx" />
+    <Content Include="Views\Help\PollTestDevices.aspx" />
+    <Content Include="Views\Help\PollViewPolls.aspx" />
+    <Content Include="Views\Help\QuestionCreate.aspx" />
+    <Content Include="Views\Help\QuestionEdit.aspx" />
+    <Content Include="Views\Help\QuestionIndex.aspx" />
+    <Content Include="Views\Help\ReportIndex.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\Create.aspx" />

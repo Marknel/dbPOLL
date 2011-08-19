@@ -18,7 +18,7 @@
         <div id="header">
             <div id="title">
                 <asp:Image ID="Image1" runat="server" Height="88px" 
-                    ImageUrl="~/Content/turningPoint_banner.jpg" Width="884px" />
+                    ImageUrl="~/Content/turningPoint_banner.jpg" Width="600px" />
             </div>
               
             <div id="logindisplay">
@@ -38,18 +38,21 @@
                                     <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
+                                    <li><%= Html.ActionLink("Help", "Index", "Help")%></li> 
                                 <%}
                                 else if (Session["uid"].ToString().Trim() == "")
                                 {%>
                                     <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
+                                    <li><%= Html.ActionLink("Help", "Index", "Help")%></li>
                                 <%}
                                 else
                                 {%>
                                     <li><%= Html.ActionLink("Home", "Home", "Home")%></li>
                                     <li><%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
-                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Poll")%></li> 
+                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Poll")%></li>
+                                    <li><%= Html.ActionLink("Help", "Index", "Help")%></li> 
                                 <%} %>
                 </ul>
             
