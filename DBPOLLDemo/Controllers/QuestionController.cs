@@ -223,6 +223,7 @@ namespace DBPOLLDemo.Controllers
 
             //returns the max question ID in the questions table
             int maxqid = new questionModel().getMaxID();
+            
 
             // VALIDATE FORM DATA!
             if (!int.TryParse(num,out numInt) || num == null)
@@ -357,7 +358,7 @@ namespace DBPOLLDemo.Controllers
             try
             {
                 questionModel q = new questionModel();
-                q.updateQuestion(questionid, questiontype, question, chartstyle, num, DateTime.Now, pollid);
+                q.updateQuestion(questionid, questiontype, question, chartstyle, num, pollid);
                 
                 return View(new questionModel().getQuestion(questionid));
             }

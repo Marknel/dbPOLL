@@ -13,7 +13,6 @@ G:\csse3004gG\DBPOLLDemo\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb
 H:\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.dll
 H:\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.pdb
 H:\dbPOLL\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache
-H:\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll.licenses
 H:\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
 H:\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb
 H:\dbPOll\dbPOLL\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache

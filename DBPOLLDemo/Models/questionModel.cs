@@ -318,7 +318,7 @@ namespace DBPOLLDemo.Models
             }
         }
 
-        public void updateQuestion(int questionid, int questiontype, String question, int chartstyle, int num, DateTime modifiedat, int pollid)
+        public void updateQuestion(int questionid, int questiontype, String question, int chartstyle, int num, int pollid)
         {
 
             /* To Update.
@@ -330,22 +330,26 @@ namespace DBPOLLDemo.Models
              * easy as!
              */
 
+            try
+            {
+                var questionList =
+                from questions in dbpollContext.QUESTIONS
+                where questions.QUESTION_ID == questionid
+                select questions;
 
-            var questionList =
-            from questions in dbpollContext.QUESTIONS
-            where questions.QUESTION_ID == questionid
-            select questions;
+                QUESTION editobj = questionList.First<QUESTION>();
 
-            QUESTION editobj = questionList.First<QUESTION>();
+                editobj.QUESTION_TYPE = questiontype;
+                editobj.QUESTION1 = question;
+                editobj.CHART_STYLE = chartstyle;
+                editobj.NUM = num;
+                editobj.MODIFIED_AT = DateTime.Now;
+                editobj.POLL_ID = pollid;
 
-            editobj.QUESTION_TYPE = questiontype;
-            editobj.QUESTION1 = question;
-            editobj.CHART_STYLE = chartstyle;
-            editobj.NUM = num;
-            editobj.MODIFIED_AT = modifiedat;
-            editobj.POLL_ID = pollid;
-
-            dbpollContext.SaveChanges();
+                dbpollContext.SaveChanges();
+            } catch (Exception e) {
+                throw(e);
+            }
         }
 
         public void deleteQuestion()
@@ -357,22 +361,20 @@ namespace DBPOLLDemo.Models
              * 3. save change.
              */
 
-            var questionList =
-            from questions in dbpollContext.QUESTIONS
-            where questions.QUESTION_ID == this.questionid
-            select questions;
+            try {
+                var questionList =
+                from questions in dbpollContext.QUESTIONS
+                where questions.QUESTION_ID == this.questionid
+                select questions;
 
-            foreach (var question in questionList)
-            {
-                dbpollContext.DeleteObject(question);
+                QUESTION q = questionList.First<QUESTION>();
+                dbpollContext.DeleteObject(q);
+
+                dbpollContext.SaveChanges();
             }
-
-            dbpollContext.SaveChanges();
-
-
-           //dbpollContext.QUESTIONS.Attach(q);
-            //dbpollContext.QUESTIONS.DeleteOnSubmit(q);
-            //dbpollContext.SubmitChanges();
+            catch (Exception e) {
+                throw (e);
+            }
         }
     }
 }

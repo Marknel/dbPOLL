@@ -116,10 +116,6 @@ namespace DBPOLLDemo.Controllers
                 return View(new pollModel().displayPolls());
             }
         }
-        /*public ActionResult viewPolls()
-        {
-            return View(new pollModel().displayPolls());
-        }*/
 
         public ActionResult Delete(int pollid)
         {
@@ -179,7 +175,7 @@ namespace DBPOLLDemo.Controllers
         // POST: /Main/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(String name, int latitude, int longitude, int created, Nullable<DateTime> expiresat)
         {
             if (Session["uid"] == null)
             {
@@ -188,9 +184,9 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                // TODO: Add insert logic here
+                new pollModel().createPoll(name, longitude, latitude, created, expiresat);
 
-                return RedirectToAction("Index");
+                return View();
             }
             catch
             {
@@ -223,7 +219,7 @@ namespace DBPOLLDemo.Controllers
         // POST: /Main/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int pollid, String pollname, float longitude, float latitude, int createdby, DateTime createdat, DateTime expiresat, DateTime modifiedat, int test)
+        public ActionResult Edit(int pollid, String pollname, decimal longitude, decimal latitude, DateTime expiresat, int test)
         {
             if (Session["uid"] == null)
             {
@@ -236,9 +232,7 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                //pollModel poll = new pollModel(pollid, pollname, longitude, latitude, createdby, expiresat, createdat, modifiedat);
-                pollModel poll = new pollModel(pollid, pollname);
-                poll.updatePoll();
+                new pollModel().updatePoll(pollid, pollname, longitude, latitude, expiresat);
 
                 return RedirectToAction("Index");
 
@@ -249,6 +243,21 @@ namespace DBPOLLDemo.Controllers
                 ViewData["error1"] = e.Message;
                 return View();
             }
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Delete(int pollid)
+        {
+
+            // Basic check to see if the user is Authenticated.
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            pollModel p = new pollModel(pollid);
+            p.deletePoll();
+            return RedirectToAction("Index");
         }
 
         public ActionResult TestDevices()

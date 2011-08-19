@@ -245,26 +245,30 @@ namespace DBPOLL.Models
             return query.ToList();
         }
 
-        public void createPoll()
+        public int getMaxID()
         {
-            /*
-            dbpollContext.POLLS.Attach(poll);
-            dbpollContext.POLLS.InsertOnSubmit(poll);
-            dbpollContext.SubmitChanges();
-            */
+            int query = (from p
+                         in dbpollContext.POLLS
+                         select p.POLL_ID).Max();
+
+            return query;
         }
 
-        public void updatePoll()
+        public void createPoll(String pollName, decimal longitude, decimal latitude, int createdBy, Nullable<DateTime> expiresat)
         {
             try
             {
-                //pollModel poll1 = new pollModel(pollid, pollname).displayPolls(pollid);
-                //poll1.POLLNAME = "CHANGE";
-                //db.POLLS.Attach(poll);
-                //poll.POLL_NAME = "HELLO";
-                /*
-                dbpollContext.SubmitChanges();
-                 */
+                POLL p = new POLL();
+
+                p.POLL_ID = getMaxID() + 1;
+                p.POLL_NAME = pollName;
+                p.LONGITUDE = longitude;
+                p.LATITUDE = latitude;
+                p.CREATED_BY = createdBy;
+                p.CREATED_AT = DateTime.Now;
+
+                dbpollContext.AddToPOLLS(p);
+                dbpollContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -272,13 +276,47 @@ namespace DBPOLL.Models
             }
         }
 
+        public void updatePoll(int pollid, String pollName, decimal longitude, decimal latitude, Nullable<DateTime> expiresat)
+        {
+            try
+            {
+                var pollList =
+                from polls in dbpollContext.POLLS
+                where polls.POLL_ID == pollid
+                select polls;
+
+                POLL p = pollList.First<POLL>();
+
+                p.POLL_NAME = pollName;
+                p.LONGITUDE = longitude;
+                p.LATITUDE = latitude;
+                p.EXPIRES_AT = expiresat;
+                p.MODIFIED_AT = DateTime.Now;
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e) {
+                throw (e);
+            }
+        }
+
         public void deletePoll()
         {
-            /*
-            dbpollContext.POLLS.Attach(poll);
-            dbpollContext.POLLS.DeleteOnSubmit(poll);
-            dbpollContext.SubmitChanges();
-             */
+            try
+            {
+                var pollList =
+                from polls in dbpollContext.POLLS
+                where polls.POLL_ID == pollid
+                select polls;
+
+                POLL p = pollList.First<POLL>();
+                dbpollContext.DeleteObject(p);
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e) { 
+                throw (e);
+            }
         }
     }
 }
