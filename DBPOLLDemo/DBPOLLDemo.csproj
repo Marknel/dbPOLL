@@ -148,6 +148,7 @@
     <Content Include="Views\Question\viewQuestions.aspx" />
     <Content Include="Views\Report\Index.aspx" />
     <Content Include="Views\Report\SessionHistoryReport.aspx" />
+    <Content Include="Views\Report\SessionParticipation.aspx" />
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
     <Content Include="Web.config">

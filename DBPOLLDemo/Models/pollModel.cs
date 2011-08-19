@@ -14,7 +14,7 @@ using System.Threading;
 using System.Globalization;
 using DBPOLLDemo.Models;
 
-namespace DBPOLL.Models
+namespace DBPOLLDemo.Models
 {
     public class pollModel : System.Web.UI.Page
     {

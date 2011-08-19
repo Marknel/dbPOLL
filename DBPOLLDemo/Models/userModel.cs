@@ -17,7 +17,7 @@ using System.Globalization;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace DBPOLL.Models
+namespace DBPOLLDemo.Models
 {
 
     public class userModel : System.Web.UI.Page
@@ -35,8 +35,6 @@ namespace DBPOLL.Models
         public String createdby;
   
         public DateTime expiredat;
-
-
 
         /// <summary>
         /// Constructor for userModel Object.
@@ -68,9 +66,7 @@ namespace DBPOLL.Models
             if (modifiedAt.HasValue)
             {
                 user.MODIFIED_AT = this.modifiedat = modifiedAt.Value;
-            }
-            
-            
+            }   
         }
 
         public userModel()
@@ -85,6 +81,7 @@ namespace DBPOLL.Models
             Thread.CurrentThread.CurrentCulture = ci;            
             List<USER> userList = new List<USER>();
             var query = from u in dbpollContext.USERS
+                        where (u.USER_TYPE>=0)
                         orderby u.USER_TYPE
                         select new userModel
                         {
@@ -96,7 +93,9 @@ namespace DBPOLL.Models
                                                  where (u1.USER_ID == u.CREATED_BY)
                                                  select u1.NAME).FirstOrDefault(),
                             expiredat = (DateTime)u.EXPIRES_AT,
+                           
                         };
+            
 
             return query.ToList();
         }
