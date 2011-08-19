@@ -149,7 +149,7 @@ namespace DBPOLLDemo.Models
         public List<answerModel> displayAnswers(int questId)
         {
             var query = from a in dbpollContext.ANSWERS
-                        where a.QUESTION_ID == questId
+                        where a.QUESTION_ID == questId && a.ANSWER_ID== a.UPDATED_TO
                         orderby a.QUESTION_ID descending
                         select new answerModel
                         {
@@ -161,6 +161,19 @@ namespace DBPOLLDemo.Models
                             updatedto = (int)a.UPDATED_TO, 
                             createdat = a.CREATED_AT
                         };
+            /**
+            List<answerModel> answers = query.ToList();
+
+            foreach (answerModel answer in answers) 
+            {
+                if (answer.AnswerID != answer.updatedto) 
+                {
+                    answers.Remove(answer);
+                }
+            }
+
+            return answers;
+            **/
             return query.ToList();
         }
 
@@ -195,30 +208,83 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
-        public void createAnswer()
+        public void createAnswer(String answer, int correct, int weight, int ansnum, int qid)
         {
-            // Taken out to test ADO.NET Searching. 
-            //dbpollContext.ANSWERS.InsertOnSubmit(a);
-            //dbpollContext.SubmitChanges();
-        }
-
-        public void updateAnswer() {
             try
             {
-                // Taken out to test ADO.NET Searching. 
-                //dbpollContext.ANSWERS.InsertOnSubmit(a);
-                //dbpollContext.SubmitChanges();
+                ANSWER a = new ANSWER();
+
+                a.ANSWER_ID = getMaxID() + 1;
+                a.ANSWER1 = answer;
+                a.CORRECT = correct;
+                a.WEIGHT = weight;
+                a.NUM = ansnum;
+                a.UPDATED_TO = updatedto; //Every answer created will be the latest version of that answer
+                a.CREATED_AT = DateTime.Now;
+                a.MODIFIED_AT = DateTime.Now;
+                a.QUESTION_ID = qid;
+
+                dbpollContext.AddToANSWERS(a);
+                dbpollContext.SaveChanges();
             }
             catch (Exception e)
             {
                 throw (e);
             }
         }
+
+        public void updateAnswer(int answerid, String answer, int correct, int weight, int ansnum)
+        {
+            try
+            {
+                var answerList =
+                from answers in dbpollContext.ANSWERS   
+                where answers.ANSWER_ID == answerid
+                select answers;
+
+
+                /* If an answer is updated, it is archived and points to a new answer with the same properties and updated answer field, 
+                 * pointed by the field updatedto in the archived record
+                 */
+                ANSWER a = answerList.First<ANSWER>();
+                if (a.ANSWER1 != answer)
+                {
+                    answerModel newanswer = new answerModel();
+                    newanswer.createAnswer(answer, correct, weight, ansnum, questionid);
+                    a.UPDATED_TO = newanswer.AnswerID; // 
+                }
+                else {
+                    a.CORRECT = correct;
+                    a.WEIGHT = weight;
+                    a.NUM = ansnum;
+                    a.UPDATED_TO = getMaxID() + 1;
+                    a.MODIFIED_AT = DateTime.Now;
+                }
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
         public void deleteAnswer() {
-            // Taken out to test ADO.NET Searching. 
-            //dbpollContext.ANSWERS.Attach(a);
-            //dbpollContext.ANSWERS.DeleteOnSubmit(a);
-            //dbpollContext.SubmitChanges();
+            try
+            {
+                var answerList =
+                from answers in dbpollContext.ANSWERS
+                where answers.ANSWER_ID == answerid
+                select answers;
+
+                ANSWER a = answerList.First<ANSWER>();
+                dbpollContext.DeleteObject(a);
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e) {
+                throw (e);
+            }
         }
     }
 }

@@ -77,7 +77,7 @@ namespace DBPOLLDemo.Controllers
         // POST: /Answer/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(String answer, int correct, String weight, int questionid)
+        public ActionResult Create(String answer, int correct, String weight, int questionid, int ansnum, int qid)
         {
             if (Session["uid"] == null)
             {
@@ -109,9 +109,8 @@ namespace DBPOLLDemo.Controllers
 
                 try
                 {
-                    // TODO: Add insert logic here
-                    answerModel a = new answerModel((maxAns + 1), answer, correct, weightInt, DateTime.Now, questionid);
-                    a.createAnswer();
+                    answerModel a = new answerModel();
+                    a.createAnswer(answer, correct, int.Parse(weight), ansnum, qid);
 
                     ViewData["created"] = "Created Answer: " + a.answer;
 
@@ -151,7 +150,7 @@ namespace DBPOLLDemo.Controllers
         // POST: /Answer/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int answerid, String answer, int correct, String weight,DateTime createdat, int questionid)
+        public ActionResult Edit(int answerid, String answer, int correct, String weight, int questionid, int ansnum)
         {
             if (Session["uid"] == null)
             {
@@ -167,18 +166,11 @@ namespace DBPOLLDemo.Controllers
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
 
-            int maxAns = new answerModel().getMaxID();
-
-            answerModel oldanswer = new answerModel(answerid);
-            oldanswer.deleteAnswer();
-            answerModel newanswer = new answerModel(answerid, answer, correct, weightInt, createdat, DateTime.Now, questionid);
-            newanswer.createAnswer();
-
-
-
+            
             try
             {
                 // TODO: Add update logic here
+                new answerModel().updateAnswer(answerid, answer, correct, int.Parse(weight), ansnum);
 
                 return RedirectToAction("Index", "Answer", new { id = questionid });
             }
