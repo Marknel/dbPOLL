@@ -24,7 +24,7 @@ namespace DBPOLLDemo.Models
     {
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
         
-        private string username;
+        public string username;//changed to public
         private string password;
 
         private USER user = new USER();
@@ -117,5 +117,143 @@ namespace DBPOLLDemo.Models
                 return false;
             }
         }
+
+
+
+        //Chris added
+        private string Salt;
+        private string Reset_Password_Key;
+
+        public int UserID;
+        public int UserType;
+        public string Name;
+        public DateTime? Expires_At;//? means it can be null
+        public int? Created_By;
+        public DateTime Created_At;
+        public DateTime Modified_At;
+        public int? SysAdmin_ID;
+
+        public userModel(int UserID)
+        {
+            this.UserID = UserID;
+        }
+        public List<userModel> displayPollAdminUsers()
+        {
+            var query = from q in dbpollContext.USERS
+                        where q.USER_TYPE == 1
+                        orderby q.CREATED_AT ascending
+                        select new userModel
+                        {
+                            UserID = q.USER_ID,
+                            UserType = q.USER_TYPE,
+                            username = q.USERNAME,
+                            Name = q.NAME
+                            //SysAdmin_ID = q.SYSADMIN_ID,
+                            //Created_By = q.CREATED_BY,
+                            //Expires_At = q.EXPIRES_AT
+                        };
+
+            return query.ToList();
+        }
+        
+        public void deleteUser()
+        {
+            /* To Delete
+             * 1. query for object to delete.
+             * 2. set User_Type = -1
+             * 3. save change.
+             */
+
+            var userList =
+                from users in dbpollContext.USERS
+                where users.USER_ID == this.UserID
+                select users;
+            USER editobj = userList.First<USER>();
+
+            editobj.USER_TYPE = -1;
+
+            dbpollContext.SaveChanges();
+        }
+
+        public userModel getUser(int UserID)
+        {
+            var query = from q in dbpollContext.USERS
+                        where q.USER_ID == UserID
+                        select new userModel
+                        {
+                            UserID = q.USER_ID,
+                            UserType = q.USER_TYPE,
+                            username = q.USERNAME,
+                            Name = q.NAME,
+                            SysAdmin_ID = q.SYSADMIN_ID,
+                            Created_By = q.CREATED_BY,
+                            Expires_At = q.EXPIRES_AT
+                        };
+
+            return query.First();
+        }
+
+        public void updateUser(int UserID, DateTime Expires_At, string Name, string username)
+        {
+
+            /* To Update.
+             * 1. Find the object to update using query.
+             * 2. pass in values to update from view to model
+             * 3. replace values in object.
+             * 4. call save on context.
+             * 
+             * easy as!
+             */
+
+            var userList =
+            from USERS in dbpollContext.USERS
+            where USERS.USER_ID == UserID
+            select USERS;
+
+            USER editobj = userList.First<USER>();
+
+            editobj.EXPIRES_AT = Expires_At;
+            editobj.NAME = Name;
+            editobj.USERNAME = username;
+            editobj.USER_ID = UserID;
+            editobj.MODIFIED_AT = DateTime.Now;
+
+            dbpollContext.SaveChanges();
+        }
+
+        public int getNewID()
+        {
+            int query = (from q
+                         in dbpollContext.USERS
+                         select q.USER_ID).Max();
+            return query + 1;
+        }
+
+        public void createUser(int UserID, int UserType, string password, string name, string username, DateTime Expires_At, int SysAdmin_ID)
+        {
+            try
+            {
+                USER create = new USER();
+
+                create.USER_ID = UserID;
+                create.USER_TYPE = UserType;
+                create.PASSWORD = password;
+                create.USERNAME = username;
+                create.NAME = name;
+                create.EXPIRES_AT = Expires_At;
+                create.CREATED_AT = DateTime.Now;
+                create.MODIFIED_AT = DateTime.Now;
+                create.SYSADMIN_ID = SysAdmin_ID;
+
+                dbpollContext.AddToUSERS(create);
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+    
+    
     }
 }

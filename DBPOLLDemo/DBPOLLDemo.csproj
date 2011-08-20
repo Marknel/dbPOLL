@@ -68,12 +68,14 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SysAdminController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -151,6 +153,9 @@
     <Content Include="Views\Report\SessionParticipation.aspx" />
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
+    <Content Include="Views\SysAdmin\Create.aspx" />
+    <Content Include="Views\SysAdmin\Edit.aspx" />
+    <Content Include="Views\SysAdmin\Index.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
