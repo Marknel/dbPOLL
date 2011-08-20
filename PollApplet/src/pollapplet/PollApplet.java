@@ -47,6 +47,8 @@ public class PollApplet extends javax.swing.JApplet {
     private DefaultCategoryDataset dataset;
     private ReceiverTableModel responseTableModel = new ReceiverTableModel();
     private PollCellRenderer PollRenderer = new PollCellRenderer();
+    public int chosenRow = 0;
+    public int chosenColumn = 0;
     
     
     /** Initializes the applet PollApplet */
@@ -119,8 +121,8 @@ public class PollApplet extends javax.swing.JApplet {
        System.out.println(receiverListModel.getSize());
        
        responseTable.setModel(responseTableModel);
-       responseTable.setDefaultRenderer(responseTableModel.getColumnClass(0), PollRenderer);
-       responseTableModel.addDeviceID("hello",1);
+       responseTable.setDefaultRenderer(responseTable.getColumnClass(0), PollRenderer);
+       /*responseTableModel.addDeviceID("hello",1);
        responseTableModel.addDeviceID("h",1);
        responseTableModel.addDeviceID("he",1);
        responseTableModel.addDeviceID("234l",1);
@@ -131,7 +133,7 @@ public class PollApplet extends javax.swing.JApplet {
        responseTableModel.addDeviceID("h235l",6);
        responseTableModel.addDeviceID("h235l",7);
        responseTableModel.addDeviceID("h325l",8);
-       responseTableModel.addDeviceID("h325l",2);
+       responseTableModel.addDeviceID("h325l",2);*/
        
        
         
@@ -171,9 +173,8 @@ public class PollApplet extends javax.swing.JApplet {
                 poll = PollService.createPoll();                
             }
             poll.addResponseListener(new BasicResponseListener());
-            Poll.PollingMode pollingMode = (Poll.PollingMode.Numeric);
+            Poll.PollingMode pollingMode = (Poll.PollingMode.SingleResponse_Numeric);
             poll.start(pollingMode);
-            responseListModel.add(new Response("start","start","start"));
 
 
             //responseChart.setSubtitle(evt.getActionCommand() + " Polling Open");
@@ -219,6 +220,7 @@ public class PollApplet extends javax.swing.JApplet {
     
     private class ResponseListModel extends DefaultListModel {
         List<Response> responses = new ArrayList();
+        List<ArrayList> TestList = new ArrayList();
 
         @Override
         public void clear() {
@@ -227,7 +229,11 @@ public class PollApplet extends javax.swing.JApplet {
         }
 
         public void add(Response newData) {
+            
             responses.add(newData);
+            responseTableModel.addDeviceID(newData.getResponseCardId(),Integer.parseInt(newData.getResponse()));
+            System.out.println("device: '"+newData.getResponseCardId()+"' Response: '"+newData.getResponse()+"'");
+            
             fireContentsChanged(this, getSize()-2, getSize()-1);
         }
 
@@ -295,15 +301,21 @@ public class PollApplet extends javax.swing.JApplet {
             if(flag == 1){break;}
             for(int column = 0; column < 4; column++ ){
                 if(this.getValueAt(row, column) == null){
-                    this.setValueAt(deviceID, row, column);
+                    this.setValueAt(deviceID+" : "+key, row, column);
                     System.out.println("Break at: "+column+" "+row);
                     flag = 1;
                     break;
-                }else if(this.getValueAt(row, column).toString().compareTo(deviceID) == 0){
+                    
+                }else if((this.getValueAt(row, column).toString().split("\\s+")[0]).compareTo(deviceID) == 0){
                     //cal colour change code here!
-                    PollRenderer.changecolor(PollRenderer.getTableCellRendererComponent(responseTable, this.getValueAt(row, column), rootPaneCheckingEnabled, rootPaneCheckingEnabled, row, column), row, column, key);
-                    System.out.println("Color Break at: "+column+" "+row);
+                    this.setValueAt(deviceID+" : "+key, row, column);
+                    chosenRow = row;
+                    chosenColumn = column;
+                    
+                   //Component c = PollRenderer.getTableCellRendererComponent(responseTable, this.getValueAt(row, column), rootPaneCheckingEnabled, rootPaneCheckingEnabled, row, column);
+                   //PollRenderer.changecolor(c , row, column, key);
                     flag = 1;
+                    //responseTable.repaint();
                     break;
                 }
             }
@@ -335,39 +347,53 @@ public class PollApplet extends javax.swing.JApplet {
     public class PollCellRenderer
        extends DefaultTableCellRenderer {
         private Color[] cellColor = {
-                                    Color.LIGHT_GRAY, 
-                                    Color.CYAN, 
-                                    Color.GREEN, 
-                                    Color.PINK, 
-                                    Color.YELLOW, 
-                                    Color.ORANGE, 
-                                    Color.GRAY, 
-                                    Color.MAGENTA, 
-                                    Color.RED
+                                    Color.getHSBColor((float)0.72, (float)0.5, (float)0.95),
+                                    Color.getHSBColor((float)0.48, 1, 1),
+                                    Color.getHSBColor((float)2, (float)0.68, 1),
+                                    Color.getHSBColor((float)29, (float)0.31, 1),
+                                    Color.getHSBColor((float)0.61, (float)0.51, 1),
+                                    Color.getHSBColor((float)246, (float)0.51, 1),
+                                    Color.getHSBColor((float)1, (float)0.12, 1),
+                                    Color.getHSBColor((float)0.32, (float)0.56, (float)0.99),
+                                    Color.getHSBColor((float)148, (float)0.8, 100),
+                                    Color.getHSBColor((float)305, (float)0.32, 1)
                                    };
-  public Component getTableCellRendererComponent(JTable table,
-                                                 Object value,
-                                                 boolean isSelected,
-                                                 boolean hasFocus,
-                                                 int row,
-                                                 int column) {
-    Component c = 
-      super.getTableCellRendererComponent(table, value,
-                                          isSelected, hasFocus,
-                                          row, column);
-    return c;
-  }
+  public Component getTableCellRendererComponent(JTable table,Object value,
+                   boolean isSelected, boolean hasFocus, int row, int column) {
+   int keyPress;     
+   Component cell = super.getTableCellRendererComponent(
+                               table, value, isSelected, hasFocus, row, column);
 
-    // Only for specific cell
-  void changecolor(Component c,int row, int column, int key){
-        if (row == 2 && column == 0) {
-       //c.getComponentAt(row, column).setBackground(cellColor[key]);
-       c.setBackground(cellColor[key]);
-        }
+                        
+	   		if( value != null )
+	   		{
+                            System.out.println("Key Clicked: "+value.toString().split("\\s+")[2]);
+                            keyPress = Integer.parseInt(value.toString().split("\\s+")[2]);
+	   			cell.setBackground(cellColor[keyPress]);
+	   			// you can also customize the Font and Foreground this way
+	   			// cell.setForeground();
+	   			// cell.setFont();
+	   		}
+	   		else
+	   		{	
+				cell.setBackground( Color.white );
+	   		}
+	
+		return cell;   
   }
-}
+    
+    
     
 
+    // Only for specific cell
+  void changecolor(Component c , int row, int column, int key){
+       //c.getComponentAt(row, column).setBackground(cellColor[key]);
+       c.setBackground(cellColor[key]);
+       //System.out.println("Color '"+cellColor[key]+"' Break at: Column: '"+column+"' Row: '"+row+"' Key: '"+key+"'");
+       c.repaint();
+  }
+}
+   
     /** This method is called from within the init() method to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -389,17 +415,19 @@ public class PollApplet extends javax.swing.JApplet {
         stopButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         responseTable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setText("Testing");
 
+        jLabel2.setLabelFor(AnsweredLbl);
         jLabel2.setText("Tested");
 
         jLabel3.setText("Detected");
 
-        AnsweredLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
+        AnsweredLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         AnsweredLbl.setText("0");
 
         detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -419,6 +447,9 @@ public class PollApplet extends javax.swing.JApplet {
         responseTable.setModel(responseTableModel);
         jScrollPane2.setViewportView(responseTable);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Please press Keys 1 - 0 in any order to test your Clicker Device");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -428,13 +459,15 @@ public class PollApplet extends javax.swing.JApplet {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(161, 161, 161)
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel4)
+                        .addGap(56, 56, 56)
                         .addComponent(detectedLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
-                        .addGap(37, 37, 37)
+                        .addGap(18, 18, 18)
                         .addComponent(AnsweredLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,21 +483,19 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(detectedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AnsweredLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(detectedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18))
+                            .addComponent(jLabel4)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)))
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(44, 44, 44)
@@ -474,8 +505,8 @@ public class PollApplet extends javax.swing.JApplet {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -511,6 +542,7 @@ try {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
