@@ -5,14 +5,11 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>TestDevices</h2>
-
     <script type="text/javascript" src="http://java.com/js/deployJava.js"></script>
 
     <script type="text/javascript">
-        var attributes = { code: 'http://localhost:4311/Content/pollapplet.PollApplet', width: 800, height: 600 };
-        var parameters = { jnlp_href: 'http://localhost:4311/Content/launch.jnlp' };
+        var attributes = { code: '/Content/pollapplet.PollApplet', width: 800, height: 600 };
+        var parameters = { jnlp_href: '/Content/launch.jnlp' };
         deployJava.runApplet(attributes, parameters, '1.6'); 
     </script>
 
