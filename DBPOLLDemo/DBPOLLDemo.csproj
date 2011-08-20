@@ -81,7 +81,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\answerModel.cs" />
+    <Compile Include="Models\answerModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\DBPOLLEDM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

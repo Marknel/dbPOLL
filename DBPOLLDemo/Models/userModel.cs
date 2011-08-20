@@ -33,6 +33,7 @@ namespace DBPOLLDemo.Models
         public DateTime createdat;
         public DateTime modifiedat;
         public String createdby;
+        public string sysAdmin;
   
         public DateTime expiredat;
 
@@ -92,6 +93,9 @@ namespace DBPOLLDemo.Models
                             createdby = (String)(from u1 in dbpollContext.USERS
                                                  where (u1.USER_ID == u.CREATED_BY)
                                                  select u1.NAME).FirstOrDefault(),
+                            sysAdmin = (String)(from s1 in dbpollContext.SYSADMINS
+                                                  where (s1.SYSADMINS_ID == u.SYSADMIN_ID)
+                                                  select s1.NAME).FirstOrDefault(),
                             expiredat = (DateTime)u.EXPIRES_AT,
                            
                         };

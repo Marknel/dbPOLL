@@ -1160,7 +1160,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DBPOLLEDM" ZoomLevel="82">
+      <Diagram Name="DBPOLLEDM" ZoomLevel="108">
         <EntityTypeShape EntityType="DBPOLLModel.ANSWER" Width="1.5" PointX="9.75" PointY="14.875" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="DBPOLLModel.MANAGEMENT" Width="1.5" PointX="7.5" PointY="12.5" Height="1.9210009765624818" />
         <EntityTypeShape EntityType="DBPOLLModel.MESSAGE" Width="1.5" PointX="10.5" PointY="11.125" Height="2.5783902994791674" />

@@ -34,7 +34,12 @@ namespace DBPOLLDemo.Models
         // for the answer
         public String answer;
         public int answernum;
+
+        //for session
         public int sessionid;
+        public int sessionparticipants;
+
+
 
         public int? participants;
         public int totalparticipants;
@@ -193,17 +198,21 @@ namespace DBPOLLDemo.Models
             var query = (from q in dbpollContext.QUESTIONS
                          from a in dbpollContext.ANSWERS
                          from p in dbpollContext.POLLS
-                     
-                         where ((q.QUESTION_ID == a.QUESTION_ID) &&(p.POLL_ID==q.POLL_ID))
+                         from s in dbpollContext.SESSIONS
+                         where ((q.QUESTION_ID == a.QUESTION_ID) &&(p.POLL_ID==q.POLL_ID) && (s.POLL_ID==p.POLL_ID))
                          orderby p.POLL_ID ascending
                          select new questionModel
                          {
                              pollid = q.POLL_ID, 
                              question = q.QUESTION1,
-                             //questnum = (int)q.NUM,
                              answer = (String)(from a1 in dbpollContext.ANSWERS
                                                where (a1.ANSWER_ID == a.ANSWER_ID)
                                                select a1.ANSWER1).FirstOrDefault(),
+                             sessionid = s.SESSION_ID,
+                             sessionparticipants = (int)(from s1 in dbpollContext.SESSIONS
+                                                         from par in dbpollContext.PARTICIPANTS
+                                                         where (s1.POLL_ID == p.POLL_ID)
+                                                         select par.USER_ID).Count(),  
                              //answer = a.NUM,
                          }
                         );
