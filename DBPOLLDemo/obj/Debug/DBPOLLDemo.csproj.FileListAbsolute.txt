@@ -1,5 +1,0 @@
-H:\CSSE3004\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.dll
-H:\CSSE3004\dbPOLL\DBPOLLDemo\bin\DBPOLLDemo.pdb
-H:\CSSE3004\dbPOLL\DBPOLLDemo\obj\Debug\ResolveAssemblyReference.cache
-H:\CSSE3004\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.dll
-H:\CSSE3004\dbPOLL\DBPOLLDemo\obj\Debug\DBPOLLDemo.pdb
