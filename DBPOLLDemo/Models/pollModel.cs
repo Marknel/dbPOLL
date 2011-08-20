@@ -19,6 +19,7 @@ namespace DBPOLLDemo.Models
     public class pollModel : System.Web.UI.Page
     {
         private POLL poll = new POLL();
+        private SESSION session = new SESSION();
         public int pollid;
         public String pollname;
         public DateTime modifiedat;
@@ -47,8 +48,8 @@ namespace DBPOLLDemo.Models
 
             poll.POLL_ID = this.pollid = pollid;
             poll.POLL_NAME = this.pollname = pollName;
-            poll.LATITUDE = this.latitude = latitude;
-            poll.LONGITUDE = this.longitude = longitude;
+            session.LATITUDE = this.latitude = latitude;
+            session.LONGITUDE = this.longitude = longitude;
             poll.CREATED_AT = this.createdAt = createdAt;
             //this.createdmaster = dbpollContext.
 
@@ -98,8 +99,8 @@ namespace DBPOLLDemo.Models
 
             poll.POLL_ID = this.pollid = pollid;
             poll.POLL_NAME = this.pollname = pollName;
-            poll.LATITUDE = this.latitude = latitude;
-            poll.LONGITUDE = this.longitude = longitude;
+            session.LATITUDE = this.latitude = latitude;
+            session.LONGITUDE = this.longitude = longitude;
             poll.CREATED_AT = this.createdAt = createdAt;
             poll.CREATED_BY = this.createdby = createdBy;
 
@@ -130,13 +131,16 @@ namespace DBPOLLDemo.Models
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from p in dbpollContext.POLLS
-                        where p.CREATED_BY == sessionID
+                        //fix meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                            
+                        from s in dbpollContext.SESSIONS
+                        where ((p.CREATED_BY == sessionID) && (p.POLL_ID==s.POLL_ID))
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -155,16 +159,17 @@ namespace DBPOLLDemo.Models
 
 
             int sessionID = (int)Session["uid"];
-            List<POLL> pollList = new List<POLL>();
+            //List<POLL> pollList = new List<POLL>();
             var query = from p in dbpollContext.POLLS
+                        from s in dbpollContext.SESSIONS
                         from it in dbpollContext.USERS
-                        where (p.CREATED_BY == it.USER_ID)
+                        where ((p.CREATED_BY == it.USER_ID) && (p.POLL_ID==s.POLL_ID))
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -173,9 +178,10 @@ namespace DBPOLLDemo.Models
                             createdcreator1 = (String)(from g in dbpollContext.USERS
                                                        where (g.USER_ID == it.CREATED_BY)
                                                        select g.NAME).FirstOrDefault(),
-                            total = (int)(from par in dbpollContext.PARTICIPANTS
-                                          where (par.POLL_ID==p.POLL_ID)
-                                          select par.USER_ID).Count(),            
+                            //FIX ME
+                            //total = (int)(from par in dbpollContext.PARTICIPANTS
+                            //              where (par.POLL_ID==p.POLL_ID)
+                            //              select par.USER_ID).Count(),            
                         };
         
             return query.ToList(); 
@@ -195,13 +201,14 @@ namespace DBPOLLDemo.Models
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from p in dbpollContext.POLLS
-                        where p.CREATED_BY == sessionID && p.POLL_ID == pollid
+                        from s in dbpollContext.SESSIONS
+                        where (p.CREATED_BY == sessionID && p.POLL_ID == pollid && p.POLL_ID == s.POLL_ID)
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -228,13 +235,14 @@ namespace DBPOLLDemo.Models
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from p in dbpollContext.POLLS
-                        where p.CREATED_BY == sessionID && p.CREATED_AT >= start && p.CREATED_AT <= end
+                        from s in dbpollContext.SESSIONS
+                        where (p.CREATED_BY == sessionID && p.CREATED_AT >= start && p.CREATED_AT <= end && s.POLL_ID==p.POLL_ID)
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -254,7 +262,7 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
-        public void createPoll(String pollName, decimal longitude, decimal latitude, int createdBy, Nullable<DateTime> expiresat)
+        public void createPoll(String pollName, int createdBy, Nullable<DateTime> expiresat)
         {
             try
             {
@@ -262,8 +270,6 @@ namespace DBPOLLDemo.Models
 
                 p.POLL_ID = getMaxID() + 1;
                 p.POLL_NAME = pollName;
-                p.LONGITUDE = longitude;
-                p.LATITUDE = latitude;
                 p.CREATED_BY = createdBy;
                 p.CREATED_AT = DateTime.Now;
 
@@ -288,8 +294,6 @@ namespace DBPOLLDemo.Models
                 POLL p = pollList.First<POLL>();
 
                 p.POLL_NAME = pollName;
-                p.LONGITUDE = longitude;
-                p.LATITUDE = latitude;
                 p.EXPIRES_AT = expiresat;
                 p.MODIFIED_AT = DateTime.Now;
 

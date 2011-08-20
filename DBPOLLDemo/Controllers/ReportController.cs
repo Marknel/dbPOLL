@@ -48,7 +48,7 @@ namespace DBPOLLDemo.Controllers
             foreach (questionModel item in list)
             {
                 String result;
-                switch (item.answer)
+                switch (item.answernum)
                 {
                     case 1:
                         result = "a";

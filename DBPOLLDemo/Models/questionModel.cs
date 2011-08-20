@@ -32,7 +32,9 @@ namespace DBPOLLDemo.Models
         public String pollname;
 
         // for the answer
-        public int? answer;
+        public String answer;
+        public int answernum;
+        public int sessionid;
 
         public int? participants;
         public int totalparticipants;
@@ -180,7 +182,7 @@ namespace DBPOLLDemo.Models
                             question = q.QUESTION1, 
                             questiontype = q.QUESTION_TYPE, 
                             createdat = q.CREATED_AT, 
-                            questnum = q.NUM
+                            questnum = (int)q.NUM
                         };
 
             return query.ToList();
@@ -190,17 +192,19 @@ namespace DBPOLLDemo.Models
         {
             var query = (from q in dbpollContext.QUESTIONS
                          from a in dbpollContext.ANSWERS
-                         where ((q.QUESTION_ID == a.QUESTION_ID) && (q.QUESTION_TYPE >=3 && q.QUESTION_TYPE <=6))
-                         //orderby q.QUESTION_TYPE ascending
+                         from p in dbpollContext.POLLS
+                     
+                         where ((q.QUESTION_ID == a.QUESTION_ID) &&(p.POLL_ID==q.POLL_ID))
+                         orderby p.POLL_ID ascending
                          select new questionModel
                          {
                              pollid = q.POLL_ID, 
                              question = q.QUESTION1,
-                             questnum = q.NUM,
-                             //answer = (String)(from u1 in dbpollContext.ANSWERS
-                             //                         where (u1.ANSWER_ID == a.ANSWER_ID)
-                             //                         select u1.ANSWER1).FirstOrDefault(),
-                             answer = a.NUM,
+                             //questnum = (int)q.NUM,
+                             answer = (String)(from a1 in dbpollContext.ANSWERS
+                                               where (a1.ANSWER_ID == a.ANSWER_ID)
+                                               select a1.ANSWER1).FirstOrDefault(),
+                             //answer = a.NUM,
                          }
                         );
 
@@ -212,11 +216,12 @@ namespace DBPOLLDemo.Models
         {
             var query = (from u in dbpollContext.USERS
                          from p in dbpollContext.PARTICIPANTS
+                         //from s in dbpollContext.SESSIONS
                          where (u.USER_ID == p.USER_ID)
-                         orderby p.POLL_ID ascending
+                         orderby p.SESSION_ID ascending
                          select new questionModel
                          {
-                             pollid = q.POLL_ID,
+                             sessionid = p.SESSION_ID,
                              participants = p.USER_ID,
                              totalparticipants = (int)(from t in dbpollContext.PARTICIPANTS
                                            where (t.USER_ID == p.USER_ID)
@@ -244,7 +249,7 @@ namespace DBPOLLDemo.Models
                                 question = q.QUESTION1, 
                                 questiontype = q.QUESTION_TYPE, 
                                 createdat = q.CREATED_AT, 
-                                questnum = q.NUM
+                                questnum = (int)q.NUM
                             };
                 return query.ToList();
 
@@ -261,7 +266,7 @@ namespace DBPOLLDemo.Models
                                 question = q.QUESTION1,
                                 questiontype = q.QUESTION_TYPE,
                                 createdat = q.CREATED_AT,
-                                questnum = q.NUM
+                                questnum = (int)q.NUM
                             };
                 return query.ToList();
             }
@@ -281,7 +286,7 @@ namespace DBPOLLDemo.Models
                             question = q.QUESTION1,
                             questiontype = q.QUESTION_TYPE,
                             createdat = q.CREATED_AT,
-                            questnum = q.NUM,
+                            questnum = (int)q.NUM,
                         };
 
             return query.ToList();
@@ -296,8 +301,8 @@ namespace DBPOLLDemo.Models
                             questionid = q.QUESTION_ID, 
                             questiontype = q.QUESTION_TYPE, 
                             question = q.QUESTION1, 
-                            chartstyle = (int)q.CHART_STYLE, 
-                            questnum = q.NUM, 
+                            chartstyle = (int)q.CHART_STYLE,
+                            questnum = (int)q.NUM, 
                             createdat = q.CREATED_AT, 
                             pollid = q.POLL_ID
                         };

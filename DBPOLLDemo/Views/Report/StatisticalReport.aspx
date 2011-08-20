@@ -1,15 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.questionModel>>" %>
 
 <script runat="server">
-
-
-
-    
-    
-    
-
-
-  
+ 
 </script>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	StatisticalReport
@@ -18,23 +10,34 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Statistical Report</h2>
-    <p class = "p">    <%= Html.ActionLink("Go to Session Participation Report", "../Report/SessionParticipation")%> 
+    <p class = "p">   <%-- <%= Html.ActionLink("Go to Session Participation Report", "../Report/SessionParticipation")%> --%>
         <br />
-        Report for multiple choice question:<br />
     </p>
-    <table class = "style7">
+
+    <% String result2 = "";
+        int tempquestionnumber = 0;
+    %>
+
+    <% foreach (var item in Model) { %>
+        <p>Result for</p>
+       <%                   
+            int iquestion = item.questnum;
+            if (tempquestionnumber == iquestion) { result2 = ""; }
+            else { tempquestionnumber = iquestion; result2 = tempquestionnumber.ToString(); }
+        %>
+        <%= Html.Encode(result2)%>
+
+    <% } %>
+
+   <%-- <table class = "style7">
         <tr>
             <th nowrap="nowrap" class="style5">
-                Question
+                Answer Choices
             </th>
             <th nowrap="nowrap" class="style4">
                 Answers
             </th>
-            <%--<% foreach (var item2 in Model){ %>
-                    <%= Html.Encode(item2.User)%>
-              </th>
 
-            <%} %>--%>
             
         </tr>
     <% String result2 = "";
@@ -94,7 +97,7 @@
             </td>     
         </tr>
     <% } %>
-    </table>
+    </table>--%>
     <br />
        <% using (Html.BeginForm()) {%>
              <input type ="submit" value = "click me" />
@@ -103,13 +106,13 @@
     <br />
     <br />
     <br />
-
+<%--
     <p class = "p"> Report for short answer questions:</p>
-    <br />
+    <br />--%>
 
 
 </asp:Content>
-<asp:Content ID="Content3" runat="server" contentplaceholderid="HeadContent">
+<%--<asp:Content ID="Content3" runat="server" contentplaceholderid="HeadContent">
     <style type="text/css">
 
         .style7
@@ -121,5 +124,5 @@
             font-weight:bold;
         }
     </style>
-</asp:Content>
+</asp:Content>--%>
 
