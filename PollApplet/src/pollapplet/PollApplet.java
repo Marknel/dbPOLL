@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -102,15 +103,23 @@ public class PollApplet extends javax.swing.JApplet {
         try {
             receiverListModel.addAll(ReceiverService.findReceivers());
         } catch (Exception e) {
-            //showError("Could not initialize receivers.", e);
+            showError("Could not initialize allReceivers.", e);
         }
+         List<Receiver> allReceivers = receiverListModel.getReceivers();
+        Receiver currentReceiver = allReceivers.get(0);
+        currentReceiver.setChannel(22);
+
         dataset = createDataset();
+    }
+    
+    private void showError(String message, Exception e) {
+        JOptionPane.showMessageDialog(null, message + "\n Reason:" + e.getMessage());
     }
     
     private void initModel() {
        
         //keyPadResponseList.setModel(responseListModel);
-        testingInfoLabel.setText("Please Wait for Testing to Begin.");
+        testingInfoLabel.setText("Please set your Clicker Device to channel 22 and  wait for testing to begin.");
 
        
        System.out.println("Changed!!!!");
@@ -163,7 +172,7 @@ public class PollApplet extends javax.swing.JApplet {
 
             //responseChart.setSubtitle(evt.getActionCommand() + " Polling Open");
         } catch (Exception e) {
-           // showError("Unable to start poll.", e);
+            showError("Unable to start poll.", e);
         }
     }                                  
     
@@ -473,7 +482,7 @@ try {
             
             //responseChart.setSubtitle("Polling Closed");
         } catch (Exception e) {
-           // showError("Unable to stop poll.", e);
+           showError("Unable to stop poll.", e);
         }
 }//GEN-LAST:event_stopButtonActionPerformed
 
