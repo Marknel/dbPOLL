@@ -32,7 +32,12 @@ namespace DBPOLLDemo.Models
         public String pollname;
 
         // for the answer
-        public int? answer;
+        public String answer;
+        public int answernum;
+
+        //for session
+        public int sessionid;
+        public int sessionparticipants;
 
         public int? participants;
         public int totalparticipants;
@@ -188,20 +193,48 @@ namespace DBPOLLDemo.Models
         public List<questionModel> displayQuestionsAnswer()
         {
             var query = (from q in dbpollContext.QUESTIONS
+                         from p in dbpollContext.POLLS
+                         from s in dbpollContext.SESSIONS
                          from a in dbpollContext.ANSWERS
-                         where ((q.QUESTION_ID == a.QUESTION_ID) && (q.QUESTION_TYPE >=3 && q.QUESTION_TYPE <=6))
-                         //orderby q.QUESTION_TYPE ascending
+                         where ((p.POLL_ID == q.POLL_ID) && (s.POLL_ID == p.POLL_ID) && a.QUESTION_ID==q.QUESTION_ID)
+                         
+                         orderby p.POLL_NAME ascending
                          select new questionModel
                          {
-                             pollid = q.POLL_ID, 
-                             question = q.QUESTION1,
-                             questnum = q.NUM,
-                             //answer = (String)(from u1 in dbpollContext.ANSWERS
-                             //                         where (u1.ANSWER_ID == a.ANSWER_ID)
-                             //                         select u1.ANSWER1).FirstOrDefault(),
-                             answer = a.NUM,
+                             pollname = (String)(from p1 in dbpollContext.POLLS
+                                                 where (p1.POLL_ID == p.POLL_ID)
+                                                 select p1.POLL_NAME).Distinct().FirstOrDefault(),
+
+                             question = (String)(from q1 in dbpollContext.QUESTIONS
+                                                 where (q1.QUESTION_ID == q.QUESTION_ID)
+                                                 //orderby q1.QUESTION_ID
+                                                 select q1.QUESTION1).FirstOrDefault(),
+                             sessionid = s.SESSION_ID,
+                             sessionname = s.SESSION_NAME,
+                             
+
+                             //sessionid = (int)(from s2 in dbpollContext.SESSIONS
+                             //                  where (s2.POLL_ID == p.POLL_ID)
+                             //                  select s2.SESSION_ID).Distinct().FirstOrDefault(),
+
+                             //answer = (String)(from a1 in dbpollContext.ANSWERS
+                             //                  where (a1.QUESTION_ID == q.QUESTION_ID)
+                             //                  select a1.ANSWER1).GroupBy(a.ANSWER_ID, a.ANSWER_ID),
+                             
+                             answer = a.ANSWER1,
+
+                             //totalparticipants = (int)(from s1 in dbpollContext.SESSIONS
+                             //                          from par in dbpollContext.PARTICIPANTS
+                             //                          where ((s1.POLL_ID == p.POLL_ID) && (par.SESSION_ID == s1.SESSION_ID))
+                             //                          select par.USER_ID).Count(),  
+
+                             totalparticipants = (int)(from r in dbpollContext.RESPONSES
+                                                       where (r.ANSWER_ID==a.ANSWER_ID && r.FEEDBACK==a.ANSWER1)
+                                                       select r.USER_ID).Count(),
                          }
-                        );
+
+                ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
+
 
 
             return query.ToList();
