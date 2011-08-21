@@ -54,7 +54,7 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewData["Message"] = "Welcome "+username;
+            ViewData["Message"] = "Welcome " + username;
             return View();
         }
 

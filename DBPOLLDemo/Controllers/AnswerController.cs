@@ -76,7 +76,7 @@ namespace DBPOLLDemo.Controllers
         // POST: /Answer/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(String answer, int correct, String weight, int questionid, int ansnum, int qid)
+        public ActionResult Create(String answer, int correct, String weight, int questionid, int ansnum)
         {
             if (Session["uid"] == null)
             {
@@ -88,8 +88,6 @@ namespace DBPOLLDemo.Controllers
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
-
-            int maxAns = new answerModel().getMaxID();
 
             if (!int.TryParse(weight, out weightInt) || weight == null)
             {
@@ -108,10 +106,9 @@ namespace DBPOLLDemo.Controllers
 
                 try
                 {
-                    answerModel a = new answerModel();
-                    a.createAnswer(answer, correct, int.Parse(weight), ansnum, qid);
+                    new answerModel().createAnswer(answer, correct, int.Parse(weight), ansnum, questionid);
 
-                    ViewData["created"] = "Created Answer: " + a.answer;
+                    ViewData["created"] = "Created Answer: " + answer;
 
                     ViewData["questionid"] = questionid;
                     return View();

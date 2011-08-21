@@ -314,14 +314,14 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
-        public void createQuestion(int qid, int questiontype, String question, int chartstyle, int questnum, int pollid)
+        public void createQuestion(int questiontype, String question, int chartstyle, int questnum, int pollid)
         {
             try
             {
 
                 QUESTION create = new QUESTION();
 
-                create.QUESTION_ID = qid;
+                create.QUESTION_ID = getMaxID() + 1;
                 create.QUESTION_TYPE = questiontype;
                 create.NUM = questnum;
                 create.QUESTION1 = question;

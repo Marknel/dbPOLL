@@ -241,7 +241,7 @@ namespace DBPOLLDemo.Controllers
                 try
                 {
                     //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
-                    new questionModel().createQuestion((maxqid + 1), shortanswertype, question, chartstyle, numInt, pollid);
+                    new questionModel().createQuestion(shortanswertype, question, chartstyle, numInt, pollid);
                     ViewData["created"] = "Created Question: " + question;
                     return View();
                 }
@@ -279,9 +279,6 @@ namespace DBPOLLDemo.Controllers
             int numInt = 0;
             bool errorspresent = false;
 
-            //returns the max question ID in the questions table
-            int maxqid = new questionModel().getMaxID();
-
             if (question == null)
             {
                 ViewData["questionerror"] = "Above field must contain a question!";
@@ -305,7 +302,7 @@ namespace DBPOLLDemo.Controllers
                 try
                 {
 
-                    new questionModel().createQuestion((maxqid + 1), questiontype, question, chartstyle, numInt, pollid);
+                    new questionModel().createQuestion(questiontype, question, chartstyle, numInt, pollid);
 
                     ViewData["id"] = pollid;
                     ViewData["created"] = "Created Question: " + question;

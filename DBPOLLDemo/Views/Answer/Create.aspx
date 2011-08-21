@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLContext.ANSWER>" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.answerModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Create
@@ -14,6 +14,11 @@
 
         <fieldset>
             <legend>Create Answer</legend>
+             <p>
+                <label for="weight">Answer Number:</label>
+                <%= Html.TextBox("ansnum")%>
+                <%= Html.ValidationMessage("ansum", "*")%>
+            </p>
             <p>
                 <label for="answer">Answer Text:</label>
                 <%= Html.TextBox("answer")%>

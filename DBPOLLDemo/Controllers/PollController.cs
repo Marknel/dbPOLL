@@ -126,7 +126,7 @@ namespace DBPOLLDemo.Controllers
             pollModel poll = new pollModel(pollid);
             poll.deletePoll();
 
-            return RedirectToAction("Index", "Main");
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -174,7 +174,7 @@ namespace DBPOLLDemo.Controllers
         // POST: /Main/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(String name, int latitude, int longitude, int created, Nullable<DateTime> expiresat)
+        public ActionResult Create(String name, int latitude, int longitude, int createdby, Nullable<DateTime> expiresat)
         {
             if (Session["uid"] == null)
             {
@@ -183,7 +183,7 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                new pollModel().createPoll(name, longitude, latitude, created, expiresat);
+                new pollModel().createPoll(name, longitude, latitude, createdby, expiresat);
 
                 return View();
             }
