@@ -8,11 +8,9 @@ namespace DBPOLLDemo.Controllers
 {
     public class HelpController : Controller
     {
-        //  
-        // GET: /HelloWorld/  
-
         
-
+        
+		// Detect the URL , then Detect the page and return the related help page
         public ActionResult Index() 
       
         {
@@ -24,10 +22,8 @@ namespace DBPOLLDemo.Controllers
             }
 
             //Return Absolute path of URLReffer in String
-            //if (Request.UrlReferrer.AbsolutePath.ToString() == null)
-            //{
-            //     RedirectToAction("Home", "Home");
-            //} 
+            //
+
 
             try
             {
@@ -72,13 +68,18 @@ namespace DBPOLLDemo.Controllers
         }
 
 
-
         //  
-        // GET: /HelloWorld/Welcome/  
+        // Link to different Help View
 
-        public string help2()
+        public ActionResult Site(string idi) 
         {
-            return "welcome to my worlds";
+			// Basic check to see if the user is Authenticated.
+            
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+		            return View(idi);
         }
     }
 }

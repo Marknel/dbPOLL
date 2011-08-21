@@ -30,27 +30,60 @@
 	<div id="contentwrapper">
 		<div id="content">
 		<a name="top"></a>
-            <h2>Question Create Help</h2><hr />
-		    <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">In this page the user can 
-                choose the type of question to create (short answer question or multiple choice) <o:p></o:p>
-                </span>
-            </p>
-            <p class="MsoNormal">
-                <b><span lang="EN-US" style="mso-ansi-language:EN-US">Creating a short answer 
-                question:<o:p></o:p></span></b></p>
-            <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Click on <b>Short Answer</b><o:p></o:p></span></p>
-            <p class="MsoNormal">
-                <b><span lang="EN-US" style="mso-ansi-language:EN-US">Creating a multiple 
-                choice:<o:p></o:p></span></b></p>
-            <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Click on <b>Multiple Choice</b><o:p></o:p></span></p>
-		<p> &nbsp;<p>
-		
-    <img src="../../Content/QuestionCreate.jpg" width="800" />
-		
-		</div> <!-- end of content div-->
+		<h2>Index Help</h2><hr />
+          <form id="form1" runat="server">
+
+      <h3>TreeView Declarative Syntax Example</h3>
+      <a href="file.pdf"><img src="help_book-icon.gif" alt="Manual" title="Manual" /></a>
+
+      <a href="javascript:window.print()"><img src="help_book-icon.gif" alt="Print" title="Print"/> </a>
+      
+      
+      <a href="Site.aspx">Site.aspx</a>
+     
+<a href="QuestionCreateMultipleChoice.aspx">QuestionCreateMultipleChoice.aspx</a>
+
+
+      <asp:TreeView id="SampleTreeView" 
+        runat="server">
+        
+        <Nodes>
+            
+          <asp:TreeNode Value="Home" 
+            NavigateUrl="/Help/Site?idi=HomeHome" 
+            Text="  Getting Started"
+            Target="Content" 
+            Expanded="True" ImageUrl="../../Content/help_manual.png">
+
+            <asp:TreeNode Value="Page 1" 
+              NavigateUrl="/Help/Site?idi=HomeHome" 
+              Text="Homepage Help"
+              Target="Content" Expanded="False" ImageUrl="../../Content/help_manual.png"> 
+              
+
+              <asp:TreeNode Value="Section 1" 
+                NavigateUrl="http://www.google.com" 
+                Text="Section 1"
+                Target="Content"/>
+
+            </asp:TreeNode>              
+
+            <asp:TreeNode Value="Page 2" 
+              NavigateUrl="http://www.google.com"
+              Text="Page 2"
+              Target="Content">
+
+            </asp:TreeNode> 
+
+          </asp:TreeNode>
+
+        </Nodes>
+
+      </asp:TreeView>
+
+    </form>
+       
+       </div> <!-- end of content div-->
 	</div> <!-- end of contentwrapper div-->
 </div> <!-- end of wrapper div -->
 
