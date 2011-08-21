@@ -30,56 +30,38 @@
 	<div id="contentwrapper">
 		<div id="content">
 		<a name="top"></a>
-		<h2>Question Edit Help</h2><hr />
+		<h2>Create Multiple Choice Help</h2><hr />
 		    <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">In this page you can edit a 
-                question by editing question type, question text, response chart and question in 
-                sequence.<o:p></o:p></span></p>
+                <span lang="EN-US" style="mso-ansi-language:EN-US">In this page the user can 
+                create a multiple answer question for a poll.<o:p></o:p></span></p>
             <p class="MsoNormal">
-                <b><span lang="EN-US" style="mso-ansi-language:EN-US">- Question Type: </span>
-                </b><span lang="EN-US" style="mso-ansi-language:EN-US">
-                <span style="mso-spacerun:yes">&nbsp;</span>You can choose of these options:<o:p></o:p></span></p>
+                <b><span lang="EN-US" style="mso-ansi-language:EN-US">- Short Answer Type:
+                </span></b><span lang="EN-US" style="mso-ansi-language:EN-US">
+                <span style="mso-spacerun:yes">&nbsp;</span>choose of these options:<o:p></o:p></span></p>
             <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Short Answer Numeric 
-                Responses Only<o:p></o:p></span></p>
+                <span lang="EN-US" style="mso-ansi-language:EN-US">Standard, Demographic , 
+                Comparative and Ranking<o:p></o:p></span></p>
             <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Short Answer Alphanumeric 
-                Responses only <o:p></o:p></span>
-            </p>
+                <b><span lang="EN-US" style="mso-ansi-language:EN-US">- Number of Question:<o:p></o:p></span></b></p>
             <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Multiple Choice: Standard<o:p></o:p></span></p>
+                <span lang="EN-US" style="mso-ansi-language:EN-US">Enter number of question<o:p></o:p></span></p>
             <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Multiple Choice: Demographic <o:p></o:p>
-                </span>
-            </p>
+                <b><span lang="EN-US" style="mso-ansi-language:EN-US">- Question Text:<o:p></o:p></span></b></p>
             <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Multiple Choice:<span 
-                    style="mso-spacerun:yes">&nbsp; </span>Comparative<o:p></o:p></span></p>
-            <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">Multiple Choice:
-                <span style="mso-spacerun:yes">&nbsp;</span>Ranking<o:p></o:p></span></p>
+                <span lang="EN-US" style="mso-ansi-language:EN-US">Enter a question text<o:p></o:p></span></p>
             <p class="MsoNormal">
                 <b><span lang="EN-US" style="mso-ansi-language:EN-US">- Response Chart: </span>
-                </b><span lang="EN-US" style="mso-ansi-language:EN-US">You can choose of these 
-                options:<b><o:p></o:p></b></span></p>
+                </b><span lang="EN-US" style="mso-ansi-language:EN-US">choose of these options:<b><o:p></o:p></b></span></p>
             <p class="MsoNormal">
                 <span lang="EN-US" style="mso-ansi-language:EN-US">Horizantal Bar Graph , 
                 Vertical Bar Graph , Line Graph , Pie Chart<o:p></o:p></span></p>
             <p class="MsoNormal">
-                <b><span lang="EN-US" style="mso-ansi-language:EN-US">- Saving the question: <o:p></o:p>
-                </span></b>
-            </p>
-            <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">After editing, clock on <b>
-                Save Changes</b> <o:p></o:p>
-                </span>
-            </p>
-            <p class="MsoNormal">
-                <o:p></o:p>
-            </p>
-            <p>
+                <b><span lang="EN-US" style="mso-ansi-language:EN-US">- Creating the question:<o:p></o:p></span></b></p>
+            <span lang="EN-US" 
+                style="line-height: 115%; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-hansi-theme-font: minor-latin; mso-bidi-font-family: Arial; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+            Click on Create Question</span><p> &nbsp;<p>
 		
-    <img src="../../Content/QuestionEdit.jpg" width="800" />
+    <img src="../../Content/QuestionCreateMultipleChoice.jpg" width="800" />
 		
 		</div> <!-- end of content div-->
 	</div> <!-- end of contentwrapper div-->
