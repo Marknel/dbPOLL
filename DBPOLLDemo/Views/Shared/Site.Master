@@ -39,7 +39,10 @@
                                     <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
                                     <li><%= Html.ActionLink("Help", "Index", "Help")%></li> 
-                                    <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
+                                    <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
+                                       { %>
+                                        <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
+                                    <% } %>
                                 <%}
                                 else if (Session["uid"].ToString().Trim() == "")
                                 {%>
@@ -47,7 +50,10 @@
                                     <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
                                     <li><%= Html.ActionLink("Help", "Index", "Help")%></li>
-                                    <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
+                                    <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
+                                       { %>
+                                        <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
+                                    <% } %>
                                 <%}
                                 else
                                 {%>
@@ -55,7 +61,10 @@
                                     <li><%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
                                     <li><%= Html.ActionLink("Modify Polls", "Index", "Poll")%></li>
                                     <li><%= Html.ActionLink("Help", "Index", "Help")%></li> 
-                                    <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
+                                    <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
+                                       { %>
+                                        <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
+                                    <% } %>
                                 <%} %>
                 </ul>
             

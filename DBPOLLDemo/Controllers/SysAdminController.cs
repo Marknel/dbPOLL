@@ -20,7 +20,11 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index()
         {
-
+            // Basic check to see if the user is Authenticated.
+            if (Session["sysadmin"] != "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             //Export(new userModel().displayPollAdminUsers());
 
             return View(new userModel().displayPollAdminUsers());
@@ -52,10 +56,10 @@ namespace DBPOLLDemo.Controllers
         {
 
             // Basic check to see if the user is Authenticated.
-            //if (Session["uid"] == null)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
+            if (Session["sysadmin"] != "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
 
             userModel q = new userModel(UserID);
@@ -71,10 +75,11 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Edit(int UserID)
         {
-            //if (Session["uid"] == null)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
+            // Basic check to see if the user is Authenticated.
+            if (Session["sysadmin"] != "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View(new userModel().getUser(UserID));
         }
@@ -113,7 +118,11 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Create()
         {
-            //if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
+            // Basic check to see if the user is Authenticated.
+            if (Session["sysadmin"] != "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View();
         }
@@ -132,6 +141,11 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(String name, String email, string expiry)
         {
+            // Basic check to see if the user is Authenticated.
+            if (Session["sysadmin"] != "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string password = name;
             bool errorspresent = false;
             //if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
