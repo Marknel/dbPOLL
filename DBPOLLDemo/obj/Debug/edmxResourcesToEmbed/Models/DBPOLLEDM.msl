@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DBPOLLModelStoreContainer" CdmEntityContainer="DBPOLLEntities">
+  <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="DBPOLLEntities">
     <EntitySetMapping Name="ANSWERS">
-      <EntityTypeMapping TypeName="DBPOLLModel.ANSWER">
+      <EntityTypeMapping TypeName="Models.ANSWER">
         <MappingFragment StoreEntitySet="ANSWERS">
           <ScalarProperty Name="ANSWER_ID" ColumnName="ANSWER_ID" />
           <ScalarProperty Name="ANSWER1" ColumnName="ANSWER" />
@@ -17,7 +17,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MANAGEMENTS">
-      <EntityTypeMapping TypeName="DBPOLLModel.MANAGEMENT">
+      <EntityTypeMapping TypeName="Models.MANAGEMENT">
         <MappingFragment StoreEntitySet="MANAGEMENTS">
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
@@ -27,7 +27,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MESSAGES">
-      <EntityTypeMapping TypeName="DBPOLLModel.MESSAGE">
+      <EntityTypeMapping TypeName="Models.MESSAGE">
         <MappingFragment StoreEntitySet="MESSAGES">
           <ScalarProperty Name="MESSAGE_ID" ColumnName="MESSAGE_ID" />
           <ScalarProperty Name="MESSAGE1" ColumnName="MESSAGE" />
@@ -40,7 +40,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OBJECTS">
-      <EntityTypeMapping TypeName="DBPOLLModel.OBJECT">
+      <EntityTypeMapping TypeName="Models.OBJECT">
         <MappingFragment StoreEntitySet="OBJECTS">
           <ScalarProperty Name="OBJ_ID" ColumnName="OBJ_ID" />
           <ScalarProperty Name="OBJ_TYPE" ColumnName="OBJ_TYPE" />
@@ -50,31 +50,31 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PARTICIPANTS">
-      <EntityTypeMapping TypeName="DBPOLLModel.PARTICIPANT">
+      <EntityTypeMapping TypeName="Models.PARTICIPANT">
         <MappingFragment StoreEntitySet="PARTICIPANTS">
           <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
           <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-          <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
+          <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="POLLS">
-      <EntityTypeMapping TypeName="DBPOLLModel.POLL">
+      <EntityTypeMapping TypeName="Models.POLL">
         <MappingFragment StoreEntitySet="POLLS">
           <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
           <ScalarProperty Name="POLL_NAME" ColumnName="POLL_NAME" />
-          <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
-          <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
           <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
           <ScalarProperty Name="EXPIRES_AT" ColumnName="EXPIRES_AT" />
           <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
           <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
+          <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+          <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="QUESTIONS">
-      <EntityTypeMapping TypeName="DBPOLLModel.QUESTION">
+      <EntityTypeMapping TypeName="Models.QUESTION">
         <MappingFragment StoreEntitySet="QUESTIONS">
           <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
           <ScalarProperty Name="QUESTION_TYPE" ColumnName="QUESTION_TYPE" />
@@ -86,23 +86,40 @@
           <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
           <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
           <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
+          <ScalarProperty Name="PARENT_KEY" ColumnName="PARENT_KEY" />
+          <ScalarProperty Name="CHILD_KEY" ColumnName="CHILD_KEY" />
+          <ScalarProperty Name="DEMOGRAPHIC_TYPE" ColumnName="DEMOGRAPHIC_TYPE" />
+          <ScalarProperty Name="DEMOGRAPHIC_DEPTH" ColumnName="DEMOGRAPHIC_DEPTH" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RESPONSES">
-      <EntityTypeMapping TypeName="DBPOLLModel.RESPONS">
+      <EntityTypeMapping TypeName="Models.RESPONS">
         <MappingFragment StoreEntitySet="RESPONSES">
           <ScalarProperty Name="RESPONSE_ID" ColumnName="RESPONSE_ID" />
           <ScalarProperty Name="FEEDBACK" ColumnName="FEEDBACK" />
           <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
           <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
           <ScalarProperty Name="ANSWER_ID" ColumnName="ANSWER_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SESSIONS">
+      <EntityTypeMapping TypeName="Models.SESSION">
+        <MappingFragment StoreEntitySet="SESSIONS">
+          <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
+          <ScalarProperty Name="SESSION_NAME" ColumnName="SESSION_NAME" />
+          <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+          <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+          <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
+          <ScalarProperty Name="SESSION_TIME" ColumnName="SESSION_TIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SYSADMINS">
-      <EntityTypeMapping TypeName="DBPOLLModel.SYSADMIN">
+      <EntityTypeMapping TypeName="Models.SYSADMIN">
         <MappingFragment StoreEntitySet="SYSADMINS">
           <ScalarProperty Name="SYSADMINS_ID" ColumnName="SYSADMINS_ID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
@@ -114,7 +131,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="USERS">
-      <EntityTypeMapping TypeName="DBPOLLModel.USER">
+      <EntityTypeMapping TypeName="Models.USER">
         <MappingFragment StoreEntitySet="USERS">
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="USER_TYPE" ColumnName="USER_TYPE" />

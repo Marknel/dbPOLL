@@ -25,8 +25,8 @@ namespace DBPOLLDemo.Models
         public int createdby;
         public DateTime createdAt;
         public DateTime expiresat;
-        public decimal longitude;
-        public decimal latitude;
+        public decimal? longitude;
+        public decimal? latitude;
         public String createdmaster;
         public String createdcreator1;
         public int total;
@@ -173,9 +173,9 @@ namespace DBPOLLDemo.Models
                             createdcreator1 = (String)(from g in dbpollContext.USERS
                                                        where (g.USER_ID == it.CREATED_BY)
                                                        select g.NAME).FirstOrDefault(),
-                            total = (int)(from par in dbpollContext.PARTICIPANTS
-                                          where (par.POLL_ID==p.POLL_ID)
-                                          select par.USER_ID).Count(),            
+                            //total = (int)(from par in dbpollContext.PARTICIPANTS
+                                         // where (par.POLL_ID==p.POLL_ID)
+                                       //   select par.USER_ID).Count(),            
                         };
         
             return query.ToList(); 

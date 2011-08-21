@@ -38,7 +38,7 @@
                 
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.QuestionNumber) %>
+                <%= Html.Encode(item.questnum) %>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.Question) %>

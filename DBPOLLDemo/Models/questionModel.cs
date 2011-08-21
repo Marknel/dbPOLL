@@ -25,7 +25,7 @@ namespace DBPOLLDemo.Models
         public int numberofresponses;
         public int chartstyle;
         public int shortanswertype;
-        public int questnum;
+        public int? questnum;
         public DateTime createdat;
         public DateTime modifiedat;
         public int pollid;
@@ -39,7 +39,6 @@ namespace DBPOLLDemo.Models
 
         public String Question { get { return question; } }
         public DateTime QuestionCreated { get { return createdat; } }
-        public int QuestionNumber { get { return questnum; } }
         public int QuestionID { get { return questionid; } }
         public int QuestionType { get { return questiontype; } }
 
@@ -213,7 +212,7 @@ namespace DBPOLLDemo.Models
             var query = (from u in dbpollContext.USERS
                          from p in dbpollContext.PARTICIPANTS
                          where (u.USER_ID == p.USER_ID)
-                         orderby p.POLL_ID ascending
+                         //orderby p.POLL_ID ascending
                          select new questionModel
                          {
                              pollid = q.POLL_ID,

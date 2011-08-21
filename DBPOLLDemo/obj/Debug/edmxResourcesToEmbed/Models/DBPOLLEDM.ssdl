@@ -1,77 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DBPOLLModel.Store" Alias="Self" Provider="Devart.Data.Oracle" ProviderManifestToken="ORA" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-  <EntityContainer Name="DBPOLLModelStoreContainer">
-    <EntitySet Name="ANSWERS" EntityType="DBPOLLModel.Store.ANSWERS" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="MANAGEMENTS" EntityType="DBPOLLModel.Store.MANAGEMENTS" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="MESSAGES" EntityType="DBPOLLModel.Store.MESSAGES" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="OBJECTS" EntityType="DBPOLLModel.Store.OBJECTS" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="PARTICIPANTS" EntityType="DBPOLLModel.Store.PARTICIPANTS" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="POLLS" EntityType="DBPOLLModel.Store.POLLS" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="QUESTIONS" EntityType="DBPOLLModel.Store.QUESTIONS" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="RESPONSES" EntityType="DBPOLLModel.Store.RESPONSES" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="SYSADMINS" EntityType="DBPOLLModel.Store.SYSADMINS" store:Type="Tables" Schema="CSSE3004GG" />
-    <EntitySet Name="USERS" EntityType="DBPOLLModel.Store.USERS" store:Type="Tables" Schema="CSSE3004GG" />
-    <AssociationSet Name="CSSE3004GG_SYS_C001254554" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254554">
-      <End Role="ANSWERS" EntitySet="ANSWERS" />
-      <End Role="ANSWERS1" EntitySet="ANSWERS" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254568" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254568">
-      <End Role="ANSWERS" EntitySet="ANSWERS" />
-      <End Role="RESPONSES" EntitySet="RESPONSES" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254534" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254534">
-      <End Role="POLLS" EntitySet="POLLS" />
-      <End Role="MANAGEMENTS" EntitySet="MANAGEMENTS" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254541" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254541">
-      <End Role="POLLS" EntitySet="POLLS" />
-      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254560" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254560">
-      <End Role="POLLS" EntitySet="POLLS" />
-      <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254576" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254576">
-      <End Role="POLLS" EntitySet="POLLS" />
-      <End Role="MESSAGES" EntitySet="MESSAGES" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254547" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254547">
-      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
-      <End Role="OBJECTS" EntitySet="OBJECTS" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254553" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254553">
-      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
-      <End Role="ANSWERS" EntitySet="ANSWERS" />
-    </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254520" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254520">
+<Schema Namespace="Models.Store" Alias="Self" Provider="Devart.Data.Oracle" ProviderManifestToken="ORA" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="ANSWERS" EntityType="Models.Store.ANSWERS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="MANAGEMENTS" EntityType="Models.Store.MANAGEMENTS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="MESSAGES" EntityType="Models.Store.MESSAGES" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="OBJECTS" EntityType="Models.Store.OBJECTS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="PARTICIPANTS" EntityType="Models.Store.PARTICIPANTS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="POLLS" EntityType="Models.Store.POLLS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="QUESTIONS" EntityType="Models.Store.QUESTIONS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="RESPONSES" EntityType="Models.Store.RESPONSES" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="SESSIONS" EntityType="Models.Store.SESSIONS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="SYSADMINS" EntityType="Models.Store.SYSADMINS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="USERS" EntityType="Models.Store.USERS" store:Type="Tables" Schema="CSSE3004GG" />
+    <AssociationSet Name="CSSE3004GG_SYS_C001273217" Association="Models.Store.CSSE3004GG_SYS_C001273217">
       <End Role="SYSADMINS" EntitySet="SYSADMINS" />
       <End Role="USERS" EntitySet="USERS" />
     </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254521" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254521">
+    <AssociationSet Name="CSSE3004GG_SYS_C001273218" Association="Models.Store.CSSE3004GG_SYS_C001273218">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="USERS1" EntitySet="USERS" />
     </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254528" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254528">
+    <AssociationSet Name="CSSE3004GG_SYS_C001273223" Association="Models.Store.CSSE3004GG_SYS_C001273223">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="POLLS" EntitySet="POLLS" />
     </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254533" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254533">
+    <AssociationSet Name="CSSE3004GG_SYS_C001273229" Association="Models.Store.CSSE3004GG_SYS_C001273229">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="SESSIONS" EntitySet="SESSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273234" Association="Models.Store.CSSE3004GG_SYS_C001273234">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="MANAGEMENTS" EntitySet="MANAGEMENTS" />
     </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254559" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254559">
+    <AssociationSet Name="CSSE3004GG_SYS_C001273235" Association="Models.Store.CSSE3004GG_SYS_C001273235">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="MANAGEMENTS" EntitySet="MANAGEMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273242" Association="Models.Store.CSSE3004GG_SYS_C001273242">
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+      <End Role="QUESTIONS1" EntitySet="QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273243" Association="Models.Store.CSSE3004GG_SYS_C001273243">
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+      <End Role="QUESTIONS1" EntitySet="QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273244" Association="Models.Store.CSSE3004GG_SYS_C001273244">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273250" Association="Models.Store.CSSE3004GG_SYS_C001273250">
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+      <End Role="OBJECTS" EntitySet="OBJECTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273256" Association="Models.Store.CSSE3004GG_SYS_C001273256">
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+      <End Role="ANSWERS" EntitySet="ANSWERS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273257" Association="Models.Store.CSSE3004GG_SYS_C001273257">
+      <End Role="ANSWERS" EntitySet="ANSWERS" />
+      <End Role="ANSWERS1" EntitySet="ANSWERS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273262" Association="Models.Store.CSSE3004GG_SYS_C001273262">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
     </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254567" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254567">
+    <AssociationSet Name="CSSE3004GG_SYS_C001273263" Association="Models.Store.CSSE3004GG_SYS_C001273263">
+      <End Role="SESSIONS" EntitySet="SESSIONS" />
+      <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273271" Association="Models.Store.CSSE3004GG_SYS_C001273271">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="RESPONSES" EntitySet="RESPONSES" />
     </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254575" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254575">
+    <AssociationSet Name="CSSE3004GG_SYS_C001273272" Association="Models.Store.CSSE3004GG_SYS_C001273272">
+      <End Role="ANSWERS" EntitySet="ANSWERS" />
+      <End Role="RESPONSES" EntitySet="RESPONSES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273273" Association="Models.Store.CSSE3004GG_SYS_C001273273">
+      <End Role="SESSIONS" EntitySet="SESSIONS" />
+      <End Role="RESPONSES" EntitySet="RESPONSES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273280" Association="Models.Store.CSSE3004GG_SYS_C001273280">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="MESSAGES" EntitySet="MESSAGES" />
     </AssociationSet>
-    <AssociationSet Name="CSSE3004GG_SYS_C001254577" Association="DBPOLLModel.Store.CSSE3004GG_SYS_C001254577">
+    <AssociationSet Name="CSSE3004GG_SYS_C001273281" Association="Models.Store.CSSE3004GG_SYS_C001273281">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="MESSAGES" EntitySet="MESSAGES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273282" Association="Models.Store.CSSE3004GG_SYS_C001273282">
       <End Role="USERS" EntitySet="USERS" />
       <End Role="MESSAGES" EntitySet="MESSAGES" />
     </AssociationSet>
@@ -124,12 +141,12 @@
   <EntityType Name="PARTICIPANTS">
     <Key>
       <PropertyRef Name="USER_ID" />
-      <PropertyRef Name="POLL_ID" />
+      <PropertyRef Name="SESSION_ID" />
     </Key>
     <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
     <Property Name="MODIFIED_AT" Type="DATE" />
     <Property Name="USER_ID" Type="int" Nullable="false" />
-    <Property Name="POLL_ID" Type="int" Nullable="false" />
+    <Property Name="SESSION_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="POLLS">
     <Key>
@@ -137,12 +154,12 @@
     </Key>
     <Property Name="POLL_ID" Type="int" Nullable="false" />
     <Property Name="POLL_NAME" Type="VARCHAR2" MaxLength="256" />
-    <Property Name="LONGITUDE" Type="FLOAT" Nullable="false" />
-    <Property Name="LATITUDE" Type="FLOAT" Nullable="false" />
     <Property Name="CREATED_BY" Type="int" Nullable="false" />
     <Property Name="EXPIRES_AT" Type="DATE" />
     <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
     <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="LONGITUDE" Type="decimal" />
+    <Property Name="LATITUDE" Type="decimal" />
   </EntityType>
   <EntityType Name="QUESTIONS">
     <Key>
@@ -158,6 +175,10 @@
     <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
     <Property Name="MODIFIED_AT" Type="DATE" />
     <Property Name="POLL_ID" Type="int" Nullable="false" />
+    <Property Name="PARENT_KEY" Type="int" />
+    <Property Name="CHILD_KEY" Type="int" />
+    <Property Name="DEMOGRAPHIC_TYPE" Type="VARCHAR2" MaxLength="256" />
+    <Property Name="DEMOGRAPHIC_DEPTH" Type="int" />
   </EntityType>
   <EntityType Name="RESPONSES">
     <Key>
@@ -168,7 +189,19 @@
     <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
     <Property Name="MODIFIED_AT" Type="DATE" />
     <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="SESSION_ID" Type="int" Nullable="false" />
     <Property Name="ANSWER_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SESSIONS">
+    <Key>
+      <PropertyRef Name="SESSION_ID" />
+    </Key>
+    <Property Name="SESSION_ID" Type="int" Nullable="false" />
+    <Property Name="SESSION_NAME" Type="VARCHAR2" MaxLength="256" />
+    <Property Name="LONGITUDE" Type="FLOAT" Nullable="false" />
+    <Property Name="LATITUDE" Type="FLOAT" Nullable="false" />
+    <Property Name="POLL_ID" Type="int" />
+    <Property Name="SESSION_TIME" Type="DATE" Nullable="false" />
   </EntityType>
   <EntityType Name="SYSADMINS">
     <Key>
@@ -198,119 +231,9 @@
     <Property Name="MODIFIED_AT" Type="DATE" />
     <Property Name="SYSADMIN_ID" Type="int" />
   </EntityType>
-  <Association Name="CSSE3004GG_SYS_C001254554">
-    <End Role="ANSWERS" Type="DBPOLLModel.Store.ANSWERS" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="ANSWERS1" Type="DBPOLLModel.Store.ANSWERS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ANSWERS">
-        <PropertyRef Name="ANSWER_ID" />
-      </Principal>
-      <Dependent Role="ANSWERS1">
-        <PropertyRef Name="UPDATED_TO" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254568">
-    <End Role="ANSWERS" Type="DBPOLLModel.Store.ANSWERS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="RESPONSES" Type="DBPOLLModel.Store.RESPONSES" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ANSWERS">
-        <PropertyRef Name="ANSWER_ID" />
-      </Principal>
-      <Dependent Role="RESPONSES">
-        <PropertyRef Name="ANSWER_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254534">
-    <End Role="POLLS" Type="DBPOLLModel.Store.POLLS" Multiplicity="1" />
-    <End Role="MANAGEMENTS" Type="DBPOLLModel.Store.MANAGEMENTS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="POLLS">
-        <PropertyRef Name="POLL_ID" />
-      </Principal>
-      <Dependent Role="MANAGEMENTS">
-        <PropertyRef Name="POLL_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254541">
-    <End Role="POLLS" Type="DBPOLLModel.Store.POLLS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="QUESTIONS" Type="DBPOLLModel.Store.QUESTIONS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="POLLS">
-        <PropertyRef Name="POLL_ID" />
-      </Principal>
-      <Dependent Role="QUESTIONS">
-        <PropertyRef Name="POLL_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254560">
-    <End Role="POLLS" Type="DBPOLLModel.Store.POLLS" Multiplicity="1" />
-    <End Role="PARTICIPANTS" Type="DBPOLLModel.Store.PARTICIPANTS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="POLLS">
-        <PropertyRef Name="POLL_ID" />
-      </Principal>
-      <Dependent Role="PARTICIPANTS">
-        <PropertyRef Name="POLL_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254576">
-    <End Role="POLLS" Type="DBPOLLModel.Store.POLLS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="MESSAGES" Type="DBPOLLModel.Store.MESSAGES" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="POLLS">
-        <PropertyRef Name="POLL_ID" />
-      </Principal>
-      <Dependent Role="MESSAGES">
-        <PropertyRef Name="POLL_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254547">
-    <End Role="QUESTIONS" Type="DBPOLLModel.Store.QUESTIONS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="OBJECTS" Type="DBPOLLModel.Store.OBJECTS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="QUESTIONS">
-        <PropertyRef Name="QUESTION_ID" />
-      </Principal>
-      <Dependent Role="OBJECTS">
-        <PropertyRef Name="QUESTION_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254553">
-    <End Role="QUESTIONS" Type="DBPOLLModel.Store.QUESTIONS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="ANSWERS" Type="DBPOLLModel.Store.ANSWERS" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="QUESTIONS">
-        <PropertyRef Name="QUESTION_ID" />
-      </Principal>
-      <Dependent Role="ANSWERS">
-        <PropertyRef Name="QUESTION_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CSSE3004GG_SYS_C001254520">
-    <End Role="SYSADMINS" Type="DBPOLLModel.Store.SYSADMINS" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273217">
+    <End Role="SYSADMINS" Type="Models.Store.SYSADMINS" Multiplicity="0..1" />
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SYSADMINS">
         <PropertyRef Name="SYSADMINS_ID" />
@@ -320,11 +243,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CSSE3004GG_SYS_C001254521">
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="USERS1" Type="DBPOLLModel.Store.USERS" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273218">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="0..1" />
+    <End Role="USERS1" Type="Models.Store.USERS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_ID" />
@@ -334,11 +255,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CSSE3004GG_SYS_C001254528">
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="POLLS" Type="DBPOLLModel.Store.POLLS" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273223">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_ID" />
@@ -348,9 +267,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CSSE3004GG_SYS_C001254533">
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="1" />
-    <End Role="MANAGEMENTS" Type="DBPOLLModel.Store.MANAGEMENTS" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273229">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="0..1" />
+    <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="SESSIONS">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273234">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="MANAGEMENTS" Type="Models.Store.MANAGEMENTS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_ID" />
@@ -360,9 +291,99 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CSSE3004GG_SYS_C001254559">
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="1" />
-    <End Role="PARTICIPANTS" Type="DBPOLLModel.Store.PARTICIPANTS" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273235">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1" />
+    <End Role="MANAGEMENTS" Type="Models.Store.MANAGEMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="MANAGEMENTS">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273242">
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="0..1" />
+    <End Role="QUESTIONS1" Type="Models.Store.QUESTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTIONS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="QUESTIONS1">
+        <PropertyRef Name="CHILD_KEY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273243">
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="0..1" />
+    <End Role="QUESTIONS1" Type="Models.Store.QUESTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTIONS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="QUESTIONS1">
+        <PropertyRef Name="PARENT_KEY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273244">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="QUESTIONS">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273250">
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OBJECTS" Type="Models.Store.OBJECTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTIONS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="OBJECTS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273256">
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="1" />
+    <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTIONS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="ANSWERS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273257">
+    <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ANSWERS1" Type="Models.Store.ANSWERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANSWERS">
+        <PropertyRef Name="ANSWER_ID" />
+      </Principal>
+      <Dependent Role="ANSWERS1">
+        <PropertyRef Name="UPDATED_TO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273262">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_ID" />
@@ -372,11 +393,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CSSE3004GG_SYS_C001254567">
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="RESPONSES" Type="DBPOLLModel.Store.RESPONSES" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273263">
+    <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="1" />
+    <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESSIONS">
+        <PropertyRef Name="SESSION_ID" />
+      </Principal>
+      <Dependent Role="PARTICIPANTS">
+        <PropertyRef Name="SESSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273271">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_ID" />
@@ -386,11 +417,33 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CSSE3004GG_SYS_C001254575">
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="MESSAGES" Type="DBPOLLModel.Store.MESSAGES" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273272">
+    <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="1" />
+    <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANSWERS">
+        <PropertyRef Name="ANSWER_ID" />
+      </Principal>
+      <Dependent Role="RESPONSES">
+        <PropertyRef Name="ANSWER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273273">
+    <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="1" />
+    <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESSIONS">
+        <PropertyRef Name="SESSION_ID" />
+      </Principal>
+      <Dependent Role="RESPONSES">
+        <PropertyRef Name="SESSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273280">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="MESSAGES" Type="Models.Store.MESSAGES" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_ID" />
@@ -400,11 +453,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CSSE3004GG_SYS_C001254577">
-    <End Role="USERS" Type="DBPOLLModel.Store.USERS" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="MESSAGES" Type="DBPOLLModel.Store.MESSAGES" Multiplicity="*" />
+  <Association Name="CSSE3004GG_SYS_C001273281">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1" />
+    <End Role="MESSAGES" Type="Models.Store.MESSAGES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="MESSAGES">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273282">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="MESSAGES" Type="Models.Store.MESSAGES" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="USERS">
         <PropertyRef Name="USER_ID" />

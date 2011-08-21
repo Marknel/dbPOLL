@@ -115,7 +115,7 @@ namespace DBPOLLDemo.Controllers
                 }
                 catch (Exception e)
                 {
-                    ViewData["error1"] = "!ERROR: " + e.Message;
+                    ViewData["error1"] = "!ERROR: " + e.Message +" inner: "+ e.InnerException;
                     ViewData["questionid"] = questionid;
                     return View();
                 }

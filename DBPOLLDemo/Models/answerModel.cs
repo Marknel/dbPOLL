@@ -219,7 +219,7 @@ namespace DBPOLLDemo.Models
                 a.CORRECT = correct;
                 a.WEIGHT = weight;
                 a.NUM = ansnum;
-                a.UPDATED_TO = updatedto; //Every answer created will be the latest version of that answer
+                a.UPDATED_TO = a.ANSWER_ID; //Every answer created will be the latest version of that answer
                 a.CREATED_AT = DateTime.Now;
                 a.MODIFIED_AT = DateTime.Now;
                 a.QUESTION_ID = qid;
