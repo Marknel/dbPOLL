@@ -14,15 +14,13 @@
             <th>Answer</th>
             <th>Weight</th>
             <th>Correct</th>
-            <th>Updated To</th>
         </tr>
 
     <% foreach (var item in Model) { %>
     
         <tr>
             <td><%= Html.ActionLink("Delete", "Delete", new { answerid = item.answerid, questionid = ViewData["questionid"], name = ViewData["name"] })%> |
-                <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%> |
-            
+                <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%>
             </td>
             
             <td>
@@ -38,9 +36,6 @@
                   else { correct = "Yes"; }
             %>
                 <%= Html.Encode(correct)%>
-            </td>
-            <td>
-                <%= Html.Encode(item.updatedto) %>
             </td>
             
         </tr>
