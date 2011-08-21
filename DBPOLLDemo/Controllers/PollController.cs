@@ -10,6 +10,12 @@ using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
 {
+    public class PollAndSessionData
+    {
+        public List<pollModel> pollData { get; set; }
+        public List<pollModel> sessionData { get; set; }
+    }
+
     public class PollController : Controller
     {
         private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
@@ -18,19 +24,18 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index()
         {
-            //return View(pollModel.displayPolls(user));
-            //return View(db.POLLs.ToList());
-            //return View(new pollModel().displayPolls(user));
-
-            //pollModel p = new pollModel(356672, "advdav", (decimal)76.54, (decimal)2.54, 1, DateTime.Now);
-            //p.createPoll();
-
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-                return View(new pollModel().displayPolls());
+            PollAndSessionData pollSession = new PollAndSessionData();
+
+            pollSession.pollData = new pollModel().displayPolls();
+            pollSession.sessionData = new pollModel().displayPollSessions();
+            
+
+                return View(pollSession);
         }
         
         public ActionResult viewPolls()
@@ -129,6 +134,18 @@ namespace DBPOLLDemo.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult DeleteSession(int sessionid)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            pollModel poll = new pollModel(sessionid,1);
+            poll.deleteSession();
+
+            return RedirectToAction("Index", "Poll");
+        }
         //
         // GET: /Main/pollDetails/5
         public ActionResult Details(int id, String name)
@@ -160,6 +177,75 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Main/Create
 
+        public ActionResult CreateSession(int pollID, String pollName)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewData["pollid"] = pollID;
+            ViewData["pollName"] = pollName;
+
+            return View();
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateSession(int pollid, String name, decimal latitude, decimal longitude, String time)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool valid = true;
+            DateTime parsedDate;
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            if (!DateTime.TryParse(time, out parsedDate))
+            {
+
+                if (time == "" || time == null)
+                {
+                    ViewData["date1"] = "Above field must contain a date";
+                }
+                else
+                {
+                    ViewData["date1"] = "Please Enter a correct Date";
+                }
+                valid = false;
+            }
+
+            if (valid == false)
+            {
+                return View();
+            }
+
+            if (parsedDate < DateTime.Now)
+            {
+                ViewData["date1"] = "Date incorrectly in the past.";
+                valid = false;
+            }
+
+            if (valid == true)
+            {
+
+                try
+                {
+                    new pollModel().createSession(pollid, name, latitude, longitude, parsedDate);
+                    return RedirectToAction("Index","Poll");
+                }
+                catch
+                {
+                    return View();
+                }
+            }
+            return View();
+
+        }
+
+
         public ActionResult Create()
         {
             if (Session["uid"] == null)
@@ -170,11 +256,12 @@ namespace DBPOLLDemo.Controllers
             return View();
         } 
 
+
         //
         // POST: /Main/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(String name, int latitude, int longitude, int createdby, Nullable<DateTime> expiresat)
+        public ActionResult Create(String name, int createdby, Nullable<DateTime> expiresat)
         {
             if (Session["uid"] == null)
             {
@@ -183,8 +270,7 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                new pollModel().createPoll(name, longitude, latitude, createdby, expiresat);
-
+                new pollModel().createPoll(name, createdby, expiresat);
                 return View();
             }
             catch
@@ -196,30 +282,103 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Main/Edit/5
 
-        public ActionResult Edit(int id, String name, float longitude, float latitude, int createdby, DateTime createdat)
+        public ActionResult Edit(int id, String name)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-
-            //ViewData["name"] = name;
+            ViewData["name"] = name;
             ViewData["id"] = id;
-            ViewData["longitude"] = longitude;
-            ViewData["latitude"] = latitude;
-            ViewData["createdby"] = createdby;
-            ViewData["createdat"] = createdat;
 
             return View();
         }
+
+        public ActionResult EditSession(String sessionname, int sessionid, int pollid, decimal longitude, decimal latitude, DateTime time)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewData["name"] = sessionname;
+            ViewData["sessionid"] = sessionid;
+            ViewData["pollid"] = pollid;
+            ViewData["longitude"] = longitude;
+            ViewData["latitude"] = latitude;
+            ViewData["time"] = time;
+
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditSession(String name, int sessionid, decimal latitude, decimal longitude, String time)
+        {
+
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool valid = true;
+            DateTime parsedDate;
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            if (!DateTime.TryParse(time, out parsedDate))
+            {
+
+                if (time == "" || time == null)
+                {
+                    ViewData["date1"] = "Above field must contain a date";
+                }
+                else
+                {
+                    ViewData["date1"] = "Please Enter a correct Date";
+                }
+                valid = false;
+            }
+
+            if (valid == false)
+            {
+                return View();
+            }
+
+            if (parsedDate < DateTime.Now)
+            {
+                ViewData["date1"] = "Date incorrectly in the past.";
+                valid = false;
+            }
+
+            if (valid == true)
+            {
+
+                try
+                {
+                    new pollModel().editSession(name, sessionid, latitude, longitude, parsedDate);
+                    return RedirectToAction("Index", "Poll");
+                }
+                catch
+                {
+                    return View();
+                }
+            }
+            return View();
+        }
+
 
         //
         // POST: /Main/Edit/5
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int pollid, String pollname, decimal longitude, decimal latitude, DateTime expiresat, int test)
+        public ActionResult Edit(int pollid, String pollname, int changed)
         {
+            char[] bad = new char[1];
+            bad[0] = 'M';
+
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -231,7 +390,9 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                new pollModel().updatePoll(pollid, pollname, longitude, latitude, expiresat);
+                
+
+                new pollModel().updatePoll(pollid, pollname);
 
                 return RedirectToAction("Index");
 

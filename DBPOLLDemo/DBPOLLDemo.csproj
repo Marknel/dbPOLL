@@ -76,6 +76,7 @@
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SysAdminController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -131,15 +132,20 @@
     <Content Include="Views\Help\QuestionIndex.aspx" />
     <Content Include="Views\Help\ReportIndex.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\PollsIManage.ascx" />
+    <Content Include="Views\Home\PollsImCreating.ascx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
+    <Content Include="Views\Poll\CreateSession.aspx" />
     <Content Include="Views\Poll\Edit.aspx" />
+    <Content Include="Views\Poll\EditSession.aspx" />
     <Content Include="Views\Poll\Index.aspx" />
     <Content Include="Views\Poll\IndexREF.aspx" />
     <Content Include="Views\Poll\questionDetails.aspx" />
     <Content Include="Views\Poll\QuestionEdit.aspx" />
     <Content Include="Views\Poll\TestDevices.aspx" />
     <Content Include="Views\Poll\viewPolls.aspx" />
+    <Content Include="Views\Home\PollsToDo.ascx" />
     <Content Include="Views\Object\Create.aspx" />
     <Content Include="Views\Object\Index.aspx" />
     <Content Include="Views\Question\Create.aspx" />
@@ -156,6 +162,7 @@
     <Content Include="Views\SysAdmin\Create.aspx" />
     <Content Include="Views\SysAdmin\Edit.aspx" />
     <Content Include="Views\SysAdmin\Index.aspx" />
+    <Content Include="Views\User\New.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

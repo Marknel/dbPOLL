@@ -4,6 +4,7 @@ using System.Data.Objects;
 using System.Data.Objects.DataClasses;
 using System.Configuration;
 using System.Linq;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.SessionState;
 using System.Web.Security;
@@ -27,6 +28,7 @@ namespace DBPOLLDemo.Models
         public string username;//changed to public
         private string password;
 
+
         private USER user = new USER();
         public String name;
         public int usertype;
@@ -41,9 +43,7 @@ namespace DBPOLLDemo.Models
         /// </summary>
         /// <param name="username">Username of user </param>
         /// <param name="password">Password of user</param>
-        public userModel(string username, string password) {
-            this.username = username;
-            this.password = password;
+        public userModel() {
         }
 
         public userModel(String userName, int userType, DateTime createdAt, Nullable<DateTime> modifiedAt, int createdBy, Nullable<DateTime> expiredAt)
@@ -67,11 +67,6 @@ namespace DBPOLLDemo.Models
             {
                 user.MODIFIED_AT = this.modifiedat = modifiedAt.Value;
             }   
-        }
-
-        public userModel()
-        {
-            // TODO: Complete member initialization
         }
 
         public List<userModel> displayAllUsers()
@@ -100,24 +95,33 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
         
-        public bool verify() {
-
+        public int verify(string username, string password) {
             var query = from u in dbpollContext.USERS 
-                           where (u.USERNAME == this.username && u.PASSWORD == this.password) 
+                           where (u.USERNAME == username && u.PASSWORD == password) 
                            select u;
 
-            //var query = from u in db.USERs where (u.USERNAME == this.username && u.PASSWORD == this.password) select u; << OLD LINQ QUERY
-
-            if (query.ToArray().Length == 1)
-            {
-                Session["uid"] = query.ToArray()[0].USER_ID;
-                return true;
-            }
-            else {
-                return false;
+            if ( query.ToArray().Length == 1 ) {
+                return query.ToArray()[0].USER_ID;
+            } else {
+                return 0;
             }
         }
 
+        public int verify_as_sys_admin(string username, string password)
+        {
+            var query = from u in dbpollContext.SYSADMINS
+                        where (u.USERNAME == username && u.PASSWORD == password)
+                        select u;
+
+            if (query.ToArray().Length == 1)
+            {
+                return query.ToArray()[0].SYSADMINS_ID;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
 
         //Chris added
@@ -253,7 +257,47 @@ namespace DBPOLLDemo.Models
                 throw (e);
             }
         }
+
+        public void createUser(int UserID, int UserType, string password, string name, string username, int created_by)
+        {
+            try
+            {
+                USER create = new USER();
+
+                create.USER_ID = UserID;
+                create.USER_TYPE = UserType;
+                create.PASSWORD = password;
+                create.USERNAME = username;
+                create.NAME = name;
+                create.CREATED_AT = DateTime.Now;
+                create.MODIFIED_AT = DateTime.Now;
+                create.CREATED_BY = created_by;
+
+                dbpollContext.AddToUSERS(create);
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
     
-    
+        public USER get_details (int uid)
+        {
+            var query = from u in dbpollContext.USERS
+                        where u.USER_ID == uid
+                        select u;
+            USER user = query.First();
+            return user;
+        }
+
+        public SYSADMIN get_sys_admin_details(int uid)
+        {
+            var query = from u in dbpollContext.SYSADMINS
+                        where u.SYSADMINS_ID == uid
+                        select u;
+            SYSADMIN sysadmin = query.First();
+            return sysadmin;
+        }
     }
 }

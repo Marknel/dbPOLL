@@ -1,10 +1,10 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.POLL>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.SESSION>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Edit
+	EditSession
 </asp:Content>
 
-<asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="HeadContent" runat="server">
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <style type="text/css">
@@ -91,28 +91,38 @@ void Page_Load(object source, EventArgs e){
 
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content4" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Edit</h2>
+    <h2>Edit Session: <%=ViewData["name"]%></h2>
 
     <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
 
-    <% using (Html.BeginForm("Edit","Edit", FormMethod.Post)) {%>
+    <% using (Html.BeginForm("EditSession","EditSession", FormMethod.Post)) {%>
 
-        <fieldset>
-            <legend>Fields</legend>
+         <fieldset>
+            <legend>Session Data</legend>
             <p>
-                <label for="POLLNAME">POLLNAME:</label>
-                <%= Html.Hidden("POLLID", ViewData["id"])%>
-                <%= Html.TextBox("pollname", ViewData["name"]) %>
-                <%= Html.Hidden("changed", 1) %>
-                <%= Html.ValidationMessage("POLLNAME", "*") %>
+                <label for="SESSIONNAME">Session Name:</label>
+
+                <%= Html.TextBox("name",ViewData["name"]) %>
+
+            </p>
+            <p>
+                <label for="SESSIONTIME">Session Time:</label>
+
+                <%= Html.TextBox("time", ViewData["time"]) %>
+                <%= ViewData["date1"] %>
+
             </p>
 
-            <input type="hidden" id="longitude" name="longitude" value="null" />
-            <input type="hidden" id="latitude" name="latitude" value="null" />
+                <%= Html.Hidden("pollid", ViewData["pollid"])%>
+                <%= Html.Hidden("sessionid", ViewData["sessionid"])%>
 
-            <div id="map_canvas" style="width:360px; height:200px"></div>
+                 <label for="map_canvas">Select Session Location:</label>
+                 <div id="map_canvas" style="width:360px; height:200px"></div>
+                 <%=Html.Hidden("pollid", ViewData["pollid"] )%>
+                 <input type="hidden" id="longitude" name="longitude" value="null" />
+                 <input type="hidden" id="latitude" name="latitude" value="null" />
             <p>
                 <input type="submit" value="Save Changes" onclick="setPollLocation();"/>
             </p>
@@ -123,6 +133,5 @@ void Page_Load(object source, EventArgs e){
     <div>
         <%=Html.ActionLink("Back to List", "Index") %>
     </div>
-
 </asp:Content>
 

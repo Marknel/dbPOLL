@@ -187,7 +187,7 @@ namespace DBPOLLDemo.Controllers
                 {
                     DateTime expiry_Date = DateTime.Now.AddMonths(expInt);
                     //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
-                    new userModel().createUser(UserID, 1, password, name, email, expiry_Date, SysAdmin_ID);
+                    new userModel().createUser(UserID, 4, password, name, email, expiry_Date, SysAdmin_ID);
                     ViewData["created"] = "Created User: " + name;
 
                     EmailController mail = new EmailController(email, password, email);

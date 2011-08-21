@@ -16,27 +16,11 @@
             <legend>Fields</legend>
             <p>
                 <label for="POLLNAME">Poll Name:</label>
-                
-               
-            
-                
+
                 <%= Html.TextBox("name") %>
-
-
                 <%= Html.ValidationMessage("POLLNAME", "*") %>
             </p>
-                <p>
-                    <label for="num">Longitude:</label>
-                    <%= Html.TextBox("longitude")%>
-                    <%= Html.ValidationMessage("num", "*")%>
-                </p>
-                <p>
-                    <label for="num">Latitude:</label>
-                    <%= Html.TextBox("latitude")%>
-                    <%= Html.ValidationMessage("num", "*")%>
-                </p>
                 <%= Html.Hidden("createdby", Session["uid"])%>
-                 
             <p>
                 <input type="submit" value="Create Poll"/>
             </p>
