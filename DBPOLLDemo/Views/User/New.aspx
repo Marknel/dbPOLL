@@ -10,14 +10,14 @@
         <fieldset>
             <legend>Create New User</legend>
             <p>
-                <label for="USERNAME">Username:</label>
-                <%= Html.TextBox("USERNAME") %>
-                <%= Html.ValidationMessage("USERNAME", "*") %>
+                <label for="email">Email:</label>
+                <%= Html.TextBox("email") %>
+                <%= Html.ValidationMessage("email", "*") %>
             </p>
             <p>
-                <label for="PASSWORD">Password:</label>
-                <%= Html.Password("PASSWORD") %>
-                <%= Html.ValidationMessage("PASSWORD", "*") %>
+                <label for="NAME">Name:</label>
+                <%= Html.TextBox("NAME") %>
+                <%= Html.ValidationMessage("NAME", "*") %>
             </p>
             <p>
                 <label for="USER_TYPE">User Type:</label>

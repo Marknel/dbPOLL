@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
@@ -77,6 +76,7 @@
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SysAdminController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -132,6 +132,8 @@
     <Content Include="Views\Help\QuestionIndex.aspx" />
     <Content Include="Views\Help\ReportIndex.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\PollsIManage.ascx" />
+    <Content Include="Views\Home\PollsImCreating.ascx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
     <Content Include="Views\Poll\Edit.aspx" />
@@ -166,6 +168,7 @@
     <Content Include="Views\SysAdmin\Create.aspx" />
     <Content Include="Views\SysAdmin\Edit.aspx" />
     <Content Include="Views\SysAdmin\Index.aspx" />
+    <Content Include="Views\User\New.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

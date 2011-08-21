@@ -107,6 +107,22 @@ namespace DBPOLLDemo.Models
             }
         }
 
+        public int verify_as_sys_admin(string username, string password)
+        {
+            var query = from u in dbpollContext.SYSADMINS
+                        where (u.USERNAME == username && u.PASSWORD == password)
+                        select u;
+
+            if (query.ToArray().Length == 1)
+            {
+                return query.ToArray()[0].SYSADMINS_ID;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
 
         //Chris added
         private string Salt;
@@ -241,6 +257,30 @@ namespace DBPOLLDemo.Models
                 throw (e);
             }
         }
+
+        public void createUser(int UserID, int UserType, string password, string name, string username, int created_by)
+        {
+            try
+            {
+                USER create = new USER();
+
+                create.USER_ID = UserID;
+                create.USER_TYPE = UserType;
+                create.PASSWORD = password;
+                create.USERNAME = username;
+                create.NAME = name;
+                create.CREATED_AT = DateTime.Now;
+                create.MODIFIED_AT = DateTime.Now;
+                create.CREATED_BY = created_by;
+
+                dbpollContext.AddToUSERS(create);
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
     
         public USER get_details (int uid)
         {
@@ -251,23 +291,13 @@ namespace DBPOLLDemo.Models
             return user;
         }
 
-        public bool createUser(int created_by, string password, string email) {
-            try {
-                USER create = new USER();
-
-                create.CREATED_AT = DateTime.Now;
-                create.CREATED_BY = created_by;
-                create.PASSWORD = password;
-
-
-                dbpollContext.AddToUSERS(create);
-
-                dbpollContext.SaveChanges();
-                return true;
-            }
-            catch (Exception e) {
-                throw (e);
-            }
+        public SYSADMIN get_sys_admin_details(int uid)
+        {
+            var query = from u in dbpollContext.SYSADMINS
+                        where u.SYSADMINS_ID == uid
+                        select u;
+            SYSADMIN sysadmin = query.First();
+            return sysadmin;
         }
     }
 }

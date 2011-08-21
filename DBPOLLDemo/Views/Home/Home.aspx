@@ -5,40 +5,49 @@
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%= Html.Encode(ViewData["Message"]) %></h2>
-    <p>
-    <%= Html.ActionLink("Edit Create and Delete Polls", "../Poll/Index") %> <br />
-    <%= Html.ActionLink("View Polls and Questions", "../Poll/viewPolls")%> <br />
-    <%= Html.ActionLink("Report", "../Report/Index")%> <br />
-    <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%> <br />
-    </p>
+    <% if (ViewData["sysadmin"] == "false")
+       { %>
+        <h2><%= Html.Encode(ViewData["Message"])%></h2>
+        <p>
+        <%= Html.ActionLink("Edit Create and Delete Polls", "../Poll/Index")%> <br />
+        <%= Html.ActionLink("View Polls and Questions", "../Poll/viewPolls")%> <br />    
+        </p>
+        <hr />
+        <% if (((USER)ViewData["User"]).USER_TYPE > 1)
+           { %>
+            <%= Html.ActionLink("Create New User", "New", "User")%>
+        <% } %>
 
-    <h1>MARKNEL's STUFF</h1>
-    <h2>Poll User Stuff</h2>
-    <button>edit user link</button>
-    <button>change password link</button>
-    <button>messages</button>
-    <% Html.RenderPartial("PollsToDo"); %>
+        <br />
+        <%= Html.ActionLink("Edit My Details", "Edit", "User")%>
+        <br />
+        <%= Html.ActionLink("Change Password", "Change_Password", "User")%>
+        <br />
+        <%= Html.ActionLink("My Messages", "Index", "Messages")%>
+        <br />
+        <% if (((USER)ViewData["User"]).USER_TYPE > 1)
+           { %>
+            <%= Html.ActionLink("Reports", "Index", "Report")%><br />
+            <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%> <br />
+        <% } %>
+        <% Html.RenderPartial("PollsToDo"); %>
 
-    <% if (((USER)ViewData["User"]).USER_TYPE > 1) { %>
-        <h2>Poll Master Stuff</h2>
-        <button>Create new Poll User</button>
-        <h3>Polls I Manage</h3>
-        <% Html.RenderPartial("PollsIManage"); %>
-    <% } %>
+        <% if (((USER)ViewData["User"]).USER_TYPE > 1)
+           { %>
+            <% Html.RenderPartial("PollsIManage"); %>
+        <% } %>
 
-    <% if (((USER)ViewData["User"]).USER_TYPE > 2) { %>
-        <h2>Poll Creator Stuff</h2>
-        <button>Create new Poll Manager</button>
-        <h3>Polls I'm Creating</h3>
-        <% Html.RenderPartial("PollsImCreating"); %>
-    <% } %>
+        <% if (((USER)ViewData["User"]).USER_TYPE > 2)
+           { %>
+            <% Html.RenderPartial("PollsImCreating"); %>
+        <% } %>
     
-    <% if (((USER)ViewData["User"]).USER_TYPE > 3) { %>
-        <h2>Poll Administrator Stuff</h2>
-        <button>Create new Poll Creator</button>
-        <button>View Reports</button>
-      
+        <% if (((USER)ViewData["User"]).USER_TYPE > 3)
+           { %>
+        
+        <% } %>
+    <% } else { %>
+        <%= Html.ActionLink("Continue to your control panel", "Index", "SysAdmin") %>
     <% } %>
 
 </asp:Content>

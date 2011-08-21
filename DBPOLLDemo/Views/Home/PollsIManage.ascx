@@ -1,3 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
-
-polls 1 2 and 3
+<h2>Polls Being Managed</h2>
+Example Poll 1<br />
+Example Poll 2<br />
+<hr />
