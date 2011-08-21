@@ -27,6 +27,7 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult New(string username, string password, string user_type)
         {
+
             // TODO: Create the user with given arguments (if they validate)
 
             // TODO: Redirect back to Dashboard... but with a 'User Created Successfully' message appearing

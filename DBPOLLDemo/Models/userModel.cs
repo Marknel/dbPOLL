@@ -250,5 +250,24 @@ namespace DBPOLLDemo.Models
             USER user = query.First();
             return user;
         }
+
+        public bool createUser(int created_by, string password, string email) {
+            try {
+                USER create = new USER();
+
+                create.CREATED_AT = DateTime.Now;
+                create.CREATED_BY = created_by;
+                create.PASSWORD = password;
+
+
+                dbpollContext.AddToUSERS(create);
+
+                dbpollContext.SaveChanges();
+                return true;
+            }
+            catch (Exception e) {
+                throw (e);
+            }
+        }
     }
 }
