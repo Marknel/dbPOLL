@@ -29,7 +29,10 @@ namespace DBPOLLDemo.Models
         public decimal? latitude;
         public String createdmaster;
         public String createdcreator1;
+        public String sessionName;
         public int total;
+        public int sessionid;
+        public DateTime time;
         
 
         //Properties for getters/setters
@@ -39,12 +42,12 @@ namespace DBPOLLDemo.Models
 
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
 
-        public pollModel(int pollid, String pollName, decimal longitude, decimal latitude, int createdBy, Nullable<DateTime> expiresat, DateTime createdAt, Nullable<DateTime> modifiedat)
+        public pollModel(int pollid, String pollName, String sessionName, decimal longitude, decimal latitude, int createdBy, Nullable<DateTime> expiresat, DateTime createdAt, Nullable<DateTime> modifiedat)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
-
+            this.sessionName = sessionName;
             poll.POLL_ID = this.pollid = pollid;
             poll.POLL_NAME = this.pollname = pollName;
             poll.LATITUDE = this.latitude = latitude;
@@ -64,6 +67,11 @@ namespace DBPOLLDemo.Models
             {
                 poll.MODIFIED_AT = this.modifiedat = modifiedat.Value;
             }
+        }
+
+        public pollModel(int sessionid, int y)
+        {
+            this.sessionid = sessionid;
         }
 
         public pollModel(int pollid)
@@ -117,10 +125,54 @@ namespace DBPOLLDemo.Models
             this.createdAt = createdAt;
         }
 
+        public pollModel(int pollId, int sessionId, String pollName, String sessionName,  decimal longitude, decimal latitude, DateTime time)
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            this.pollid = pollId;
+            this.sessionid = sessionId;
+            this.pollname = pollName;
+            this.latitude = latitude;
+            this.sessionName = sessionName;
+            this.longitude = longitude;
+            this.time = time;
+
+        }
+
         /// <summary>
         /// Returns all polls in the database which have been created by the searching user.
         /// </summary>
         /// <returns>List of polls associated with the user</returns>
+        /// 
+
+        public List<pollModel> displayPollSessions()
+        {
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            Thread.CurrentThread.CurrentCulture = ci;
+
+            int sessionID = (int)Session["uid"];
+            List<POLL> pollList = new List<POLL>();
+            var query = from p in dbpollContext.POLLS
+                        from s in dbpollContext.SESSIONS
+                        where (p.POLL_ID == s.POLL_ID) && p.CREATED_BY == sessionID
+                        select new pollModel
+                        {
+                            pollid = p.POLL_ID,
+                            sessionid = s.SESSION_ID,
+                            pollname = p.POLL_NAME,
+                            sessionName = s.SESSION_NAME,
+                            time = s.SESSION_TIME,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
+                        };
+
+
+            return query.ToList();
+        }
+
         public List<pollModel> displayPolls()
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
@@ -135,8 +187,6 @@ namespace DBPOLLDemo.Models
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -254,7 +304,82 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
-        public void createPoll(String pollName, decimal longitude, decimal latitude, int createdBy, Nullable<DateTime> expiresat)
+        public int getMaxSessionID()
+        {
+            int query = (from s
+                         in dbpollContext.SESSIONS
+                         select s.SESSION_ID).Max();
+
+            return query;
+        }
+
+        public void createSession(int pollid, String name, decimal latitude, decimal longitude, DateTime time)
+        {
+            try
+            {
+                SESSION s = new SESSION();
+
+                s.SESSION_ID = getMaxSessionID() + 1;
+                s.SESSION_NAME = name;
+                s.LATITUDE = latitude;
+                s.LONGITUDE = longitude;
+                s.SESSION_TIME = time;
+                s.POLL_ID = pollid;
+
+                dbpollContext.AddToSESSIONS(s);
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void editSession(String sessionname, int sessionid, decimal latitude, decimal longitude, DateTime parsedDate)
+        {
+            try
+            {
+                var SessionList =
+                from Session in dbpollContext.SESSIONS
+                where Session.SESSION_ID == sessionid
+                select Session;
+
+                SESSION s = SessionList.First<SESSION>();
+
+                s.SESSION_NAME = sessionname;
+                s.LATITUDE = latitude;
+                s.LONGITUDE = longitude;
+                s.SESSION_TIME = parsedDate;
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void deleteSession()
+        {
+            try
+            {
+                var SessionList =
+                from Session in dbpollContext.SESSIONS
+                where Session.SESSION_ID == sessionid
+                select Session;
+
+                SESSION s = SessionList.First<SESSION>();
+                dbpollContext.DeleteObject(s);
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void createPoll(String pollName, int createdBy, Nullable<DateTime> expiresat)
         {
             try
             {
@@ -262,8 +387,6 @@ namespace DBPOLLDemo.Models
 
                 p.POLL_ID = getMaxID() + 1;
                 p.POLL_NAME = pollName;
-                p.LONGITUDE = longitude;
-                p.LATITUDE = latitude;
                 p.CREATED_BY = createdBy;
                 p.CREATED_AT = DateTime.Now;
 
@@ -276,7 +399,7 @@ namespace DBPOLLDemo.Models
             }
         }
 
-        public void updatePoll(int pollid, String pollName, decimal longitude, decimal latitude, Nullable<DateTime> expiresat)
+        public void updatePoll(int pollid, String pollName)
         {
             try
             {
@@ -288,9 +411,6 @@ namespace DBPOLLDemo.Models
                 POLL p = pollList.First<POLL>();
 
                 p.POLL_NAME = pollName;
-                p.LONGITUDE = longitude;
-                p.LATITUDE = latitude;
-                p.EXPIRES_AT = expiresat;
                 p.MODIFIED_AT = DateTime.Now;
 
                 dbpollContext.SaveChanges();

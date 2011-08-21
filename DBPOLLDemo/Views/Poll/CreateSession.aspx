@@ -1,7 +1,7 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.POLL>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.SESSION>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Edit
+	Create Session
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
@@ -18,9 +18,9 @@
 <script type="text/javascript">
     var map;
     var marker = null;
-    function initialize(currentLat, currentLong) {
+    function initialize() {
         // Map is centered over brisbane
-        var latlng = new google.maps.LatLng(currentLat, currentLong);
+        var latlng = new google.maps.LatLng(-27.28, 153.01);
         var myOptions = {
             zoom: 9,
             center: latlng,
@@ -28,8 +28,6 @@
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),
         myOptions);
-
-        placeMarker(latlng);
 
         google.maps.event.addListener(map, 'click', function (event) {
             placeMarker(event.latLng);
@@ -83,7 +81,7 @@
 void Page_Load(object source, EventArgs e){
         HtmlGenericControl body = (HtmlGenericControl)
         Page.Master.FindControl("MyBody");
-        body.Attributes.Add("onload", "initialize(" + ViewData["latitude"] +", "+ ViewData["longitude"] + ")");
+        body.Attributes.Add("onload", "initialize()");
 
     } 
     </script>
@@ -93,28 +91,37 @@ void Page_Load(object source, EventArgs e){
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Edit</h2>
+    <h2>Create New Session for <%=ViewData["pollName"] %></h2>
 
-    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
+    <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
 
-    <% using (Html.BeginForm("Edit","Edit", FormMethod.Post)) {%>
+    <% using (Html.BeginForm("CreateSession","Poll", FormMethod.Post)) {%>
 
         <fieldset>
-            <legend>Fields</legend>
+            <legend>Session Data</legend>
             <p>
-                <label for="POLLNAME">POLLNAME:</label>
-                <%= Html.Hidden("POLLID", ViewData["id"])%>
-                <%= Html.TextBox("pollname", ViewData["name"]) %>
-                <%= Html.Hidden("changed", 1) %>
-                <%= Html.ValidationMessage("POLLNAME", "*") %>
+                <label for="SESSIONNAME">Session Name:</label>
+
+                <%= Html.TextBox("name") %>
+
+            </p>
+            <p>
+                <label for="SESSIONTIME">Session Time:</label>
+
+                <%= Html.TextBox("time") %>
+                <%= ViewData["date1"] %>
+
             </p>
 
-            <input type="hidden" id="longitude" name="longitude" value="null" />
-            <input type="hidden" id="latitude" name="latitude" value="null" />
+                <%= Html.Hidden("pollid", ViewData["pollid"])%>
 
-            <div id="map_canvas" style="width:360px; height:200px"></div>
+                 <label for="map_canvas">Select Session Location:</label>
+                 <div id="map_canvas" style="width:360px; height:200px"></div>
+                 <%=Html.Hidden("pollid", ViewData["pollid"] )%>
+                 <input type="hidden" id="longitude" name="longitude" value="null" />
+                 <input type="hidden" id="latitude" name="latitude" value="null" />
             <p>
-                <input type="submit" value="Save Changes" onclick="setPollLocation();"/>
+                <input type="submit" value="Create Session" onclick="setPollLocation();"/>
             </p>
         </fieldset>
 
@@ -125,4 +132,5 @@ void Page_Load(object source, EventArgs e){
     </div>
 
 </asp:Content>
+
 

@@ -238,8 +238,7 @@ table
 {
   border: solid 1px #E0F4A4;
   border-collapse: collapse;
-  width : 545px;
-	
+  table-layout:auto
 }
 
 table td 
