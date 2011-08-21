@@ -146,14 +146,6 @@
     <Content Include="Views\Poll\TestDevices.aspx" />
     <Content Include="Views\Poll\viewPolls.aspx" />
     <Content Include="Views\Home\PollsToDo.ascx" />
-    <Content Include="Views\Main\answerDetails.aspx" />
-    <Content Include="Views\Main\Create.aspx" />
-    <Content Include="Views\Main\Edit.aspx" />
-    <Content Include="Views\Main\Index.aspx" />
-    <Content Include="Views\Main\IndexREF.aspx" />
-    <Content Include="Views\Main\questionDetails.aspx" />
-    <Content Include="Views\Main\QuestionEdit.aspx" />
-    <Content Include="Views\Main\viewPolls.aspx" />
     <Content Include="Views\Object\Create.aspx" />
     <Content Include="Views\Object\Index.aspx" />
     <Content Include="Views\Question\Create.aspx" />
