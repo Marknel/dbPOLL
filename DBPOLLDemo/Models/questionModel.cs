@@ -43,6 +43,7 @@ namespace DBPOLLDemo.Models
         public int sessionparticipants;
         public String sessionname;
 
+
         public int? participants;
         public int totalparticipants;
 
@@ -285,6 +286,7 @@ namespace DBPOLLDemo.Models
                              totalparticipants = (int)(from r in dbpollContext.RESPONSES
                                                        where (r.ANSWER_ID==a.ANSWER_ID && r.FEEDBACK==a.ANSWER1)
                                                        select r.USER_ID).Count(),
+
                          }
 
                 ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
@@ -308,7 +310,6 @@ namespace DBPOLLDemo.Models
                              pollname = (String)(from p1 in dbpollContext.POLLS
                                                      where (p1.POLL_ID == s.POLL_ID)
                                                      select p1.POLL_NAME).FirstOrDefault(),
-                                                     
                              participants = p.USER_ID,
                              totalparticipants = (int)(from t in dbpollContext.PARTICIPANTS
                                            where (t.SESSION_ID == s.SESSION_ID)

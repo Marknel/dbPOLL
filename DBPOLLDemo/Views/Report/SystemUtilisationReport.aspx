@@ -67,7 +67,9 @@
             <td nowrap="nowrap" class="style7">
                 <%= Html.Encode(item.name) %>
             </td>
-            <% if (item.createdby == null) { item.createdby = "-"; } %>
+
+            <% if (item.createdby == null) { item.createdby = item.sysAdmin; } %>
+
             <td nowrap="nowrap" class="style9">
                 <%= Html.Encode(item.createdby) %>
             </td>

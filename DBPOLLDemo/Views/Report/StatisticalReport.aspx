@@ -2,15 +2,12 @@
 
 <script runat="server">
  
-    protected void Page_Load(object sender, EventArgs e)
-    {
-
-    }
 </script>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     StatisticalReport
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
     <h2 class="style1">
         Statistical Report</h2>
     <% String pollnamecheck = "";
@@ -89,18 +86,14 @@
                   %>   
                    
     <%}%>
-        
-         
-
-        
     </table>
 </asp:Content>
-<asp:Content ID="Content3" runat="server" contentplaceholderid="HeadContent">
+<%--<asp:Content ID="Content3" runat="server" contentplaceholderid="HeadContent">
     <style type="text/css">
         .style1
         {
             font-size: large;
         }
     </style>
-</asp:Content>
+</asp:Content>--%>
 
