@@ -7,6 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Session Participation</h2>
+    <p> Tables below shows a record of attendance and level of participation during the available session in all polls</p>
 
      <table>
         <tr>
@@ -14,29 +15,44 @@
                 Poll Name
             </th>
             <th nowrap="nowrap">
-                Participant 
+                Session Name
             </th>
             <th nowrap="nowrap">
                 Total Participants 
             </th>
-          
-           <%-- <th nowrap="nowrap">
-                Number of Poll Attendances
-            </th>--%>
+            <th nowrap="nowrap">
+                Participant 
+            </th>
+            
             
         </tr>
 
+   <% String pnamecheck = "" ;%>
+   <% String scheck = "" ;%>
    <% foreach (var item in Model) { %>
      <tr>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.pollname)%>
+                    <% if (pnamecheck != item.pollname){ %>
+                        <%= Html.Encode(item.pollname)%>
+                        <% pnamecheck = item.pollname; %>
+                    <%} %>
             </td>
             <td nowrap="nowrap">
+                <% if (scheck != item.sessionname){ %>
+                    <%= Html.Encode(item.sessionname)%>
+                <%} %>
+            </td>
+            <td nowrap="nowrap">
+                <% if (scheck != item.sessionname){ %>
+                    <%= Html.Encode(item.totalparticipants)%>
+                    <% scheck = item.sessionname; %>
+                <%} %>
+            </td>
+            <td nowrap="nowrap">
+                 
                 <%= Html.Encode(item.participants)%>
             </td>
-           <td nowrap="nowrap">
-                <%= Html.Encode(item.totalparticipants)%>
-            </td>
+           
   
             
         </tr>

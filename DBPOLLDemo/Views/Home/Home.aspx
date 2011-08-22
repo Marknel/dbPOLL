@@ -11,5 +11,6 @@
     <%= Html.ActionLink("View Polls and Questions", "../Poll/viewPolls")%> <br />
     <%= Html.ActionLink("Report", "../Report/Index")%> <br />
     <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%> <br />
+
     </p>
 </asp:Content>

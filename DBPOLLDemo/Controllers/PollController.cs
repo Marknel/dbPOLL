@@ -183,7 +183,7 @@ namespace DBPOLLDemo.Controllers
 
             try
             {
-                new pollModel().createPoll(name, longitude, latitude, created, expiresat);
+                new pollModel().createPoll(name, created, expiresat);
 
                 return View();
             }
