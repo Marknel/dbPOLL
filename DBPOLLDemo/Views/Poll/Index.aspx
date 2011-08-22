@@ -21,6 +21,7 @@
     
         <tr>
             <td nowrap="nowrap">
+                <%= Html.ActionLink("Run", "Run", new {pollid=item.pollID}) %> |
                 <%= Html.ActionLink("Delete", "Delete", new {pollid=item.pollID}) %> |
                 <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID}) %> |
                 <%= Html.ActionLink(" View Questions", "Details", new {id=item.pollID, name=item.Name})%> |

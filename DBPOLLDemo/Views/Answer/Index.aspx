@@ -11,6 +11,7 @@
     <table>
         <tr>
             <th>Actions</th>
+            <th>Number</th>
             <th>Answer</th>
             <th>Weight</th>
             <th>Correct</th>
@@ -23,6 +24,10 @@
                 <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%>
             </td>
             
+            <td>
+                <%= Html.Encode(item.ansnum) %>
+            </td>
+
             <td>
                 <%= Html.Encode(item.Answer) %>
             </td>
@@ -45,7 +50,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New", "Create", new { questionid = ViewData["questionid"], name = ViewData["name"] })%>
+        <%= Html.ActionLink("Create New Answer", "CreateMethod", new { questionid = ViewData["questionid"], name = ViewData["name"] })%>
     </p>
 
 </asp:Content>

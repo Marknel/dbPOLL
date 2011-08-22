@@ -117,7 +117,11 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Views\Answer\Create.aspx" />
+    <Content Include="Views\Answer\CreateMethod.aspx" />
+    <Content Include="Views\Answer\CreateTrueFalse.aspx" />
+    <Content Include="Views\Answer\CreateYesNoAbstain.aspx" />
     <Content Include="Views\Answer\Edit.aspx" />
+    <Content Include="Views\Answer\OpinionScale.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
     <Content Include="Views\Help\AnswerEdit.aspx" />
     <Content Include="Views\Help\AnswerIndex.aspx" />

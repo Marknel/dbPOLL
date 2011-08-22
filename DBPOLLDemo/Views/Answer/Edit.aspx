@@ -15,6 +15,12 @@
         <fieldset>
             <legend>Edit Answer</legend>
             <p>
+                <label for="weight">Answer Number:</label>
+                <%= Html.TextBox("ansnum", Model.ansnum)%>
+                <%= Html.ValidationMessage("ansum", "*")%>
+            </p>
+            <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
+            <p>
                 <label for="answer">Answer Text:</label>
                  <%= Html.TextBox("answer", Model.answer) %>
                 <%= Html.ValidationMessage("ANSWER1", "*") %>
@@ -37,6 +43,9 @@
             </p>
             <p><%=ViewData["created"]%></p>
             <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
+
+
+
             <p>
                 <input type="submit" value="Save" />
             </p>
@@ -45,7 +54,7 @@
     <% } %>
 
     <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink("Back to Answer List", "Index", new { id = ViewData["questionid"]})%>
     </div>
 
 </asp:Content>

@@ -231,7 +231,7 @@ namespace DBPOLLDemo.Controllers
                 errorspresent = true;
             }
 
-            if (question == null)
+            if (question == "")
             {
                 ViewData["questionerror"] = "Above field must contain a question!";
                 errorspresent = true;
@@ -279,7 +279,7 @@ namespace DBPOLLDemo.Controllers
             int numInt = 0;
             bool errorspresent = false;
 
-            if (question == null)
+            if (question == "")
             {
                 ViewData["questionerror"] = "Above field must contain a question!";
                 errorspresent = true;

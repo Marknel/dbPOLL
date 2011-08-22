@@ -60,7 +60,7 @@ namespace DBPOLLDemo.Models
 
         }
 
-        public answerModel(int answerid, String ansnum, String answer, String correct,String weight, String updatedto, DateTime createdat)
+        public answerModel(int answerid, string ansnum, String answer, String correct,String weight, String updatedto, DateTime createdat)
         {
             int ansnumber = 0;
             int correctnumber = 0;
@@ -68,7 +68,6 @@ namespace DBPOLLDemo.Models
             int weightnum = 0;
 
             a.ANSWER_ID = this.answerid = answerid;
-
             try { ansnumber = int.Parse(ansnum); }
             catch { ansnumber = 0; };
             a.NUM = this.ansnum = ansnumber;
@@ -88,7 +87,6 @@ namespace DBPOLLDemo.Models
             a.UPDATED_TO = this.updatedto = updatedtonum;
 
             a.CREATED_AT = this.createdat = createdat;
-
         }
 
         /// <summary>
@@ -150,7 +148,7 @@ namespace DBPOLLDemo.Models
         {
             var query = from a in dbpollContext.ANSWERS
                         where a.QUESTION_ID == questId && a.ANSWER_ID== a.UPDATED_TO
-                        orderby a.QUESTION_ID descending
+                        orderby a.NUM ascending
                         select new answerModel
                         {
                             answerid = a.ANSWER_ID,
@@ -247,11 +245,13 @@ namespace DBPOLLDemo.Models
                  * pointed by the field updatedto in the archived record
                  */
                 ANSWER a = answerList.First<ANSWER>();
-                if (a.ANSWER1 != answer)
+                /**
+                if (!(a.ANSWER1.Equals(answer)))
                 {
+                    
                     answerModel newanswer = new answerModel();
                     newanswer.createAnswer(answer, correct, weight, ansnum, questionid);
-                    a.UPDATED_TO = newanswer.AnswerID; // 
+                    a.UPDATED_TO = newanswer.AnswerID; 
                 }
                 else {
                     a.CORRECT = correct;
@@ -260,8 +260,15 @@ namespace DBPOLLDemo.Models
                     a.UPDATED_TO = getMaxID() + 1;
                     a.MODIFIED_AT = DateTime.Now;
                 }
-
+                **/
+                a.ANSWER1 = answer;
+                a.CORRECT = correct;
+                a.WEIGHT = weight;
+                a.NUM = ansnum;
+                a.UPDATED_TO = getMaxID() + 1;
+                a.MODIFIED_AT = DateTime.Now;
                 dbpollContext.SaveChanges();
+
             }
             catch (Exception e)
             {
