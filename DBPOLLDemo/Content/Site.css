@@ -141,7 +141,7 @@ ul#menu
     padding: 0 0 2px;
     position: relative;
     margin: 0;
-    text-align: right;
+    text-align: left;
 }
 
 ul#menu li
@@ -271,13 +271,13 @@ table th
 
 #menucontainer
 {
+    width: 1024px;
     margin-top:40px;
 }
 
 div#title
 {
     display:block;
-    float:left;
     text-align:left;
 }
 
@@ -285,9 +285,11 @@ div#title
 {
     font-size:1.1em;
     display:block;
+    float: right;
     text-align:right;
     margin:10px 10px 10px 895px;
     color:White;
+    width:100px;
 }
 
 #logindisplay a:link

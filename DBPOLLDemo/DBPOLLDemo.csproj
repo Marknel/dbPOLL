@@ -50,7 +50,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -58,6 +58,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -84,7 +85,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\answerModel.cs" />
+    <Compile Include="Models\answerModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\DBPOLLEDM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,6 +108,29 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AnswerEdit.jpg" />
+    <Content Include="Content\AnswerIndex.jpg" />
+    <Content Include="Content\Back.jpg" />
+    <Content Include="Content\Help.css" />
+    <Content Include="Content\helpbook.gif" />
+    <Content Include="Content\help_manual.png" />
+    <Content Include="Content\Home.jpg" />
+    <Content Include="Content\HomeHome.jpg" />
+    <Content Include="Content\Index.jpg" />
+    <Content Include="Content\Manual.jpg" />
+    <Content Include="Content\ObjectIndex.jpg" />
+    <Content Include="Content\PollApplet.jar" />
+    <Content Include="Content\PollIndex.jpg" />
+    <Content Include="Content\PollTestDevices.jpg" />
+    <Content Include="Content\PollViewPolls.jpg" />
+    <Content Include="Content\Print.jpg" />
+    <Content Include="Content\QuestionCreate.jpg" />
+    <Content Include="Content\QuestionCreateMultipleChoice.jpg" />
+    <Content Include="Content\QuestionCreateShortAnswer.jpg" />
+    <Content Include="Content\QuestionEdit.jpg" />
+    <Content Include="Content\QuestionIndex.jpg" />
+    <Content Include="Content\QuestionviewQuestions.jpg" />
+    <Content Include="Content\ReportIndex.jpg" />
     <Content Include="Content\turningPoint_banner.jpg" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -132,9 +158,13 @@
     <Content Include="Views\Help\PollTestDevices.aspx" />
     <Content Include="Views\Help\PollViewPolls.aspx" />
     <Content Include="Views\Help\QuestionCreate.aspx" />
+    <Content Include="Views\Help\QuestionCreateMultipleChoice.aspx" />
+    <Content Include="Views\Help\QuestionCreateShortAnswer.aspx" />
     <Content Include="Views\Help\QuestionEdit.aspx" />
     <Content Include="Views\Help\QuestionIndex.aspx" />
+    <Content Include="Views\Help\QuestionviewQuestions.aspx" />
     <Content Include="Views\Help\ReportIndex.aspx" />
+    <Content Include="Views\Help\Site.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Home\PollsIManage.ascx" />
     <Content Include="Views\Home\PollsImCreating.ascx" />
@@ -165,6 +195,7 @@
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
     <Content Include="Views\SysAdmin\Create.aspx" />
+    <Content Include="Views\SysAdmin\Delete.aspx" />
     <Content Include="Views\SysAdmin\Edit.aspx" />
     <Content Include="Views\SysAdmin\Index.aspx" />
     <Content Include="Views\User\New.aspx" />
@@ -198,6 +229,9 @@
     <Content Include="Views\Shared\Blank.Master" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\jnlpcomponent1.jnlp" />
+    <None Include="Content\launch.jnlp" />
+    <None Include="Content\Thumbs.db" />
     <EntityDeploy Include="Models\DBPOLLEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBPOLLEDM.Designer.cs</LastGenOutput>

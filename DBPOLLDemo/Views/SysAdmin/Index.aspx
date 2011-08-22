@@ -5,8 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
-        sysAdmin</h2>
-    Need to display list of Poll Administrators with edit and delete buttons
+        Please select Poll Administrator to edit or delete, or use the button at the bottom to create a new one</h2>
     <% using (Html.BeginForm())
        {%>
     <fieldset>
@@ -48,6 +47,9 @@
         </table>
         <p>
             <%= Html.ActionLink("Create new Poll Administrator", "Create")%>
+        </p>
+        <p>
+        <%= Html.ActionLink("System Utilisation Report", "../Report/SystemUtilisationReport")%> <br />
         </p>
     </fieldset>
     <% } %>

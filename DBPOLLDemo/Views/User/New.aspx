@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
-
+<%@ Import Namespace="DBPOLLDemo.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	New
 </asp:Content>
@@ -20,8 +20,17 @@
                 <%= Html.ValidationMessage("NAME", "*") %>
             </p>
             <p>
+            
                 <label for="USER_TYPE">User Type:</label>
-                <%= Html.TextBox("USER_TYPE") %>
+                <select>
+                    <option value="Poll User">Poll User</option>
+                    <% if (((USER)ViewData["User"]).USER_TYPE > 1) { %>
+                        <option value="Poll Master">Poll Master</option>
+                    <% } %>
+                    <% if (((USER)ViewData["User"]).USER_TYPE > 1) { %>
+                        <option value="Poll Creator">Poll Creator</option>
+                    <% } %>
+                </select>
             </p>
             <p style ="color: Red;"><%= Html.Encode(ViewData["Message"]) %></p>
             <p>

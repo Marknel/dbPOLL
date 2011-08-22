@@ -10,11 +10,12 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Threading;
 using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Models
 {
-    public class answerModel
+    public class answerModel : System.Web.UI.Page
     {
         public int answerid;
         public String answer;
@@ -149,6 +150,7 @@ namespace DBPOLLDemo.Models
             var query = from a in dbpollContext.ANSWERS
                         where a.QUESTION_ID == questId && a.ANSWER_ID== a.UPDATED_TO
                         orderby a.NUM ascending
+
                         select new answerModel
                         {
                             answerid = a.ANSWER_ID,

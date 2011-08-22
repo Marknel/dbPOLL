@@ -595,6 +595,7 @@
           <Property Name="QUESTION_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="QUESTION" Relationship="Models.CSSE3004GG_SYS_C001273256" FromRole="ANSWERS" ToRole="QUESTIONS" />
           <NavigationProperty Name="ANSWERS1" Relationship="Models.CSSE3004GG_SYS_C001273257" FromRole="ANSWERS" ToRole="ANSWERS1" />
+          <NavigationProperty Name="ANSWER2" Relationship="Models.CSSE3004GG_SYS_C001273257" FromRole="ANSWERS1" ToRole="ANSWERS" />
           <NavigationProperty Name="RESPONSES" Relationship="Models.CSSE3004GG_SYS_C001273272" FromRole="ANSWERS" ToRole="RESPONSES" />
         </EntityType>
         <EntityType Name="MANAGEMENT">
@@ -1133,7 +1134,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="DBPOLLEDM">
-        <EntityTypeShape EntityType="Models.ANSWER" Width="1.5" PointX="9.75" PointY="14.75" Height="2.9070849609375031" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.ANSWER" Width="1.5" PointX="9.75" PointY="14.75" Height="3.0714322916666674" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.MANAGEMENT" Width="1.5" PointX="7.5" PointY="12.5" Height="1.9210009765624996" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.MESSAGE" Width="1.5" PointX="10.5" PointY="11.25" Height="2.5783902994791639" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.OBJECT" Width="1.5" PointX="9.75" PointY="18.625" Height="1.7566536458333317" IsExpanded="true" />
@@ -1145,19 +1146,19 @@
         <EntityTypeShape EntityType="Models.SYSADMIN" Width="1.5" PointX="0.75" PointY="9.5" Height="2.0853483072916674" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.USER" Width="1.5" PointX="3" PointY="8.25" Height="4.3862109375000031" IsExpanded="true" />
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273256" ManuallyRouted="false">
-          <ConnectorPoint PointX="9" PointY="16.516042480468752" />
-          <ConnectorPoint PointX="9.75" PointY="16.516042480468752" />
+          <ConnectorPoint PointX="9" PointY="16.598216145833334" />
+          <ConnectorPoint PointX="9.75" PointY="16.598216145833334" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273257" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.281923076923077" PointY="17.657084960937503" />
-          <ConnectorPoint PointX="10.281923076923077" PointY="17.907084960937503" />
-          <ConnectorPoint PointX="10.728461538461538" PointY="17.907084960937503" />
-          <ConnectorPoint PointX="10.728461538461538" PointY="17.657084960937503" />
+          <ConnectorPoint PointX="10.281923076923077" PointY="17.821432291666667" />
+          <ConnectorPoint PointX="10.281923076923077" PointY="18.071432291666667" />
+          <ConnectorPoint PointX="10.728461538461538" PointY="18.071432291666667" />
+          <ConnectorPoint PointX="10.728461538461538" PointY="17.821432291666667" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273272" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.25" PointY="17.272997988281247" />
-          <ConnectorPoint PointX="12.24218625" PointY="17.272997988281247" />
-          <ConnectorPoint PointX="12.24218625" PointY="17.625" />
+          <ConnectorPoint PointX="11.25" PointY="17.304249988281249" />
+          <ConnectorPoint PointX="12.34375" PointY="17.304249988281249" />
+          <ConnectorPoint PointX="12.34375" PointY="17.625" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273234" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="10.374999500000001" />

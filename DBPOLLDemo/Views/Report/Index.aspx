@@ -9,10 +9,13 @@
     <h2>Reports</h2>
     <p>Please choose a type of report you would like to generate:</p>
     <p> 
-   <%-- <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />--%>
-   <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />
+    <%-- <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />--%>
+    <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />
     <%= Html.ActionLink("Statistical Report", "../Report/StatisticalReport")%> <br />
-    <%= Html.ActionLink("System Utilisation Report", "../Report/SystemUtilisationReport")%> <br />
+    
+    <%= Html.ActionLink("Session Participation Report", "../Report/SessionParticipation")%> <br />
+    
+    
     </p>
 
 </asp:Content>

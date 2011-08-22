@@ -17,45 +17,7 @@
 <script type="text/javascript"
     src="http://maps.googleapis.com/maps/api/js?sensor=false">
 </script>
-<script type="text/javascript">
-    var map;
-    var marker = null;
-    function initialize() {
-        var latlng = new google.maps.LatLng(39, 35);
-        var myOptions = {
-            zoom: 1,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("google_map"),
-        myOptions);
 
-//        google.maps.event.addListener(map, 'click', function (event) {
-//            placeMarker(event.latLng);
-//        });
-
-    }
-
-    //As there is only one point. Returns the Geogrpahical Location of the poll to a createpoll / update poll 
-//    function getPollLocation() {
-//        if (marker = null) {
-//            return null;
-//        } else { return marker.getPosition; }
-//    }
-
-    // Adds a marker or moves the markers position on the map.
-//    function placeMarker(location) {
-//        if (marker == null) {
-//            marker = new google.maps.Marker({
-//                position: location,
-//                map: map
-//            });
-//        } else {
-//            marker.setPosition(location);
-//        }
-//    }
-
-</script>
 
 <script runat="server" language="C#">
 void Page_Load(object source, EventArgs e){
@@ -66,7 +28,73 @@ void Page_Load(object source, EventArgs e){
     } 
     </script>
 
+  <script type="text/javascript">
+              var map;
+              var marker = null;
+              function initialize() {
+                  var latlng = new google.maps.LatLng(39, 35);
+                  var myOptions = {
+                      zoom: 1,
+                      center: latlng,
+                      mapTypeId: google.maps.MapTypeId.ROADMAP
+                  };
+                  
+     
+                map = new google.maps.Map(document.getElementById("google_map"),
+                myOptions);
 
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(-34.933333, 138.6),
+                    map: map
+                });
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(-12.466667, 130.833333),
+                    map: map
+                });
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(153.016667, -27.5),
+                    map: map
+                });
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(-31.933333, 115.833333),
+                    map: map
+                }); 
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng( -33.8830555556,151.216666667),
+                    map: map
+                });
+//                marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng( -27.5, 153.016667),
+//                    map: map
+//                }); marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng(-34.933333, 138.6),
+//                    map: map
+//                });
+//                marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng(-12.466667, 130.833333 ),
+//                    map: map
+//                });
+//                marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng(-31.933333, 115.833333),
+//                    map: map
+//                });
+//                marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng(151.216666667, -33.8830555556),
+//                    map: map
+//                });
+//                marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng(-33.895820604476604, 151.14644409179687),
+//                    map: map
+//                });
+//                marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng(152.70592064619063, -27.627904686799557),
+//                    map: map
+//                });
+                 ;
+              }
+
+
+</script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -78,7 +106,9 @@ void Page_Load(object source, EventArgs e){
             <th nowrap="nowrap">
                 Poll Name
             </th>
-           
+            <th nowrap="nowrap">
+                Session Name
+            </th>
             <th nowrap="nowrap">
                 Date Poll Created
             </th>
@@ -87,22 +117,28 @@ void Page_Load(object source, EventArgs e){
             </th>
             <th nowrap="nowrap">
                 Poll Creator
-            </th>
+                Assigned</th>
             <th nowrap="nowrap">
                 Total Number of Participants
             </th>
+
             
             
         </tr>
 
+   <% String pnamecheck = "" ;%>
    <% foreach (var item in Model) { %>
     
         <tr>
-            
             <td nowrap="nowrap">
-                <%= Html.Encode(item.pollname)%>
+            <% if (pnamecheck != item.pollname){ %>
+                    <%= Html.Encode(item.pollname)%>
+                <% pnamecheck = item.pollname; %>
+            <%} %>
+             </td>
+            <td nowrap="nowrap">
+                <%= Html.Encode(item.sessionname)%>
             </td>
-         
             <td nowrap="nowrap">
                 <%= Html.Encode(String.Format("{0:g}", item.createdAt))%>
             </td>
@@ -117,7 +153,12 @@ void Page_Load(object source, EventArgs e){
                 <%= Html.Encode(item.total) %>
             </td>
             
-            
+        <% Session["a1"] = item.latitude;
+           Session["a2"] = item.longitude;
+        %>
+        
+
+        
         </tr>
     
     <% } %>
@@ -127,5 +168,7 @@ void Page_Load(object source, EventArgs e){
     <br />
     <br />
     <br />
+
+    
     <div id="google_map" style="width:360px; height:200px"></div>
      </asp:Content>

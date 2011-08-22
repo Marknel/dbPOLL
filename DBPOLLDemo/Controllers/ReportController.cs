@@ -9,6 +9,9 @@ using DBPOLLDemo.Models;
 using System.Web.UI;
 using System.IO;
 
+using System.Web.UI.DataVisualization.Charting;
+
+
 namespace DBPOLLDemo.Controllers
 {
     public class ReportController : Controller
@@ -28,6 +31,10 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult SystemUtilisationReport()
         {
+            if (Session["sysadmin"] != "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(new userModel().displayAllUsers());
         }
 
@@ -37,18 +44,35 @@ namespace DBPOLLDemo.Controllers
             return View(new questionModel().displayQuestionsAnswer());
         }
 
+       
+
+        public ActionResult SessionHistoryReport()
+        {
+            return View(new pollModel().displayAllPolls());
+        }
+
+        public ActionResult SessionParticipation()
+        {
+            return View(new questionModel().displayAttendance());
+        }
+
+        //[AcceptVerbs(HttpVerbs.Post)]
+        public void StatisticalReportExport()
+        {
+            Export(new questionModel().displayQuestionsAnswer());
+        }
+
         public void Export(List<questionModel> list)
+        //public void Export()
         {
             StringWriter sw = new StringWriter();
 
-            //First line for column names
-            //sw.WriteLine("\"ID\",\"Date\",\"Description\"");
             sw.WriteLine("\"Question\",\"Answer\"");
 
             foreach (questionModel item in list)
             {
                 String result;
-                switch (item.answer)
+                switch (item.answernum)
                 {
                     case 1:
                         result = "a";
@@ -96,37 +120,51 @@ namespace DBPOLLDemo.Controllers
             Response.End();
         }
 
-        public ActionResult SessionHistoryReport()
+        public ActionResult Chart()
         {
-            return View(new pollModel().displayAllPolls());
+            List<int> list = new List<int>();
+            list.Add(1);
+            list.Add(2);
+            list.Add(4);
+            list.Add(8);
+            list.Add(10);
+            list.Add(20);
+            //list = (List<int>)Session["test"];
+
+
+            //ViewData["Chart"] = list;
+
+            Chart chart = new Chart();
+            chart.BackColor = System.Drawing.Color.Transparent;
+            //chart.Width = Unit.Pixel(250);
+            //chart.Height = Unit.Pixel(100);
+
+            Series series1 = new Series("Series1");
+            series1.ChartArea = "ca1";
+            series1.ChartType = SeriesChartType.Column;
+            series1.Font = new System.Drawing.Font("Verdana", 8.25f, System.Drawing.FontStyle.Regular);
+            int i = 1;
+            foreach (int value in list)
+            {
+                series1.Points.Add(new DataPoint
+                {
+                    AxisLabel = "Session " + i.ToString(),
+                    YValues = new double[] { value }
+                });
+                i++;
+            }
+            chart.Series.Add(series1);
+
+            ChartArea ca1 = new ChartArea("ca1");
+            ca1.BackColor = System.Drawing.Color.Transparent;
+            chart.ChartAreas.Add(ca1);
+            using (var ms = new System.IO.MemoryStream())
+            {
+                chart.SaveImage(ms, ChartImageFormat.Png);
+                ms.Seek(0, System.IO.SeekOrigin.Begin);
+
+                return File(ms.ToArray(), "image/png");
+            }
         }
-
-        public ActionResult SessionParticipation()
-        {
-            return View(new questionModel().displayAttendance());
-        }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public void StatisticalReport(String clickme)
-        {
-            Export(new questionModel().displayQuestionsAnswer());
-            //ViewData["test"] = "helo";
-
-            //string attachment = "haha.xls";
-            //Response.ClearContent();
-            //Response.AddHeader("content-disposition", attachment);
-            //Response.ContentType = "application/ms-excel";
-            //System.IO.StringWriter sw = new System.IO.StringWriter();
-            //TextWriter tw = null;
-            //Type tpe = null;
-            //HtmlTextWriter htw = Page.CreateHtmlTextWriterFromType(tw, tpe);
-
-            //Response.Write(sw.ToString());
-            //Response.End();
-
-            //return View(new questionModel().displayQuestionsAnswer());
-        }
-
-      
     }
 }

@@ -19,6 +19,9 @@ namespace DBPOLLDemo.Models
     public class questionModel : System.Web.UI.Page
     {
         private QUESTION q = new QUESTION();
+        private POLL p = new POLL();
+        private SESSION s = new SESSION();
+        private ANSWER a = new ANSWER();
         public int questionid;
         public int questiontype;
         public String question;
@@ -32,7 +35,14 @@ namespace DBPOLLDemo.Models
         public String pollname;
 
         // for the answer
-        public int? answer;
+        public String answer;
+        public int answernum;
+
+        //for session
+        public int sessionid;
+        public int sessionparticipants;
+
+        public String sessionname;
 
         public int? participants;
         public int totalparticipants;
@@ -54,6 +64,16 @@ namespace DBPOLLDemo.Models
         public questionModel(int qid)
         {
             q.QUESTION_ID = this.questionid = qid;
+            
+        }
+
+        public questionModel(String pname, String ques, int sid, String ans, int total)
+        {
+            q.QUESTION1 = this.question = ques;
+            p.POLL_NAME= this.pollname = pname;
+            s.SESSION_ID = this.sessionid = sid;
+            a.ANSWER1 = this.answer = ans;
+            this.totalparticipants = total;
         }
 
 
@@ -179,46 +199,119 @@ namespace DBPOLLDemo.Models
                             question = q.QUESTION1, 
                             questiontype = q.QUESTION_TYPE, 
                             createdat = q.CREATED_AT, 
-                            questnum = q.NUM
+                            questnum = (int)q.NUM
                         };
 
             return query.ToList();
         }
 
+        //public List<questionModel> displayQuestionsAnswer()
+        //{
+        //    var query = (from q in dbpollContext.QUESTIONS
+        //                 from p in dbpollContext.POLLS
+        //                 from s in dbpollContext.SESSIONS
+        //                 where ((p.POLL_ID==q.POLL_ID) && (s.POLL_ID==p.POLL_ID))
+        //                 orderby p.POLL_ID ascending
+        //                 select new questionModel
+        //                 {
+        //                     //pollid = p.POLL_ID, 
+                             
+        //                     //pollname = p.POLL_NAME,
+        //                     pollname = (String)(from p1 in dbpollContext.POLLS
+        //                                         where (p1.POLL_ID == p.POLL_ID)
+        //                                         select p1.POLL_NAME).Distinct().FirstOrDefault(),
+        //                     questnum = (int)q.NUM,
+        //                     //question = (String)(from q1 in dbpollContext.QUESTIONS
+        //                     //                  where (q1.QUESTION_ID == q.QUESTION_ID)
+        //                     //                  select q1.QUESTION1).Distinct().FirstOrDefault(),
+        //                     question = q.QUESTION1,
+        //                     answer = (String)(from a1 in dbpollContext.ANSWERS
+        //                                       where (a1.QUESTION_ID == q.QUESTION_ID)
+        //                                       select a1.ANSWER1).FirstOrDefault(),
+        //                     //sessionid = (int)(from s2 in dbpollContext.SESSIONS
+        //                     //                  where (s2.POLL_ID == p.POLL_ID
+        //                     //                  select s2.SESSION_ID).Distinct().FirstOrDefault(),)
+        //                     sessionid = s.SESSION_ID,
+        //                     sessionparticipants = (int)(from s1 in dbpollContext.SESSIONS
+        //                                                 from par in dbpollContext.PARTICIPANTS
+        //                                                 where ((s1.POLL_ID == p.POLL_ID)&& (par.SESSION_ID==s1.SESSION_ID))
+        //                                                 select par.USER_ID).Count(),  
+        //                     //answer = a.NUM,
+        //                 }
+        //                );
+
+
+        //    return query.ToList();
+        //}
+
         public List<questionModel> displayQuestionsAnswer()
         {
             var query = (from q in dbpollContext.QUESTIONS
+                         from p in dbpollContext.POLLS
+                         from s in dbpollContext.SESSIONS
                          from a in dbpollContext.ANSWERS
-                         where ((q.QUESTION_ID == a.QUESTION_ID) && (q.QUESTION_TYPE >=3 && q.QUESTION_TYPE <=6))
-                         //orderby q.QUESTION_TYPE ascending
+                         where ((p.POLL_ID == q.POLL_ID) && (s.POLL_ID == p.POLL_ID) && a.QUESTION_ID==q.QUESTION_ID)
+                         
+                         orderby p.POLL_NAME ascending
                          select new questionModel
                          {
-                             pollid = q.POLL_ID, 
-                             question = q.QUESTION1,
-                             questnum = q.NUM,
-                             //answer = (String)(from u1 in dbpollContext.ANSWERS
-                             //                         where (u1.ANSWER_ID == a.ANSWER_ID)
-                             //                         select u1.ANSWER1).FirstOrDefault(),
-                             answer = a.NUM,
-                         }
-                        );
+                             pollname = (String)(from p1 in dbpollContext.POLLS
+                                                 where (p1.POLL_ID == p.POLL_ID)
+                                                 select p1.POLL_NAME).Distinct().FirstOrDefault(),
 
+                             question = (String)(from q1 in dbpollContext.QUESTIONS
+                                                 where (q1.QUESTION_ID == q.QUESTION_ID)
+                                                 //orderby q1.QUESTION_ID
+                                                 select q1.QUESTION1).FirstOrDefault(),
+                             sessionid = s.SESSION_ID,
+                             sessionname = s.SESSION_NAME,
+                             
+
+                             //sessionid = (int)(from s2 in dbpollContext.SESSIONS
+                             //                  where (s2.POLL_ID == p.POLL_ID)
+                             //                  select s2.SESSION_ID).Distinct().FirstOrDefault(),
+
+                             //answer = (String)(from a1 in dbpollContext.ANSWERS
+                             //                  where (a1.QUESTION_ID == q.QUESTION_ID)
+                             //                  select a1.ANSWER1).GroupBy(a.ANSWER_ID, a.ANSWER_ID),
+                             
+                             answer = a.ANSWER1,
+
+                             //totalparticipants = (int)(from s1 in dbpollContext.SESSIONS
+                             //                          from par in dbpollContext.PARTICIPANTS
+                             //                          where ((s1.POLL_ID == p.POLL_ID) && (par.SESSION_ID == s1.SESSION_ID))
+                             //                          select par.USER_ID).Count(),  
+
+                             totalparticipants = (int)(from r in dbpollContext.RESPONSES
+                                                       where (r.ANSWER_ID==a.ANSWER_ID && r.FEEDBACK==a.ANSWER1)
+                                                       select r.USER_ID).Count(),
+                         }
+
+                ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
 
             return query.ToList();
         }
 
+        
+
         public List<questionModel> displayAttendance()
         {
-            var query = (from u in dbpollContext.USERS
+            var query = (from s in dbpollContext.SESSIONS
                          from p in dbpollContext.PARTICIPANTS
-                         where (u.USER_ID == p.USER_ID)
-                         //orderby p.POLL_ID ascending
+                         where (s.SESSION_ID == p.SESSION_ID)
+                         orderby p.SESSION_ID ascending
+
                          select new questionModel
                          {
-                             pollid = q.POLL_ID,
+                             sessionname = s.SESSION_NAME,
+                             sessionid = p.SESSION_ID,
+                             pollname = (String)(from p1 in dbpollContext.POLLS
+                                                     where (p1.POLL_ID == s.POLL_ID)
+                                                     select p1.POLL_NAME).FirstOrDefault(),
+                                                     
                              participants = p.USER_ID,
                              totalparticipants = (int)(from t in dbpollContext.PARTICIPANTS
-                                           where (t.USER_ID == p.USER_ID)
+                                           where (t.SESSION_ID == s.SESSION_ID)
                                            select t.USER_ID).Count(),  
 
                          }
@@ -243,7 +336,7 @@ namespace DBPOLLDemo.Models
                                 question = q.QUESTION1, 
                                 questiontype = q.QUESTION_TYPE, 
                                 createdat = q.CREATED_AT, 
-                                questnum = q.NUM
+                                questnum = (int)q.NUM
                             };
                 return query.ToList();
 
@@ -260,7 +353,7 @@ namespace DBPOLLDemo.Models
                                 question = q.QUESTION1,
                                 questiontype = q.QUESTION_TYPE,
                                 createdat = q.CREATED_AT,
-                                questnum = q.NUM
+                                questnum = (int)q.NUM
                             };
                 return query.ToList();
             }
@@ -280,7 +373,7 @@ namespace DBPOLLDemo.Models
                             question = q.QUESTION1,
                             questiontype = q.QUESTION_TYPE,
                             createdat = q.CREATED_AT,
-                            questnum = q.NUM,
+                            questnum = (int)q.NUM,
                         };
 
             return query.ToList();
@@ -295,8 +388,8 @@ namespace DBPOLLDemo.Models
                             questionid = q.QUESTION_ID, 
                             questiontype = q.QUESTION_TYPE, 
                             question = q.QUESTION1, 
-                            chartstyle = (int)q.CHART_STYLE, 
-                            questnum = q.NUM, 
+                            chartstyle = (int)q.CHART_STYLE,
+                            questnum = (int)q.NUM, 
                             createdat = q.CREATED_AT, 
                             pollid = q.POLL_ID
                         };

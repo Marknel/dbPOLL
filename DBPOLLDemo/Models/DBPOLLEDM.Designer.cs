@@ -683,6 +683,44 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273257", "ANSWERS")]
+        public ANSWER ANSWER2
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273257", "ANSWERS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273257", "ANSWERS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<ANSWER> ANSWER2Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273257", "ANSWERS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273257", "ANSWERS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273272", "RESPONSES")]
         public EntityCollection<RESPONS> RESPONSES
         {

@@ -21,6 +21,15 @@ namespace DBPOLLDemo.Controllers
         // This function displays the user creation screen
         public ActionResult New()
         {
+            // Basic check to see if the user is Authenticated.
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            userModel user = new userModel();
+            var userDetails = user.get_details((int)Session["uid"]);
+            ViewData["User"] = userDetails;
             return View();
         }
 

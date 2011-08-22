@@ -19,20 +19,25 @@ namespace DBPOLLDemo.Models
     public class pollModel : System.Web.UI.Page
     {
         private POLL poll = new POLL();
+        private SESSION session = new SESSION();
         public int pollid;
         public String pollname;
         public DateTime modifiedat;
         public int createdby;
         public DateTime createdAt;
         public DateTime expiresat;
-        public decimal? longitude;
-        public decimal? latitude;
+        public decimal longitude;
+        public decimal latitude;
         public String createdmaster;
         public String createdcreator1;
         public String sessionName;
         public int total;
+
         public int sessionid;
         public DateTime time;
+
+        public String sessionname;
+
         
 
         //Properties for getters/setters
@@ -50,8 +55,8 @@ namespace DBPOLLDemo.Models
             this.sessionName = sessionName;
             poll.POLL_ID = this.pollid = pollid;
             poll.POLL_NAME = this.pollname = pollName;
-            poll.LATITUDE = this.latitude = latitude;
-            poll.LONGITUDE = this.longitude = longitude;
+            session.LATITUDE = this.latitude = latitude;
+            session.LONGITUDE = this.longitude = longitude;
             poll.CREATED_AT = this.createdAt = createdAt;
             //this.createdmaster = dbpollContext.
 
@@ -107,8 +112,8 @@ namespace DBPOLLDemo.Models
 
             poll.POLL_ID = this.pollid = pollid;
             poll.POLL_NAME = this.pollname = pollName;
-            poll.LATITUDE = this.latitude = latitude;
-            poll.LONGITUDE = this.longitude = longitude;
+            session.LATITUDE = this.latitude = latitude;
+            session.LONGITUDE = this.longitude = longitude;
             poll.CREATED_AT = this.createdAt = createdAt;
             poll.CREATED_BY = this.createdby = createdBy;
 
@@ -183,11 +188,16 @@ namespace DBPOLLDemo.Models
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from p in dbpollContext.POLLS
-                        where p.CREATED_BY == sessionID
+                        //fix meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                            
+                        from s in dbpollContext.SESSIONS
+                        where ((p.CREATED_BY == sessionID) && (p.POLL_ID==s.POLL_ID))
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -206,28 +216,32 @@ namespace DBPOLLDemo.Models
 
 
             int sessionID = (int)Session["uid"];
-            List<POLL> pollList = new List<POLL>();
-            var query = from p in dbpollContext.POLLS
-                        from it in dbpollContext.USERS
-                        where (p.CREATED_BY == it.USER_ID)
-                        select new pollModel
-                        {
-                            pollid = p.POLL_ID,
-                            pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
-                            createdby = p.CREATED_BY,
-                            expiresat = (DateTime)p.EXPIRES_AT,
-                            createdAt = p.CREATED_AT,
-                            modifiedat = (DateTime)p.MODIFIED_AT,
-                            createdmaster = it.NAME,
-                            createdcreator1 = (String)(from g in dbpollContext.USERS
-                                                       where (g.USER_ID == it.CREATED_BY)
-                                                       select g.NAME).FirstOrDefault(),
-                            //total = (int)(from par in dbpollContext.PARTICIPANTS
-                                         // where (par.POLL_ID==p.POLL_ID)
-                                       //   select par.USER_ID).Count(),            
-                        };
+            //List<POLL> pollList = new List<POLL>();
+            var query = (from p in dbpollContext.POLLS
+                         from s in dbpollContext.SESSIONS
+                         from it in dbpollContext.USERS
+                         where ((p.CREATED_BY == it.USER_ID) && (p.POLL_ID == s.POLL_ID))
+                         select new pollModel
+                         {
+                             pollid = p.POLL_ID,
+                             pollname = p.POLL_NAME,
+                             longitude = s.LONGITUDE,
+                             latitude = s.LATITUDE,
+                             createdby = p.CREATED_BY,
+                             expiresat = (DateTime)p.EXPIRES_AT,
+                             createdAt = p.CREATED_AT,
+                             modifiedat = (DateTime)s.SESSION_TIME,
+                             createdmaster = it.NAME,
+                             sessionname = s.SESSION_NAME,
+                             createdcreator1 = (String)(from g in dbpollContext.USERS
+                                                        where (g.USER_ID == it.CREATED_BY)
+                                                        select g.NAME).FirstOrDefault(),
+
+                             total = (int)(from par in dbpollContext.PARTICIPANTS
+                                           where (par.SESSION_ID== s.SESSION_ID)
+                                           select par.USER_ID).Count(),            
+                         }).OrderBy(p => p.pollname).ThenBy(p => p.createdAt);
+
         
             return query.ToList(); 
         }
@@ -246,13 +260,14 @@ namespace DBPOLLDemo.Models
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from p in dbpollContext.POLLS
-                        where p.CREATED_BY == sessionID && p.POLL_ID == pollid
+                        from s in dbpollContext.SESSIONS
+                        where (p.CREATED_BY == sessionID && p.POLL_ID == pollid && p.POLL_ID == s.POLL_ID)
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -279,13 +294,14 @@ namespace DBPOLLDemo.Models
             int sessionID = (int)Session["uid"];
             List<POLL> pollList = new List<POLL>();
             var query = from p in dbpollContext.POLLS
-                        where p.CREATED_BY == sessionID && p.CREATED_AT >= start && p.CREATED_AT <= end
+                        from s in dbpollContext.SESSIONS
+                        where (p.CREATED_BY == sessionID && p.CREATED_AT >= start && p.CREATED_AT <= end && s.POLL_ID==p.POLL_ID)
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = p.LONGITUDE,
-                            latitude = p.LATITUDE,
+                            longitude = s.LONGITUDE,
+                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
@@ -412,6 +428,7 @@ namespace DBPOLLDemo.Models
                 POLL p = pollList.First<POLL>();
 
                 p.POLL_NAME = pollName;
+                p.EXPIRES_AT = expiresat;
                 p.MODIFIED_AT = DateTime.Now;
 
                 dbpollContext.SaveChanges();
