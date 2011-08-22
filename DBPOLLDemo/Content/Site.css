@@ -41,6 +41,7 @@ p, ul
 {
     margin-bottom: 20px;
     line-height: 1.6em;
+    font-size: large;
 }
 
 /* HEADINGS   
@@ -61,7 +62,8 @@ h1
 h2
 {
     padding: 0 0 10px 0;
-    height: 44px;
+    height: 20px;
+    text-align: left;
 }
 h3
 {

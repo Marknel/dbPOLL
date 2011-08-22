@@ -67,7 +67,6 @@
             <td nowrap="nowrap" class="style7">
                 <%= Html.Encode(item.name) %>
             </td>
-
             <% if (item.createdby == null) { item.createdby = item.sysAdmin; } %>
 
             <td nowrap="nowrap" class="style9">
@@ -76,15 +75,13 @@
             <td nowrap="nowrap" class="style5">
                 <%= Html.Encode(String.Format("{0:g}", item.createdat))%>
             </td>
-            <td nowrap="nowrap" class="style10" color:blue><%
-          
+            <td nowrap="nowrap" class="style10"><%       
                 int total = (item.createdat - DateTime.Now).Days+365;
                 if ((total >= 0) && (total <= 30) &&
                         (utype == "Poll Administrator"))
                 { expire = "This Account is about to expire in " + total + " days"; }
                 else if ((total < 0) && (utype == "Poll Administrator")) { expire = "Expired"; }
                 else { expire = ""; }
-          
              %>
                 <%= Html.Encode(expire)%>
             </td>

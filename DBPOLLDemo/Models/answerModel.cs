@@ -150,7 +150,7 @@ namespace DBPOLLDemo.Models
         public List<answerModel> displayAnswers(int questId)
         {
             var query = from a in dbpollContext.ANSWERS
-                        where a.QUESTION_ID == questId && a.ANSWER_ID== a.UPDATED_TO
+                        where a.QUESTION_ID == questId 
                         orderby a.QUESTION_ID descending
                         select new answerModel
                         {
