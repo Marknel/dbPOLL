@@ -63,7 +63,7 @@
     <% } %>
 
     </table>
-    <%= Html.ActionLink("Generate report in excel", "StatisticalReport")%>
+    <%= Html.ActionLink("Generate report in excel", "StatisticalReportExport")%>
     <%--<asp:Button
         ID="clickme" runat="server" name="clickme" Text="Generate report in excel" />--%>
 </asp:Content>

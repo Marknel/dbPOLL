@@ -31,6 +31,10 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult SystemUtilisationReport()
         {
+            if (Session["sysadmin"] != "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(new userModel().displayAllUsers());
         }
 
@@ -52,7 +56,7 @@ namespace DBPOLLDemo.Controllers
             return View(new questionModel().displayAttendance());
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        //[AcceptVerbs(HttpVerbs.Post)]
         public void StatisticalReportExport()
         {
             Export(new questionModel().displayQuestionsAnswer());

@@ -12,8 +12,10 @@
     <%-- <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />--%>
     <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />
     <%= Html.ActionLink("Statistical Report", "../Report/StatisticalReport")%> <br />
-    <%= Html.ActionLink("System Utilisation Report", "../Report/SystemUtilisationReport")%> <br />
+    
     <%= Html.ActionLink("Session Participation Report", "../Report/SessionParticipation")%> <br />
+    
+    
     </p>
 
 </asp:Content>

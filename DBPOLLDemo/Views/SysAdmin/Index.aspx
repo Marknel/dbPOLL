@@ -48,6 +48,9 @@
         <p>
             <%= Html.ActionLink("Create new Poll Administrator", "Create")%>
         </p>
+        <p>
+        <%= Html.ActionLink("System Utilisation Report", "../Report/SystemUtilisationReport")%> <br />
+        </p>
     </fieldset>
     <% } %>
 </asp:Content>
