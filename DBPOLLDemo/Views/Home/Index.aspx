@@ -8,7 +8,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <!-- 'Inherits="System.Web.Mvc.ViewPage<DBPOLLContext.USER>" -->
-    <h2>Poll Creator Login</h2>
+    <h2>Login</h2>
 
     <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
 

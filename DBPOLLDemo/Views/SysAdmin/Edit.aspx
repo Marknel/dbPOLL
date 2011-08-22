@@ -5,8 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
-        Edit User:
-        <%="i need to be fixed!" /*Model.question*/%></h2>
+        Edit User:</h2>
     <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
     <% using (Html.BeginForm())
        {%>
@@ -24,7 +23,7 @@
         </p>
         <p>
             <label for="Expires_At">
-                Expiry date:</label>
+                Expiry date (dd/mm/yyyy):</label>
             <%= Html.TextBox("Expires_At", Model.Expires_At)%>
             <%= Html.ValidationMessage("Expiry date", "*")%>
         </p>
@@ -35,8 +34,11 @@
             <%= Html.ValidationMessage("Username", "*")%>
         </p>
         <p>
+            <%=ViewData["edited"]%></p>
+        <p>
             <input type="submit" value="Save Changes" />
         </p>
+
     </fieldset>
     <%--</form>--%>
     <% } %>

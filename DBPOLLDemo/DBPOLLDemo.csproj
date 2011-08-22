@@ -190,6 +190,7 @@
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
     <Content Include="Views\SysAdmin\Create.aspx" />
+    <Content Include="Views\SysAdmin\Delete.aspx" />
     <Content Include="Views\SysAdmin\Edit.aspx" />
     <Content Include="Views\SysAdmin\Index.aspx" />
     <Content Include="Views\User\New.aspx" />

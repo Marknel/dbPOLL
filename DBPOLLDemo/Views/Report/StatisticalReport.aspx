@@ -36,8 +36,9 @@
                             <%= Html.Encode("Session " + item.sessionid)%>
                         </th>
                     </tr> 
-           <p style="font-weight: bold;"><%= Html.Encode("Result for: " + item.pollname)%></p>
-           <br />
+            <br />
+            <br />
+           <p class="special"><%= Html.Encode("Result for: " + item.pollname)%></p>
             <%= Html.Encode("Question: " + item.question)%> 
             <br />
             <img src="<%= Url.Action("Chart") %>" alt="image" />  </br></br>
@@ -69,7 +70,7 @@
                <img src="<%= Url.Action("Chart") %>" alt="image" />  </br></br>
                
         <%} %>
-                     <% if (!acheck.Contains(item.answer)) {%>
+                   <% if (!acheck.Contains(item.answer)) {%>
                     <tr> 
                         <td nowrap="nowrap" class="style5">
                             <%= Html.Encode(item.answer)%>
@@ -91,15 +92,24 @@
     <%}%>
         
          
-
-        
     </table>
+   <%-- <p>--%>
+           <%--  <input name="submit" type="submit" id="generate" value="Generate excel file" />--%>
+          <%--   <input name="submit" type="submit" id="submit" value="Save" />--%>
+                
+   <%-- </p>--%>
 </asp:Content>
 <asp:Content ID="Content3" runat="server" contentplaceholderid="HeadContent">
     <style type="text/css">
         .style1
         {
             font-size: large;
+        }
+        .special
+        {
+            
+            font-weight: bolder;    
+            text-decoration: underline;
         }
     </style>
 </asp:Content>

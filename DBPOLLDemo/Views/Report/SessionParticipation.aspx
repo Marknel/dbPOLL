@@ -26,7 +26,7 @@
             
             
         </tr>
-
+   <% Session["export"] = ""; %>
    <% String pnamecheck = "" ;%>
    <% String scheck = "" ;%>
    <% foreach (var item in Model) { %>
@@ -53,12 +53,19 @@
                 <%= Html.Encode(item.participants)%>
             </td>
            
-  
+            <% Session["export"] += item.pollname; %>
+            <% Session["export"] += item.sessionname; %>
+            <% Session["export"] += item.totalparticipants.ToString(); %>
+            <% Session["export"] += item.participants.ToString(); %>
+
             
         </tr>
     <% } %>
 
     </table>
+    <%= Html.ActionLink("Generate report in excel", "StatisticalReport")%>
+    <%--<asp:Button
+        ID="clickme" runat="server" name="clickme" Text="Generate report in excel" />--%>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">

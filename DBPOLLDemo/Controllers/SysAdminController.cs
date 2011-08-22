@@ -102,6 +102,7 @@ namespace DBPOLLDemo.Controllers
                 userModel u = new userModel();
                 u.updateUser(UserID, Expires_At, Name, username);
 
+                ViewData["edited"] = "Details successfully changed";
                 return View(new userModel().getUser(UserID));
             }
             catch

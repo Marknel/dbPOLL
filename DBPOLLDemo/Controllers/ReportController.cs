@@ -53,17 +53,16 @@ namespace DBPOLLDemo.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public void StatisticalReport(String clickme)
+        public void StatisticalReportExport()
         {
             Export(new questionModel().displayQuestionsAnswer());
         }
 
         public void Export(List<questionModel> list)
+        //public void Export()
         {
             StringWriter sw = new StringWriter();
 
-            //First line for column names
-            //sw.WriteLine("\"ID\",\"Date\",\"Description\"");
             sw.WriteLine("\"Question\",\"Answer\"");
 
             foreach (questionModel item in list)
