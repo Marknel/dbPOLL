@@ -287,11 +287,6 @@ namespace DBPOLLDemo.Models
                                                        select r.USER_ID).Count(),
                          }
 
-
-                ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
-
-
-
                 ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
 
             return query.ToList();

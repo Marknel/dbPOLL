@@ -26,8 +26,8 @@ namespace DBPOLLDemo.Models
         public int createdby;
         public DateTime createdAt;
         public DateTime expiresat;
-        public decimal? longitude;
-        public decimal? latitude;
+        public decimal longitude;
+        public decimal latitude;
         public String createdmaster;
         public String createdcreator1;
         public String sessionName;
