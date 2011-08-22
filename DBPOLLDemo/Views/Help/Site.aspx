@@ -33,49 +33,131 @@
 		<h2>Index Help</h2><hr />
           <form id="form1" runat="server">
 
-      <h3>TreeView Declarative Syntax Example</h3>
-      <a href="file.pdf"><img src="help_book-icon.gif" alt="Manual" title="Manual" /></a>
-
-      <a href="javascript:window.print()"><img src="help_book-icon.gif" alt="Print" title="Print"/> </a>
-      
-      
-      <a href="Site.aspx">Site.aspx</a>
-     
-<a href="QuestionCreateMultipleChoice.aspx">QuestionCreateMultipleChoice.aspx</a>
-
 
       <asp:TreeView id="SampleTreeView" 
         runat="server">
         
         <Nodes>
             
-          <asp:TreeNode Value="Home" 
+          <asp:TreeNode Value="HomeHome" 
             NavigateUrl="/Help/Site?idi=HomeHome" 
-            Text="  Getting Started"
-            Target="Content" 
+            Text=" Getting Started"
+           
             Expanded="True" ImageUrl="../../Content/help_manual.png">
 
-            <asp:TreeNode Value="Page 1" 
-              NavigateUrl="/Help/Site?idi=HomeHome" 
-              Text="Homepage Help"
-              Target="Content" Expanded="False" ImageUrl="../../Content/help_manual.png"> 
+            <asp:TreeNode Value=" Poll Component" 
+              NavigateUrl="/Help/Site?idi=Pollindex" 
+              Text="  Poll Help"
+              Expanded="False" ImageUrl="../../Content/help_manual.png"> 
               
+            <asp:TreeNode Value=" Pollindex" 
+              NavigateUrl="/Help/Site?idi=Pollindex" 
+              Text="  Poll Index "
+              Expanded="False" ImageUrl="../../Content/help_manual.png"/> 
 
-              <asp:TreeNode Value="Section 1" 
-                NavigateUrl="http://www.google.com" 
-                Text="Section 1"
-                Target="Content"/>
+
+              <asp:TreeNode Value="PollView" 
+                NavigateUrl="/Help/Site?idi=PollViewPolls"
+                Text=" Poll View " ImageUrl="../../Content/help_manual.png"/>  
 
             </asp:TreeNode>              
 
-            <asp:TreeNode Value="Page 2" 
-              NavigateUrl="http://www.google.com"
-              Text="Page 2"
-              Target="Content">
+            <asp:TreeNode Value="Question Component" 
+              NavigateUrl="/Help/Site?idi=Questionindex"
+              Text=" Question Help" 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" >
 
-            </asp:TreeNode> 
+            <asp:TreeNode Value="Question Index" 
+              NavigateUrl="/Help/Site?idi=Questionindex"
+              Text=" Question Index" 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
 
-          </asp:TreeNode>
+            <asp:TreeNode Value="QuestionviewQuestions" 
+              NavigateUrl="/Help/Site?idi=QuestionviewQuestions"
+              Text=" Question viewQuestions" 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+
+            <asp:TreeNode Value="QuestionEdit" 
+              NavigateUrl="/Help/Site?idi=QuestionEdit"
+              Text=" Question Edit " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+     
+            <asp:TreeNode Value="QuestionCreate" 
+              NavigateUrl="/Help/Site?idi=QuestionCreate"
+              Text=" Question Create " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+
+            <asp:TreeNode Value="QuestionCreateMultipleChoice" 
+              NavigateUrl="/Help/Site?idi=QuestionCreateMultipleChoice"
+              Text=" Question CreateMultiple Choice " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+    
+    
+            <asp:TreeNode Value="QuestionCreateShortAnswer" 
+              NavigateUrl="/Help/Site?idi=QuestionCreateShortAnswer"
+              Text=" Question Create ShortAnswer " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+
+              </asp:TreeNode>    
+
+          
+            <asp:TreeNode Value="Answer" 
+              NavigateUrl="/Help/Site?idi=AnswerIndex"
+              Text=" Answer Help " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" >
+
+
+
+            <asp:TreeNode Value="AnswerIndex" 
+              NavigateUrl="/Help/Site?idi=AnswerIndex"
+              Text=" Answer Index " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+        
+            <asp:TreeNode Value="AnswerEdit" 
+              NavigateUrl="/Help/Site?idi=AnswerEdit"
+              Text=" Answer Edit " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+
+              </asp:TreeNode>    
+
+            <asp:TreeNode Value="ObjectIndex" 
+              NavigateUrl="/Help/Site?idi=ObjectIndex"
+              Text=" Object Help " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" >
+
+
+            <asp:TreeNode Value="ObjectIndex" 
+              NavigateUrl="/Help/Site?idi=ObjectIndex"
+              Text=" Object Index " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+
+              </asp:TreeNode>    
+
+            <asp:TreeNode Value="ReportIndex" 
+              NavigateUrl="/Help/Site?idi=ReportIndex"
+              Text=" Report Help " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" >
+
+            <asp:TreeNode Value="ReportIndex" 
+              NavigateUrl="/Help/Site?idi=ReportIndex"
+              Text=" ReportIndex " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+              </asp:TreeNode>    
+
+            <asp:TreeNode Value="PollTestDevices" 
+              NavigateUrl="/Help/Site?idi=PollTestDevices "
+              Text="  Test Devices Help " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" >
+
+            <asp:TreeNode Value="PollTestDevices" 
+              NavigateUrl="/Help/Site?idi=PollTestDevices "
+              Text="  Test Devices. " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+              </asp:TreeNode>    
+
+              </asp:TreeNode>    
+               
+               
 
         </Nodes>
 
