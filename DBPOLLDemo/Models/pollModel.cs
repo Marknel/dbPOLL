@@ -69,6 +69,7 @@ namespace DBPOLLDemo.Models
             }
         }
 
+
         public pollModel(int sessionid, int y)
         {
             this.sessionid = sessionid;

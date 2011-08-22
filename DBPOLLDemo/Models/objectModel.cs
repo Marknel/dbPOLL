@@ -67,6 +67,20 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
+        public objectModel getObject(int id)
+        {
+            var query = from o in dbpollContext.OBJECTS
+                        where o.OBJ_ID== id
+                        select new objectModel
+                        {
+                            obid = o.OBJ_ID,
+                            obtype = o.OBJ_ID,
+                            attribute = o.ATTRIBUTE
+                        };
+
+            return query.First();
+        }
+
         public int getMaxID()
         {
             int query = (from o 
@@ -76,17 +90,70 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
-        public void createObject()
+        public void createObject(int obtype, String attribute, int questionid)
         {
-            //dbpollContext.OBJECTS.InsertOnSubmit(ob);
-            //dbpollContext.SubmitChanges();
+            try
+            {
+
+                OBJECT o = new OBJECT();
+
+                o.OBJ_ID = getMaxID() + 1;
+                o.OBJ_TYPE = obtype;
+                o.ATTRIBUTE = attribute;
+
+                dbpollContext.AddToOBJECTS(o);
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void updateObject(int obid, int obtype, String attribute)
+        {
+            try
+            {
+                var oList =
+                from o in dbpollContext.OBJECTS
+                where o.OBJ_ID == obid
+                select o;
+
+                OBJECT ob = oList.First<OBJECT>();
+
+                ob.OBJ_ID = getMaxID() + 1;
+                ob.OBJ_TYPE = obtype;
+                ob.ATTRIBUTE = attribute;
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+            
         }
 
         public void deleteObject()
         {
-            //dbpollContext.OBJECTS.Attach(ob);
-           // dbpollContext.OBJECTS.DeleteOnSubmit(ob);
-           //dbpollContext.SubmitChanges();
+            try
+            {
+                var oList =
+                from o in dbpollContext.OBJECTS
+                where o.OBJ_ID == obid
+                select o;
+
+                OBJECT ob = oList.First<OBJECT>();
+
+                dbpollContext.DeleteObject(ob);
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
         }
     }
 }

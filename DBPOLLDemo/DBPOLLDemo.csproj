@@ -157,6 +157,7 @@
     <Content Include="Views\Question\CreateShortAnswer.aspx" />
     <Content Include="Views\Question\Edit.aspx" />
     <Content Include="Views\Question\Index.aspx" />
+    <Content Include="Views\Question\viewQuestion.aspx" />
     <Content Include="Views\Question\viewQuestions.aspx" />
     <Content Include="Views\Report\Index.aspx" />
     <Content Include="Views\Report\SessionHistoryReport.aspx" />

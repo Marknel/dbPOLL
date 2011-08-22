@@ -16,6 +16,14 @@ namespace DBPOLLDemo.Controllers
         public List<pollModel> sessionData { get; set; }
     }
 
+    public class PollSession
+    {
+        public pollModel pollData { get; set; }
+        public questionModel questionData { get; set; }
+        public answerModel answerData { get; set; }
+    }
+
+
     public class PollController : Controller
     {
         private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
@@ -35,9 +43,9 @@ namespace DBPOLLDemo.Controllers
             pollSession.sessionData = new pollModel().displayPollSessions();
             
 
-                return View(pollSession);
+            return View(pollSession);
         }
-        
+
         public ActionResult viewPolls()
         {
             if (Session["uid"] == null)
@@ -47,6 +55,7 @@ namespace DBPOLLDemo.Controllers
 
             return View(new pollModel().displayPolls());
         }
+
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult viewPolls(String date1, String date2)
         {

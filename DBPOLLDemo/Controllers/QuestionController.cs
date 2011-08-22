@@ -360,7 +360,7 @@ namespace DBPOLLDemo.Controllers
             }
             catch(Exception e)
             {
-                ViewData["quest"] = "ERROR: "+e.Message;
+                ViewData["quest"] = "ERROR: "+ e.Message;
                 return View();
             }
         }

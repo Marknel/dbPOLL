@@ -72,13 +72,10 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            int maxobid = new objectModel().getMaxID(); 
-
             try
             {
-                // TODO: Add insert logic here
-                objectModel ob = new objectModel((maxobid + 1),obtype, attribute, questionid);
-                ob.createObject();
+
+                new objectModel().createObject(obtype, attribute, questionid);
 
                 return RedirectToAction("Index", new { questionid = questionid });
             }
