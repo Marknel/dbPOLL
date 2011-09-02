@@ -30,32 +30,19 @@ namespace DBPOLLDemo.Controllers
             return View(new userModel().displayPollAdminUsers());
         }
 
-        public void Export(List<userModel> list)
+
+        public ActionResult DeleteConfirm(int UserID)
         {
-            StringWriter sw = new StringWriter();
-
-            //First line for column names
-            sw.WriteLine("\"ID\",\"Date\",\"Description\"");
-
-            foreach (userModel item in list)
+            if (Session["sysadmin"] != "true")
             {
-                sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\"",
-                                           item.UserID,
-                                           item.username,
-                                           item.Name));
+                return RedirectToAction("Index", "Home");
             }
-
-            Response.AddHeader("Content-Disposition", "attachment; filename=test.csv");
-            Response.ContentType = "text/csv";
-            Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");
-            Response.Write(sw);
-            Response.End();
+            ViewData["delID"] = UserID;
+            return View("DeleteConfirm");
         }
-        
+
         public ActionResult Delete(int UserID)
         {
-
-            // Basic check to see if the user is Authenticated.
             if (Session["sysadmin"] != "true")
             {
                 return RedirectToAction("Index", "Home");

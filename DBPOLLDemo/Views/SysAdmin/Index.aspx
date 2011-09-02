@@ -29,7 +29,7 @@
                { %>
             <tr>
                 <td nowrap="nowrap">
-                    <%= Html.ActionLink("Delete", "Delete", new { UserID = item.UserID })%>
+                    <%= Html.ActionLink("Delete", "DeleteConfirm", new { UserID = item.UserID })%>
                     |
                     <%= Html.ActionLink("Edit", "Edit", new { UserID = item.UserID })%>
                 </td>
