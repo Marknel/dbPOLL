@@ -198,7 +198,7 @@ namespace DBPOLLDemo.Controllers
             return View();
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateSession(int pollid, String name, decimal latitude, decimal longitude, String time)
+        public ActionResult CreateSession(int pollid, String name, decimal latitude, decimal longitude, String time, String longitudeBox, String latitudeBox)
         {
             if (Session["uid"] == null)
             {
@@ -207,6 +207,34 @@ namespace DBPOLLDemo.Controllers
 
             bool valid = true;
             DateTime parsedDate;
+            Decimal parsedLongitude;
+            Decimal parsedLatitude;
+
+            IEnumerable<int> longE = Enumerable.Range(0, 180);
+            IEnumerable<int> longW = Enumerable.Range(-180, 180);
+
+            IEnumerable<int> latN = Enumerable.Range(0, 90);
+            IEnumerable<int> latS = Enumerable.Range(-90, 90);
+
+
+            if (!(longitudeBox.Equals("") && latitudeBox.Equals("")))
+            {
+                if (!Decimal.TryParse(latitudeBox, out parsedLatitude))
+                {
+                    ViewData["latBox"] = "field is not a latitude";
+                    valid = false;
+                }
+                if (!Decimal.TryParse(longitudeBox, out parsedLongitude))
+                {
+                    ViewData["longBox"] = "field is not a longitude";
+                    valid = false;
+                }
+
+                
+
+            }
+
+
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
