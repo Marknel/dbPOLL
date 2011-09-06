@@ -109,6 +109,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Applets\lib\jcommon-1.0.10.jar" />
+    <Content Include="Applets\lib\jfreechart-1.0.6.jar" />
+    <Content Include="Applets\lib\jna.jar" />
+    <Content Include="Applets\lib\orson-0.5.0.jar" />
+    <Content Include="Applets\lib\rc_sdk.jar" />
     <Content Include="Content\AnswerEdit.jpg" />
     <Content Include="Content\AnswerIndex.jpg" />
     <Content Include="Content\Back.jpg" />
@@ -120,7 +125,7 @@
     <Content Include="Content\Index.jpg" />
     <Content Include="Content\Manual.jpg" />
     <Content Include="Content\ObjectIndex.jpg" />
-    <Content Include="Content\PollApplet.jar" />
+    <Content Include="Applets\PollApplet.jar" />
     <Content Include="Content\PollIndex.jpg" />
     <Content Include="Content\PollTestDevices.jpg" />
     <Content Include="Content\PollViewPolls.jpg" />
@@ -231,8 +236,8 @@
     <Content Include="Views\Shared\Blank.Master" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\jnlpcomponent1.jnlp" />
-    <None Include="Content\launch.jnlp" />
+    <None Include="Applets\jnlpcomponent1.jnlp" />
+    <None Include="Applets\launch.jnlp" />
     <None Include="Content\Thumbs.db" />
     <EntityDeploy Include="Models\DBPOLLEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
