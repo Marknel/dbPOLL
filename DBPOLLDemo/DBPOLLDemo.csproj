@@ -76,6 +76,7 @@
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SysAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Default.aspx.cs">
@@ -170,9 +171,9 @@
     <Content Include="Views\Home\PollsImCreating.ascx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
-    <Content Include="Views\Poll\CreateSession.aspx" />
+    <Content Include="Views\Session\Create.aspx" />
     <Content Include="Views\Poll\Edit.aspx" />
-    <Content Include="Views\Poll\EditSession.aspx" />
+    <Content Include="Views\Session\Edit.aspx" />
     <Content Include="Views\Poll\Index.aspx" />
     <Content Include="Views\Poll\IndexREF.aspx" />
     <Content Include="Views\Poll\questionDetails.aspx" />

@@ -143,18 +143,6 @@ namespace DBPOLLDemo.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult DeleteSession(int sessionid)
-        {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            pollModel poll = new pollModel(sessionid,1);
-            poll.deleteSession();
-
-            return RedirectToAction("Index", "Poll");
-        }
         //
         // GET: /Main/pollDetails/5
         public ActionResult Details(int id, String name)
@@ -166,9 +154,37 @@ namespace DBPOLLDemo.Controllers
             return RedirectToAction("Index", "Question", new { id, name });
         }
 
+        // Our handlers for session oprations. Will redirect to session controller
+        public ActionResult CreateSession(int pollID, String pollName)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-        //
-        // GET: /Main/answerDetails/5
+            return RedirectToAction("Create", "Session", new { pollID, pollName });
+        }
+
+        public ActionResult EditSession(String sessionname, int sessionid, int pollid, decimal longitude, decimal latitude, DateTime time)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Edit", "Session", 
+                new { sessionname, sessionid, pollid, longitude, latitude, time });
+        }
+
+        public ActionResult DeleteSession(int sessionid)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Delete", "Session", new {sessionid });
+        }
 
         public ActionResult answerDetails(int id, String name)
         {
@@ -185,103 +201,6 @@ namespace DBPOLLDemo.Controllers
 
         //
         // GET: /Main/Create
-
-        public ActionResult CreateSession(int pollID, String pollName)
-        {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            ViewData["pollid"] = pollID;
-            ViewData["pollName"] = pollName;
-
-            return View();
-        }
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateSession(int pollid, String name, decimal latitude, decimal longitude, String time, String longitudeBox, String latitudeBox)
-        {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            bool valid = true;
-            DateTime parsedDate;
-            Decimal parsedLongitude;
-            Decimal parsedLatitude;
-
-            IEnumerable<int> longE = Enumerable.Range(0, 180);
-            IEnumerable<int> longW = Enumerable.Range(-180, 180);
-
-            IEnumerable<int> latN = Enumerable.Range(0, 90);
-            IEnumerable<int> latS = Enumerable.Range(-90, 90);
-
-
-            if (!(longitudeBox.Equals("") && latitudeBox.Equals("")))
-            {
-                if (!Decimal.TryParse(latitudeBox, out parsedLatitude))
-                {
-                    ViewData["latBox"] = "field is not a latitude";
-                    valid = false;
-                }
-                if (!Decimal.TryParse(longitudeBox, out parsedLongitude))
-                {
-                    ViewData["longBox"] = "field is not a longitude";
-                    valid = false;
-                }
-
-                
-
-            }
-
-
-
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
-
-            if (!DateTime.TryParse(time, out parsedDate))
-            {
-
-                if (time == "" || time == null)
-                {
-                    ViewData["date1"] = "Above field must contain a date";
-                }
-                else
-                {
-                    ViewData["date1"] = "Please Enter a correct Date";
-                }
-                valid = false;
-            }
-
-            if (valid == false)
-            {
-                return View();
-            }
-
-            if (parsedDate < DateTime.Now)
-            {
-                ViewData["date1"] = "Date incorrectly in the past.";
-                valid = false;
-            }
-
-            if (valid == true)
-            {
-
-                try
-                {
-                    new pollModel().createSession(pollid, name, latitude, longitude, parsedDate);
-                    return RedirectToAction("Index","Poll");
-                }
-                catch
-                {
-                    return View();
-                }
-            }
-            return View();
-
-        }
-
 
         public ActionResult Create()
         {
@@ -331,81 +250,6 @@ namespace DBPOLLDemo.Controllers
 
             return View();
         }
-
-        public ActionResult EditSession(String sessionname, int sessionid, int pollid, decimal longitude, decimal latitude, DateTime time)
-        {
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            ViewData["name"] = sessionname;
-            ViewData["sessionid"] = sessionid;
-            ViewData["pollid"] = pollid;
-            ViewData["longitude"] = longitude;
-            ViewData["latitude"] = latitude;
-            ViewData["time"] = time;
-
-            return View();
-        }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditSession(String name, int sessionid, decimal latitude, decimal longitude, String time)
-        {
-
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            bool valid = true;
-            DateTime parsedDate;
-
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
-
-            if (!DateTime.TryParse(time, out parsedDate))
-            {
-
-                if (time == "" || time == null)
-                {
-                    ViewData["date1"] = "Above field must contain a date";
-                }
-                else
-                {
-                    ViewData["date1"] = "Please Enter a correct Date";
-                }
-                valid = false;
-            }
-
-            if (valid == false)
-            {
-                return View();
-            }
-
-            if (parsedDate < DateTime.Now)
-            {
-                ViewData["date1"] = "Date incorrectly in the past.";
-                valid = false;
-            }
-
-            if (valid == true)
-            {
-
-                try
-                {
-                    new pollModel().editSession(name, sessionid, latitude, longitude, parsedDate);
-                    return RedirectToAction("Index", "Poll");
-                }
-                catch
-                {
-                    return View();
-                }
-            }
-            return View();
-        }
-
 
         //
         // POST: /Main/Edit/5
