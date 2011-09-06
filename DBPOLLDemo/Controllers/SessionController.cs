@@ -82,7 +82,6 @@ namespace DBPOLLDemo.Controllers
                 }
             }
             
-
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
@@ -151,7 +150,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(String name, int sessionid, decimal latitude, decimal longitude, String time)
+        public ActionResult Edit(String name, int sessionid, decimal latitude, decimal longitude, String time, String longitudeBox, String latitudeBox)
         {
 
             if (Session["uid"] == null)
@@ -165,6 +164,37 @@ namespace DBPOLLDemo.Controllers
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
+
+            Decimal parsedLongitude = longitude;
+            Decimal parsedLatitude = latitude;
+
+            IEnumerable<int> longRange = Enumerable.Range(-180, 360);
+            IEnumerable<int> latRange = Enumerable.Range(-90, 180);
+
+
+            if (!(longitudeBox.Equals("") && latitudeBox.Equals("")))
+            {
+                if (!Decimal.TryParse(latitudeBox, out parsedLatitude))
+                {
+                    ViewData["latBox"] = "field is not a valid latitude";
+                    valid = false;
+                }
+                else if (!latRange.Contains((int)parsedLatitude))
+                {
+                    ViewData["latBox"] = "Latitude is not between -90" + (char)176 + " and 90" + (char)176;
+                    valid = false;
+                }
+                if (!Decimal.TryParse(longitudeBox, out parsedLongitude))
+                {
+                    ViewData["longBox"] = "field is not a valid longitude";
+                    valid = false;
+                }
+                else if (!longRange.Contains((int)parsedLongitude))
+                {
+                    ViewData["longBox"] = "Longitude is not between -180" + (char)176 + " and 180" + (char)176;
+                    valid = false;
+                }
+            }
 
             if (!DateTime.TryParse(time, out parsedDate))
             {
@@ -196,7 +226,7 @@ namespace DBPOLLDemo.Controllers
 
                 try
                 {
-                    new pollModel().editSession(name, sessionid, latitude, longitude, parsedDate);
+                    new pollModel().editSession(name, sessionid, parsedLatitude, parsedLongitude, parsedDate);
                     return RedirectToAction("Index", "Poll");
                 }
                 catch

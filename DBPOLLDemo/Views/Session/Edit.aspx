@@ -72,8 +72,12 @@
                 position: location,
                 map: map
             });
+            document.getElementById('longitudeBox').value = getPollLong();
+            document.getElementById('latitudeBox').value = getPollLat();
         } else {
             marker.setPosition(location);
+            document.getElementById('longitudeBox').value = getPollLong();
+            document.getElementById('latitudeBox').value = getPollLat();
         }
     }
 
@@ -112,6 +116,20 @@ void Page_Load(object source, EventArgs e){
 
                 <%= Html.TextBox("time", ViewData["time"]) %>
                 <%= ViewData["date1"] %>
+
+            </p>
+            <p>
+                <label for="Longitude">Session Longitude:</label>
+
+                <%= Html.TextBox("longitudeBox") %>
+                <%= ViewData["longBox"] %>
+
+            </p>
+            <p>
+                <label for="Latitude">Session Latitiude:</label>
+
+                <%= Html.TextBox("latitudeBox") %>
+                <%= ViewData["latBox"] %>
 
             </p>
 
