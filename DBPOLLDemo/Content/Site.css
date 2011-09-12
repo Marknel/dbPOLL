@@ -200,11 +200,13 @@ fieldset
 fieldset p 
 {
     margin: 2px 12px 10px 10px;
+    width: 200px;
 }
 
 fieldset label 
 {
     display: block;
+    width: 200px;
 }
 
 fieldset label.inline 

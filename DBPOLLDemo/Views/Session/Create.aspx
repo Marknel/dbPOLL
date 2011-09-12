@@ -131,12 +131,13 @@ void Page_Load(object source, EventArgs e){
                 <%= ViewData["latBox"] %>
 
             </p>
+            <p>
 
                 <%= Html.Hidden("pollid", ViewData["pollid"])%>
-
-                 <label for="map_canvas">Select Session Location:</label>
-                 <div id="map_canvas" style="width:360px; height:200px"></div>
+                     <label for="map_canvas">Select Session Location:</label>
+                     <div id="map_canvas" style="width:520px; height:360px"></div>
                  <%=Html.Hidden("pollid", ViewData["pollid"] )%>
+                 </p>
                  <input type="hidden" id="longitude" name="longitude" value="null" />
                  <input type="hidden" id="latitude" name="latitude" value="null" />
             <p>
@@ -147,7 +148,7 @@ void Page_Load(object source, EventArgs e){
     <% } %>
 
     <div>
-        <%=Html.ActionLink("Back to List", "Index") %>
+        <%=Html.ActionLink("Back to List", "../Poll/Index") %>
     </div>
 
 </asp:Content>
