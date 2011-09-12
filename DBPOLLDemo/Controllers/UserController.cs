@@ -43,7 +43,7 @@ namespace DBPOLLDemo.Controllers
                 case "Poll User":
                     user_power = 1;
                     break;
-
+                    
                 case "Poll Master":
                     user_power = 2;
                     break;

@@ -40,7 +40,12 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New Poll", "Create", new {createdby = (int)Session["uid"] })%>
+
+        <%  //Check if the user is authorized to create polls
+            if (Int32.Parse(Session["user_type"].ToString()) > 2)
+          { %>
+            <%= Html.ActionLink("Create New Poll", "Create", new { createdby = (int)Session["uid"] })%>
+        <%} %>
     </p>
 
     <h2>Session Index </h2>

@@ -100,6 +100,16 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
+
+        /// <summary>
+        /// Takes a username and password, checks the user exists in the system and returns
+        /// the user's userid code.
+        /// </summary>
+        /// <param name="username">username of user to verify</param>
+        /// <param name="password">password of user to verify</param>
+        /// <returns>USERID that corresponds to user level in system (ie. 1 == pollUser)
+        /// 
+        /// Or Returns 0 if user is a system admin</returns>
         public int verify(string username, string password)
         {
             var query = from u in dbpollContext.USERS
@@ -240,6 +250,28 @@ namespace DBPOLLDemo.Models
                          in dbpollContext.USERS
                          select q.USER_ID).Max();
             return query + 1;
+        }
+
+        /// <summary>
+        /// Returns the user type code for a specified userid. (i.e 1 for poll user)
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        public int getUserType(int uid)
+        {
+            var query = -1;
+            try
+            {
+                query = (from q
+                             in dbpollContext.USERS
+                             where q.USER_ID == uid
+                             select q.USER_TYPE).First();
+            }
+            catch (Exception)
+            {
+                return query;
+            }
+            return query;
         }
 
         public void createUser(int UserID, int UserType, string password, string name, string username, DateTime Expires_At, int SysAdmin_ID)

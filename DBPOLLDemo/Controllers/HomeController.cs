@@ -17,8 +17,10 @@ namespace DBPOLLDemo.Controllers
         {
             userModel user = new userModel();
             var authenticated = user.verify(username, password);
+            var type = user.getUserType(authenticated);
             if ( authenticated != 0 ) {
                 Session["uid"] = authenticated;
+                Session["user_type"] = type;
                 Session["sysadmin"] = "false";
                 return RedirectToAction("Home", "Home");
             } else {
@@ -26,6 +28,7 @@ namespace DBPOLLDemo.Controllers
                 if (authenticated != 0)
                 {
                     Session["uid"] = authenticated;
+                    Session["user_type"] = type;
                     Session["sysadmin"] = "true";
                     return RedirectToAction("Home", "Home");
                 }
