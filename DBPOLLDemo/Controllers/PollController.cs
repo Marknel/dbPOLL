@@ -290,5 +290,16 @@ namespace DBPOLLDemo.Controllers
         {
             return View();
         }
+
+        public ActionResult AssignPoll()
+        {
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult AssignPoll(int userid)
+        {
+            return View();
+        }
     }
 }

@@ -330,6 +330,15 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
+        public int getMaxAssignID()
+        {
+            int query = (from a
+                         in dbpollContext.ASSIGNEDPOLLS
+                         select a.ASSIGNED_ID).Max();
+
+            return query;
+        }
+
         public void createSession(int pollid, String name, decimal latitude, decimal longitude, DateTime time)
         {
             try
@@ -395,6 +404,30 @@ namespace DBPOLLDemo.Models
                 throw (e);
             }
         }
+
+        /// <summary>
+        /// Call to assign a poll to a particualar poll master.
+        /// </summary>
+        /// <param name="pollid"></param>
+        /// <param name="userid"></param>
+        public void assignPoll(int pollid, int userid)
+        {
+            try
+            {
+                ASSIGNEDPOLL p = new ASSIGNEDPOLL();
+                p.ASSIGNED_ID = getMaxAssignID() + 1;
+                p.POLL_ID = pollid;
+                p.USER_ID = userid;
+
+                dbpollContext.AddToASSIGNEDPOLLS(p);
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
 
         public void createPoll(String pollName, int createdBy, Nullable<DateTime> expiresat)
         {

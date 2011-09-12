@@ -38,6 +38,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273273", "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.SESSION), "RESPONSES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.RESPONS), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273217", "SYSADMINS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.SYSADMIN), "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.USER), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273218", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.USER), "USERS1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.USER), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001293084", "POLL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.POLL), "ASSIGNEDPOLL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ASSIGNEDPOLL), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001293085", "USER", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.USER), "ASSIGNEDPOLL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ASSIGNEDPOLL), true)]
 
 #endregion
 
@@ -264,6 +266,22 @@ namespace DBPOLLDemo.Models
             }
         }
         private ObjectSet<USER> _USERS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ASSIGNEDPOLL> ASSIGNEDPOLLS
+        {
+            get
+            {
+                if ((_ASSIGNEDPOLLS == null))
+                {
+                    _ASSIGNEDPOLLS = base.CreateObjectSet<ASSIGNEDPOLL>("ASSIGNEDPOLLS");
+                }
+                return _ASSIGNEDPOLLS;
+            }
+        }
+        private ObjectSet<ASSIGNEDPOLL> _ASSIGNEDPOLLS;
 
         #endregion
         #region AddTo Methods
@@ -354,6 +372,14 @@ namespace DBPOLLDemo.Models
         public void AddToUSERS(USER uSER)
         {
             base.AddObject("USERS", uSER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ASSIGNEDPOLLS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToASSIGNEDPOLLS(ASSIGNEDPOLL aSSIGNEDPOLL)
+        {
+            base.AddObject("ASSIGNEDPOLLS", aSSIGNEDPOLL);
         }
 
         #endregion
@@ -733,6 +759,188 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273272", "RESPONSES", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Models", Name="ASSIGNEDPOLL")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ASSIGNEDPOLL : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ASSIGNEDPOLL object.
+        /// </summary>
+        /// <param name="aSSIGNED_ID">Initial value of the ASSIGNED_ID property.</param>
+        public static ASSIGNEDPOLL CreateASSIGNEDPOLL(global::System.Int32 aSSIGNED_ID)
+        {
+            ASSIGNEDPOLL aSSIGNEDPOLL = new ASSIGNEDPOLL();
+            aSSIGNEDPOLL.ASSIGNED_ID = aSSIGNED_ID;
+            return aSSIGNEDPOLL;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ASSIGNED_ID
+        {
+            get
+            {
+                return _ASSIGNED_ID;
+            }
+            set
+            {
+                if (_ASSIGNED_ID != value)
+                {
+                    OnASSIGNED_IDChanging(value);
+                    ReportPropertyChanging("ASSIGNED_ID");
+                    _ASSIGNED_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ASSIGNED_ID");
+                    OnASSIGNED_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ASSIGNED_ID;
+        partial void OnASSIGNED_IDChanging(global::System.Int32 value);
+        partial void OnASSIGNED_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> POLL_ID
+        {
+            get
+            {
+                return _POLL_ID;
+            }
+            set
+            {
+                OnPOLL_IDChanging(value);
+                ReportPropertyChanging("POLL_ID");
+                _POLL_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("POLL_ID");
+                OnPOLL_IDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _POLL_ID;
+        partial void OnPOLL_IDChanging(Nullable<global::System.Int32> value);
+        partial void OnPOLL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> USER_ID
+        {
+            get
+            {
+                return _USER_ID;
+            }
+            set
+            {
+                OnUSER_IDChanging(value);
+                ReportPropertyChanging("USER_ID");
+                _USER_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("USER_ID");
+                OnUSER_IDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _USER_ID;
+        partial void OnUSER_IDChanging(Nullable<global::System.Int32> value);
+        partial void OnUSER_IDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001293084", "POLL")]
+        public POLL POLL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<POLL>("Models.CSSE3004GG_SYS_C001293084", "POLL").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<POLL>("Models.CSSE3004GG_SYS_C001293084", "POLL").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<POLL> POLLReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<POLL>("Models.CSSE3004GG_SYS_C001293084", "POLL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<POLL>("Models.CSSE3004GG_SYS_C001293084", "POLL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001293085", "USER")]
+        public USER USER
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001293085", "USER").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001293085", "USER").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<USER> USERReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001293085", "USER");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<USER>("Models.CSSE3004GG_SYS_C001293085", "USER", value);
                 }
             }
         }
@@ -2013,6 +2221,28 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<QUESTION>("Models.CSSE3004GG_SYS_C001273244", "QUESTIONS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001293084", "ASSIGNEDPOLL")]
+        public EntityCollection<ASSIGNEDPOLL> ASSIGNEDPOLLS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ASSIGNEDPOLL>("Models.CSSE3004GG_SYS_C001293084", "ASSIGNEDPOLL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ASSIGNEDPOLL>("Models.CSSE3004GG_SYS_C001293084", "ASSIGNEDPOLL", value);
                 }
             }
         }
@@ -3945,6 +4175,28 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<USER>("Models.CSSE3004GG_SYS_C001273218", "USERS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001293085", "ASSIGNEDPOLL")]
+        public EntityCollection<ASSIGNEDPOLL> ASSIGNEDPOLLS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ASSIGNEDPOLL>("Models.CSSE3004GG_SYS_C001293085", "ASSIGNEDPOLL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ASSIGNEDPOLL>("Models.CSSE3004GG_SYS_C001293085", "ASSIGNEDPOLL", value);
                 }
             }
         }
