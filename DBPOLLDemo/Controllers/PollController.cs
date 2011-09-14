@@ -291,15 +291,18 @@ namespace DBPOLLDemo.Controllers
             return View();
         }
 
-        public ActionResult AssignPoll()
+        public ActionResult AssignPoll(int pollid, String pollname)
         {
-            return View();
+            ViewData["pollid"] = pollid;
+            ViewData["pollname"] = pollname;
+            return View( new userModel().displayPollMasterUsers());
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult AssignPoll(int userid)
+        public ActionResult AssignPoll(int pollid, int[] selectedObjects)
         {
-            return View();
+            new pollModel().assignPoll(pollid, selectedObjects);
+            return View(new userModel().displayPollMasterUsers());
         }
     }
 }

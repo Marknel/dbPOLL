@@ -20,7 +20,6 @@ using System.Collections.Generic;
 
 namespace DBPOLLDemo.Models
 {
-
     public class userModel : System.Web.UI.Page
     {
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
@@ -38,6 +37,9 @@ namespace DBPOLLDemo.Models
         public string sysAdmin;
 
         public DateTime expiredat;
+
+
+        
 
         /// <summary>
         /// Constructor for userModel Object.
@@ -96,7 +98,7 @@ namespace DBPOLLDemo.Models
 
                         };
 
-
+            
             return query.ToList();
         }
 
@@ -160,10 +162,15 @@ namespace DBPOLLDemo.Models
         {
             this.UserID = UserID;
         }
+
+        /// <summary>
+        /// Returns a set of all poll admin users in the database
+        /// </summary>
+        /// <returns></returns>
         public List<userModel> displayPollAdminUsers()
         {
             var query = from q in dbpollContext.USERS
-                        where q.USER_TYPE == 4
+                        where q.USER_TYPE == User_Type.POLL_ADMINISTRATOR
                         orderby q.CREATED_AT ascending
                         select new userModel
                         {
@@ -174,6 +181,26 @@ namespace DBPOLLDemo.Models
                             //SysAdmin_ID = q.SYSADMIN_ID,
                             //Created_By = q.CREATED_BY,
                             //Expires_At = q.EXPIRES_AT
+                        };
+
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// Returns a set of all poll masters in database.
+        /// </summary>
+        /// <returns></returns>
+        public List<userModel> displayPollMasterUsers()
+        {
+            var query = from q in dbpollContext.USERS
+                        where q.USER_TYPE == User_Type.POLL_MASTER
+                        orderby q.CREATED_AT ascending
+                        select new userModel
+                        {
+                            UserID = q.USER_ID,
+                            UserType = q.USER_TYPE,
+                            username = q.USERNAME,
+                            Name = q.NAME
                         };
 
             return query.ToList();

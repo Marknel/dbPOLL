@@ -185,27 +185,57 @@ namespace DBPOLLDemo.Models
             ci = new CultureInfo("en-AU");
             Thread.CurrentThread.CurrentCulture = ci;
 
-            int sessionID = (int)Session["uid"];
+            int userID = (int)Session["uid"];
+            
+            
+
             List<POLL> pollList = new List<POLL>();
-            var query = from p in dbpollContext.POLLS
+            if (Int32.Parse(Session["user_type"].ToString()) >= User_Type.POLL_CREATOR)
+            {
+
+
+                var query = from p in dbpollContext.POLLS
                         //fix meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                            
-                        from s in dbpollContext.SESSIONS
-                        where ((p.CREATED_BY == sessionID) && (p.POLL_ID==s.POLL_ID))
+                        //from s in dbpollContext.SESSIONS
+
+                        where p.CREATED_BY == userID //|| ((a.USER_ID == userID) && ((a.POLL_ID == p.POLL_ID) && (p.POLL_ID == s.POLL_ID))))
                         select new pollModel
                         {
                             pollid = p.POLL_ID,
                             pollname = p.POLL_NAME,
-                            longitude = s.LONGITUDE,
-                            latitude = s.LATITUDE,
                             createdby = p.CREATED_BY,
                             expiresat = (DateTime)p.EXPIRES_AT,
                             createdAt = p.CREATED_AT,
                             modifiedat = (DateTime)p.MODIFIED_AT
                         };
+                return query.ToList();
 
+            }
+            else if (Int32.Parse(Session["user_type"].ToString()) >= User_Type.POLL_MASTER)
+            {
+                var q2 = from a in dbpollContext.ASSIGNEDPOLLS
+                         where a.USER_ID == userID
+                         select a.POLL_ID;
 
-            return query.ToList();
+                var query = from p in dbpollContext.POLLS
+                            //fix meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                            //from s in dbpollContext.SESSIONS
+                            where q2.Contains(p.POLL_ID) //|| ((a.USER_ID == userID) && ((a.POLL_ID == p.POLL_ID) && (p.POLL_ID == s.POLL_ID))))
+                            select new pollModel
+                            {
+                                pollid = p.POLL_ID,
+                                pollname = p.POLL_NAME,
+                                createdby = p.CREATED_BY,
+                                expiresat = (DateTime)p.EXPIRES_AT,
+                                createdAt = p.CREATED_AT,
+                                modifiedat = (DateTime)p.MODIFIED_AT
+                            };
+                return query.ToList();
+            }
+            else
+            {
+               return new List<pollModel>();
+            }
         }
 
         public List<pollModel> displayAllPolls()
@@ -410,22 +440,34 @@ namespace DBPOLLDemo.Models
         /// </summary>
         /// <param name="pollid"></param>
         /// <param name="userid"></param>
-        public void assignPoll(int pollid, int userid)
+        public void assignPoll(int pollid, int[] pollMasterId)
         {
             try
             {
+                foreach (int id in pollMasterId)
+            {
+
                 ASSIGNEDPOLL p = new ASSIGNEDPOLL();
                 p.ASSIGNED_ID = getMaxAssignID() + 1;
                 p.POLL_ID = pollid;
-                p.USER_ID = userid;
+                p.USER_ID = id;
 
                 dbpollContext.AddToASSIGNEDPOLLS(p);
                 dbpollContext.SaveChanges();
+                }
             }
             catch (Exception e)
             {
                 throw (e);
             }
+        }
+
+
+        public void assignPollMaster(int pollid, int[] pollMasterId)
+        {
+
+            
+            
         }
 
 

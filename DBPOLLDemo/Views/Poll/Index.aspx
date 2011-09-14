@@ -33,6 +33,16 @@
               <td nowrap="nowrap">
                 <%= Html.Encode(String.Format("{0:g}", item.CreateDate)) %>
             </td>
+
+            <%  //Check if the user is authorized to assign poll masters
+            if (Int32.Parse(Session["user_type"].ToString()) > 2)
+          { %>
+            <td nowrap="nowrap">
+                <%= Html.ActionLink("Assign Poll Masters", "AssignPoll", new {pollid=item.pollID, pollname = item.pollname}) %>
+            </td>
+            <%} %>
+
+
         </tr>
     
     <% } %>
