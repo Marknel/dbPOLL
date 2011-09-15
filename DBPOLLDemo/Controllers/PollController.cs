@@ -16,6 +16,12 @@ namespace DBPOLLDemo.Controllers
         public List<pollModel> sessionData { get; set; }
     }
 
+    public class Assign_PollMasters
+    {
+        public List<userModel> assigned { get; set; }
+        public List<userModel> unassigned { get; set; }
+    }
+
     public class PollSession
     {
         public pollModel pollData { get; set; }
@@ -293,16 +299,40 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult AssignPoll(int pollid, String pollname)
         {
+            Assign_PollMasters pollMasters = new Assign_PollMasters();
+
+            pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);
+            pollMasters.unassigned = new userModel().displayUnassignedPollMasterUsers(pollid);
+
+
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;
-            return View( new userModel().displayPollMasterUsers());
+            return View(pollMasters);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult AssignPoll(int pollid, int[] selectedObjects)
+        public ActionResult AssignPoll(int pollid, int[] selectedObjects, String pollname)
         {
             new pollModel().assignPoll(pollid, selectedObjects);
-            return View(new userModel().displayPollMasterUsers());
+
+
+            Assign_PollMasters pollMasters = new Assign_PollMasters();
+
+            pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);
+            pollMasters.unassigned = new userModel().displayUnassignedPollMasterUsers(pollid);
+
+
+            ViewData["pollid"] = pollid;
+            ViewData["pollname"] = pollname;
+            return View(pollMasters);
+        }
+
+
+        public ActionResult UnassignPollUser(int pollid, String pollname, int userid)
+        {
+            new pollModel().unassignPollMaster(pollid, userid);
+
+            return RedirectToAction("AssignPoll", "Poll", new {pollid = pollid, pollname = pollname });
         }
     }
 }

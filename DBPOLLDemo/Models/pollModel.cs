@@ -462,12 +462,26 @@ namespace DBPOLLDemo.Models
             }
         }
 
+        public void unassignPollMaster(int pollid, int userid){
 
-        public void assignPollMaster(int pollid, int[] pollMasterId)
-        {
+            try
+            {
+                var query =
+                from assign in dbpollContext.ASSIGNEDPOLLS
+                where assign.POLL_ID == pollid && assign.USER_ID == userid
+                select assign;
 
-            
-            
+                ASSIGNEDPOLL a = query.First<ASSIGNEDPOLL>();
+                dbpollContext.DeleteObject(a);
+
+                dbpollContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+
         }
 
 

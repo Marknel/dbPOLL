@@ -206,6 +206,62 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
+        /// <summary>
+        /// Returns a list of poll masters who have been assigned 
+        /// to a given poll.
+        /// List generic is userModel
+        /// </summary>
+        /// <param name="pollid"></param>
+        /// <returns></returns>
+        public List<userModel> displayAssignedPollMasterUsers(int pollid)
+        {
+            var query2 = from a in dbpollContext.ASSIGNEDPOLLS
+                         where a.POLL_ID == pollid
+                         select a.USER_ID;
+
+
+            var query = from q in dbpollContext.USERS
+                        where q.USER_TYPE == User_Type.POLL_MASTER && query2.Contains(q.USER_ID)
+                        orderby q.CREATED_AT ascending
+                        select new userModel
+                        {
+                            UserID = q.USER_ID,
+                            UserType = q.USER_TYPE,
+                            username = q.USERNAME,
+                            Name = q.NAME
+                        };
+
+            return query.ToList();
+        }
+
+        /// <summary>
+        /// Returns a list of poll masters who have not been assigned
+        /// to a given poll.
+        /// List generic is userModel
+        /// </summary>
+        /// <param name="pollid"></param>
+        /// <returns></returns>
+        public List<userModel> displayUnassignedPollMasterUsers(int pollid)
+        {
+            var query2 = from a in dbpollContext.ASSIGNEDPOLLS
+                         where a.POLL_ID == pollid
+                         select a.USER_ID;
+
+
+            var query = from q in dbpollContext.USERS
+                        where q.USER_TYPE == User_Type.POLL_MASTER && !query2.Contains(q.USER_ID)
+                        orderby q.CREATED_AT ascending
+                        select new userModel
+                        {
+                            UserID = q.USER_ID,
+                            UserType = q.USER_TYPE,
+                            username = q.USERNAME,
+                            Name = q.NAME
+                        };
+
+            return query.ToList();
+        }
+
         public void deleteUser()
         {
             /* To Delete
