@@ -211,7 +211,7 @@ public class PollApplet extends javax.swing.JApplet {
         }
     }
     
-    private class ResponseListModel extends DefaultListModel {
+    public class ResponseListModel extends DefaultListModel {
         List<Response> responses = new ArrayList();
         List<ArrayList> TestList = new ArrayList();
 
