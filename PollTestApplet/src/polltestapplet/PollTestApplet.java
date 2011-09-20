@@ -30,6 +30,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -281,7 +282,11 @@ public class PollTestApplet extends javax.swing.JApplet {
     
     class ReceiverTableModel extends AbstractTableModel {
     private String[] columnNames = {"Receivers","Receivers","Receivers","Receivers"};
-    private String[][] data = new String[25][4];
+    
+    Vector<String[]> data = new Vector<String[]>() ; 
+    
+    
+    //private String[][] data = new String[25][4];
 
 
     public int getColumnCount() {
@@ -290,7 +295,7 @@ public class PollTestApplet extends javax.swing.JApplet {
     
     public void addDeviceID(String deviceID, int key){
         int detectedCount = 0;
-        for(int row = 0; row < 29; row++){
+        for(int row = 0; row < this.getRowCount(); row++){
             for(int column = 0; column < 4; column++ ){
                 if(this.getValueAt(row, column) == null){
                     this.setValueAt(deviceID+" : "+key, row, column);
@@ -309,25 +314,41 @@ public class PollTestApplet extends javax.swing.JApplet {
         }         
     }
 
-    public int getRowCount() {
-        return data.length;
-    }
+    public int getRowCount(){ 
+    return data == null ? 0:data.size() ; 
+    } 
+
+    
 
     public String getColumnName(int col) {
         return columnNames[col];
     }
 
-    public Object getValueAt(int row, int col) {
-        return data[row][col];
+    public Object getValueAt(int row,int column){ 
+    if(data.isEmpty()){
+        data.add(new String[4]);
     }
-
+    return data.elementAt(row)[column] ; 
+    } 
+    
     /*
      * Don't need to implement this method unless your table's
      * data can change.
      */
     public void setValueAt(String value, int row, int col) {
-        data[row][col] = value;
-        fireTableCellUpdated(row, col);
+        if((row % 4) == 0)
+        {
+         //create new row
+         data.add(new String[4]);  
+        }else{
+         // add item
+         ((String[])data.get(row))[col] = value;
+            
+        }
+            
+            //fireTableCellUpdated(row, col);
+        fireTableChanged(null);
+        
     }
 }
     

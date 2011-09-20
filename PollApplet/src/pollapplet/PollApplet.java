@@ -125,9 +125,9 @@ public class PollApplet extends javax.swing.JApplet {
        System.out.println("Changed!!!!");
        System.out.println(receiverListModel.getSize());
        
-       responseTable.setModel(responseTableModel);
-       responseTable.setDefaultRenderer(responseTable.getColumnClass(0), PollRenderer);
-       responseTable.setRowHeight(20);
+       //responseTable.setModel(responseTableModel);
+       //responseTable.setDefaultRenderer(responseTable.getColumnClass(0), PollRenderer);
+       //responseTable.setRowHeight(20);
 
         //receiverList.setModel(receiverListModel);
 
