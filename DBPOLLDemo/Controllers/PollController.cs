@@ -146,7 +146,7 @@ namespace DBPOLLDemo.Controllers
             pollModel poll = new pollModel(pollid);
             poll.deletePoll();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Poll");
         }
 
         //
@@ -233,7 +233,8 @@ namespace DBPOLLDemo.Controllers
             try
             {
                 new pollModel().createPoll(name, createdby, expiresat);
-                return View();
+
+                return RedirectToAction("Index", "Poll");
             }
             catch
             {

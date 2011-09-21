@@ -109,7 +109,7 @@ void Page_Load(object source, EventArgs e){
             <p>
                 <label for="SESSIONNAME">Session Name:</label>
 
-                <%= Html.TextBox("name",ViewData["name"]) %>
+                <%= Html.TextBox("sessionname", ViewData["name"])%>
 
             </p>
             <p>
@@ -140,8 +140,6 @@ void Page_Load(object source, EventArgs e){
                 <%= Html.Hidden("sessionid", ViewData["sessionid"])%>
                 </p>
 
-                
-                 <%=Html.Hidden("pollid", ViewData["pollid"] )%>
                  <input type="hidden" id="longitude" name="longitude" value="null" />
                  <input type="hidden" id="latitude" name="latitude" value="null" />
             <p>

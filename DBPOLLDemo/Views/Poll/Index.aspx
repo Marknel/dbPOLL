@@ -6,6 +6,27 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+    <script type = "text/javascript">
+    // Allows deletion of items to be checked and confimed
+
+
+        var clicked = false;
+        function check(id) {
+
+            if (clicked != true) {
+                document.getElementById(id).innerHTML = "Are you sure?"
+                clicked = true;
+                return false;
+            } else {
+                clicked = false;
+                return true
+            }
+        }
+            
+            </script>
+
+
+
     <h2>Poll Index </h2>
 
     <table>
@@ -22,7 +43,7 @@
         <tr>
             <td nowrap="nowrap">
                 <%= Html.ActionLink("Run", "Run", new {pollid=item.pollID}) %> |
-                <%= Html.ActionLink("Delete", "Delete", new {pollid=item.pollID}) %> |
+                <a id="<%=item.pollID%>" href="/Poll/Delete?pollid=<%=item.pollID%>" onclick="return check(<%=item.pollID%>);">Delete</a>|
                 <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID}) %> |
                 <%= Html.ActionLink(" View Questions", "Details", new {id=item.pollID, name=item.Name})%> |
                 <%= Html.ActionLink("Create New Session", "CreateSession", new {pollID = item.pollID, pollName = item.pollname})%>
@@ -74,7 +95,7 @@
     
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Delete", "DeleteSession", new {sessionid=item.sessionid}) %> |
+                <a id="<%=item.sessionid%>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>" onclick="return check(<%=item.sessionid%>);">Delete</a>|
                 <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollID, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
             </td>
             <td nowrap="nowrap">

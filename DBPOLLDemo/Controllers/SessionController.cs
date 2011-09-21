@@ -158,7 +158,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(String name, int sessionid, decimal latitude, decimal longitude, String time, String longitudeBox, String latitudeBox)
+        public ActionResult Edit(String sessionname, int sessionid, int pollid, decimal latitude, decimal longitude, String time, String longitudeBox, String latitudeBox)
         {
 
             if (Session["uid"] == null)
@@ -218,30 +218,57 @@ namespace DBPOLLDemo.Controllers
                 valid = false;
             }
 
-            if (valid == false)
-            {
-                return View();
-            }
-
             if (parsedDate < DateTime.Now)
             {
                 ViewData["date1"] = "Date incorrectly in the past.";
                 valid = false;
             }
 
+            if (valid == false)
+            {
+
+                ViewData["name"] = sessionname;
+                ViewData["sessionid"] = sessionid;
+                ViewData["pollid"] = pollid;
+                ViewData["longitude"] = longitude;
+                ViewData["latitude"] = latitude;
+                ViewData["time"] = time;
+
+                return View();
+            }
+
+            
+
             if (valid == true)
             {
 
                 try
                 {
-                    new pollModel().editSession(name, sessionid, parsedLatitude, parsedLongitude, parsedDate);
+                    new pollModel().editSession(sessionname, sessionid, parsedLatitude, parsedLongitude, parsedDate);
                     return RedirectToAction("Index", "Poll");
                 }
                 catch
                 {
+                    ViewData["name"] = "Could not Edit Session. Please try again";
+                    ViewData["sessionid"] = sessionid;
+                    ViewData["pollid"] = pollid;
+                    ViewData["longitude"] = longitude;
+                    ViewData["latitude"] = latitude;
+                    ViewData["time"] = time;
+
                     return View();
                 }
+
+
             }
+
+            ViewData["name"] = sessionname;
+            ViewData["sessionid"] = sessionid;
+            ViewData["pollid"] = pollid;
+            ViewData["longitude"] = longitude;
+            ViewData["latitude"] = latitude;
+            ViewData["time"] = time;
+
             return View();
         }
 
