@@ -36,13 +36,13 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["pollid"] = pollID;
+            ViewData["pollID"] = pollID;
             ViewData["pollName"] = pollName;
 
             return View();
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(int pollid, String name, decimal latitude, decimal longitude, String time, String longitudeBox, String latitudeBox)
+        public ActionResult Create(int pollID, String pollName, String name, decimal latitude, decimal longitude, String time, String longitudeBox, String latitudeBox)
         {
             if (Session["uid"] == null)
             {
@@ -100,30 +100,38 @@ namespace DBPOLLDemo.Controllers
                 valid = false;
             }
 
-            if (valid == false)
-            {
-                return View();
-            }
-
             if (parsedDate < DateTime.Now)
             {
                 ViewData["date1"] = "Date incorrectly in the past.";
                 valid = false;
             }
 
+            if (valid == false)
+            {
+                ViewData["pollID"] = pollID;
+                ViewData["pollName"] = pollName;
+                return View();
+            }
+            
+
             if (valid == true)
             {
 
                 try
                 {
-                    new pollModel().createSession(pollid, name, parsedLatitude, parsedLongitude, parsedDate);
-                    return RedirectToAction("Index", "Poll");
+
+                    new pollModel().createSession(pollID, name, parsedLatitude, parsedLongitude, parsedDate);
+                    return RedirectToAction("Index", "Poll", new { pollID = pollID, pollName = pollName });
                 }
-                catch
+                catch(Exception e)
                 {
+                    ViewData["pollID"] = pollID;
+                    ViewData["pollName"] = pollName +"ERROR: "+e.Message;
                     return View();
                 }
             }
+            ViewData["pollID"] = pollID;
+            ViewData["pollName"] = pollName;
             return View();
 
         }

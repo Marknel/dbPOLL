@@ -133,10 +133,10 @@ void Page_Load(object source, EventArgs e){
             </p>
             <p>
 
-                <%= Html.Hidden("pollid", ViewData["pollid"])%>
+                <%= Html.Hidden("pollID", ViewData["pollID"])%>
                      <label for="map_canvas">Select Session Location:</label>
                      <div id="map_canvas" style="width:520px; height:360px"></div>
-                 <%=Html.Hidden("pollid", ViewData["pollid"] )%>
+                 <%=Html.Hidden("pollName", ViewData["pollName"] )%>
                  </p>
                  <input type="hidden" id="longitude" name="longitude" value="null" />
                  <input type="hidden" id="latitude" name="latitude" value="null" />
