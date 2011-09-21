@@ -84,6 +84,7 @@ public class PollApplet extends javax.swing.JApplet {
                 @Override
                 public void run() {
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
+                    
                     initReceivers();
                     initComponents();
                     initModel();
@@ -379,6 +380,12 @@ public class PollApplet extends javax.swing.JApplet {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        userDialog = new javax.swing.JDialog();
+        jLabel2 = new javax.swing.JLabel();
+        masterIDTxt = new javax.swing.JTextField();
+        submitBtn = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        pollDialog = new javax.swing.JDialog();
         MasterPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -402,17 +409,64 @@ public class PollApplet extends javax.swing.JApplet {
         detectedLbl = new javax.swing.JLabel();
         testingInfoLabel = new javax.swing.JLabel();
 
+        jLabel2.setText("Poll Master Id = ");
+
+        submitBtn.setText("Submit");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("<Used For Testing> ");
+
+        javax.swing.GroupLayout userDialogLayout = new javax.swing.GroupLayout(userDialog.getContentPane());
+        userDialog.getContentPane().setLayout(userDialogLayout);
+        userDialogLayout.setHorizontalGroup(
+            userDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userDialogLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(userDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(userDialogLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(userDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(submitBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(masterIDTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3)))
+        );
+        userDialogLayout.setVerticalGroup(
+            userDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(userDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(userDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(masterIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(submitBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pollDialogLayout = new javax.swing.GroupLayout(pollDialog.getContentPane());
+        pollDialog.getContentPane().setLayout(pollDialogLayout);
+        pollDialogLayout.setHorizontalGroup(
+            pollDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        pollDialogLayout.setVerticalGroup(
+            pollDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         MasterPanel.setMaximumSize(new java.awt.Dimension(800, 600));
         MasterPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 28));
         titleLabel.setText("KeyPad Polling");
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        stopButton.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        stopButton.setFont(new java.awt.Font("Tahoma", 0, 36));
         stopButton.setText("Next Question");
         stopButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -420,7 +474,7 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        startButton.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        startButton.setFont(new java.awt.Font("Tahoma", 0, 36));
         startButton.setText("Start Polling");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,43 +484,43 @@ public class PollApplet extends javax.swing.JApplet {
 
         detectedInfoLabel.setText("Devices Found");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24));
         jLabel1.setText("poll Text");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        questionText.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        questionText.setFont(new java.awt.Font("Tahoma", 0, 48));
         questionText.setText("Question text");
 
-        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer4Text.setText("1. Answer");
 
-        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer3Text.setText("1. Answer");
 
-        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer5Text.setText("1. Answer");
 
-        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer2Text.setText("1. Answer");
 
-        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer1Text.setText("1. Answer");
 
-        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer8Text.setText("1. Answer");
 
-        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer7Text.setText("1. Answer");
 
-        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer6Text.setText("1. Answer");
 
-        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer10Text.setText("1. Answer");
 
-        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 36));
         answer9Text.setText("1. Answer");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -523,7 +577,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
-        stopButton1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        stopButton1.setFont(new java.awt.Font("Tahoma", 0, 36));
         stopButton1.setText("Prev Question");
         stopButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -531,7 +585,7 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
         detectedLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         detectedLbl.setText("0");
 
@@ -578,7 +632,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap())
         );
 
-        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
         testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
         javax.swing.GroupLayout MasterPanelLayout = new javax.swing.GroupLayout(MasterPanel);
@@ -657,14 +711,20 @@ private void stopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JLabel detectedInfoLabel;
     private javax.swing.JLabel detectedLbl;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField masterIDTxt;
+    private javax.swing.JDialog pollDialog;
     private javax.swing.JLabel questionText;
     private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
     private javax.swing.JButton stopButton1;
+    private javax.swing.JButton submitBtn;
     private javax.swing.JLabel testingInfoLabel;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JDialog userDialog;
     // End of variables declaration//GEN-END:variables
 }
 
