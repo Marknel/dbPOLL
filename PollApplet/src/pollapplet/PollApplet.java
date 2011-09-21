@@ -30,6 +30,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -37,6 +38,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.data.category.DefaultCategoryDataset;
+import pollapplet.PollList.dbPoll;
 
 /**
  *
@@ -51,7 +53,8 @@ public class PollApplet extends javax.swing.JApplet {
     private ReceiverTableModel responseTableModel = new ReceiverTableModel();
     private PollCellRenderer PollRenderer = new PollCellRenderer();
     private String test = "test";
-    private String[] test2 = new String[4];
+    private PollList Polls = new PollList();
+    private dbPoll selectedPoll;
     private String Session;
 
     /** Initializes the applet PollApplet */
@@ -86,10 +89,7 @@ public class PollApplet extends javax.swing.JApplet {
 
                 @Override
                 public void run() {
-                    test2[0] = "hello";
-                    test2[1] = "sad";
-                    test2[2] = "hsda";
-                    test2[3] = "hasdsad";
+                    Polls.loadPolls(5);
 
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
                     initReceivers();
@@ -97,16 +97,16 @@ public class PollApplet extends javax.swing.JApplet {
                     initModel();
                     
                    
-                    Session = (String)JOptionPane.showInputDialog(
+                    selectedPoll = (dbPoll)JOptionPane.showInputDialog(
                     (Component)Frame,
                     "Choose Poll:",
                     "Select a Poll",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    (Object[])test2,
-                    test2[0]);
+                    Polls.polls.toArray(),
+                    Polls.polls.get(0));
                     
-                    pollLbl.setText(Session);
+                    pollLbl.setText(selectedPoll.getPollName());
                     
                     
                     startButton.addActionListener(new java.awt.event.ActionListener() {

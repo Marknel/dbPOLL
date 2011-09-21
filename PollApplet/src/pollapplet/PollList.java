@@ -21,15 +21,15 @@ public class PollList {
 
     //Connection dbconn;
     /**
-     * A list containing all the polls assigned to a specific Poll Master
+     * A list containing all the polls assigned to a specific dbPoll Master
      */
-    public LinkedList<Poll> polls = new LinkedList();
+    public LinkedList<dbPoll> polls = new LinkedList();
 
     public PollList() {
     }
 
     /**
-     * Runs over the database reading each poll into a Poll object and adding
+     * Runs over the database reading each poll into a dbPoll object and adding
      * the object to the polls list.
      * @param pollMaster must be a valid pollMaster in the database. 
      * polls List will contain null items if the poll master has not been 
@@ -53,11 +53,11 @@ public class PollList {
                     + " WHERE user_id = " + pollMaster);
 
             while (rset.next()) {
-                polls.add(new Poll(Integer.parseInt(rset.getString("POLL_ID")), rset.getString("POLL_NAME"), rset.getString("SESSION_NAME")));
+                polls.add(new dbPoll(Integer.parseInt(rset.getString("POLL_ID")), rset.getString("POLL_NAME"), rset.getString("SESSION_NAME")));
                 
             }
 
-            for (Poll p : polls) {
+            for (dbPoll p : polls) {
                 System.out.println("POLL ID: " + p.getPollId() + " Name: " + p.getPollName()+ " Session: "+p.getPollSession());
 
             }
@@ -73,14 +73,14 @@ public class PollList {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Basic Poll class fold. Getter/Setter baby code"> 
-    public class Poll {
+    // <editor-fold defaultstate="collapsed" desc="Basic dbPoll class fold. Getter/Setter baby code"> 
+    public class dbPoll {
 
         private int pollId;
         private String pollName;
         private String pollSession;
 
-        public Poll(int pollId, String pollSession, String pollName) {
+        public dbPoll(int pollId, String pollSession, String pollName) {
             this.pollId = pollId;
             this.pollName = pollName;
             this.pollSession = pollSession;
@@ -108,6 +108,11 @@ public class PollList {
 
         public void setPollSession(String pollSession) {
             this.pollSession = pollSession;
+        }
+        
+        @Override public String toString() {
+            
+        return this.pollName;  
         }
     }
 //</editor-fold> 
