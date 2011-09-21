@@ -20,7 +20,7 @@ import com.turningtech.test.Examination;
 import com.turningtech.test.Question;
 import com.turningtech.test.TestService;
 import com.turningtech.test.ResponseTest;
-import com.turningtech.test.ResponseListenerTest; 
+import com.turningtech.test.ResponseListenerTest;
 import com.turningtech.receiver.Receiver;
 import com.turningtech.receiver.ReceiverService;
 import com.turningtech.receiver.ResponseCardLibrary;
@@ -43,21 +43,24 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author s4200943
  */
 public class PollApplet extends javax.swing.JApplet {
+
     private Poll poll;
     private ResponseListModel responseListModel = new ResponseListModel();
     private ReceiverListModel receiverListModel = new ReceiverListModel();
     private DefaultCategoryDataset dataset;
     private ReceiverTableModel responseTableModel = new ReceiverTableModel();
     private PollCellRenderer PollRenderer = new PollCellRenderer();
-    
-    
+    private String test = "test";
+    private String[] test2 = new String[4];
+    private String Session;
+
     /** Initializes the applet PollApplet */
     @Override
     public void init() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -83,87 +86,106 @@ public class PollApplet extends javax.swing.JApplet {
 
                 @Override
                 public void run() {
+                    test2[0] = "hello";
+                    test2[1] = "sad";
+                    test2[2] = "hsda";
+                    test2[3] = "hasdsad";
+
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
-                    
                     initReceivers();
                     initComponents();
                     initModel();
+                    
+                   
+                    Session = (String)JOptionPane.showInputDialog(
+                    (Component)Frame,
+                    "Choose Poll:",
+                    "Select a Poll",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    (Object[])test2,
+                    test2[0]);
+                    
+                    pollLbl.setText(Session);
+                    
+                    
                     startButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startPollHandler(evt);
-            }
-        });
+
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            startPollHandler(evt);
+                        }
+                    });
                 }
             });
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-    
+
     private void initReceivers() {
         try {
             receiverListModel.addAll(ReceiverService.findReceivers());
         } catch (Exception e) {
             showError("Could not initialize allReceivers.", e);
         }
-         List<Receiver> allReceivers = receiverListModel.getReceivers();
+        List<Receiver> allReceivers = receiverListModel.getReceivers();
         Receiver currentReceiver = allReceivers.get(0);
         currentReceiver.setChannel(22);
 
         dataset = createDataset();
     }
-    
+
     private void showError(String message, Exception e) {
         JOptionPane.showMessageDialog(null, message + "\n Reason:" + e.getMessage());
     }
-    
+
     private void initModel() {
-       
+
         //keyPadResponseList.setModel(responseListModel);
         testingInfoLabel.setText("Please set your Clicker Device to channel 22 and  wait for testing to begin.");
 
-       
-       System.out.println("Changed!!!!");
-       System.out.println(receiverListModel.getSize());
-       
-       //responseTable.setModel(responseTableModel);
-       //responseTable.setDefaultRenderer(responseTable.getColumnClass(0), PollRenderer);
-       //responseTable.setRowHeight(20);
+
+        System.out.println("Changed!!!!");
+        System.out.println(receiverListModel.getSize());
+
+        //responseTable.setModel(responseTableModel);
+        //responseTable.setDefaultRenderer(responseTable.getColumnClass(0), PollRenderer);
+        //responseTable.setRowHeight(20);
 
         //receiverList.setModel(receiverListModel);
 
         /*receiverList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
-            public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting()) {
-                    return;
-                }
-                int selection = receiverList.getSelectedIndex();
-                try {
-                    Receiver receiver = receiverListModel.get(selection);
-                    lblChannel.setText(Integer.toString(receiver.getChannel()));
-                    lblDescription.setText(receiver.getDescription());
-                    lblId.setText(receiver.getId());
-                    lblId1.setText(receiver.getVersion());
-                } catch (Exception ex) {
-                    //ignore
-                }
-
-            }
+        
+        public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting()) {
+        return;
+        }
+        int selection = receiverList.getSelectedIndex();
+        try {
+        Receiver receiver = receiverListModel.get(selection);
+        lblChannel.setText(Integer.toString(receiver.getChannel()));
+        lblDescription.setText(receiver.getDescription());
+        lblId.setText(receiver.getId());
+        lblId1.setText(receiver.getVersion());
+        } catch (Exception ex) {
+        //ignore
+        }
+        
+        }
         });
         receiverList.setCellRenderer(receiverCellRenderer);*/
     }
-    
-    private void startPollHandler(java.awt.event.ActionEvent evt) {                                  
+
+    private void startPollHandler(java.awt.event.ActionEvent evt) {
         //this.responseChart.setDataset((dataset = createDataset()));
         this.responseListModel.clear();
         try {//System.out.println("evt paramString: " + evt.getActionCommand());
             //see if it's an invalid response poll that we're starting
             if (evt.getActionCommand().equals("InvalidResponse")) {
                 String answerRange = "246809";
-                poll = PollService.createCorrectPoll(evt.getActionCommand(), answerRange);          
-            }else{
-                poll = PollService.createPoll();                
+                poll = PollService.createCorrectPoll(evt.getActionCommand(), answerRange);
+            } else {
+                poll = PollService.createPoll();
             }
             poll.addResponseListener(new BasicResponseListener());
             Poll.PollingMode pollingMode = (Poll.PollingMode.SingleResponse_Numeric);
@@ -175,8 +197,8 @@ public class PollApplet extends javax.swing.JApplet {
         } catch (Exception e) {
             showError("Unable to start poll.", e);
         }
-    }                                  
-    
+    }
+
     private class ReceiverListModel extends DefaultListModel {
 
         private List<Receiver> receivers = new ArrayList();
@@ -211,8 +233,9 @@ public class PollApplet extends javax.swing.JApplet {
             return receivers;
         }
     }
-    
+
     public class ResponseListModel extends DefaultListModel {
+
         List<Response> responses = new ArrayList();
         List<ArrayList> TestList = new ArrayList();
 
@@ -223,12 +246,12 @@ public class PollApplet extends javax.swing.JApplet {
         }
 
         public void add(Response newData) {
-            
+
             responses.add(newData);
-            responseTableModel.addDeviceID(newData.getResponseCardId(),Integer.parseInt(newData.getResponse()));
-            System.out.println("device: '"+newData.getResponseCardId()+"' Response: '"+newData.getResponse()+"'");
-            
-            fireContentsChanged(this, getSize()-2, getSize()-1);
+            responseTableModel.addDeviceID(newData.getResponseCardId(), Integer.parseInt(newData.getResponse()));
+            System.out.println("device: '" + newData.getResponseCardId() + "' Response: '" + newData.getResponse() + "'");
+
+            fireContentsChanged(this, getSize() - 2, getSize() - 1);
         }
 
         @Override
@@ -241,7 +264,7 @@ public class PollApplet extends javax.swing.JApplet {
             return responses.get(index);
         }
     }
-    
+
     private DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset newDataset = new DefaultCategoryDataset();
         List<Receiver> receivers = receiverListModel.getReceivers();
@@ -254,123 +277,122 @@ public class PollApplet extends javax.swing.JApplet {
         return newDataset;
 
     }
-    
+
     private class BasicResponseListener implements ResponseListener {
 
         public BasicResponseListener() {
         }
 
-        public void responseReceived(Response response) {            
-            responseListModel.add(response);            
-            if (response.getReceiverId() == null ||
-                    response.getResponse() == null ||
-                    response.getResponse().equals("?")) {
+        public void responseReceived(Response response) {
+            responseListModel.add(response);
+            if (response.getReceiverId() == null
+                    || response.getResponse() == null
+                    || response.getResponse().equals("?")) {
                 return;
             }
 
 //            if (!dataset.getColumnKeys().contains(response.getResponse()))
-                
+
             /**
             Number count = dataset.getValue(response.getReceiverId(), response.getResponse());
             if (count == null) {
-                count = new Integer(1);
+            count = new Integer(1);
             }
-            */
+             */
             //dataset.incrementValue(1, response.getReceiverId(), response.getResponse());
         }
     }
-    
+
     class ReceiverTableModel extends AbstractTableModel {
-    private String[] columnNames = {"Receivers","Receivers","Receivers","Receivers"};
-    private String[][] data = new String[25][4];
 
+        private String[] columnNames = {"Receivers", "Receivers", "Receivers", "Receivers"};
+        private String[][] data = new String[25][4];
 
-    public int getColumnCount() {
-        return columnNames.length;
-    }
-    
-    public void addDeviceID(String deviceID, int key){
-        int detectedCount = 0;
-        for(int row = 0; row < 29; row++){
-            for(int column = 0; column < 4; column++ ){
-                if(this.getValueAt(row, column) == null){
-                    this.setValueAt(deviceID+" : "+key, row, column);
-                    System.out.println("Break at: "+column+" "+row);
-                    detectedCount = Integer.parseInt(detectedLbl.getText());
-                    detectedCount++;
-                    detectedLbl.setText(""+detectedCount);
-                    return;
-                    
-                }else if((this.getValueAt(row, column).toString().split("\\s+")[0]).compareTo(deviceID) == 0){
-                    //cal colour change code here!
-                    this.setValueAt(deviceID+" : "+key, row, column);
-                    return;
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        public void addDeviceID(String deviceID, int key) {
+            int detectedCount = 0;
+            for (int row = 0; row < 29; row++) {
+                for (int column = 0; column < 4; column++) {
+                    if (this.getValueAt(row, column) == null) {
+                        this.setValueAt(deviceID + " : " + key, row, column);
+                        System.out.println("Break at: " + column + " " + row);
+                        detectedCount = Integer.parseInt(detectedLbl.getText());
+                        detectedCount++;
+                        detectedLbl.setText("" + detectedCount);
+                        return;
+
+                    } else if ((this.getValueAt(row, column).toString().split("\\s+")[0]).compareTo(deviceID) == 0) {
+                        //cal colour change code here!
+                        this.setValueAt(deviceID + " : " + key, row, column);
+                        return;
+                    }
                 }
             }
-        }         
+        }
+
+        public int getRowCount() {
+            return data.length;
+        }
+
+        public String getColumnName(int col) {
+            return columnNames[col];
+        }
+
+        public Object getValueAt(int row, int col) {
+            return data[row][col];
+        }
+
+        /*
+         * Don't need to implement this method unless your table's
+         * data can change.
+         */
+        public void setValueAt(String value, int row, int col) {
+            data[row][col] = value;
+            fireTableCellUpdated(row, col);
+        }
     }
 
-    public int getRowCount() {
-        return data.length;
-    }
-
-    public String getColumnName(int col) {
-        return columnNames[col];
-    }
-
-    public Object getValueAt(int row, int col) {
-        return data[row][col];
-    }
-
-    /*
-     * Don't need to implement this method unless your table's
-     * data can change.
-     */
-    public void setValueAt(String value, int row, int col) {
-        data[row][col] = value;
-        fireTableCellUpdated(row, col);
-    }
-}
-    
     public class PollCellRenderer
-       extends DefaultTableCellRenderer {
+            extends DefaultTableCellRenderer {
+
         private Color[] cellColor = {
-                                    Color.getHSBColor((float)0.72, (float)0.5, (float)0.95),
-                                    Color.getHSBColor((float)0.48, 1, 1),
-                                    Color.getHSBColor((float)2, (float)0.68, 1),
-                                    Color.getHSBColor((float)29, (float)0.31, 1),
-                                    Color.getHSBColor((float)0.61, (float)0.51, 1),
-                                    Color.getHSBColor((float)246, (float)0.51, 1),
-                                    Color.getHSBColor((float)1, (float)0.12, 1),
-                                    Color.getHSBColor((float)0.32, (float)0.56, (float)0.99),
-                                    Color.getHSBColor((float)148, (float)0.8, 100),
-                                    Color.getHSBColor((float)305, (float)0.32, 1)
-                                   };
-  public Component getTableCellRendererComponent(JTable table,Object value,
-                   boolean isSelected, boolean hasFocus, int row, int column) {
-   int keyPress;     
-   Component cell = super.getTableCellRendererComponent(
-                               table, value, isSelected, hasFocus, row, column);
-                                
-                        cell.setFont(new Font("Arial",Font.PLAIN, 16));
-	   		if( value != null )
-	   		{
-                            System.out.println("Key Clicked: "+value.toString().split("\\s+")[2]);
-                            keyPress = Integer.parseInt(value.toString().split("\\s+")[2]);
-	   			cell.setBackground(cellColor[keyPress]);
-	   			// you can also customize the Font and Foreground this way
-	   			// cell.setForeground();
-	   			// cell.setFont();
-	   		}
-	   		else
-	   		{	
-				cell.setBackground( Color.white );
-	   		}
-	
-		return cell;   
-  }
-}
-   
+            Color.getHSBColor((float) 0.72, (float) 0.5, (float) 0.95),
+            Color.getHSBColor((float) 0.48, 1, 1),
+            Color.getHSBColor((float) 2, (float) 0.68, 1),
+            Color.getHSBColor((float) 29, (float) 0.31, 1),
+            Color.getHSBColor((float) 0.61, (float) 0.51, 1),
+            Color.getHSBColor((float) 246, (float) 0.51, 1),
+            Color.getHSBColor((float) 1, (float) 0.12, 1),
+            Color.getHSBColor((float) 0.32, (float) 0.56, (float) 0.99),
+            Color.getHSBColor((float) 148, (float) 0.8, 100),
+            Color.getHSBColor((float) 305, (float) 0.32, 1)
+        };
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            int keyPress;
+            Component cell = super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            cell.setFont(new Font("Arial", Font.PLAIN, 16));
+            if (value != null) {
+                System.out.println("Key Clicked: " + value.toString().split("\\s+")[2]);
+                keyPress = Integer.parseInt(value.toString().split("\\s+")[2]);
+                cell.setBackground(cellColor[keyPress]);
+                // you can also customize the Font and Foreground this way
+                // cell.setForeground();
+                // cell.setFont();
+            } else {
+                cell.setBackground(Color.white);
+            }
+
+            return cell;
+        }
+    }
+
     /** This method is called from within the init() method to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -386,13 +408,14 @@ public class PollApplet extends javax.swing.JApplet {
         submitBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         pollDialog = new javax.swing.JDialog();
+        Frame = new javax.swing.JFrame();
         MasterPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         stopButton = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
         detectedInfoLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        pollLbl = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         questionText = new javax.swing.JLabel();
         answer4Text = new javax.swing.JLabel();
@@ -413,7 +436,7 @@ public class PollApplet extends javax.swing.JApplet {
 
         submitBtn.setText("Submit");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18));
         jLabel3.setText("<Used For Testing> ");
 
         javax.swing.GroupLayout userDialogLayout = new javax.swing.GroupLayout(userDialog.getContentPane());
@@ -456,6 +479,17 @@ public class PollApplet extends javax.swing.JApplet {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout FrameLayout = new javax.swing.GroupLayout(Frame.getContentPane());
+        Frame.getContentPane().setLayout(FrameLayout);
+        FrameLayout.setHorizontalGroup(
+            FrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        FrameLayout.setVerticalGroup(
+            FrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         MasterPanel.setMaximumSize(new java.awt.Dimension(800, 600));
         MasterPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
@@ -484,8 +518,8 @@ public class PollApplet extends javax.swing.JApplet {
 
         detectedInfoLabel.setText("Devices Found");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24));
-        jLabel1.setText("poll Text");
+        pollLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        pollLbl.setText("poll Text");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -595,7 +629,7 @@ public class PollApplet extends javax.swing.JApplet {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(pollLbl)
                 .addGap(294, 294, 294)
                 .addComponent(detectedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -621,7 +655,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(detectedLbl)
                     .addComponent(detectedInfoLabel)
-                    .addComponent(jLabel1))
+                    .addComponent(pollLbl))
                 .addGap(7, 7, 7)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -632,7 +666,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap())
         );
 
-        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
+        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
         javax.swing.GroupLayout MasterPanelLayout = new javax.swing.GroupLayout(MasterPanel);
@@ -678,14 +712,14 @@ public class PollApplet extends javax.swing.JApplet {
     }// </editor-fold>//GEN-END:initComponents
 
 private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-try {
-            poll.stop();
-            testingInfoLabel.setText("Testing has finished. Please wait for instruction");
-            
-            //responseChart.setSubtitle("Polling Closed");
-        } catch (Exception e) {
-           showError("Unable to stop poll.", e);
-        }
+    try {
+        poll.stop();
+        testingInfoLabel.setText("Testing has finished. Please wait for instruction");
+
+        //responseChart.setSubtitle("Polling Closed");
+    } catch (Exception e) {
+        showError("Unable to stop poll.", e);
+    }
 }//GEN-LAST:event_stopButtonActionPerformed
 
 private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -695,8 +729,8 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 private void stopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButton1ActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_stopButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame Frame;
     private javax.swing.JPanel MasterPanel;
     private javax.swing.JLabel answer10Text;
     private javax.swing.JLabel answer1Text;
@@ -710,13 +744,13 @@ private void stopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JLabel answer9Text;
     private javax.swing.JLabel detectedInfoLabel;
     private javax.swing.JLabel detectedLbl;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField masterIDTxt;
     private javax.swing.JDialog pollDialog;
+    private javax.swing.JLabel pollLbl;
     private javax.swing.JLabel questionText;
     private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
@@ -727,5 +761,3 @@ private void stopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JDialog userDialog;
     // End of variables declaration//GEN-END:variables
 }
-
-
