@@ -37,6 +37,7 @@ public class PollList {
      */
     public void loadPolls(int pollMaster) {
         Connection con;
+        polls = new LinkedList();
         try {
             // pull all polls for poll master into applet
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());

@@ -60,6 +60,10 @@ public class PollApplet extends javax.swing.JApplet {
     private dbPoll selectedPoll;
     private dbQuestion selectedQuestion;
     private String Session;
+    /**
+     * Current Question during polling. (Location in question list)
+     */
+    private int QUESTION = 0;
 
     /** Initializes the applet PollApplet */
     @Override
@@ -94,7 +98,7 @@ public class PollApplet extends javax.swing.JApplet {
                 @Override
                 public void run() {
 
-                    Polls.loadPolls(5);
+                    Polls.loadPolls(6);
 
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
                     initReceivers();
@@ -114,25 +118,11 @@ public class PollApplet extends javax.swing.JApplet {
                     pollLbl.setText(selectedPoll.getPollName());
                     Questions.loadQuestions(selectedPoll.getPollId());
 
-                    selectedQuestion = Questions.questions.get(0);
-
+                    selectedQuestion = Questions.questions.get(QUESTION);
                     questionText.setText(selectedQuestion.getQuestionText());
-
                     Answers.loadAnswers(selectedQuestion.getQuestionID());
-//(a < b) ? a : b;
-                    answer1Text.setText(((Answers.answers.size() >= 1) ? "1. "+Answers.answers.get(0).getAnswerText() : " "));
-                    answer2Text.setText(((Answers.answers.size() >= 2) ? "2. "+Answers.answers.get(1).getAnswerText() : " "));
-                    answer3Text.setText(((Answers.answers.size() >= 3) ? "3. "+Answers.answers.get(2).getAnswerText() : " "));
-                    answer4Text.setText(((Answers.answers.size() >= 4) ? "4. "+Answers.answers.get(3).getAnswerText() : " "));
-                    answer5Text.setText(((Answers.answers.size() >= 5) ? "5. "+Answers.answers.get(4).getAnswerText() : " "));
-                    answer6Text.setText(((Answers.answers.size() >= 6) ? "6. "+Answers.answers.get(5).getAnswerText() : " "));
-                    answer7Text.setText(((Answers.answers.size() >= 7) ? "7. "+Answers.answers.get(6).getAnswerText() : " "));
-                    answer8Text.setText(((Answers.answers.size() >= 8) ? "8. "+Answers.answers.get(7).getAnswerText() : " "));
-                    answer9Text.setText(((Answers.answers.size() >= 9) ? "9. "+Answers.answers.get(8).getAnswerText() : " "));
-                    answer10Text.setText(((Answers.answers.size() >= 10) ? "10. "+Answers.answers.get(9).getAnswerText() : ""));
 
-
-
+                    setAnswers();
 
                     startButton.addActionListener(new java.awt.event.ActionListener() {
 
@@ -145,6 +135,19 @@ public class PollApplet extends javax.swing.JApplet {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void setAnswers() {
+        answer1Text.setText(((Answers.answers.size() >= 1) ? "1. " + Answers.answers.get(0).getAnswerText() : " "));
+        answer2Text.setText(((Answers.answers.size() >= 2) ? "2. " + Answers.answers.get(1).getAnswerText() : " "));
+        answer3Text.setText(((Answers.answers.size() >= 3) ? "3. " + Answers.answers.get(2).getAnswerText() : " "));
+        answer4Text.setText(((Answers.answers.size() >= 4) ? "4. " + Answers.answers.get(3).getAnswerText() : " "));
+        answer5Text.setText(((Answers.answers.size() >= 5) ? "5. " + Answers.answers.get(4).getAnswerText() : " "));
+        answer6Text.setText(((Answers.answers.size() >= 6) ? "6. " + Answers.answers.get(5).getAnswerText() : " "));
+        answer7Text.setText(((Answers.answers.size() >= 7) ? "7. " + Answers.answers.get(6).getAnswerText() : " "));
+        answer8Text.setText(((Answers.answers.size() >= 8) ? "8. " + Answers.answers.get(7).getAnswerText() : " "));
+        answer9Text.setText(((Answers.answers.size() >= 9) ? "9. " + Answers.answers.get(8).getAnswerText() : " "));
+        answer10Text.setText(((Answers.answers.size() >= 10) ? "10. " + Answers.answers.get(9).getAnswerText() : ""));
     }
 
     private void initReceivers() {
@@ -437,7 +440,7 @@ public class PollApplet extends javax.swing.JApplet {
         MasterPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        stopButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
         detectedInfoLabel = new javax.swing.JLabel();
         pollLbl = new javax.swing.JLabel();
@@ -453,7 +456,7 @@ public class PollApplet extends javax.swing.JApplet {
         answer6Text = new javax.swing.JLabel();
         answer10Text = new javax.swing.JLabel();
         answer9Text = new javax.swing.JLabel();
-        stopButton1 = new javax.swing.JButton();
+        prevQuestion = new javax.swing.JButton();
         detectedLbl = new javax.swing.JLabel();
         testingInfoLabel = new javax.swing.JLabel();
 
@@ -525,11 +528,11 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        stopButton.setFont(new java.awt.Font("Tahoma", 0, 36));
-        stopButton.setText("Next Question");
-        stopButton.addActionListener(new java.awt.event.ActionListener() {
+        nextButton.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        nextButton.setText("Next Question");
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopButtonActionPerformed(evt);
+                nextButtonActionPerformed(evt);
             }
         });
 
@@ -638,11 +641,11 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
-        stopButton1.setFont(new java.awt.Font("Tahoma", 0, 36));
-        stopButton1.setText("Prev Question");
-        stopButton1.addActionListener(new java.awt.event.ActionListener() {
+        prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36));
+        prevQuestion.setText("Prev Question");
+        prevQuestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopButton1ActionPerformed(evt);
+                prevQuestionActionPerformed(evt);
             }
         });
 
@@ -668,11 +671,11 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(stopButton1)
+                .addComponent(prevQuestion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(startButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(stopButton)
+                .addComponent(nextButton)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -687,9 +690,9 @@ public class PollApplet extends javax.swing.JApplet {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(stopButton1)
+                    .addComponent(prevQuestion)
                     .addComponent(startButton)
-                    .addComponent(stopButton))
+                    .addComponent(nextButton))
                 .addContainerGap())
         );
 
@@ -738,7 +741,26 @@ public class PollApplet extends javax.swing.JApplet {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+
+    if((QUESTION+1) >= Questions.questions.size()){
+        
+        
+    }else{
+        QUESTION++;
+        selectedQuestion = Questions.questions.get(QUESTION );
+        questionText.setText(selectedQuestion.getQuestionText());
+        Answers.loadAnswers(selectedQuestion.getQuestionID());
+        setAnswers();
+    }
+
+    
+
+}//GEN-LAST:event_nextButtonActionPerformed
+
+private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+// TODO add your handling code here:
+
     try {
         poll.stop();
         testingInfoLabel.setText("Testing has finished. Please wait for instruction");
@@ -747,15 +769,24 @@ private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     } catch (Exception e) {
         showError("Unable to stop poll.", e);
     }
-}//GEN-LAST:event_stopButtonActionPerformed
-
-private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-// TODO add your handling code here:
 }//GEN-LAST:event_startButtonActionPerformed
 
-private void stopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButton1ActionPerformed
+private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevQuestionActionPerformed
 // TODO add your handling code here:
-}//GEN-LAST:event_stopButton1ActionPerformed
+    if(QUESTION <= 0){
+        
+        
+    }else{
+        QUESTION--;
+        selectedQuestion = Questions.questions.get(QUESTION );
+        questionText.setText(selectedQuestion.getQuestionText());
+        Answers.loadAnswers(selectedQuestion.getQuestionID());
+        setAnswers();
+    }
+
+    
+    
+}//GEN-LAST:event_prevQuestionActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame Frame;
     private javax.swing.JPanel MasterPanel;
@@ -776,12 +807,12 @@ private void stopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField masterIDTxt;
+    private javax.swing.JButton nextButton;
     private javax.swing.JDialog pollDialog;
     private javax.swing.JLabel pollLbl;
+    private javax.swing.JButton prevQuestion;
     private javax.swing.JLabel questionText;
     private javax.swing.JButton startButton;
-    private javax.swing.JButton stopButton;
-    private javax.swing.JButton stopButton1;
     private javax.swing.JButton submitBtn;
     private javax.swing.JLabel testingInfoLabel;
     private javax.swing.JLabel titleLabel;
