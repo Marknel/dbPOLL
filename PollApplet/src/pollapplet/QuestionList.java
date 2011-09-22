@@ -15,12 +15,12 @@ import java.util.logging.Logger;
  */
 public class QuestionList {
     
-    public LinkedList<Question> questions = new LinkedList();
+    public LinkedList<dbQuestion> questions = new LinkedList();
     
     public QuestionList() {
     }
 
-    private void loadQuestions(int pollID) {
+    public void loadQuestions(int pollID) {
         Connection con;
         try {
             // pull all polls for poll master into applet
@@ -43,7 +43,7 @@ public class QuestionList {
                 }
                 
                 
-                questions.add(new Question(
+                questions.add(new dbQuestion(
                         Integer.parseInt(rset.getString("QUESTION_ID")), 
                         Integer.parseInt(rset.getString("QUESTION_TYPE")),
                         rset.getString("QUESTION"), 
@@ -52,7 +52,7 @@ public class QuestionList {
                         Integer.parseInt(rset.getString("NUM"))));
             }
             
-             for (Question q : questions){
+             for (dbQuestion q : questions){
                 System.out.println(
                         "Question ID: "+q.getQuestionID()+ 
                         " Type: " +q.getQuestionType() +
@@ -73,8 +73,8 @@ public class QuestionList {
         
     }
 
-// <editor-fold defaultstate="collapsed" desc="Basic Question class fold. Getter/Setter baby code"> 
-public class Question {
+// <editor-fold defaultstate="collapsed" desc="Basic dbQuestion class fold. Getter/Setter baby code"> 
+public class dbQuestion {
     
     private int questionID;
     private int questionType;
@@ -83,7 +83,7 @@ public class Question {
     private int shortAnswerType;
     private int numInSequence;
 
-    public Question(int questionId, int questionType, String question, int chartStyle, int shortAnswerType, int numInSequence) {
+    public dbQuestion(int questionId, int questionType, String question, int chartStyle, int shortAnswerType, int numInSequence) {
         this.questionID = questionId;
         this.questionType = questionType;
         this.questionText = question;
@@ -139,8 +139,7 @@ public class Question {
         public void setShortAnswerType(int shortAnswerType) {
             this.shortAnswerType = shortAnswerType;
         }
-    
-}
+    }
 //</editor-fold>  
 
 

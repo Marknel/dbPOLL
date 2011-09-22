@@ -80,7 +80,7 @@ public class PollList {
         private String pollName;
         private String pollSession;
 
-        public dbPoll(int pollId, String pollSession, String pollName) {
+        public dbPoll(int pollId, String pollName, String pollSession) {
             this.pollId = pollId;
             this.pollName = pollName;
             this.pollSession = pollSession;
@@ -112,7 +112,7 @@ public class PollList {
         
         @Override public String toString() {
             
-        return this.pollName;  
+        return this.pollName+" - " + this.pollSession;  
         }
     }
 //</editor-fold> 

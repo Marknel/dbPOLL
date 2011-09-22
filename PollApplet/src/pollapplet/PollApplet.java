@@ -39,6 +39,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.data.category.DefaultCategoryDataset;
 import pollapplet.PollList.dbPoll;
+import pollapplet.QuestionList.dbQuestion;
 
 /**
  *
@@ -54,7 +55,10 @@ public class PollApplet extends javax.swing.JApplet {
     private PollCellRenderer PollRenderer = new PollCellRenderer();
     private String test = "test";
     private PollList Polls = new PollList();
+    private QuestionList Questions = new QuestionList();
+    private AnswerList Answers = new AnswerList();
     private dbPoll selectedPoll;
+    private dbQuestion selectedQuestion;
     private String Session;
 
     /** Initializes the applet PollApplet */
@@ -89,26 +93,47 @@ public class PollApplet extends javax.swing.JApplet {
 
                 @Override
                 public void run() {
+
                     Polls.loadPolls(5);
 
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
                     initReceivers();
                     initComponents();
                     initModel();
-                    
-                   
-                    selectedPoll = (dbPoll)JOptionPane.showInputDialog(
-                    (Component)Frame,
-                    "Choose Poll:",
-                    "Select a Poll",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    Polls.polls.toArray(),
-                    Polls.polls.get(0));
-                    
+
+
+                    selectedPoll = (dbPoll) JOptionPane.showInputDialog(
+                            (Component) Frame,
+                            "Choose Poll & Session:",
+                            "Select a Poll",
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            Polls.polls.toArray(),
+                            Polls.polls.get(0));
+
                     pollLbl.setText(selectedPoll.getPollName());
-                    
-                    
+                    Questions.loadQuestions(selectedPoll.getPollId());
+
+                    selectedQuestion = Questions.questions.get(0);
+
+                    questionText.setText(selectedQuestion.getQuestionText());
+
+                    Answers.loadAnswers(selectedQuestion.getQuestionID());
+//(a < b) ? a : b;
+                    answer1Text.setText(((Answers.answers.size() >= 1) ? "1. "+Answers.answers.get(0).getAnswerText() : " "));
+                    answer2Text.setText(((Answers.answers.size() >= 2) ? "2. "+Answers.answers.get(1).getAnswerText() : " "));
+                    answer3Text.setText(((Answers.answers.size() >= 3) ? "3. "+Answers.answers.get(2).getAnswerText() : " "));
+                    answer4Text.setText(((Answers.answers.size() >= 4) ? "4. "+Answers.answers.get(3).getAnswerText() : " "));
+                    answer5Text.setText(((Answers.answers.size() >= 5) ? "5. "+Answers.answers.get(4).getAnswerText() : " "));
+                    answer6Text.setText(((Answers.answers.size() >= 6) ? "6. "+Answers.answers.get(5).getAnswerText() : " "));
+                    answer7Text.setText(((Answers.answers.size() >= 7) ? "7. "+Answers.answers.get(6).getAnswerText() : " "));
+                    answer8Text.setText(((Answers.answers.size() >= 8) ? "8. "+Answers.answers.get(7).getAnswerText() : " "));
+                    answer9Text.setText(((Answers.answers.size() >= 9) ? "9. "+Answers.answers.get(8).getAnswerText() : " "));
+                    answer10Text.setText(((Answers.answers.size() >= 10) ? "10. "+Answers.answers.get(9).getAnswerText() : ""));
+
+
+
+
                     startButton.addActionListener(new java.awt.event.ActionListener() {
 
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -523,11 +548,13 @@ public class PollApplet extends javax.swing.JApplet {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel2.setMaximumSize(new java.awt.Dimension(760, 396));
+        jPanel2.setMinimumSize(new java.awt.Dimension(760, 396));
 
-        questionText.setFont(new java.awt.Font("Tahoma", 0, 48));
+        questionText.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         questionText.setText("Question text");
 
-        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 36));
+        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         answer4Text.setText("1. Answer");
 
         answer3Text.setFont(new java.awt.Font("Tahoma", 0, 36));
@@ -666,7 +693,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap())
         );
 
-        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
         testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
         javax.swing.GroupLayout MasterPanelLayout = new javax.swing.GroupLayout(MasterPanel);
