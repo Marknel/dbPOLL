@@ -203,8 +203,8 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="1"/>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                      <Component id="jPanel2" min="-2" pref="654" max="-2" attributes="1"/>
+                      <EmptySpace pref="129" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -227,7 +227,7 @@
                           <Component id="pollLbl" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" pref="382" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="prevQuestion" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -299,24 +299,24 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="answer1Text" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="questionText" pref="403" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="answer2Text" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="answer1Text" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="answer3Text" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="answer4Text" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="answer5Text" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="191" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="answer7Text" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="answer8Text" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="answer10Text" min="-2" max="-2" attributes="0"/>
                                       <Component id="answer6Text" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="answer10Text" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="answer9Text" min="-2" max="-2" attributes="0"/>
+                                      <Component id="answer8Text" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="answer7Text" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="answer9Text" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="questionText" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="237" max="32767" attributes="0"/>
                       </Group>
@@ -326,33 +326,33 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="questionText" min="-2" max="-2" attributes="0"/>
+                          <Component id="questionText" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="answer9Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer7Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer8Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer6Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer10Text" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="answer1Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer2Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer3Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer4Text" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="answer5Text" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="56" max="32767" attributes="0"/>
+                          <EmptySpace pref="88" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -361,15 +361,19 @@
                 <Component class="javax.swing.JLabel" name="questionText">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="48" style="0"/>
+                      <Font name="Tahoma" size="36" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Question text"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Default Cursor"/>
+                    </Property>
+                    <Property name="horizontalTextPosition" type="int" value="2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="answer4Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -377,7 +381,7 @@
                 <Component class="javax.swing.JLabel" name="answer3Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -385,7 +389,7 @@
                 <Component class="javax.swing.JLabel" name="answer5Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -393,7 +397,7 @@
                 <Component class="javax.swing.JLabel" name="answer2Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -401,7 +405,7 @@
                 <Component class="javax.swing.JLabel" name="answer1Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -409,7 +413,7 @@
                 <Component class="javax.swing.JLabel" name="answer8Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -417,7 +421,7 @@
                 <Component class="javax.swing.JLabel" name="answer7Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -425,7 +429,7 @@
                 <Component class="javax.swing.JLabel" name="answer6Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -433,7 +437,7 @@
                 <Component class="javax.swing.JLabel" name="answer10Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
@@ -441,7 +445,7 @@
                 <Component class="javax.swing.JLabel" name="answer9Text">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="36" style="0"/>
+                      <Font name="Tahoma" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="1. Answer"/>
                   </Properties>
