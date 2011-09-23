@@ -88,6 +88,7 @@ public class PollTestApplet extends javax.swing.JApplet {
                     initReceivers();
                     initComponents();
                     initModel();
+                    
                     startButton.addActionListener(new java.awt.event.ActionListener() {
 
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +167,7 @@ public class PollTestApplet extends javax.swing.JApplet {
             } else {
                 poll = PollService.createPoll();
             }
+            
             poll.addResponseListener(new BasicResponseListener());
             Poll.PollingMode pollingMode = (Poll.PollingMode.SingleResponse_Numeric);
             poll.start(pollingMode);
@@ -415,16 +417,21 @@ public class PollTestApplet extends javax.swing.JApplet {
 
         MasterPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Tahoma", 0, 28));
         titleLabel.setText("KeyPad Test");
 
         detectedInfoLabel.setText("Devices Found");
 
-        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
         detectedLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         detectedLbl.setText("0");
 
         startButton.setText("Start");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
 
         stopButton.setText("Stop");
         stopButton.addActionListener(new java.awt.event.ActionListener() {
@@ -436,7 +443,7 @@ public class PollTestApplet extends javax.swing.JApplet {
         responseTable.setModel(responseTableModel);
         tableMasterPane.setViewportView(responseTable);
 
-        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
         testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
         javax.swing.GroupLayout MasterPanelLayout = new javax.swing.GroupLayout(MasterPanel);
@@ -509,6 +516,11 @@ private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         showError("Unable to stop poll.", e);
     }
 }//GEN-LAST:event_stopButtonActionPerformed
+
+private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+// TODO add your handling code here:
+}//GEN-LAST:event_startButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MasterPanel;
     private javax.swing.JLabel detectedInfoLabel;

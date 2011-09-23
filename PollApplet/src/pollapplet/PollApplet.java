@@ -61,7 +61,6 @@ public class PollApplet extends javax.swing.JApplet {
     private dbQuestion selectedQuestion;
     private String Session;
     private boolean polling = false;
-    
     /**
      * Current Question during polling. (Location in question list)
      */
@@ -117,7 +116,7 @@ public class PollApplet extends javax.swing.JApplet {
                             Polls.polls.toArray(),
                             Polls.polls.get(0));
 
-                    pollLbl.setText(selectedPoll.getPollName());
+                    pollLbl.setText("POLL: " + selectedPoll.getPollName());
                     Questions.loadQuestions(selectedPoll.getPollId());
 
                     selectedQuestion = Questions.questions.get(QUESTION);
@@ -209,6 +208,7 @@ public class PollApplet extends javax.swing.JApplet {
     private void startPollHandler(java.awt.event.ActionEvent evt) {
         //this.responseChart.setDataset((dataset = createDataset()));
         this.responseListModel.clear();
+        System.out.println("Polling for " + selectedQuestion.getQuestionText() + " Started");
         try {//System.out.println("evt paramString: " + evt.getActionCommand());
             //see if it's an invalid response poll that we're starting
             if (evt.getActionCommand().equals("InvalidResponse")) {
@@ -218,7 +218,21 @@ public class PollApplet extends javax.swing.JApplet {
                 poll = PollService.createPoll();
             }
             poll.addResponseListener(new BasicResponseListener());
-            Poll.PollingMode pollingMode = (Poll.PollingMode.SingleResponse_Numeric);
+            Poll.PollingMode pollingMode;
+
+            // Set Answering type depending on question type from database.
+            if (selectedQuestion.getQuestionType() > 2 && selectedQuestion.getQuestionType() < 6) {
+                pollingMode = (Poll.PollingMode.SingleResponse_Numeric);
+            } else if (selectedQuestion.getQuestionType() == 6) {
+                pollingMode = (Poll.PollingMode.MultiResponse_Numeric);
+            } else if (selectedQuestion.getQuestionType() == 1) {
+                pollingMode = (Poll.PollingMode.Numeric);
+            } else if (selectedQuestion.getQuestionType() == 2) {
+                pollingMode = (Poll.PollingMode.ShortAnswer);
+            } else {
+                pollingMode = (Poll.PollingMode.SingleResponse_Numeric);
+            }
+
             poll.start(pollingMode);
             testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
@@ -530,7 +544,7 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        nextButton.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        nextButton.setFont(new java.awt.Font("Tahoma", 0, 36));
         nextButton.setText("Next Question");
         nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -538,7 +552,7 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        startButton.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        startButton.setFont(new java.awt.Font("Tahoma", 0, 36));
         startButton.setText("Start Polling");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -548,7 +562,7 @@ public class PollApplet extends javax.swing.JApplet {
 
         detectedInfoLabel.setText("Devices Found");
 
-        pollLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        pollLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
         pollLbl.setText("poll Text");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -556,39 +570,39 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel2.setMaximumSize(new java.awt.Dimension(760, 396));
         jPanel2.setMinimumSize(new java.awt.Dimension(760, 396));
 
-        questionText.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        questionText.setFont(new java.awt.Font("Tahoma", 0, 36));
         questionText.setText("Question text");
         questionText.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         questionText.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer4Text.setText("1. Answer");
 
-        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer3Text.setText("1. Answer");
 
-        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer5Text.setText("1. Answer");
 
-        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer2Text.setText("1. Answer");
 
-        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer1Text.setText("1. Answer");
 
-        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer8Text.setText("1. Answer");
 
-        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer7Text.setText("1. Answer");
 
-        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer6Text.setText("1. Answer");
 
-        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer10Text.setText("1. Answer");
 
-        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer9Text.setText("1. Answer");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -598,7 +612,9 @@ public class PollApplet extends javax.swing.JApplet {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(questionText, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(questionText, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(answer2Text)
@@ -606,14 +622,14 @@ public class PollApplet extends javax.swing.JApplet {
                             .addComponent(answer3Text)
                             .addComponent(answer4Text)
                             .addComponent(answer5Text))
-                        .addGap(191, 191, 191)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(answer10Text)
                             .addComponent(answer6Text)
                             .addComponent(answer8Text)
                             .addComponent(answer7Text)
-                            .addComponent(answer9Text))))
-                .addContainerGap(237, Short.MAX_VALUE))
+                            .addComponent(answer9Text))
+                        .addGap(238, 238, 238))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -645,7 +661,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
-        prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36));
         prevQuestion.setText("Prev Question");
         prevQuestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -653,7 +669,7 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
+        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         detectedLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         detectedLbl.setText("0");
 
@@ -664,33 +680,37 @@ public class PollApplet extends javax.swing.JApplet {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pollLbl)
-                .addGap(294, 294, 294)
+                .addGap(260, 260, 260)
                 .addComponent(detectedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(detectedInfoLabel)
-                .addGap(289, 289, 289))
+                .addGap(327, 327, 327))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(prevQuestion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(startButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nextButton)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, 0, 751, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(prevQuestion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(startButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nextButton)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(detectedLbl)
-                    .addComponent(detectedInfoLabel)
-                    .addComponent(pollLbl))
-                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(pollLbl)
+                        .addGap(7, 7, 7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(detectedLbl)
+                            .addComponent(detectedInfoLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -747,57 +767,52 @@ public class PollApplet extends javax.swing.JApplet {
 
 private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
 
-    if((QUESTION+1) >= Questions.questions.size()){
-        
-        
-    }else{
+    if ((QUESTION + 1) >= Questions.questions.size()) {
+    } else {
         QUESTION++;
-        selectedQuestion = Questions.questions.get(QUESTION );
+        selectedQuestion = Questions.questions.get(QUESTION);
         questionText.setText(selectedQuestion.getQuestionText());
         Answers.loadAnswers(selectedQuestion.getQuestionID());
         setAnswers();
     }
 
-    
+
 
 }//GEN-LAST:event_nextButtonActionPerformed
 
 private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
 // TODO add your handling code here:
-    
-    if(polling == false){
-       startButton.setText("Stop Polling");
-       polling = true;;
-    }else{
-       startButton.setText("Start Polling");
-       polling = false;
-    }
-    /*
-     * try {
-        poll.stop();
-        testingInfoLabel.setText("Testing has finished. Please wait for instruction");
 
-        //responseChart.setSubtitle("Polling Closed");
-    } catch (Exception e) {
-        showError("Unable to stop poll.", e);
-    }*/
+    if (polling == false) {
+        startButton.setText("Stop Polling");
+        startPollHandler(evt);
+        polling = true;
+    } else {
+        startButton.setText("Start Polling");
+        try {
+            poll.stop();
+            testingInfoLabel.setText("Testing has finished. Please wait for instruction");
+
+            //responseChart.setSubtitle("Polling Closed");
+        } catch (Exception e) {
+            showError("Unable to stop poll.", e);
+        }
+        polling = false;
+    }
+
 }//GEN-LAST:event_startButtonActionPerformed
 
 private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevQuestionActionPerformed
 // TODO add your handling code here:
-    if(QUESTION <= 0){
-        
-        
-    }else{
+    if (QUESTION <= 0) {
+    } else {
         QUESTION--;
-        selectedQuestion = Questions.questions.get(QUESTION );
+        selectedQuestion = Questions.questions.get(QUESTION);
         questionText.setText(selectedQuestion.getQuestionText());
         Answers.loadAnswers(selectedQuestion.getQuestionID());
         setAnswers();
     }
 
-    
-    
 }//GEN-LAST:event_prevQuestionActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame Frame;
