@@ -51,8 +51,6 @@ public class PollApplet extends javax.swing.JApplet {
     private ResponseListModel responseListModel = new ResponseListModel();
     private ReceiverListModel receiverListModel = new ReceiverListModel();
     private DefaultCategoryDataset dataset;
-    private ReceiverTableModel responseTableModel = new ReceiverTableModel();
-    private PollCellRenderer PollRenderer = new PollCellRenderer();
     private String test = "test";
     private PollList Polls = new PollList();
     private QuestionList Questions = new QuestionList();
@@ -281,7 +279,6 @@ public class PollApplet extends javax.swing.JApplet {
     public class ResponseListModel extends DefaultListModel {
 
         List<Response> responses = new ArrayList();
-        List<ArrayList> TestList = new ArrayList();
 
         @Override
         public void clear() {
@@ -290,9 +287,11 @@ public class PollApplet extends javax.swing.JApplet {
         }
 
         public void add(Response newData) {
-
+            
+            if(responses.contains(newData) && selectedQuestion.getQuestionType() != 6){
+                responses.remove(newData);
+            }
             responses.add(newData);
-            responseTableModel.addDeviceID(newData.getResponseCardId(), Integer.parseInt(newData.getResponse()));
             System.out.println("device: '" + newData.getResponseCardId() + "' Response: '" + newData.getResponse() + "'");
 
             fireContentsChanged(this, getSize() - 2, getSize() - 1);
@@ -347,96 +346,6 @@ public class PollApplet extends javax.swing.JApplet {
         }
     }
 
-    class ReceiverTableModel extends AbstractTableModel {
-
-        private String[] columnNames = {"Receivers", "Receivers", "Receivers", "Receivers"};
-        private String[][] data = new String[25][4];
-
-        public int getColumnCount() {
-            return columnNames.length;
-        }
-
-        public void addDeviceID(String deviceID, int key) {
-            int detectedCount = 0;
-            for (int row = 0; row < 29; row++) {
-                for (int column = 0; column < 4; column++) {
-                    if (this.getValueAt(row, column) == null) {
-                        this.setValueAt(deviceID + " : " + key, row, column);
-                        System.out.println("Break at: " + column + " " + row);
-                        detectedCount = Integer.parseInt(detectedLbl.getText());
-                        detectedCount++;
-                        detectedLbl.setText("" + detectedCount);
-                        return;
-
-                    } else if ((this.getValueAt(row, column).toString().split("\\s+")[0]).compareTo(deviceID) == 0) {
-                        //cal colour change code here!
-                        this.setValueAt(deviceID + " : " + key, row, column);
-                        return;
-                    }
-                }
-            }
-        }
-
-        public int getRowCount() {
-            return data.length;
-        }
-
-        public String getColumnName(int col) {
-            return columnNames[col];
-        }
-
-        public Object getValueAt(int row, int col) {
-            return data[row][col];
-        }
-
-        /*
-         * Don't need to implement this method unless your table's
-         * data can change.
-         */
-        public void setValueAt(String value, int row, int col) {
-            data[row][col] = value;
-            fireTableCellUpdated(row, col);
-        }
-    }
-
-    public class PollCellRenderer
-            extends DefaultTableCellRenderer {
-
-        private Color[] cellColor = {
-            Color.getHSBColor((float) 0.72, (float) 0.5, (float) 0.95),
-            Color.getHSBColor((float) 0.48, 1, 1),
-            Color.getHSBColor((float) 2, (float) 0.68, 1),
-            Color.getHSBColor((float) 29, (float) 0.31, 1),
-            Color.getHSBColor((float) 0.61, (float) 0.51, 1),
-            Color.getHSBColor((float) 246, (float) 0.51, 1),
-            Color.getHSBColor((float) 1, (float) 0.12, 1),
-            Color.getHSBColor((float) 0.32, (float) 0.56, (float) 0.99),
-            Color.getHSBColor((float) 148, (float) 0.8, 100),
-            Color.getHSBColor((float) 305, (float) 0.32, 1)
-        };
-
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            int keyPress;
-            Component cell = super.getTableCellRendererComponent(
-                    table, value, isSelected, hasFocus, row, column);
-
-            cell.setFont(new Font("Arial", Font.PLAIN, 16));
-            if (value != null) {
-                System.out.println("Key Clicked: " + value.toString().split("\\s+")[2]);
-                keyPress = Integer.parseInt(value.toString().split("\\s+")[2]);
-                cell.setBackground(cellColor[keyPress]);
-                // you can also customize the Font and Foreground this way
-                // cell.setForeground();
-                // cell.setFont();
-            } else {
-                cell.setBackground(Color.white);
-            }
-
-            return cell;
-        }
-    }
-
     /** This method is called from within the init() method to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -456,7 +365,7 @@ public class PollApplet extends javax.swing.JApplet {
         MasterPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        nextButton = new javax.swing.JButton();
+        nextQuestion = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
         detectedInfoLabel = new javax.swing.JLabel();
         pollLbl = new javax.swing.JLabel();
@@ -544,15 +453,15 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        nextButton.setFont(new java.awt.Font("Tahoma", 0, 36));
-        nextButton.setText("Next Question");
-        nextButton.addActionListener(new java.awt.event.ActionListener() {
+        nextQuestion.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        nextQuestion.setText("Next Question");
+        nextQuestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextButtonActionPerformed(evt);
+                nextQuestionActionPerformed(evt);
             }
         });
 
-        startButton.setFont(new java.awt.Font("Tahoma", 0, 36));
+        startButton.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         startButton.setText("Start Polling");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -661,7 +570,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
-        prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36));
+        prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         prevQuestion.setText("Prev Question");
         prevQuestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -694,7 +603,7 @@ public class PollApplet extends javax.swing.JApplet {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(startButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nextButton)))
+                        .addComponent(nextQuestion)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -716,11 +625,11 @@ public class PollApplet extends javax.swing.JApplet {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(prevQuestion)
                     .addComponent(startButton)
-                    .addComponent(nextButton))
+                    .addComponent(nextQuestion))
                 .addContainerGap())
         );
 
-        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
+        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
         javax.swing.GroupLayout MasterPanelLayout = new javax.swing.GroupLayout(MasterPanel);
@@ -765,7 +674,7 @@ public class PollApplet extends javax.swing.JApplet {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextQuestionActionPerformed
 
     if ((QUESTION + 1) >= Questions.questions.size()) {
     } else {
@@ -778,7 +687,7 @@ private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
 
 
-}//GEN-LAST:event_nextButtonActionPerformed
+}//GEN-LAST:event_nextQuestionActionPerformed
 
 private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
 // TODO add your handling code here:
@@ -786,13 +695,16 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     if (polling == false) {
         startButton.setText("Stop Polling");
         startPollHandler(evt);
+        nextQuestion.setEnabled(false);
+        prevQuestion.setEnabled(false);
         polling = true;
     } else {
         startButton.setText("Start Polling");
         try {
             poll.stop();
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
-
+            nextQuestion.setEnabled(true);
+            prevQuestion.setEnabled(true);
             //responseChart.setSubtitle("Polling Closed");
         } catch (Exception e) {
             showError("Unable to stop poll.", e);
@@ -834,7 +746,7 @@ private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField masterIDTxt;
-    private javax.swing.JButton nextButton;
+    private javax.swing.JButton nextQuestion;
     private javax.swing.JDialog pollDialog;
     private javax.swing.JLabel pollLbl;
     private javax.swing.JButton prevQuestion;

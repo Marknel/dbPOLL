@@ -210,7 +210,7 @@
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="startButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="nextButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="nextQuestion" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="35" max="32767" attributes="0"/>
@@ -240,7 +240,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="prevQuestion" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="startButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="nextButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="nextQuestion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -248,7 +248,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="nextButton">
+            <Component class="javax.swing.JButton" name="nextQuestion">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="36" style="0"/>
@@ -256,7 +256,7 @@
                 <Property name="text" type="java.lang.String" value="Next Question"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextQuestionActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="startButton">
