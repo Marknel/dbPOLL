@@ -40,6 +40,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jfree.data.category.DefaultCategoryDataset;
 import pollapplet.PollList.dbPoll;
 import pollapplet.QuestionList.dbQuestion;
+import pollapplet.Responses;
 
 /**
  *
@@ -52,6 +53,7 @@ public class PollApplet extends javax.swing.JApplet {
     private ReceiverListModel receiverListModel = new ReceiverListModel();
     private DefaultCategoryDataset dataset;
     private String test = "test";
+    private Responses dbResponses = new Responses();
     private PollList Polls = new PollList();
     private QuestionList Questions = new QuestionList();
     private AnswerList Answers = new AnswerList();
@@ -123,12 +125,6 @@ public class PollApplet extends javax.swing.JApplet {
 
                     setAnswers();
 
-                    startButton.addActionListener(new java.awt.event.ActionListener() {
-
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            startPollHandler(evt);
-                        }
-                    });
                 }
             });
         } catch (Exception ex) {
@@ -278,7 +274,7 @@ public class PollApplet extends javax.swing.JApplet {
 
     public class ResponseListModel extends DefaultListModel {
 
-        List<Response> responses = new ArrayList();
+        public List<Response> responses = new ArrayList();
 
         @Override
         public void clear() {
@@ -697,6 +693,9 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         startPollHandler(evt);
         nextQuestion.setEnabled(false);
         prevQuestion.setEnabled(false);
+        
+        
+        
         polling = true;
     } else {
         startButton.setText("Start Polling");
@@ -705,6 +704,7 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
             nextQuestion.setEnabled(true);
             prevQuestion.setEnabled(true);
+            dbResponses.saveResponses(responseListModel.responses, selectedPoll.getSessionId(), selectedQuestion.getQuestionID());
             //responseChart.setSubtitle("Polling Closed");
         } catch (Exception e) {
             showError("Unable to stop poll.", e);

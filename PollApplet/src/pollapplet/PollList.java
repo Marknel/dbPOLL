@@ -45,7 +45,7 @@ public class PollList {
 
             Statement stmt = con.createStatement();
             ResultSet rset = stmt.executeQuery(
-                    "SELECT p.POLL_ID, p.POLL_NAME, s.SESSION_NAME"
+                    "SELECT p.POLL_ID, s.SESSION_ID, p.POLL_NAME, s.SESSION_NAME"
                     + " FROM POLLS P"
                     + " INNER JOIN assignedpolls a"
                     + " ON p.poll_id = a.poll_id"
@@ -54,7 +54,7 @@ public class PollList {
                     + " WHERE user_id = " + pollMaster);
 
             while (rset.next()) {
-                polls.add(new dbPoll(Integer.parseInt(rset.getString("POLL_ID")), rset.getString("POLL_NAME"), rset.getString("SESSION_NAME")));
+                polls.add(new dbPoll(Integer.parseInt(rset.getString("POLL_ID")), Integer.parseInt(rset.getString("SESSION_ID")), rset.getString("POLL_NAME"), rset.getString("SESSION_NAME")));
                 
             }
 
@@ -78,13 +78,15 @@ public class PollList {
     public class dbPoll {
 
         private int pollId;
+        private int sessionId;
         private String pollName;
         private String pollSession;
 
-        public dbPoll(int pollId, String pollName, String pollSession) {
+        public dbPoll(int pollId, int sessionId, String pollName, String pollSession) {
             this.pollId = pollId;
             this.pollName = pollName;
             this.pollSession = pollSession;
+            this.sessionId = sessionId;
         }
 
         public int getPollId() {
@@ -110,6 +112,16 @@ public class PollList {
         public void setPollSession(String pollSession) {
             this.pollSession = pollSession;
         }
+
+        public int getSessionId() {
+            return sessionId;
+        }
+
+        public void setSessionId(int sessionId) {
+            this.sessionId = sessionId;
+        }
+        
+        
         
         @Override public String toString() {
             
