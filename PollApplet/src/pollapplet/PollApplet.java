@@ -7,6 +7,7 @@
  * PollApplet.java
  *
  * Created on 17/08/2011, 5:34:40 PM
+ * 
  */
 package pollapplet;
 
@@ -14,37 +15,22 @@ import com.turningtech.poll.Poll;
 import com.turningtech.poll.PollService;
 import com.turningtech.poll.Response;
 import com.turningtech.poll.ResponseListener;
-import com.turningtech.test.Test;
-import com.turningtech.test.DeviceWakeup;
-import com.turningtech.test.Examination;
-import com.turningtech.test.Question;
-import com.turningtech.test.TestService;
-import com.turningtech.test.ResponseTest;
-import com.turningtech.test.ResponseListenerTest;
 import com.turningtech.receiver.Receiver;
 import com.turningtech.receiver.ReceiverService;
 import com.turningtech.receiver.ResponseCardLibrary;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import org.jfree.data.category.DefaultCategoryDataset;
 import pollapplet.PollList.dbPoll;
 import pollapplet.QuestionList.dbQuestion;
-import pollapplet.Responses;
 
 /**
  *
- * @author s4200943
+ * @author 42009432 - Adam Young
  */
 public class PollApplet extends javax.swing.JApplet {
 
@@ -52,14 +38,12 @@ public class PollApplet extends javax.swing.JApplet {
     private ResponseListModel responseListModel = new ResponseListModel();
     private ReceiverListModel receiverListModel = new ReceiverListModel();
     private DefaultCategoryDataset dataset;
-    private String test = "test";
     private Responses dbResponses = new Responses();
     private PollList Polls = new PollList();
     private QuestionList Questions = new QuestionList();
     private AnswerList Answers = new AnswerList();
     private dbPoll selectedPoll;
     private dbQuestion selectedQuestion;
-    private String Session;
     private boolean polling = false;
     /**
      * Current Question during polling. (Location in question list)
@@ -205,12 +189,11 @@ public class PollApplet extends javax.swing.JApplet {
         System.out.println("Polling for " + selectedQuestion.getQuestionText() + " Started");
         try {//System.out.println("evt paramString: " + evt.getActionCommand());
             //see if it's an invalid response poll that we're starting
-            if (evt.getActionCommand().equals("InvalidResponse")) {
-                String answerRange = "246809";
-                poll = PollService.createCorrectPoll(evt.getActionCommand(), answerRange);
-            } else {
-                poll = PollService.createPoll();
-            }
+
+            String answerRange = "123";
+            poll = PollService.createCorrectPoll("InvalidResponse", answerRange);
+            //poll = PollService.createPoll();
+
             poll.addResponseListener(new BasicResponseListener());
             Poll.PollingMode pollingMode;
 
@@ -226,7 +209,6 @@ public class PollApplet extends javax.swing.JApplet {
             } else {
                 pollingMode = (Poll.PollingMode.SingleResponse_Numeric);
             }
-
             poll.start(pollingMode);
             testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
@@ -283,8 +265,8 @@ public class PollApplet extends javax.swing.JApplet {
         }
 
         public void add(Response newData) {
-            
-            if(responses.contains(newData) && selectedQuestion.getQuestionType() != 6){
+
+            if (responses.contains(newData) && selectedQuestion.getQuestionType() != 6) {
                 responses.remove(newData);
             }
             responses.add(newData);
@@ -681,8 +663,6 @@ private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         setAnswers();
     }
 
-
-
 }//GEN-LAST:event_nextQuestionActionPerformed
 
 private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -693,9 +673,6 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         startPollHandler(evt);
         nextQuestion.setEnabled(false);
         prevQuestion.setEnabled(false);
-        
-        
-        
         polling = true;
     } else {
         startButton.setText("Start Polling");
@@ -711,7 +688,6 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         }
         polling = false;
     }
-
 }//GEN-LAST:event_startButtonActionPerformed
 
 private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevQuestionActionPerformed

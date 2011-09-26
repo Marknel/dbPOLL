@@ -14,7 +14,7 @@ import javax.swing.DefaultListModel;
 
 /**
  * Contains methods to allow the getting of poll data from database.
- * @author s4200943
+ * @author 42009432 - Adam Young
  * 
  */
 public class PollList {
@@ -31,6 +31,7 @@ public class PollList {
     /**
      * Runs over the database reading each poll into a dbPoll object and adding
      * the object to the polls list.
+     * 
      * @param pollMaster must be a valid pollMaster in the database. 
      * polls List will contain null items if the poll master has not been 
      * assigned to a poll.
@@ -49,22 +50,22 @@ public class PollList {
                     + " FROM POLLS P"
                     + " INNER JOIN assignedpolls a"
                     + " ON p.poll_id = a.poll_id"
-                    +" INNER JOIN sessions s"
-                    +" ON p.poll_id = s.poll_id"
+                    + " INNER JOIN sessions s"
+                    + " ON p.poll_id = s.poll_id"
                     + " WHERE user_id = " + pollMaster);
 
             while (rset.next()) {
                 polls.add(new dbPoll(Integer.parseInt(rset.getString("POLL_ID")), Integer.parseInt(rset.getString("SESSION_ID")), rset.getString("POLL_NAME"), rset.getString("SESSION_NAME")));
-                
-            }
-
-            for (dbPoll p : polls) {
-                System.out.println("POLL ID: " + p.getPollId() + " Name: " + p.getPollName()+ " Session: "+p.getPollSession());
 
             }
+
+            /*for (dbPoll p : polls) {
+            System.out.println("POLL ID: " + p.getPollId() + " Name: " + p.getPollName()+ " Session: "+p.getPollSession());
+            
+            }*/
 
             stmt.close();
-            System.out.println("Ok.");
+            //System.out.println("Ok.");
 
 
         } catch (SQLException ex) {
@@ -120,12 +121,16 @@ public class PollList {
         public void setSessionId(int sessionId) {
             this.sessionId = sessionId;
         }
-        
-        
-        
-        @Override public String toString() {
-            
-        return this.pollName+" - " + this.pollSession;  
+
+        /**
+         * Formatted poll - session pair
+         * 
+         * @return 'pollName - pollSession'
+         */
+        @Override
+        public String toString() {
+
+            return this.pollName + " - " + this.pollSession;
         }
     }
 //</editor-fold> 

@@ -11,14 +11,36 @@ import java.util.List;
 
 /**
  *
- * @author s4200943
+ * @author s42009432 - Adam Young
+ * 
+ * Provides means of storing Responses in the database
  */
 public class Responses {
 
+    /**
+     * Provides a means of accessing Answers for a selected question in order
+     * to extract answerID + Answer for response record insertion.
+     */
+    private AnswerList Answers = new AnswerList();
+
+    /**
+     * Default blank constructor to call methods from class
+     */
     Responses() {
     }
 
-    public void saveResponses(List<Response> responses, int sessionID, int answerID) {
+    /**
+     * Formats and inserts given response data into the database.
+     * If keypad users have not being provided with user accounts a default
+     * will be generated.
+     * 
+     * @param responses: List of response objects gathered from the receiver.
+     * @param sessionID: The current session being polled.
+     * @param questionID: The current question for which the responses belong.
+     */
+    public void saveResponses(List<Response> responses, int sessionID, int questionID) {
+
+        Answers.loadAnswers(questionID);
 
         Connection con;
         String query = "INSERT ALL\n";
@@ -58,7 +80,6 @@ public class Responses {
                             + "VALUES(" + maxUserID + ", -2, '" + res.getResponseCardId() + "', sysdate)");
 
                 }
-
                 uset = stmt.executeQuery(
                         "SELECT USER_ID"
                         + " FROM USERS"
@@ -66,11 +87,12 @@ public class Responses {
                 uset.next();
 
                 //Build our string of values,
+
                 query = query.concat("INTO RESPONSES (RESPONSE_ID, FEEDBACK, ANSWER_ID, CREATED_AT, USER_ID, SESSION_ID) "
                         + "VALUES ("
-                        + (maxID+1) + ", "
-                        + res.getResponse() + ", "
-                        + answerID + ", "
+                        + (maxID + 1) + ", '"
+                        + Answers.answers.get(Integer.parseInt(res.getResponse())).getAnswerText() + "', "
+                        + Answers.answers.get(Integer.parseInt(res.getResponse())).getAnswerID() + ", "
                         + "sysdate, "
                         + uset.getString("USER_ID")
                         + ", " + sessionID

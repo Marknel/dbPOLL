@@ -6,7 +6,7 @@ package pollapplet;
 
 /**
  *
- * @author s4200943
+ * @author 42009432 - Adam Young
  */
 public class Objects {
     // Support the creation and addition of objects to the polling stage

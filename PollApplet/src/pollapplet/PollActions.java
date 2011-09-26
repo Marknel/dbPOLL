@@ -8,7 +8,7 @@ import pollapplet.PollApplet.*;
 
 /**
  *
- * @author s4200943
+ * @author 42009432 - Adam Young
  */
 
 /* SQL Queries

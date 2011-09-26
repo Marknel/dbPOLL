@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author s4200943
+ * @author 42009432 - Adam Young
  */
 public class QuestionList {
     
@@ -53,7 +53,7 @@ public class QuestionList {
                         Integer.parseInt(rset.getString("NUM"))));
             }
             
-             for (dbQuestion q : questions){
+             /*for (dbQuestion q : questions){
                 System.out.println(
                         "Question ID: "+q.getQuestionID()+ 
                         " Type: " +q.getQuestionType() +
@@ -61,10 +61,10 @@ public class QuestionList {
                         " Chart Style: "+q.getChartStyle()+
                         " Short Answer Type: "+q.getShortAnswerType()+
                         " Num in seq: " + q.getNumInSequence());  
-             }
+             }*/
             
             stmt.close();
-            System.out.println ("Ok.");
+            //System.out.println ("Ok.");
             
             
         } catch (SQLException ex) {
