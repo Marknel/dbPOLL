@@ -91,8 +91,8 @@ public class Responses {
                 query = query.concat("INTO RESPONSES (RESPONSE_ID, FEEDBACK, ANSWER_ID, CREATED_AT, USER_ID, SESSION_ID) "
                         + "VALUES ("
                         + (maxID + 1) + ", '"
-                        + Answers.answers.get(Integer.parseInt(res.getResponse())).getAnswerText() + "', "
-                        + Answers.answers.get(Integer.parseInt(res.getResponse())).getAnswerID() + ", "
+                        + Answers.answers.get(Integer.parseInt(res.getResponse()) - 1).getAnswerText() + "', "
+                        + Answers.answers.get(Integer.parseInt(res.getResponse()) - 1).getAnswerID() + ", "
                         + "sysdate, "
                         + uset.getString("USER_ID")
                         + ", " + sessionID
@@ -103,7 +103,7 @@ public class Responses {
             }
 
             query = query.concat("SELECT * FROM dual");
-            System.out.println("QUERY STRING FOR RESPONSES::::: \n" + query);
+            System.out.println("QUERY STRING FOR RESPONSES---- \n" + query +"\n ---------");
 
             rset = stmt.executeQuery(query);
 

@@ -21,6 +21,7 @@ import com.turningtech.receiver.ResponseCardLibrary;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -34,6 +35,10 @@ import pollapplet.QuestionList.dbQuestion;
  */
 public class PollApplet extends javax.swing.JApplet {
 
+    private LinkedList<String> TOTALRESPONSES =  new LinkedList<String>();
+    
+    private LinkedList<String> CURRENTRESPONSES =  new LinkedList<String>();
+    
     private Poll poll;
     private ResponseListModel responseListModel = new ResponseListModel();
     private ReceiverListModel receiverListModel = new ReceiverListModel();
@@ -151,36 +156,9 @@ public class PollApplet extends javax.swing.JApplet {
         //keyPadResponseList.setModel(responseListModel);
         testingInfoLabel.setText("Please set your Clicker Device to channel 22 and  wait for testing to begin.");
 
-
         System.out.println("Changed!!!!");
         System.out.println(receiverListModel.getSize());
 
-        //responseTable.setModel(responseTableModel);
-        //responseTable.setDefaultRenderer(responseTable.getColumnClass(0), PollRenderer);
-        //responseTable.setRowHeight(20);
-
-        //receiverList.setModel(receiverListModel);
-
-        /*receiverList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-        
-        public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) {
-        return;
-        }
-        int selection = receiverList.getSelectedIndex();
-        try {
-        Receiver receiver = receiverListModel.get(selection);
-        lblChannel.setText(Integer.toString(receiver.getChannel()));
-        lblDescription.setText(receiver.getDescription());
-        lblId.setText(receiver.getId());
-        lblId1.setText(receiver.getVersion());
-        } catch (Exception ex) {
-        //ignore
-        }
-        
-        }
-        });
-        receiverList.setCellRenderer(receiverCellRenderer);*/
     }
 
     private void startPollHandler(java.awt.event.ActionEvent evt) {
@@ -266,9 +244,26 @@ public class PollApplet extends javax.swing.JApplet {
 
         public void add(Response newData) {
 
-            if (responses.contains(newData) && selectedQuestion.getQuestionType() != 6) {
-                responses.remove(newData);
+            if(selectedQuestion.getQuestionType() != 6){
+                for(Response resp : responses){
+                    if(resp.getResponseCardId().equals(newData.getResponseCardId())){
+                        responses.remove(resp);
+                        break;
+                    }             
+                }
             }
+            
+            if(!TOTALRESPONSES.contains(newData.getResponseCardId())){
+                TOTALRESPONSES.add(newData.getResponseCardId());
+                detectTotalLbl.setText(""+TOTALRESPONSES.size());
+            }
+            
+            if(!CURRENTRESPONSES.contains(newData.getResponseCardId())){
+                CURRENTRESPONSES.add(newData.getResponseCardId());
+                detectQuestLbl.setText(""+CURRENTRESPONSES.size());
+            }
+            
+                
             responses.add(newData);
             System.out.println("device: '" + newData.getResponseCardId() + "' Response: '" + newData.getResponse() + "'");
 
@@ -345,22 +340,27 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel1 = new javax.swing.JPanel();
         nextQuestion = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
-        detectedInfoLabel = new javax.swing.JLabel();
         pollLbl = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         questionText = new javax.swing.JLabel();
-        answer4Text = new javax.swing.JLabel();
-        answer3Text = new javax.swing.JLabel();
-        answer5Text = new javax.swing.JLabel();
-        answer2Text = new javax.swing.JLabel();
-        answer1Text = new javax.swing.JLabel();
-        answer8Text = new javax.swing.JLabel();
-        answer7Text = new javax.swing.JLabel();
+        AnswerPanel1 = new javax.swing.JPanel();
         answer6Text = new javax.swing.JLabel();
         answer10Text = new javax.swing.JLabel();
+        answer8Text = new javax.swing.JLabel();
+        answer7Text = new javax.swing.JLabel();
         answer9Text = new javax.swing.JLabel();
+        AnswerPanel2 = new javax.swing.JPanel();
+        answer1Text = new javax.swing.JLabel();
+        answer2Text = new javax.swing.JLabel();
+        answer3Text = new javax.swing.JLabel();
+        answer4Text = new javax.swing.JLabel();
+        answer5Text = new javax.swing.JLabel();
         prevQuestion = new javax.swing.JButton();
-        detectedLbl = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        detectQuestLbl = new javax.swing.JLabel();
+        slash = new javax.swing.JLabel();
+        detectedInfoLabel = new javax.swing.JLabel();
+        detectTotalLbl = new javax.swing.JLabel();
         testingInfoLabel = new javax.swing.JLabel();
 
         jLabel2.setText("Poll Master Id = ");
@@ -447,50 +447,114 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        detectedInfoLabel.setText("Devices Found");
-
-        pollLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
+        pollLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         pollLbl.setText("poll Text");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel2.setMaximumSize(new java.awt.Dimension(760, 396));
         jPanel2.setMinimumSize(new java.awt.Dimension(760, 396));
+        jPanel2.setPreferredSize(new java.awt.Dimension(600, 396));
 
-        questionText.setFont(new java.awt.Font("Tahoma", 0, 36));
+        questionText.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         questionText.setText("Question text");
         questionText.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         questionText.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 24));
-        answer4Text.setText("1. Answer");
+        AnswerPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        AnswerPanel1.setPreferredSize(new java.awt.Dimension(351, 310));
 
-        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 24));
-        answer3Text.setText("1. Answer");
-
-        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 24));
-        answer5Text.setText("1. Answer");
-
-        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 24));
-        answer2Text.setText("1. Answer");
-
-        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 24));
-        answer1Text.setText("1. Answer");
-
-        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 24));
-        answer8Text.setText("1. Answer");
-
-        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 24));
-        answer7Text.setText("1. Answer");
-
-        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 24));
+        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         answer6Text.setText("1. Answer");
 
-        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 24));
+        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         answer10Text.setText("1. Answer");
 
-        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 24));
+        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer8Text.setText("1. Answer");
+
+        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer7Text.setText("1. Answer");
+
+        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         answer9Text.setText("1. Answer");
+
+        javax.swing.GroupLayout AnswerPanel1Layout = new javax.swing.GroupLayout(AnswerPanel1);
+        AnswerPanel1.setLayout(AnswerPanel1Layout);
+        AnswerPanel1Layout.setHorizontalGroup(
+            AnswerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AnswerPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AnswerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answer7Text)
+                    .addComponent(answer9Text)
+                    .addComponent(answer8Text)
+                    .addComponent(answer6Text)
+                    .addComponent(answer10Text))
+                .addContainerGap(254, Short.MAX_VALUE))
+        );
+        AnswerPanel1Layout.setVerticalGroup(
+            AnswerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AnswerPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(answer7Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answer9Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answer8Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(answer10Text, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answer6Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        AnswerPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer1Text.setText("1. Answer");
+
+        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer2Text.setText("1. Answer");
+
+        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer3Text.setText("1. Answer");
+
+        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer4Text.setText("1. Answer");
+
+        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer5Text.setText("1. Answer");
+
+        javax.swing.GroupLayout AnswerPanel2Layout = new javax.swing.GroupLayout(AnswerPanel2);
+        AnswerPanel2.setLayout(AnswerPanel2Layout);
+        AnswerPanel2Layout.setHorizontalGroup(
+            AnswerPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AnswerPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AnswerPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(answer3Text)
+                    .addComponent(answer4Text)
+                    .addComponent(answer5Text)
+                    .addComponent(answer2Text)
+                    .addComponent(answer1Text))
+                .addContainerGap(235, Short.MAX_VALUE))
+        );
+        AnswerPanel2Layout.setVerticalGroup(
+            AnswerPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AnswerPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(answer1Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answer2Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answer3Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answer4Text, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(answer5Text, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -500,52 +564,23 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(questionText, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                        .addComponent(AnswerPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AnswerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(answer2Text)
-                            .addComponent(answer1Text)
-                            .addComponent(answer3Text)
-                            .addComponent(answer4Text)
-                            .addComponent(answer5Text))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(answer10Text)
-                            .addComponent(answer6Text)
-                            .addComponent(answer8Text)
-                            .addComponent(answer7Text)
-                            .addComponent(answer9Text))
-                        .addGap(238, 238, 238))))
+                        .addComponent(questionText, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                        .addGap(371, 371, 371))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(questionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(answer9Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer7Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer8Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer6Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer10Text))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(answer1Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer2Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer3Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer4Text)
-                        .addGap(18, 18, 18)
-                        .addComponent(answer5Text)))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addComponent(questionText, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(AnswerPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                    .addComponent(AnswerPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -556,58 +591,87 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        detectedLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        detectedLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        detectedLbl.setText("0");
+        detectQuestLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detectQuestLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        detectQuestLbl.setText("0");
+
+        slash.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        slash.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        slash.setText("/");
+
+        detectedInfoLabel.setText("Devices Found");
+
+        detectTotalLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detectTotalLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        detectTotalLbl.setText("0");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addComponent(detectQuestLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(slash)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(detectTotalLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(detectedInfoLabel)
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(detectQuestLbl)
+                    .addComponent(detectedInfoLabel)
+                    .addComponent(slash)
+                    .addComponent(detectTotalLbl)))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pollLbl)
-                .addGap(260, 260, 260)
-                .addComponent(detectedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(detectedInfoLabel)
-                .addGap(327, 327, 327))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, 0, 751, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(prevQuestion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(startButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nextQuestion)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(pollLbl)
+                        .addGap(183, 183, 183)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(516, 516, 516))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, 0, 751, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(prevQuestion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(startButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nextQuestion)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(pollLbl)
-                        .addGap(7, 7, 7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(detectedLbl)
-                            .addComponent(detectedInfoLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pollLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(prevQuestion)
+                    .addComponent(nextQuestion)
                     .addComponent(startButton)
-                    .addComponent(nextQuestion))
+                    .addComponent(prevQuestion))
                 .addContainerGap())
         );
 
-        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        testingInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
         testingInfoLabel.setText("Please press Keys on your Clicker Device to ensure your responses are received");
 
         javax.swing.GroupLayout MasterPanelLayout = new javax.swing.GroupLayout(MasterPanel);
@@ -619,10 +683,10 @@ public class PollApplet extends javax.swing.JApplet {
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addComponent(testingInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MasterPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 781, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         MasterPanelLayout.setVerticalGroup(
@@ -633,7 +697,7 @@ public class PollApplet extends javax.swing.JApplet {
                     .addComponent(testingInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(titleLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -641,13 +705,13 @@ public class PollApplet extends javax.swing.JApplet {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MasterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 801, Short.MAX_VALUE)
+            .addComponent(MasterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MasterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(MasterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -656,7 +720,9 @@ private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
     if ((QUESTION + 1) >= Questions.questions.size()) {
     } else {
+        
         QUESTION++;
+        detectQuestLbl.setText(""+CURRENTRESPONSES.size());
         selectedQuestion = Questions.questions.get(QUESTION);
         questionText.setText(selectedQuestion.getQuestionText());
         Answers.loadAnswers(selectedQuestion.getQuestionID());
@@ -669,6 +735,7 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 // TODO add your handling code here:
 
     if (polling == false) {
+        detectQuestLbl.setText(""+CURRENTRESPONSES.size());
         startButton.setText("Stop Polling");
         startPollHandler(evt);
         nextQuestion.setEnabled(false);
@@ -677,11 +744,14 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
     } else {
         startButton.setText("Start Polling");
         try {
+            CURRENTRESPONSES = new LinkedList<String>();
+            
             poll.stop();
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
             nextQuestion.setEnabled(true);
             prevQuestion.setEnabled(true);
             dbResponses.saveResponses(responseListModel.responses, selectedPoll.getSessionId(), selectedQuestion.getQuestionID());
+            responseListModel = new ResponseListModel();
             //responseChart.setSubtitle("Polling Closed");
         } catch (Exception e) {
             showError("Unable to stop poll.", e);
@@ -696,6 +766,7 @@ private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     } else {
         QUESTION--;
         selectedQuestion = Questions.questions.get(QUESTION);
+        detectQuestLbl.setText(""+CURRENTRESPONSES.size());
         questionText.setText(selectedQuestion.getQuestionText());
         Answers.loadAnswers(selectedQuestion.getQuestionID());
         setAnswers();
@@ -703,6 +774,8 @@ private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
 }//GEN-LAST:event_prevQuestionActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AnswerPanel1;
+    private javax.swing.JPanel AnswerPanel2;
     private javax.swing.JFrame Frame;
     private javax.swing.JPanel MasterPanel;
     private javax.swing.JLabel answer10Text;
@@ -715,18 +788,21 @@ private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     private javax.swing.JLabel answer7Text;
     private javax.swing.JLabel answer8Text;
     private javax.swing.JLabel answer9Text;
+    private javax.swing.JLabel detectQuestLbl;
+    private javax.swing.JLabel detectTotalLbl;
     private javax.swing.JLabel detectedInfoLabel;
-    private javax.swing.JLabel detectedLbl;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField masterIDTxt;
     private javax.swing.JButton nextQuestion;
     private javax.swing.JDialog pollDialog;
     private javax.swing.JLabel pollLbl;
     private javax.swing.JButton prevQuestion;
     private javax.swing.JLabel questionText;
+    private javax.swing.JLabel slash;
     private javax.swing.JButton startButton;
     private javax.swing.JButton submitBtn;
     private javax.swing.JLabel testingInfoLabel;

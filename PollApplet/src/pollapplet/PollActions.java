@@ -26,21 +26,16 @@ import pollapplet.PollApplet.*;
     SELECT QUESTION_ID, QUESTION_TYPE, QUESTION, NUM
     FROM QUESTIONS Q
     WHERE Q.POLL_ID = 2;
- 
- 
- 
- */
 
+ */
 
 public class PollActions {
 
     public PollList p =  new PollList();
-    
-    
+        
     public PollActions()  {   
     }
-    
-    
+     
     
     public void getQuestions(int pollid){
         // Retrieve questions for selected poll from database

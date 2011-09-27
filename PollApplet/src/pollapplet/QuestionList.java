@@ -30,12 +30,13 @@ public class QuestionList {
             
             Statement stmt = con.createStatement();
             ResultSet rset = stmt.executeQuery(
-             "SELECT QUESTION_ID, QUESTION_TYPE, QUESTION, CHART_STYLE, SHORT_ANSWER_TYPE, NUM"+
+             "SELECT QUESTION_ID, QUESTION_TYPE, QUESTION, CHART_STYLE, SHORT_ANSWER_TYPE, NUM, NUMBER_OF_RESPONSES"+
              " FROM QUESTIONS Q"+
              " WHERE Q.POLL_ID = "+pollID);      
 
             while (rset.next()) {
                 int shorttype; 
+                int numResp; 
                         
                 if(rset.getString("SHORT_ANSWER_TYPE") == null){
                     shorttype = -1;
@@ -43,14 +44,20 @@ public class QuestionList {
                     shorttype = Integer.parseInt(rset.getString("SHORT_ANSWER_TYPE"));
                 }
                 
-                
+                if(rset.getString("NUMBER_OF_RESPONSES") == null){
+                    numResp = -1;
+                }else{
+                    numResp = Integer.parseInt(rset.getString("NUMBER_OF_RESPONSES"));
+                }
+
                 questions.add(new dbQuestion(
                         Integer.parseInt(rset.getString("QUESTION_ID")), 
                         Integer.parseInt(rset.getString("QUESTION_TYPE")),
                         rset.getString("QUESTION"), 
                         Integer.parseInt(rset.getString("CHART_STYLE")), 
                         shorttype, 
-                        Integer.parseInt(rset.getString("NUM"))));
+                        Integer.parseInt(rset.getString("NUM")),
+                        numResp));
             }
             
              /*for (dbQuestion q : questions){
@@ -65,13 +72,11 @@ public class QuestionList {
             
             stmt.close();
             //System.out.println ("Ok.");
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(PollList.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
 
 // <editor-fold defaultstate="collapsed" desc="Basic dbQuestion class fold. Getter/Setter baby code"> 
@@ -83,14 +88,16 @@ public class dbQuestion {
     private int chartStyle;
     private int shortAnswerType;
     private int numInSequence;
+    private int numPossibleAnswers;
 
-    public dbQuestion(int questionId, int questionType, String question, int chartStyle, int shortAnswerType, int numInSequence) {
+    public dbQuestion(int questionId, int questionType, String question, int chartStyle, int shortAnswerType, int numInSequence, int numberOfResponses) {
         this.questionID = questionId;
         this.questionType = questionType;
         this.questionText = question;
         this.chartStyle = chartStyle;
         this.shortAnswerType = shortAnswerType;
         this.numInSequence = numInSequence;
+        this.numPossibleAnswers = numberOfResponses;
     }
 
         public int getChartStyle() {
@@ -140,10 +147,16 @@ public class dbQuestion {
         public void setShortAnswerType(int shortAnswerType) {
             this.shortAnswerType = shortAnswerType;
         }
+
+        public int getNumPossibleAnswers() {
+            return numPossibleAnswers;
+        }
+
+        public void setNumPossibleAnswers(int numPossibleAnswers) {
+            this.numPossibleAnswers = numPossibleAnswers;
+        }     
     }
 //</editor-fold>  
-
-
 
 public static void main(String [] args)
     {
