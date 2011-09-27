@@ -103,7 +103,7 @@ public class Responses {
             }
 
             query = query.concat("SELECT * FROM dual");
-            System.out.println("QUERY STRING FOR RESPONSES---- \n" + query +"\n ---------");
+            System.out.println("---- QUERY STRING FOR RESPONSES ---- \n" + query +"\n ------------------------");
 
             rset = stmt.executeQuery(query);
 

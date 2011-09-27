@@ -158,10 +158,4 @@ public class dbQuestion {
     }
 //</editor-fold>  
 
-public static void main(String [] args)
-    {
-        QuestionList q = new QuestionList();
-        
-        q.loadQuestions(5);
-    }
 }

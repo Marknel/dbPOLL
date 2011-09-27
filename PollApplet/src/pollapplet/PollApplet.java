@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+/**
  * PollApplet.java
  *
  * Created on 17/08/2011, 5:34:40 PM
@@ -35,10 +35,8 @@ import pollapplet.QuestionList.dbQuestion;
  */
 public class PollApplet extends javax.swing.JApplet {
 
-    private LinkedList<String> TOTALRESPONSES =  new LinkedList<String>();
-    
-    private LinkedList<String> CURRENTRESPONSES =  new LinkedList<String>();
-    
+    private LinkedList<String> TOTALRESPONSES = new LinkedList<String>();
+    private LinkedList<String> CURRENTRESPONSES = new LinkedList<String>();
     private Poll poll;
     private ResponseListModel responseListModel = new ResponseListModel();
     private ReceiverListModel receiverListModel = new ReceiverListModel();
@@ -95,15 +93,19 @@ public class PollApplet extends javax.swing.JApplet {
                     initComponents();
                     initModel();
 
-
-                    selectedPoll = (dbPoll) JOptionPane.showInputDialog(
-                            (Component) Frame,
-                            "Choose Poll & Session:",
-                            "Select a Poll",
-                            JOptionPane.PLAIN_MESSAGE,
-                            null,
-                            Polls.polls.toArray(),
-                            Polls.polls.get(0));
+                    while (selectedPoll == null) {
+                        selectedPoll = (dbPoll) JOptionPane.showInputDialog(
+                                (Component) Frame,
+                                "Choose Poll & Session:",
+                                "Select a Poll",
+                                JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                Polls.polls.toArray(),
+                                Polls.polls.get(0));
+                        if (selectedPoll == null) {
+                            JOptionPane.showMessageDialog(null, "You must select a poll!", "Poll Error", 1);
+                        }
+                    }
 
                     pollLbl.setText("POLL: " + selectedPoll.getPollName());
                     Questions.loadQuestions(selectedPoll.getPollId());
@@ -113,7 +115,6 @@ public class PollApplet extends javax.swing.JApplet {
                     Answers.loadAnswers(selectedQuestion.getQuestionID());
 
                     setAnswers();
-
                 }
             });
         } catch (Exception ex) {
@@ -137,18 +138,20 @@ public class PollApplet extends javax.swing.JApplet {
     private void initReceivers() {
         try {
             receiverListModel.addAll(ReceiverService.findReceivers());
+
+            List<Receiver> allReceivers = receiverListModel.getReceivers();
+            Receiver currentReceiver = allReceivers.get(0);
+            currentReceiver.setChannel(22);
+
+            dataset = createDataset();
         } catch (Exception e) {
             showError("Could not initialize allReceivers.", e);
         }
-        List<Receiver> allReceivers = receiverListModel.getReceivers();
-        Receiver currentReceiver = allReceivers.get(0);
-        currentReceiver.setChannel(22);
-
-        dataset = createDataset();
     }
 
     private void showError(String message, Exception e) {
         JOptionPane.showMessageDialog(null, message + "\n Reason:" + e.getMessage());
+        System.exit(-1);
     }
 
     private void initModel() {
@@ -244,26 +247,26 @@ public class PollApplet extends javax.swing.JApplet {
 
         public void add(Response newData) {
 
-            if(selectedQuestion.getQuestionType() != 6){
-                for(Response resp : responses){
-                    if(resp.getResponseCardId().equals(newData.getResponseCardId())){
+            if (selectedQuestion.getQuestionType() != 6) {
+                for (Response resp : responses) {
+                    if (resp.getResponseCardId().equals(newData.getResponseCardId())) {
                         responses.remove(resp);
                         break;
-                    }             
+                    }
                 }
             }
-            
-            if(!TOTALRESPONSES.contains(newData.getResponseCardId())){
+
+            if (!TOTALRESPONSES.contains(newData.getResponseCardId())) {
                 TOTALRESPONSES.add(newData.getResponseCardId());
-                detectTotalLbl.setText(""+TOTALRESPONSES.size());
+                detectTotalLbl.setText("" + TOTALRESPONSES.size());
             }
-            
-            if(!CURRENTRESPONSES.contains(newData.getResponseCardId())){
+
+            if (!CURRENTRESPONSES.contains(newData.getResponseCardId())) {
                 CURRENTRESPONSES.add(newData.getResponseCardId());
-                detectQuestLbl.setText(""+CURRENTRESPONSES.size());
+                detectQuestLbl.setText("" + CURRENTRESPONSES.size());
             }
-            
-                
+
+
             responses.add(newData);
             System.out.println("device: '" + newData.getResponseCardId() + "' Response: '" + newData.getResponse() + "'");
 
@@ -299,6 +302,7 @@ public class PollApplet extends javax.swing.JApplet {
         public BasicResponseListener() {
         }
 
+        @Override
         public void responseReceived(Response response) {
             responseListModel.add(response);
             if (response.getReceiverId() == null
@@ -720,9 +724,9 @@ private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
     if ((QUESTION + 1) >= Questions.questions.size()) {
     } else {
-        
+
         QUESTION++;
-        detectQuestLbl.setText(""+CURRENTRESPONSES.size());
+        detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         selectedQuestion = Questions.questions.get(QUESTION);
         questionText.setText(selectedQuestion.getQuestionText());
         Answers.loadAnswers(selectedQuestion.getQuestionID());
@@ -735,7 +739,7 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 // TODO add your handling code here:
 
     if (polling == false) {
-        detectQuestLbl.setText(""+CURRENTRESPONSES.size());
+        detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         startButton.setText("Stop Polling");
         startPollHandler(evt);
         nextQuestion.setEnabled(false);
@@ -745,7 +749,7 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         startButton.setText("Start Polling");
         try {
             CURRENTRESPONSES = new LinkedList<String>();
-            
+
             poll.stop();
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
             nextQuestion.setEnabled(true);
@@ -766,7 +770,7 @@ private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     } else {
         QUESTION--;
         selectedQuestion = Questions.questions.get(QUESTION);
-        detectQuestLbl.setText(""+CURRENTRESPONSES.size());
+        detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         questionText.setText(selectedQuestion.getQuestionText());
         Answers.loadAnswers(selectedQuestion.getQuestionID());
         setAnswers();

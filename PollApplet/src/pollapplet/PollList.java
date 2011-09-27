@@ -134,10 +134,4 @@ public class PollList {
         }
     }
 //</editor-fold> 
-
-    public static void main(String[] args) {
-        PollList p = new PollList();
-
-        p.loadPolls(5);
-    }
 }
