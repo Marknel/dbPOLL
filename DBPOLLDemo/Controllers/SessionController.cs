@@ -49,6 +49,12 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+
             bool valid = true;
             DateTime parsedDate;
             Decimal parsedLongitude = longitude;
@@ -81,10 +87,6 @@ namespace DBPOLLDemo.Controllers
                     valid = false;
                 }
             }
-            
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
 
             if (!DateTime.TryParse(time, out parsedDate))
             {
@@ -116,10 +118,8 @@ namespace DBPOLLDemo.Controllers
 
             if (valid == true)
             {
-
                 try
                 {
-
                     new pollModel().createSession(pollID, name, parsedLatitude, parsedLongitude, parsedDate);
                     return RedirectToAction("Index", "Poll", new { pollID = pollID, pollName = pollName });
                 }
@@ -169,9 +169,11 @@ namespace DBPOLLDemo.Controllers
             bool valid = true;
             DateTime parsedDate;
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             Decimal parsedLongitude = longitude;
             Decimal parsedLatitude = latitude;

@@ -16,7 +16,6 @@ using System.Xml.Linq;
 using DBPOLLDemo.Models;
 using System.Globalization;
 using System.Threading;
-using System.Collections.Generic;
 
 namespace DBPOLLDemo.Models
 {
@@ -38,9 +37,6 @@ namespace DBPOLLDemo.Models
 
         public DateTime expiredat;
 
-
-        
-
         /// <summary>
         /// Constructor for userModel Object.
         /// </summary>
@@ -52,10 +48,11 @@ namespace DBPOLLDemo.Models
 
         public userModel(String userName, int userType, DateTime createdAt, Nullable<DateTime> modifiedAt, int createdBy, Nullable<DateTime> expiredAt)
         {
-
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             user.NAME = this.name = userName;
             user.USER_TYPE = this.usertype = userType;
@@ -75,9 +72,12 @@ namespace DBPOLLDemo.Models
 
         public List<userModel> displayAllUsers()
         {
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+
             List<USER> userList = new List<USER>();
             var query = from u in dbpollContext.USERS
                         where (u.USER_TYPE >= 0)
@@ -127,6 +127,7 @@ namespace DBPOLLDemo.Models
                 return 0;
             }
         }
+
 
         public int verify_as_sys_admin(string username, string password)
         {
@@ -243,23 +244,23 @@ namespace DBPOLLDemo.Models
         /// <returns></returns>
         public List<userModel> displayUnassignedPollMasterUsers(int pollid)
         {
-            var query2 = from a in dbpollContext.ASSIGNEDPOLLS
-                         where a.POLL_ID == pollid
-                         select a.USER_ID;
+            var pollAssignments = from assignment in dbpollContext.ASSIGNEDPOLLS
+                         where assignment.POLL_ID == pollid
+                         select assignment.USER_ID;
 
 
-            var query = from q in dbpollContext.USERS
-                        where q.USER_TYPE == User_Type.POLL_MASTER && !query2.Contains(q.USER_ID)
-                        orderby q.CREATED_AT ascending
+            var unassignedPollMasters = from user in dbpollContext.USERS
+                        where user.USER_TYPE == User_Type.POLL_MASTER && !pollAssignments.Contains(user.USER_ID)
+                        orderby user.CREATED_AT ascending
                         select new userModel
                         {
-                            UserID = q.USER_ID,
-                            UserType = q.USER_TYPE,
-                            username = q.USERNAME,
-                            Name = q.NAME
+                            UserID = user.USER_ID,
+                            UserType = user.USER_TYPE,
+                            username = user.USERNAME,
+                            Name = user.NAME
                         };
 
-            return query.ToList();
+            return unassignedPollMasters.ToList();
         }
 
         public void deleteUser()
@@ -283,17 +284,17 @@ namespace DBPOLLDemo.Models
 
         public userModel getUser(int UserID)
         {
-            var query = from q in dbpollContext.USERS
-                        where q.USER_ID == UserID
+            var query = from user in dbpollContext.USERS
+                        where user.USER_ID == UserID
                         select new userModel
                         {
-                            UserID = q.USER_ID,
-                            UserType = q.USER_TYPE,
-                            username = q.USERNAME,
-                            Name = q.NAME,
-                            SysAdmin_ID = q.SYSADMIN_ID,
-                            Created_By = q.CREATED_BY,
-                            Expires_At = q.EXPIRES_AT
+                            UserID = user.USER_ID,
+                            UserType = user.USER_TYPE,
+                            username = user.USERNAME,
+                            Name = user.NAME,
+                            SysAdmin_ID = user.SYSADMIN_ID,
+                            Created_By = user.CREATED_BY,
+                            Expires_At = user.EXPIRES_AT
                         };
 
             return query.First();

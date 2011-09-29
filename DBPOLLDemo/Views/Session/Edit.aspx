@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.SESSION>" %>
+﻿<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.SESSION>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	EditSession
@@ -83,7 +83,7 @@
 
 </script>
 
-<script runat="server" language="C#">
+<script runat="server" Language="C#" Culture="en-AU">
 void Page_Load(object source, EventArgs e){
         HtmlGenericControl body = (HtmlGenericControl)
         Page.Master.FindControl("MyBody");

@@ -81,8 +81,11 @@ namespace DBPOLLDemo.Controllers
         {
             //if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             try
             {
@@ -140,8 +143,11 @@ namespace DBPOLLDemo.Controllers
             int SysAdmin_ID = 1000; //Int32.Parse(Session["uid"].ToString());
 
             // Allows insertion of Australian formatted dates
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
             int expInt = 0;
 
 

@@ -61,12 +61,7 @@ namespace DBPOLLDemo.Controllers
             if (MyReferrer.Contains("Report")) url = "ReportIndex";          
             
             return View(url);
-            
-                        
-                       
- 
         }
-
 
         //  
         // Link to different Help View
