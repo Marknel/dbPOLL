@@ -58,12 +58,12 @@
                 <%= Html.Encode(item.questnum) %>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.Question) %>
+                <%= Html.Encode(item.question) %>
             </td>
             <td nowrap="nowrap">
            <%  
                 string test;
-                switch(item.QuestionType)       
+                switch(item.questiontype)       
                   {         
                      case 1:   
                         test = "Short Answer: Numeric Responses Only";
@@ -92,7 +92,7 @@
            
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(String.Format("{0:g}", item.QuestionCreated)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
             </td>
             
             

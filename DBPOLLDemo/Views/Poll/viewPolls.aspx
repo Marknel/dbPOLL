@@ -55,13 +55,13 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Search Questions", "../Question/viewQuestions", new {pollid=item.pollID})%>
+                <%= Html.ActionLink("Search Questions", "../Question/viewQuestions", new {pollid=item.pollid})%>
             </td>
             <td>
-                <%= Html.Encode(item.Name) %>
+                <%= Html.Encode(item.pollname) %>
             </td>
               <td>
-                <%= Html.Encode(String.Format("{0:g}", item.CreateDate)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdAt))%>
             </td>
         </tr>
     

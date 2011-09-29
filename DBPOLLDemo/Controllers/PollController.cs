@@ -59,6 +59,12 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+
             return View(new pollModel().displayPolls());
         }
 
@@ -102,7 +108,6 @@ namespace DBPOLLDemo.Controllers
                     ViewData["date2"] = "Please Enter a correct Date";
                 }
                 valid = false;
-                
             }
 
             if (valid == false)

@@ -22,10 +22,10 @@
             
             </td>
             <td>
-                <%= Html.Encode(String.Format("{0}", item.AnswerNumber)) %>
+                <%= Html.Encode(String.Format("{0}", item.ansnum)) %>
             </td>
             <td>
-                <%= Html.Encode(item.Answer) %>
+                <%= Html.Encode(item.answer) %>
             </td>
             
         </tr>

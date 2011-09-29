@@ -28,36 +28,30 @@ namespace DBPOLLDemo.Models
         public int questionid;
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
 
-        ANSWER a = new ANSWER();
-
-        //Properties for getters/setters
-        public String Answer { get { return answer; } }
-        public int AnswerNumber { get { return ansnum; } }
-        public int AnswerID { get { return answerid; } }
-        //public int pollID { get { return pollid; } }
+        ANSWER ans = new ANSWER();
 
         public answerModel(int answerid, String answer, int correct, int weight, int ansnum, int updatedto, DateTime createdat)
         {
-            a.ANSWER_ID = this.answerid = answerid;
-            a.ANSWER1 = this.answer = answer;
-            a.CORRECT = this.correct = correct;
-            a.WEIGHT = this.weight = weight;
-            a.NUM = this.ansnum = ansnum;
-            a.UPDATED_TO = this.updatedto;
-            a.CREATED_AT = this.createdat;
+            ans.ANSWER_ID = this.answerid = answerid;
+            ans.ANSWER1 = this.answer = answer;
+            ans.CORRECT = this.correct = correct;
+            ans.WEIGHT = this.weight = weight;
+            ans.NUM = this.ansnum = ansnum;
+            ans.UPDATED_TO = this.updatedto;
+            ans.CREATED_AT = this.createdat;
            
         }
 
         public answerModel(int answerid, String ansnum, String answer)
         {
             int ansnumber = 0;
-            a.ANSWER_ID = this.answerid = answerid;
+            ans.ANSWER_ID = this.answerid = answerid;
 
             try { ansnumber = int.Parse(ansnum); }
             catch { ansnumber = 0; };
-            a.NUM = this.ansnum = ansnumber;
+            ans.NUM = this.ansnum = ansnumber;
 
-            a.ANSWER1 = this.answer = answer;
+            ans.ANSWER1 = this.answer = answer;
 
         }
 
@@ -68,26 +62,26 @@ namespace DBPOLLDemo.Models
             int updatedtonum = 0;
             int weightnum = 0;
 
-            a.ANSWER_ID = this.answerid = answerid;
+            ans.ANSWER_ID = this.answerid = answerid;
             try { ansnumber = int.Parse(ansnum); }
             catch { ansnumber = 0; };
-            a.NUM = this.ansnum = ansnumber;
+            ans.NUM = this.ansnum = ansnumber;
 
-            a.ANSWER1 = this.answer = answer;
+            ans.ANSWER1 = this.answer = answer;
 
             try { correctnumber = int.Parse(correct); }
             catch { correctnumber = 0; };
-            a.CORRECT = this.correct = correctnumber;
+            ans.CORRECT = this.correct = correctnumber;
 
             try { weightnum = int.Parse(weight); }
             catch { weightnum = 0; };
-            a.WEIGHT = this.weight = weightnum;
+            ans.WEIGHT = this.weight = weightnum;
 
             try { updatedtonum = int.Parse(updatedto); }
             catch { updatedtonum = 0; };
-            a.UPDATED_TO = this.updatedto = updatedtonum;
+            ans.UPDATED_TO = this.updatedto = updatedtonum;
 
-            a.CREATED_AT = this.createdat = createdat;
+            ans.CREATED_AT = this.createdat = createdat;
         }
 
         /// <summary>
@@ -102,13 +96,13 @@ namespace DBPOLLDemo.Models
         /// <param name="questionid"></param>
         public answerModel(int answerid, String answer, int correct, int weight, DateTime createdat, DateTime modifiedat, int questionid)
         {
-            a.ANSWER_ID = this.answerid = answerid;
-            a.ANSWER1 = this.answer = answer;
-            a.CORRECT = this.correct = correct;
-            a.CREATED_AT = this.createdat = createdat;
-            a.MODIFIED_AT = this.modifiedat = modifiedat;
-            a.WEIGHT = this.weight = weight;
-            a.QUESTION_ID = this.questionid = questionid;
+            ans.ANSWER_ID = this.answerid = answerid;
+            ans.ANSWER1 = this.answer = answer;
+            ans.CORRECT = this.correct = correct;
+            ans.CREATED_AT = this.createdat = createdat;
+            ans.MODIFIED_AT = this.modifiedat = modifiedat;
+            ans.WEIGHT = this.weight = weight;
+            ans.QUESTION_ID = this.questionid = questionid;
         }
 
         /// <summary>
@@ -122,18 +116,18 @@ namespace DBPOLLDemo.Models
         /// <param name="questionid"></param>
         public answerModel(int answerid, String answer, int correct, int weight, DateTime createdat, int questionid)
         {
-            a.ANSWER_ID = this.answerid = answerid;
-            a.ANSWER1 = this.answer = answer;
-            a.CORRECT = this.correct = correct;
-            a.CREATED_AT = this.createdat = createdat;
-            a.WEIGHT = this.weight = weight;
-            a.QUESTION_ID = this.questionid = questionid;
+            ans.ANSWER_ID = this.answerid = answerid;
+            ans.ANSWER1 = this.answer = answer;
+            ans.CORRECT = this.correct = correct;
+            ans.CREATED_AT = this.createdat = createdat;
+            ans.WEIGHT = this.weight = weight;
+            ans.QUESTION_ID = this.questionid = questionid;
         }
 
 
         public answerModel(int answerid)
         {
-            a.ANSWER_ID = this.answerid = answerid;
+            ans.ANSWER_ID = this.answerid = answerid;
         }
 
         public answerModel()
@@ -212,19 +206,19 @@ namespace DBPOLLDemo.Models
         {
             try
             {
-                ANSWER a = new ANSWER();
+                ANSWER ans = new ANSWER();
 
-                a.ANSWER_ID = getMaxID() + 1;
-                a.ANSWER1 = answer;
-                a.CORRECT = correct;
-                a.WEIGHT = weight;
-                a.NUM = ansnum;
-                a.UPDATED_TO = a.ANSWER_ID; //Every answer created will be the latest version of that answer
-                a.CREATED_AT = DateTime.Now;
-                a.MODIFIED_AT = DateTime.Now;
-                a.QUESTION_ID = qid;
+                ans.ANSWER_ID = getMaxID() + 1;
+                ans.ANSWER1 = answer;
+                ans.CORRECT = correct;
+                ans.WEIGHT = weight;
+                ans.NUM = ansnum;
+                ans.UPDATED_TO = ans.ANSWER_ID; //Every answer created will be the latest version of that answer
+                ans.CREATED_AT = DateTime.Now;
+                ans.MODIFIED_AT = DateTime.Now;
+                ans.QUESTION_ID = qid;
 
-                dbpollContext.AddToANSWERS(a);
+                dbpollContext.AddToANSWERS(ans);
                 dbpollContext.SaveChanges();
             }
             catch (Exception e)
@@ -246,7 +240,7 @@ namespace DBPOLLDemo.Models
                 /* If an answer is updated, it is archived and points to a new answer with the same properties and updated answer field, 
                  * pointed by the field updatedto in the archived record
                  */
-                ANSWER a = answerList.First<ANSWER>();
+                ANSWER ans = answerList.First<ANSWER>();
                 /**
                 if (!(a.ANSWER1.Equals(answer)))
                 {
@@ -263,12 +257,12 @@ namespace DBPOLLDemo.Models
                     a.MODIFIED_AT = DateTime.Now;
                 }
                 **/
-                a.ANSWER1 = answer;
-                a.CORRECT = correct;
-                a.WEIGHT = weight;
-                a.NUM = ansnum;
-                a.UPDATED_TO = getMaxID() + 1;
-                a.MODIFIED_AT = DateTime.Now;
+                ans.ANSWER1 = answer;
+                ans.CORRECT = correct;
+                ans.WEIGHT = weight;
+                ans.NUM = ansnum;
+                ans.UPDATED_TO = getMaxID() + 1;
+                ans.MODIFIED_AT = DateTime.Now;
                 dbpollContext.SaveChanges();
 
             }

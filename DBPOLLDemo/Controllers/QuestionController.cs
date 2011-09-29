@@ -39,6 +39,12 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult viewQuestions(int pollid)
         {
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");

@@ -31,22 +31,22 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Delete", "answerDetails", new { id = item.QuestionID})%> |
+                <%= Html.ActionLink("Delete", "answerDetails", new { id = item.questionid})%> |
                 <%= Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) %> |
-                <%= Html.ActionLink("View Answers", "answerDetails", new { id = item.QuestionID, name = item.Question })%> 
+                <%= Html.ActionLink("View Answers", "answerDetails", new { id = item.questionid, name = item.question })%> 
                 
             </td>
             <td>
-                <%= Html.Encode(item.QuestionNumber) %>
+                <%= Html.Encode(item.questnum) %>
             </td>
             <td>
-                <%= Html.Encode(item.Question) %>
+                <%= Html.Encode(item.question) %>
             </td>
             <td>
-                <%= Html.Encode(item.QuestionType) %>
+                <%= Html.Encode(item.questiontype) %>
             </td>
             <td>
-                <%= Html.Encode(String.Format("{0:g}", item.QuestionCreated)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
             </td>
             
             

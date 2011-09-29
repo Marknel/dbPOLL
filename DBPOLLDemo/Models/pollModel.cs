@@ -324,7 +324,7 @@ namespace DBPOLLDemo.Models
         /// <returns>List of polls between given dates</returns>
         public List<pollModel> displayPolls(DateTime start, DateTime end)
         {
-
+            string format = "dd/M/yyyy h:mm tt";
             CultureInfo culture = new CultureInfo("en-AU");
             culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
             culture.DateTimeFormat.ShortTimePattern = string.Empty;

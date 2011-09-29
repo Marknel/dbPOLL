@@ -1,16 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Configuration;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-using System.Threading;
 using System.Globalization;
 
 namespace DBPOLLDemo.Models
@@ -18,10 +8,10 @@ namespace DBPOLLDemo.Models
 
     public class questionModel : System.Web.UI.Page
     {
-        private QUESTION q = new QUESTION();
-        private POLL p = new POLL();
-        private SESSION s = new SESSION();
-        private ANSWER a = new ANSWER();
+        private QUESTION quest = new QUESTION();
+        private POLL poll = new POLL();
+        private SESSION session = new SESSION();
+        private ANSWER dbanswer = new ANSWER();
         public int questionid;
         public int questiontype;
         public String question;
@@ -47,11 +37,6 @@ namespace DBPOLLDemo.Models
         public int? participants;
         public int totalparticipants;
 
-        public String Question { get { return question; } }
-        public DateTime QuestionCreated { get { return createdat; } }
-        public int QuestionID { get { return questionid; } }
-        public int QuestionType { get { return questiontype; } }
-
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context
 
         /// <summary>
@@ -63,16 +48,16 @@ namespace DBPOLLDemo.Models
 
         public questionModel(int qid)
         {
-            q.QUESTION_ID = this.questionid = qid;
+            quest.QUESTION_ID = this.questionid = qid;
             
         }
 
         public questionModel(String pname, String ques, int sid, String ans, int total)
         {
-            q.QUESTION1 = this.question = ques;
-            p.POLL_NAME= this.pollname = pname;
-            s.SESSION_ID = this.sessionid = sid;
-            a.ANSWER1 = this.answer = ans;
+            quest.QUESTION1 = this.question = ques;
+            poll.POLL_NAME= this.pollname = pname;
+            session.SESSION_ID = this.sessionid = sid;
+            dbanswer.ANSWER1 = this.answer = ans;
             this.totalparticipants = total;
         }
 
@@ -86,34 +71,34 @@ namespace DBPOLLDemo.Models
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
-            q.QUESTION_ID = this.questionid = qid;
-            q.QUESTION_TYPE = this.questiontype = questiontype;
-            q.QUESTION1 = this.question = question;
-            q.NUMBER_OF_RESPONSES = this.numberofresponses = numberofresponses;
-            q.CHART_STYLE = this.chartstyle = chartstyle;
-            q.SHORT_ANSWER_TYPE = this.shortanswertype = shortanswertype;
-            q.NUM = this.questnum = questnum;
-            q.CREATED_AT = this.createdat = createdat;
-            q.MODIFIED_AT = this.modifiedat = modifiedat;
-            q.POLL_ID = this.pollid = pollid;
+            quest.QUESTION_ID = this.questionid = qid;
+            quest.QUESTION_TYPE = this.questiontype = questiontype;
+            quest.QUESTION1 = this.question = question;
+            quest.NUMBER_OF_RESPONSES = this.numberofresponses = numberofresponses;
+            quest.CHART_STYLE = this.chartstyle = chartstyle;
+            quest.SHORT_ANSWER_TYPE = this.shortanswertype = shortanswertype;
+            quest.NUM = this.questnum = questnum;
+            quest.CREATED_AT = this.createdat = createdat;
+            quest.MODIFIED_AT = this.modifiedat = modifiedat;
+            quest.POLL_ID = this.pollid = pollid;
 
         }
 
         //Question contructor for short answer QUESTIONS! WILL NOT WORK FOR MULTIPLE CHOICE!!
         public questionModel(int qid, int questiontype, int questnum, String question, int chartstyle, DateTime createdat, int pollid)
         {
-            q.QUESTION_ID = this.questionid = qid;
-            q.QUESTION_TYPE = this.questiontype = questiontype;
-            q.QUESTION1 = this.question = question;
-            q.CHART_STYLE = this.chartstyle = chartstyle;
+            quest.QUESTION_ID = this.questionid = qid;
+            quest.QUESTION_TYPE = this.questiontype = questiontype;
+            quest.QUESTION1 = this.question = question;
+            quest.CHART_STYLE = this.chartstyle = chartstyle;
             // IF question is short answer we will need to set type. BORK BORK BORK
             if (questiontype <= 2)
             {
-                q.SHORT_ANSWER_TYPE = this.shortanswertype = questiontype;
+                quest.SHORT_ANSWER_TYPE = this.shortanswertype = questiontype;
             }
-            q.NUM = this.questnum = questnum;
-            q.CREATED_AT = this.createdat = createdat;
-            q.POLL_ID = this.pollid = pollid;
+            quest.NUM = this.questnum = questnum;
+            quest.CREATED_AT = this.createdat = createdat;
+            quest.POLL_ID = this.pollid = pollid;
 
         }
 
@@ -124,12 +109,12 @@ namespace DBPOLLDemo.Models
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
-            q.QUESTION_ID = this.questionid = qid;
-            q.QUESTION1 = this.question = question;
-            q.POLL_ID = this.pollid = pollid;
-            q.QUESTION_TYPE = this.questiontype = questiontype;
-            q.CREATED_AT =  this.createdat = createdat;
-            q.NUM = this.questnum = questnum;
+            quest.QUESTION_ID = this.questionid = qid;
+            quest.QUESTION1 = this.question = question;
+            quest.POLL_ID = this.pollid = pollid;
+            quest.QUESTION_TYPE = this.questiontype = questiontype;
+            quest.CREATED_AT =  this.createdat = createdat;
+            quest.NUM = this.questnum = questnum;
         }
 
         public questionModel(int qid, int questiontype, String question,  DateTime createdat, int pollid)
@@ -140,11 +125,11 @@ namespace DBPOLLDemo.Models
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
-            q.QUESTION_ID = this.questionid = qid;
-            q.QUESTION1 = this.question = question;
-            q.POLL_ID = this.pollid = pollid;
-            q.QUESTION_TYPE = this.questiontype = questiontype;
-            q.CREATED_AT = this.createdat = createdat;
+            quest.QUESTION_ID = this.questionid = qid;
+            quest.QUESTION1 = this.question = question;
+            quest.POLL_ID = this.pollid = pollid;
+            quest.QUESTION_TYPE = this.questiontype = questiontype;
+            quest.CREATED_AT = this.createdat = createdat;
             //q.NUM = this.questnum = questnum;
         }
         
@@ -161,20 +146,20 @@ namespace DBPOLLDemo.Models
             int qnum = 0;
 
 
-            q.QUESTION_ID = this.questionid = qid;
-            q.QUESTION_TYPE = this.questiontype = questiontype;
-            q.QUESTION1 = this.question = question;
+            quest.QUESTION_ID = this.questionid = qid;
+            quest.QUESTION_TYPE = this.questiontype = questiontype;
+            quest.QUESTION1 = this.question = question;
 
             try { chart = int.Parse(chartstyle); }
             catch { chart = 0; };
-            q.CHART_STYLE = this.chartstyle = chart;
+            quest.CHART_STYLE = this.chartstyle = chart;
 
             try { qnum = int.Parse(questnum); }
             catch { qnum = 0; };
-            q.NUM = this.questnum = qnum;
+            quest.NUM = this.questnum = qnum;
 
-            q.CREATED_AT = this.createdat = createdat;
-            q.POLL_ID = this.pollid = pollid;
+            quest.CREATED_AT = this.createdat = createdat;
+            quest.POLL_ID = this.pollid = pollid;
         }
 
         public questionModel(int qid, int questiontype, String question, int chartstyle, int questnum, DateTime createdat, DateTime editedat, int pollid)
@@ -185,14 +170,14 @@ namespace DBPOLLDemo.Models
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
            
-            q.QUESTION_ID = this.questionid = qid;
-            q.QUESTION_TYPE = this.questiontype = questiontype;
-            q.QUESTION1 = this.question = question;
-            q.CHART_STYLE = this.chartstyle = chartstyle;
-            q.NUM = this.questnum = questnum;
-            q.MODIFIED_AT = this.modifiedat = editedat;
-            q.CREATED_AT = this.createdat = createdat;
-            q.POLL_ID = this.pollid = pollid;
+            quest.QUESTION_ID = this.questionid = qid;
+            quest.QUESTION_TYPE = this.questiontype = questiontype;
+            quest.QUESTION1 = this.question = question;
+            quest.CHART_STYLE = this.chartstyle = chartstyle;
+            quest.NUM = this.questnum = questnum;
+            quest.MODIFIED_AT = this.modifiedat = editedat;
+            quest.CREATED_AT = this.createdat = createdat;
+            quest.POLL_ID = this.pollid = pollid;
         }
 
 
