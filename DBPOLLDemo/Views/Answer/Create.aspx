@@ -15,7 +15,7 @@
         <fieldset>
             <legend>Create Answer</legend>
              <p>
-                <label for="weight">Answer Number:</label>
+                <label for="ansnum">Answer Number:</label>
                 <%= Html.TextBox("ansnum")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>

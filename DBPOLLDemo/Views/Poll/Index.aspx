@@ -7,25 +7,22 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <script type = "text/javascript">
-    // Allows deletion of items to be checked and confimed
-
-
+        // Allows deletion of items to be checked and confimed        
         var clicked = false;
         function check(id) {
-
+            document.getElementById(id + "yes").innerHTML = "Yes";
+            document.getElementById(id + "no").innerHTML = "No";
             if (clicked != true) {
-                document.getElementById(id).innerHTML = "Are you sure?"
+                document.getElementById(id).style.display = "none";
+               
                 clicked = true;
                 return false;
             } else {
                 clicked = false;
                 return true
             }
-        }
-            
-            </script>
-
-
+        }    
+     </script>
 
     <h2>Poll Index </h2>
 
@@ -35,17 +32,15 @@
              <th nowrap="nowrap">Poll Name</th>
              <th nowrap="nowrap">Creation Date</th>
         </tr>
-
-    <% foreach (var item in Model.pollData) { 
-           
-           %>
-    
+    <% foreach (var item in Model.pollData) { %>    
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Run", "Run", new {pollid=item.pollID}) %> |
-                <a id="<%=item.pollID%>" href="/Poll/Delete?pollid=<%=item.pollID%>" onclick="return check(<%=item.pollID%>);">Delete</a>|
+                <a id= "<%=item.pollID%>" href="/Poll/Index/" onclick="return check(<%=item.pollID%>);"> Delete</a> 
+                <a id = "<%= item.pollID + "yes" %>" href="/Poll/Delete?pollid=<%=item.pollID%>"></a>
+                <a id = "<%= item.pollID + "no" %>" href="/Poll/Index/"></a> |
+               
                 <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID}) %> |
-                <%= Html.ActionLink(" View Questions", "Details", new {id=item.pollID, name=item.Name})%> |
+                <%= Html.ActionLink("View Questions", "Details", new {id=item.pollID, name=item.Name})%> |
                 <%= Html.ActionLink("Create New Session", "CreateSession", new {pollID = item.pollID, pollName = item.pollname})%>
             </td>
             <td nowrap="nowrap">
@@ -95,7 +90,12 @@
     
         <tr>
             <td nowrap="nowrap">
-                <a id="<%=item.sessionid%>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>" onclick="return check(<%=item.sessionid%>);">Delete</a>|
+                <%= Html.ActionLink("Run", "Run", new {sessionid = item.sessionid}) %> |
+
+                <a id= "<%= item.sessionid + "s"%>" href="/Poll/Index/" onclick="return check(<%=item.sessionid + "s"%>);">Delete</a> 
+                <a id = "<%= item.sessionid + "syes" %>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>"></a>
+                <a id = "<%= item.sessionid + "sno" %>" href="/Poll/Index/"></a> |
+
                 <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollID, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
             </td>
             <td nowrap="nowrap">

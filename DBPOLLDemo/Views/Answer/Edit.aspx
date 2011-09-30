@@ -13,9 +13,10 @@
     <% using (Html.BeginForm()) {%>
 
         <fieldset>
+
             <legend>Edit Answer</legend>
             <p>
-                <label for="weight">Answer Number:</label>
+                <label for="ansnum">Answer Number:</label>
                 <%= Html.TextBox("ansnum", Model.ansnum)%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
@@ -26,9 +27,7 @@
                 <%= Html.ValidationMessage("ANSWER1", "*") %>
             </p>
             <p style ="color: Red;"><%=ViewData["answererror"]%></p>
-            <%=Html.Hidden("questionid", ViewData["questionid"])%>
-             <%=Html.Hidden("answerid", Model.answerid)%>
-             <%=Html.Hidden("createdat", Model.createdat)%>
+
             <p>
                <label for="correct">Correct Answer:</label>
                 <select id="correct" name="correct">
@@ -45,7 +44,9 @@
             <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
 
 
-
+             <%=Html.Hidden("questionid", ViewData["questionid"])%>
+             <%=Html.Hidden("answerid", Model.answerid)%>
+             <%=Html.Hidden("createdat", Model.createdat)%>
             <p>
                 <input type="submit" value="Save" />
             </p>

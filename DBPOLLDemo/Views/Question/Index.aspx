@@ -6,6 +6,23 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+     <script type = "text/javascript">
+         // Allows deletion of items to be checked and confimed        
+         var clicked = false;
+         function check(id) {
+             document.getElementById(id + "yes").innerHTML = "Yes";
+             document.getElementById(id + "no").innerHTML = "No";
+             if (clicked != true) {
+                 document.getElementById(id).style.display = "none";
+
+                 clicked = true;
+                 return false;
+             } else {
+                 clicked = false;
+                 return true;
+             }
+         }    
+     </script>   
     <h2>Questions for Poll: <%= Html.Encode(ViewData["name"]) %></h2>
 
     <table>
@@ -31,7 +48,11 @@
     
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Delete", "Delete", new { questionid = item.QuestionID, id = ViewData["id"], name = ViewData["name"] })%> |
+     
+                <a id= "<%= item.QuestionID %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>" onclick="return check(<%=item.QuestionID%>);"> Delete</a> 
+                <a id = "<%= item.QuestionID + "yes" %>" href="/Question/Delete/<%= ViewData["id"]%>?questionid=<%=item.QuestionID%>&name=<%= ViewData["name"]%>"></a>
+                <a id = "<%= item.QuestionID + "no" %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>"></a> |
+
                 <%= Html.ActionLink("Edit", "Edit", new { questionid = item.QuestionID })%> |
                 <%= Html.ActionLink("View Answers", "Details", new { id = item.QuestionID, name = item.Question })%> |
                 <%= Html.ActionLink("View objects", "../Object/Index", new { questionid = item.QuestionID})%> 

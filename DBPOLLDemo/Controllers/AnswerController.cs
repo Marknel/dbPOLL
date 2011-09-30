@@ -18,14 +18,13 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Answer/
 
-        public ActionResult Index(int id, String name)
+        public ActionResult Index(int id)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewData["name"] = name;
             ViewData["questionid"] = id;
 
             return View(new answerModel().displayAnswers(id));
@@ -41,7 +40,7 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            return RedirectToAction("Index", "answerHistory", new { id });
         }
 
         public ActionResult Delete(int answerid, int questionid, String name)
@@ -416,18 +415,21 @@ namespace DBPOLLDemo.Controllers
             
             try
             {
-                // TODO: Add update logic here
-               new answerModel().updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
+               answerModel a = new answerModel();
+               a = a.getAnswer(answerid);
 
-               answerModel a = new answerModel().getAnswer(answerid);
+               new answerHistoryModel(answerid).createAnswerHistory(a.answer, a.correct, a.weight, a.ansnum);
 
-                //return RedirectToAction("Index", "Answer", new { id = questionid });
-                return View(a);
+               a.updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
+
+               ViewData["questionid"] = questionid;
+               return View(a);
             }
             catch(Exception e)
             {
                 ViewData["weighterror"] = "OMG THERE IS AN ERROR "+ e.Message;
                 answerModel a = new answerModel().getAnswer(answerid);
+                ViewData["questionid"] = questionid;
                 return View(a);
             }
         }

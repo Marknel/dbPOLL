@@ -6,6 +6,24 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+<script type = "text/javascript">
+         // Allows deletion of items to be checked and confimed        
+         var clicked = false;
+         function check(id) {
+             document.getElementById(id + "yes").innerHTML = "Yes";
+             document.getElementById(id + "no").innerHTML = "No";
+             if (clicked != true) {
+                 document.getElementById(id).style.display = "none";
+
+                 clicked = true;
+                 return false;
+             } else {
+                 clicked = false;
+                 return true;
+             }
+         }    
+     </script> 
+
     <h2>Answers for : <%= Html.Encode(ViewData["name"]) %></h2>
 
     <table>
@@ -20,8 +38,14 @@
     <% foreach (var item in Model) { %>
     
         <tr>
-            <td><%= Html.ActionLink("Delete", "Delete", new { answerid = item.answerid, questionid = ViewData["questionid"], name = ViewData["name"] })%> |
-                <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%>
+            <td>
+
+            <a id= "<%= item.answerid %>" href="/Answer/Index/<%= ViewData["questionid"]%>" onclick="return check(<%=item.answerid%>);">Delete</a> 
+            <a id = "<%= item.answerid + "yes" %>" href="/Answer/Delete/?answerid=<%=item.answerid%>&questionid=<%=ViewData["questionid"]%>"></a>
+            <a id = "<%= item.answerid + "no" %>" href="/Answer/Index/<%=ViewData["questionid"]%>"></a> |
+
+                <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%> | 
+                <%= Html.ActionLink("View Answer History", "Details", new {id=item.answerid})%>
             </td>
             
             <td>

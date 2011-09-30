@@ -21,7 +21,7 @@ namespace DBPOLLDemo.Controllers
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ActionResult Index(int id, String name)
+        public ActionResult Index(int id)
         {
             if (Session["uid"] == null)
             {
@@ -29,7 +29,6 @@ namespace DBPOLLDemo.Controllers
             }
 
 
-            ViewData["name"] = name;
             ViewData["id"] = id;
             return View(new questionModel().displayQuestions(id));
         }
