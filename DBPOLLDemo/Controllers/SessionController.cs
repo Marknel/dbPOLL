@@ -290,5 +290,33 @@ namespace DBPOLLDemo.Controllers
 
             return RedirectToAction("Index", "Poll");
         }
+
+        public ActionResult ViewAvailableSession(int userid)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            //pollModel poll = new pollModel(sessionid, 1);
+            //poll.deleteSession();
+
+            return View(new pollModel().displayAssignedSessions(userid));
+            
+        }
+
+        //public ActionResult StartSession(int sessionid)
+        //{
+        //    if (Session["uid"] == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+        //    //pollModel poll = new pollModel(sessionid, 1);
+        //    //poll.deleteSession();
+
+        //    //return View(new pollModel().displayAssignedSessions(userid));
+
+        //}
     }
 }

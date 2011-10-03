@@ -25,7 +25,7 @@ namespace DBPOLLDemo.Models
         public DateTime modifiedat;
         public int createdby;
         public DateTime createdAt;
-        public DateTime expiresat;
+        public DateTime? expiresat;
         public decimal longitude;
         public decimal latitude;
         public String createdmaster;
@@ -570,6 +570,31 @@ namespace DBPOLLDemo.Models
                              pollname = p.POLL_NAME,
 
                              createdAt = p.CREATED_AT,
+                         }
+
+                ).Distinct();
+
+            return query.ToList();
+        }
+
+        public List<pollModel> displayAssignedSessions(int userid)
+        {
+            var query = (from p in dbpollContext.PARTICIPANTS
+                         from s in dbpollContext.SESSIONS
+                         from poll in dbpollContext.POLLS
+                         where (
+                         p.USER_ID == userid &&
+                         p.SESSION_ID == s.SESSION_ID &&
+                         s.POLL_ID == poll.POLL_ID
+                         )
+                         orderby poll.POLL_NAME ascending
+                         select new pollModel
+                         {
+                             pollid = poll.POLL_ID,
+                             sessionid = s.SESSION_ID,
+                             sessionname = s.SESSION_NAME,
+                             pollname = poll.POLL_NAME,
+                             expiresat = poll.EXPIRES_AT,
                          }
 
                 ).Distinct();
