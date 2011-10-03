@@ -37,7 +37,7 @@ namespace DBPOLLDemo.Models
             ans.CORRECT = this.correct = correct;
             ans.WEIGHT = this.weight = weight;
             ans.NUM = this.ansnum = ansnum;
-            ans.UPDATED_TO = this.updatedto;
+            //ans.UPDATED_TO = this.updatedto;
             ans.CREATED_AT = this.createdat;
            
         }
@@ -79,7 +79,7 @@ namespace DBPOLLDemo.Models
 
             try { updatedtonum = int.Parse(updatedto); }
             catch { updatedtonum = 0; };
-            ans.UPDATED_TO = this.updatedto = updatedtonum;
+            //ans.UPDATED_TO = this.updatedto = updatedtonum;
 
             ans.CREATED_AT = this.createdat = createdat;
         }
@@ -142,7 +142,8 @@ namespace DBPOLLDemo.Models
         public List<answerModel> displayAnswers(int questId)
         {
             var query = from a in dbpollContext.ANSWERS
-                        where a.QUESTION_ID == questId && a.ANSWER_ID== a.UPDATED_TO
+                        where a.QUESTION_ID == questId && a.ANSWER_ID == 1
+                        //a.UPDATED_TO   FIX ME ANDREW OMG. I AM BROKEN BECAUSE OF YOU! WHAT HAVE YOU DONE!   
                         orderby a.NUM ascending
 
                         select new answerModel
@@ -152,7 +153,7 @@ namespace DBPOLLDemo.Models
                             answer = a.ANSWER1, 
                             correct = (int)a.CORRECT,
                             weight = (int)a.WEIGHT, 
-                            updatedto = (int)a.UPDATED_TO, 
+                            updatedto = 1,//(int)a.UPDATED_TO,a.UPDATED_TO   FIX ME ANDREW OMG. I AM BROKEN BECAUSE OF YOU! WHAT HAVE YOU DONE!   
                             createdat = a.CREATED_AT
                         };
             /**
@@ -186,8 +187,8 @@ namespace DBPOLLDemo.Models
                                 ansnum = (int)a.NUM, 
                                 answer = a.ANSWER1, 
                                 correct = (int)a.CORRECT,
-                                weight = (int)a.WEIGHT, 
-                                updatedto = (int)a.UPDATED_TO, 
+                                weight = (int)a.WEIGHT,
+                                updatedto =  1,//(int)a.UPDATED_TO,a.UPDATED_TO   FIX ME ANDREW OMG. I AM BROKEN BECAUSE OF YOU! WHAT HAVE YOU DONE!   
                                 createdat = a.CREATED_AT
                             };
 
@@ -213,7 +214,7 @@ namespace DBPOLLDemo.Models
                 ans.CORRECT = correct;
                 ans.WEIGHT = weight;
                 ans.NUM = ansnum;
-                ans.UPDATED_TO = ans.ANSWER_ID; //Every answer created will be the latest version of that answer
+                //ans.UPDATED_TO = ans.ANSWER_ID; //Every answer created will be the latest version of that answer
                 ans.CREATED_AT = DateTime.Now;
                 ans.MODIFIED_AT = DateTime.Now;
                 ans.QUESTION_ID = qid;
@@ -261,7 +262,7 @@ namespace DBPOLLDemo.Models
                 ans.CORRECT = correct;
                 ans.WEIGHT = weight;
                 ans.NUM = ansnum;
-                ans.UPDATED_TO = getMaxID() + 1;
+                //ans.UPDATED_TO = getMaxID() + 1;
                 ans.MODIFIED_AT = DateTime.Now;
                 dbpollContext.SaveChanges();
 
