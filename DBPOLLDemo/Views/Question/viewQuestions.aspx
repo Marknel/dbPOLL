@@ -103,7 +103,7 @@
     </table>
 <% } %>
    <p>
-        <%= Html.ActionLink("Back to Menu", "../Home/Home") %>
+        <%= Html.ActionLink("Back to Menu", "../Home/Index") %>
     </p>
     
 
