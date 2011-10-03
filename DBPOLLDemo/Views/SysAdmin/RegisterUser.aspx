@@ -16,21 +16,24 @@
             <label for="Name">
                 Name:</label>
             <%= Html.TextBox("name")%>
-            <%=ViewData["nameError"]%>
+             <p style="color: Red;">
+            <%=ViewData["nameError"]%></p>
         </p>
         <p>
             <label for="email">
                 Email Address:</label>
             <%= Html.TextBox("email")%>
-            <%=ViewData["emailError"]%>
+             <p style="color: Red;">
+            <%=ViewData["emailError"]%></p>
         </p>
         <p>
             <label for="expiry">
                 Number of months for account to be valid (if left blank will be 12 months):</label>
             <%= Html.TextBox("expiry")%>
-            <%=ViewData["expiryError"]%>
+             <p style="color: Red;">
+            <%=ViewData["expiryError"]%></p>
         </p>
-        <p>
+ <p style="color: Red;">
             <%=ViewData["created"]%></p>
         <p style="color: Red;">
             <%=ViewData["mastererror"]%></p>
@@ -38,6 +41,6 @@
     </fieldset>
     <% } %>
     <p>
-        <%= Html.ActionLink("Back to Poll Administrator List", "SysAdmin")%>
+        <%= Html.ActionLink("Back to Poll Administrator List", "Index")%>
     </p>
 </asp:content>

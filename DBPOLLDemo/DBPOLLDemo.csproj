@@ -39,6 +39,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Devart.Data.Linq, Version=2.50.29.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle.Linq, Version=2.50.29.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -67,13 +69,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
+    <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
@@ -89,10 +90,10 @@
     <Compile Include="Models\answerModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Models\DBPOLLEDM.Designer.cs">
+    <Compile Include="Models\DBPOLL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBPOLLEDM.edmx</DependentUpon>
+      <DependentUpon>DBPOLL.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\modelConstants.cs" />
     <Compile Include="Models\objectModel.cs">
@@ -118,12 +119,14 @@
     <Content Include="Content\AnswerEdit.jpg" />
     <Content Include="Content\AnswerIndex.jpg" />
     <Content Include="Content\Back.jpg" />
+    <Content Include="Content\f_keepad.gif" />
     <Content Include="Content\Help.css" />
     <Content Include="Content\helpbook.gif" />
     <Content Include="Content\help_manual.png" />
     <Content Include="Content\Home.jpg" />
     <Content Include="Content\HomeHome.jpg" />
     <Content Include="Content\Index.jpg" />
+    <Content Include="Content\keepad_logo_head.jpg" />
     <Content Include="Content\Manual.jpg" />
     <Content Include="Content\ObjectIndex.jpg" />
     <Content Include="Applets\PollApplet.jar" />
@@ -138,6 +141,7 @@
     <Content Include="Content\QuestionIndex.jpg" />
     <Content Include="Content\QuestionviewQuestions.jpg" />
     <Content Include="Content\ReportIndex.jpg" />
+    <Content Include="Content\technology_to_engage.gif" />
     <Content Include="Content\turningPoint_banner.jpg" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -172,9 +176,9 @@
     <Content Include="Views\Help\QuestionviewQuestions.aspx" />
     <Content Include="Views\Help\ReportIndex.aspx" />
     <Content Include="Views\Help\Site.aspx" />
-    <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Home\PollsIManage.ascx" />
     <Content Include="Views\Home\PollsImCreating.ascx" />
+    <Content Include="Views\Home\ResetPassword.aspx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
@@ -203,11 +207,13 @@
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
     <Content Include="Views\SysAdmin\DeleteConfirm.aspx" />
-    <Content Include="Views\SysAdmin\Create.aspx" />
-    <Content Include="Views\SysAdmin\Delete.aspx" />
+    <Content Include="Views\SysAdmin\RegisterUser.aspx" />
+    <Content Include="Views\SysAdmin\DeleteSuccess.aspx" />
     <Content Include="Views\SysAdmin\Edit.aspx" />
     <Content Include="Views\SysAdmin\Index.aspx" />
-    <Content Include="Views\User\New.aspx" />
+    <Content Include="Views\SysAdmin\RegisterUserSuccess.aspx" />
+    <Content Include="Views\User\Edit.aspx" />
+    <Content Include="Views\User\RegisterUserSuccess.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -220,12 +226,12 @@
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
-    <Content Include="Views\Account\ChangePassword.aspx" />
-    <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
-    <Content Include="Views\Account\LogOn.aspx" />
-    <Content Include="Views\Account\Register.aspx" />
+    <Content Include="Views\User\ChangePassword.aspx" />
+    <Content Include="Views\User\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Home\LogOn.aspx" />
+    <Content Include="Views\User\RegisterUser.aspx" />
     <Content Include="Views\Home\About.aspx" />
-    <Content Include="Views\Home\Home.aspx" />
+    <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\Shared\Site.Master" />
@@ -233,18 +239,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\Blank.Master" />
+    <Folder Include="Classes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Applets\jnlpcomponent1.jnlp" />
     <None Include="Applets\launch.jnlp" />
     <None Include="Content\Thumbs.db" />
-    <EntityDeploy Include="Models\DBPOLLEDM.edmx">
+    <EntityDeploy Include="Models\DBPOLL.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBPOLLEDM.Designer.cs</LastGenOutput>
+      <LastGenOutput>DBPOLL.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

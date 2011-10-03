@@ -22,13 +22,6 @@
                 <%=ViewData["nameError"]%></p>
         </p>
         <p>
-            <label for="expiry">
-                Number of months for account to be valid (if left blank will be 12 months):</label>
-            <%= Html.TextBox("expiry", Model.monthsLeft)%>
-            <p style="color: Red;">
-                <%=ViewData["expiryError"]%></p>
-        </p>
-        <p>
             <label for="email">
                 Email:</label>
             <%= Html.TextBox("email", Model.username)%>
@@ -36,13 +29,15 @@
                 <%=ViewData["emailError"]%></p>
         </p>
         <p style="color: Red;">
-                <%=ViewData["edited"]%></p>
+            <%=ViewData["edited"]%></p>
         <p>
             <input type="submit" value="Save Changes" />
         </p>
     </fieldset>
     <%
         }%>
+    <%= Html.ActionLink("Change Password", "ChangePassword", "User")%>
+    <hr />
     <div>
         <%=Html.ActionLink("Back to User List", "Index")%>
     </div>

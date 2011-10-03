@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<List<DBPOLLDemo.Models.userModel>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<List<DBPOLLDemo.Models.userModel>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     sysAdmin
@@ -46,7 +46,7 @@
             <% } %>
         </table>
         <p>
-            <%= Html.ActionLink("Create new Poll Administrator", "Create")%>
+            <%= Html.ActionLink("Create new Poll Administrator", "RegisterUser")%>
         </p>
         <p>
         <%= Html.ActionLink("System Utilisation Report", "../Report/SystemUtilisationReport")%> <br />

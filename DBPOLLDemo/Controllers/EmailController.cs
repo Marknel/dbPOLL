@@ -49,33 +49,36 @@ namespace DBPOLLDemo.Controllers
 
         public string send()
         {
-            //try
-            //{
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("groupg3004@gmail.com");
-            mail.IsBodyHtml = true;
-            mail.To.Add(this.destAddress);
-            mail.Subject = "Your new account details";
-            mail.Body = this.body;
-
-
-            //smtp.Host = "mailhub.itee.uq.edu.au";
-            //smtp.Port = 25;    
-
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-            smtp.Port = 587;
-            smtp.Credentials = new System.Net.NetworkCredential("groupg3004@gmail.com", "csse3004");
-            smtp.EnableSsl = true;
             try
             {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("groupg3004@gmail.com");
+                mail.IsBodyHtml = true;
+                mail.To.Add(this.destAddress);
+                mail.Subject = "Your new account details";
+                mail.Body = this.body;
+
+
+                //smtp.Host = "mailhub.itee.uq.edu.au";
+                //smtp.Port = 25;    
+
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                smtp.Port = 587;
+                smtp.Credentials = new System.Net.NetworkCredential("groupg3004@gmail.com", "csse3004");
+                smtp.EnableSsl = true;
+
                 smtp.Send(mail);
-                return "Email sent successfully";
             }
-            catch (SmtpException e)
+            catch (Exception e)
             {
                 return "An error occured while sending the email: " + e.Message;
             }
+            return "Email sent successfully";
         }
+
+           
+        
+
 
     }
 }

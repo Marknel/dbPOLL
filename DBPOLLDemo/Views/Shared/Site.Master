@@ -3,50 +3,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
     <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
-    
-
-
 </head>
-
 <body runat="server" id="MyBody">
+<br /><br />
+    <div class="title">
+        <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/keepad_logo_head.jpg" 
+            Height="90px"  Style="float: left; padding-left:90px;" />
+        <asp:Image ID="Image2" runat="server" ImageUrl="~/Content/turningPoint_banner.jpg" 
+             AlternateText="TurningPoint Banner" Style="float: right; padding-right:90px;" Height="90px"
+            />
+    </div>
+    <br /><br /><br /><br /><br />
     <form id="form1" runat="server">
     <div class="page">
-
         <div id="header">
-            <div id="title">
-                <asp:Image ID="Image1" runat="server" Height="88px" 
-                    ImageUrl="~/Content/turningPoint_banner.jpg" Width="600px" />
-            </div>
-              
             <div id="logindisplay">
-                <%if (!(Session["uid"] == null)){%>
-                                
-                        <%=Html.ActionLink("Log Off", "LogOff", "Home") %>
-                    <%}else{ %>
-                        <%=Html.ActionLink("Log On", "LogOff", "Home") %>
-                    <%} %>
-            </div> 
-            
+                <%if (!(Session["uid"] == null))
+                  {%>
+                <%=Html.ActionLink("Log Off", "LogOff", "Home") %>
+                <%}
+                  else
+                  { %>
+                <%=Html.ActionLink("Log On", "Logon", "Home")%>
+                <%} %>
+            </div>
             <div id="menucontainer">
-                
                 <ul id="menu">
-                              <%if(Session["uid"]==null)
-                                {%>
-                                    <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
-                                    <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
+                    <% if (Session["sysadmin"] != null && Session["sysadmin"].ToString().Equals("true"))
+                       { %>
+                    <%--SysAdmin Only--%>
+                    <li>
+                        <%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li>
+                    <% }
+                       else
+                       {%>
+                    <li>
+                        <%= Html.ActionLink("Home", "Index", "Home")%></li>
+                    <%} %>
+                    <%if (Session["uid"] == null || Session["uid"].ToString().Trim() == "")
+                      {%>
+                    <%-- <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
 
                                     <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
                                        { %>
                                         <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
-                                    <% } %>
-                                <%}
-                                else if (Session["uid"].ToString().Trim() == "")
-                                {%>
-                                    <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
+                                    <% } %>--%>
+                    <%-- <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
                                     <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
                                     <% if (Session["sysadmin"] == null || Session["sysadmin"] == "false")
@@ -56,32 +64,31 @@
                                     <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
                                        { %>
                                         <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
-                                    <% } %>
-                                <%}
-                                else
-                                {%>
-                                    <li><%= Html.ActionLink("Home", "Home", "Home")%></li>
-                                    <li><%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
-                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Poll")%></li>
-                                    <% if (Session["sysadmin"] == null || Session["sysadmin"] == "false")
-                                       {%>
-                                    <li><%= Html.ActionLink("Help", "Index", "Help")%></li> 
-                                    <% }%>
-                                    <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
-                                       { %>
-                                        <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
-                                    <% } %>
-                                <%} %>
+                                    <% } %>--%>
+                    <%}
+                      else
+                      {%>
+                    <%--Logged in--%>
+                    <% if (Session["sysadmin"] == null || Session["sysadmin"] == "false")
+                       {%>
+                    <%--Not a sysAdmin--%>
+                    <li>
+                        <%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
+                    <li>
+                        <%= Html.ActionLink("Modify Polls", "Index", "Poll")%></li>
+                    <% }%>
+                    <%} %>
+                    <li>
+                        <%= Html.ActionLink("Help", "Index", "Help")%></li>
                 </ul>
-            
             </div>
         </div>
-
         <div id="main">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-
-            <div id="footer">
-            </div>
+        </div>
+        <div id="footer">
+            <asp:Image ID="Image3" runat="server" ImageAlign="Left" ImageUrl="~/Content/technology_to_engage.gif" /><asp:Image
+                ID="Image4" runat="server" ImageAlign="Right" ImageUrl="~/Content/f_keepad.gif" />
         </div>
     </div>
     </form>

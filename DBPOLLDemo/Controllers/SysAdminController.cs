@@ -10,6 +10,7 @@ using DBPOLLDemo.Models;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Web.UI;
+using System.Text.RegularExpressions;
 
 namespace DBPOLLDemo.Controllers
 {
@@ -21,39 +22,46 @@ namespace DBPOLLDemo.Controllers
         public ActionResult Index()
         {
             // Basic check to see if the user is Authenticated.
-            if (Session["sysadmin"] != "true")
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
-            //Export(new userModel().displayPollAdminUsers());
-
+            
             return View(new userModel().displayPollAdminUsers());
         }
 
 
         public ActionResult DeleteConfirm(int UserID)
         {
-            if (Session["sysadmin"] != "true")
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
             ViewData["delID"] = UserID;
-            return View("DeleteConfirm");
+            return View();
         }
 
-        public ActionResult Delete(int UserID)
+        public ActionResult DeleteSuccess(int UserID)
         {
-            if (Session["sysadmin"] != "true")
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-
             userModel q = new userModel(UserID);
             q.deleteUser();
+
             return View(new userModel().displayPollAdminUsers());
         }
 
+        public ActionResult SysAdmin()
+        {
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(new userModel().displayPollAdminUsers());
+        }
 
         /// <summary>
         /// Redirects to Edit view to allow modification of User's details.
@@ -62,12 +70,10 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Edit(int UserID)
         {
-            // Basic check to see if the user is Authenticated.
-            if (Session["sysadmin"] != "true")
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
-
             return View(new userModel().getUser(UserID));
         }
 
@@ -77,96 +83,29 @@ namespace DBPOLLDemo.Controllers
         /// </summary>
         /// <returns></returns>
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int UserID, DateTime Expires_At, string Name, string username)
+        public ActionResult Edit(int UserID, string expiry, string name, string email)
         {
-            //if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
-
-            CultureInfo culture = new CultureInfo("en-AU");
-            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
-            culture.DateTimeFormat.ShortTimePattern = string.Empty;
-            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-
-            try
-            {
-                userModel u = new userModel();
-                u.updateUser(UserID, Expires_At, Name, username);
-
-                ViewData["edited"] = "Details successfully changed";
-                return View(new userModel().getUser(UserID));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        /// <summary>
-        /// Returns the view with a choice between creating a short answer and multiple choice question.
-        /// </summary>
-        /// <param name="pollid">Poll to create question for</param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public ActionResult Create()
-        {
-            // Basic check to see if the user is Authenticated.
-            if (Session["sysadmin"] != "true")
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
-        }
-
-
-
-        /// <summary>
-        /// POST method that creates short answer questions from a set of given data.
-        /// </summary>
-        /// <param name="shortanswertype"></param>
-        /// <param name="num"></param>
-        /// <param name="question"></param>
-        /// <param name="chartstyle"></param>
-        /// <param name="pollid"></param>
-        /// <returns></returns>
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(String name, String email, string expiry)
-        {
-            // Basic check to see if the user is Authenticated.
-            if (Session["sysadmin"] != "true")
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            string password = name;
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
             bool errorspresent = false;
-            //if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
-            int SysAdmin_ID = 1000; //Int32.Parse(Session["uid"].ToString());
-
-            // Allows insertion of Australian formatted dates
-            CultureInfo culture = new CultureInfo("en-AU");
-            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
-            culture.DateTimeFormat.ShortTimePattern = string.Empty;
-            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
             int expInt = 0;
 
-
-            //returns the max question ID in the questions table
-            int UserID = new userModel().getNewID();
-
-            // VALIDATE FORM DATA!
             if (name == null || name == "")
             {
                 ViewData["nameError"] = "Above field must contain a name!";
                 errorspresent = true;
             }
-            if (email == null || System.Text.RegularExpressions.Regex.IsMatch(email, @"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=
-                [0-9a-zA-Z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$"))
+            if (email == null || !Regex.IsMatch(email, @"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$", RegexOptions.IgnoreCase))
             {
                 ViewData["emailError"] = "Above field must contain a valid email address!";
                 errorspresent = true;
             }
-            if (expiry == null)
+            if (expiry == null || expiry == "")
                 expInt = 12;
             else if (!System.Text.RegularExpressions.Regex.IsMatch(expiry, @"^\d+$"))
             {
@@ -188,39 +127,160 @@ namespace DBPOLLDemo.Controllers
                 }
             }
 
-
-            if (errorspresent == false)
+            if (errorspresent)
             {
-                try
-                {
-                    DateTime expiry_Date = DateTime.Now.AddMonths(expInt);
-                    //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
-                    new userModel().createUser(UserID, 4, password, name, email, expiry_Date, SysAdmin_ID);
-                    ViewData["created"] = "Created User: " + name;
-
-                    EmailController mail = new EmailController(email, password, email);
-                    
-                    string mailSuccess = mail.send();
-                    if (!mailSuccess.Equals("Email sent successfully"))
-                    {
-                        throw new Exception(mailSuccess);
-                    }
+                return View(new userModel().getUser(UserID));
+            }
 
 
-                    return View();
-                }
-                catch (Exception e)
-                {
-                    ViewData["error1"] = "!ERROR: " + e.Message;
-                    return View();
-                }
+            try
+            {
+                DateTime expiry_Date = DateTime.Now.AddMonths(expInt);
+                userModel u = new userModel();
+                u.updateUser(UserID, expiry_Date, name, email);
+
+                ViewData["edited"] = "Details successfully changed";
+                return View(new userModel().getUser(UserID));
+            }
+            catch(Exception e)
+            {
+                ViewData["edited"] = "!ERROR: " + e.Message;
+                return View(new userModel().getUser(UserID));
+            }
+        }
+
+        
+
+        /// <summary>
+        /// Returns the view with a choice between creating a short answer and multiple choice question.
+        /// </summary>
+        /// <param name="pollid">Poll to create question for</param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ActionResult RegisterUser()
+        {
+            // Basic check to see if the user is Authenticated.
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+        
+
+
+        /// <summary>
+        /// POST method that creates short answer questions from a set of given data.
+        /// </summary>
+        /// <param name="shortanswertype"></param>
+        /// <param name="num"></param>
+        /// <param name="question"></param>
+        /// <param name="chartstyle"></param>
+        /// <param name="pollid"></param>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult RegisterUser(String name, String email, string expiry)
+        {
+            // Basic check to see if the user is Authenticated.
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            bool errorspresent = false;
+            int SysAdmin_ID = (int)Session["uid"];
+
+
+            // Allows insertion of Australian formatted dates
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+            int expInt = 0;
+
+
+            //returns the max question ID in the questions table
+            int UserID = new userModel().getNewID();
+
+            // VALIDATE FORM DATA!
+            if (name == null || name == "")
+            {
+                ViewData["nameError"] = "Above field must contain a name!";
+                errorspresent = true;
+            }
+
+            if (email == null || !Regex.IsMatch(email, @"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$", RegexOptions.IgnoreCase))
+            {
+                ViewData["emailError"] = "Above field must contain a valid email address!";
+                errorspresent = true;
+            }
+            if (expiry == null || expiry == "")
+                expInt = 12;
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(expiry, @"^\d+$"))
+            {
+                ViewData["expiryError"] = "Expiry date must be a whole non-negative number";
+                errorspresent = true;
             }
             else
             {
-                // We have errors, send to user posthaste!
-                ViewData["mastererror"] = "There are errors marked in the form. Please correct these and resubmit";
+                try
+                {
+                    //converts user num into string
+                    expInt = int.Parse(expiry);
+                }
+                catch (Exception e)
+                {
+                    //Not an int. do not insert and throw view error to user. 
+                    ViewData["expiryError"] = "!ERROR: " + e.Message;
+                    errorspresent = true;
+                }
+            }
+
+            if (errorspresent)
+            {
                 return View();
             }
+
+
+            try
+            {
+                userModel user = new userModel();
+                DateTime expiry_Date = DateTime.Now.AddMonths(expInt);
+                string password = user.Password_Generator();
+                //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
+                user.createUser(UserID, 4, password, name, email, expiry_Date, SysAdmin_ID);
+
+                EmailController mail = new EmailController(email, password, email);
+
+                string mailSuccess = mail.send();
+                if (!mailSuccess.Equals("Email sent successfully"))
+                {
+                    throw new Exception(mailSuccess);
+                }
+
+                return RedirectToAction("RegisterUserSuccess", "SysAdmin");
+            }
+            catch (Exception e)
+            {
+                ViewData["error1"] = "!ERROR: " + e.Message;
+                return View();
+            }
+        }
+        
+
+        /// <summary>
+        /// Returns the view with a choice between creating a short answer and multiple choice question.
+        /// </summary>
+        /// <param name="pollid">Poll to create question for</param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ActionResult RegisterUserSuccess()
+        {
+            // Basic check to see if the user is Authenticated.
+            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        
         }
     }
 }

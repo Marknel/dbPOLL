@@ -1,37 +1,73 @@
-<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
-
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	dbPOLL Login
+<%@ Import Namespace="DBPOLLDemo.Models" %>
+<asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
+    DBPOLL Home Page
 </asp:Content>
+<asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        <%= Html.Encode(ViewData["Message"])%></h2>
+    <h2>
+        Everyone can see</h2>
+    
+    <br />
+    <%= Html.ActionLink("Change Password", "ChangePassword", "User")%>
+    <br />
+    <%= Html.ActionLink("My Messages", "Messages", "Index")%>
+    <br />
+    <hr />
+    <hr />
 
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<!-- 'Inherits="System.Web.Mvc.ViewPage<DBPOLLContext.USER>" -->
-    <h2>Login</h2>
+    <h2>
+        Here for development only</h2>
+    <p>
+        <%= Html.ActionLink("Edit Create and Delete Polls", "../Poll/Index")%>
+        <br />
+        <%= Html.ActionLink("View Polls and Questions", "../Poll/viewPolls")%>
+        <br />
+    </p>
+    <hr />
+  
+    <h2>
+        Poll Masters</h2>
+    <% if (((USER)ViewData["User"]).USER_TYPE > 1)
+           { %>
+    <%= Html.ActionLink("Edit My Details", "Edit", "User")%>
+    <br />
+    <%= Html.ActionLink("Create New User", "RegisterUser", "User")%>
+    <br />
+    <%= Html.ActionLink("Reports", "Index", "Report")%><br />
+    <br />
+    <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
+    <br />
+   
 
-    <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
+   <p>
+    Building Participant List
+    Administering Polls
+    Generate statistical reports + Graphs
+   </p>
+    <% } %>
 
-    <% using (Html.BeginForm("Login","Index", FormMethod.Post)) {%>
 
-        <fieldset>
-            <legend>Please Login</legend>
-            <p>
-                <label for="USERNAME">Username:</label>
-                <%= Html.TextBox("USERNAME") %>
-                <%= Html.ValidationMessage("USERNAME", "*") %>
-            </p>
-            <p>
-                <label for="PASSWORD">Password:</label>
-                <%= Html.Password("PASSWORD") %>
-                <%= Html.ValidationMessage("PASSWORD", "*") %>
-            </p>
-            <p style ="color: Red;"><%= Html.Encode(ViewData["Message"]) %></p>
-            <p>
-                <input type="submit" value="Login" />
-            </p>
-        </fieldset>
+    <%--<% Html.RenderPartial("PollsIManage"); %>
+    <% Html.RenderPartial("PollsToDo"); %>--%>
 
-<% } %>
+
+
+    <h2>
+        Poll Creators</h2>
+    <% if (((USER)ViewData["User"]).USER_TYPE > 2)
+           { %>
+    <%--<% Html.RenderPartial("PollsImCreating"); %>--%>
+    <% } %>
+
+
+
+    <h2>
+        Poll Administrators</h2>
+    <% if (((USER)ViewData["User"]).USER_TYPE > 3)
+           { %>
+    <% } %>
 </asp:Content>
-
