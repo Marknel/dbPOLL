@@ -7,7 +7,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Session Participation</h2>
-    <p> Tables below shows a record of attendance and level of participation during the available session in all polls</p>
+    <p> Tables below shows a record of attendance and level of participation during the available sessions</p>
+    <p class="style1"> Note: sessions with zero participant will not be shown </p>
 
      <table>
         <tr>
@@ -18,10 +19,10 @@
                 Session Name
             </th>
             <th nowrap="nowrap">
-                Total Participants 
+                Total Participant 
             </th>
             <th nowrap="nowrap">
-                Participant 
+                Participant id
             </th>
             
             
@@ -69,4 +70,10 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
+    <style type="text/css">
+        .style1
+        {
+            font-size: x-small;
+        }
+    </style>
 </asp:Content>

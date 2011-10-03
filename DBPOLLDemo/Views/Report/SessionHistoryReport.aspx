@@ -2,7 +2,9 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	SessionHistoryReport</asp:Content>
+	SessionHistoryReport
+ 
+</asp:Content>
 
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
@@ -16,6 +18,7 @@
 
 <script type="text/javascript"
     src="http://maps.googleapis.com/maps/api/js?sensor=false">
+    
 </script>
 
 
@@ -23,75 +26,86 @@
 void Page_Load(object source, EventArgs e){
         HtmlGenericControl body = (HtmlGenericControl)
         Page.Master.FindControl("MyBody");
+        
         body.Attributes.Add("onload", "initialize()");
-
     } 
     </script>
 
   <script type="text/javascript">
-              var map;
-              var marker = null;
-              function initialize() {
-                  var latlng = new google.maps.LatLng(39, 35);
-                  var myOptions = {
-                      zoom: 1,
-                      center: latlng,
-                      mapTypeId: google.maps.MapTypeId.ROADMAP
-                  };
-                  
-     
-                map = new google.maps.Map(document.getElementById("google_map"),
+      var map;
+      var marker = null;
+
+      function createMarkerClickHandler(marker, text, link) {
+          return function () {
+              marker.openInfoWindowHtml(
+      '<h3>' + text + '</h3>' +
+      '<p><a href="' + link + '">Wikipedia &raquo;</a></p>'
+    );
+              return false;
+          };
+      }
+
+
+      function createMarker(pointData) {
+          var latlng = new GLatLng(pointData.latitude, pointData.longitude);
+
+          var icon = new GIcon();
+          icon.image = 'red_marker.png';
+          icon.iconSize = new GSize(32, 32);
+          icon.iconAnchor = new GPoint(16, 16);
+          icon.infoWindowAnchor = new GPoint(25, 7);
+
+          opts = {
+              "icon": icon,
+              "clickable": true,
+              "labelText": pointData.abbr,
+              "labelOffset": new GSize(-16, -16)
+          };
+
+          var marker = new LabeledMarker(latlng, opts);
+          var handler = createMarkerClickHandler(marker, pointData.name, pointData.wp);
+
+          GEvent.addListener(marker, "click", handler);
+
+          var listItem = document.createElement('li');
+          listItem.innerHTML = '<div class="label">' + pointData.abbr + '</div><a href="' + pointData.wp + '">' + pointData.name + '</a>';
+          listItem.getElementsByTagName('a')[0].onclick = handler;
+
+          document.getElementById('sidebar-list').appendChild(listItem);
+
+          return marker;
+      }
+
+      function initialize() {
+
+          var latlng = new google.maps.LatLng(39, 35);
+          var myOptions = {
+              zoom: 2,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+
+          var infowindow = new google.maps.InfoWindow();
+
+          map = new google.maps.Map(document.getElementById("google_map"),
                 myOptions);
 
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(-34.933333, 138.6),
-                    map: map
-                });
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(-12.466667, 130.833333),
-                    map: map
-                });
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(153.016667, -27.5),
-                    map: map
-                });
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(-31.933333, 115.833333),
-                    map: map
-                }); 
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng( -33.8830555556,151.216666667),
-                    map: map
-                });
-//                marker = new google.maps.Marker({
-//                    position: new google.maps.LatLng( -27.5, 153.016667),
-//                    map: map
-//                }); marker = new google.maps.Marker({
-//                    position: new google.maps.LatLng(-34.933333, 138.6),
-//                    map: map
-//                });
-//                marker = new google.maps.Marker({
-//                    position: new google.maps.LatLng(-12.466667, 130.833333 ),
-//                    map: map
-//                });
-//                marker = new google.maps.Marker({
-//                    position: new google.maps.LatLng(-31.933333, 115.833333),
-//                    map: map
-//                });
-//                marker = new google.maps.Marker({
-//                    position: new google.maps.LatLng(151.216666667, -33.8830555556),
-//                    map: map
-//                });
-//                marker = new google.maps.Marker({
-//                    position: new google.maps.LatLng(-33.895820604476604, 151.14644409179687),
-//                    map: map
-//                });
-//                marker = new google.maps.Marker({
-//                    position: new google.maps.LatLng(152.70592064619063, -27.627904686799557),
-//                    map: map
-//                });
-                 ;
-              }
+          var i = 0;
+          for (i = 0; i < array.length; i++) {
+              marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(array2[i], array[i]),
+                  map: map
+              });
+
+              google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                  return function () {
+                      var result = "<p>" + pollinfo[i] + "<br/> " + sessionInfo[i] + "</p>";
+                      infowindow.setContent(result);
+                      infowindow.open(map, marker);
+                  }
+              })(marker, i));
+          }
+      }
 
 
 </script>
@@ -125,14 +139,41 @@ void Page_Load(object source, EventArgs e){
             
             
         </tr>
-
-   <% String pnamecheck = "" ;%>
+     <script type="text/javascript">
+         var array = new Array();
+         var array2 = new Array();
+         var sessionInfo = new Array();
+         var pollinfo = new Array();
+         var i = 0;
+         var s = "";
+     </script>
+   <% String pnamecheck = "" ;
+      int counter = 0;
+   %>
    <% foreach (var item in Model) { %>
-    
+  
+        <script type="text/javascript">
+        
+            longitude = <%=item.longitude %>;
+            lat = <%=item.latitude %>;
+
+            p = 'Poll: ' + '<%=item.pollname %>';
+            s = 'Session: ' + '<%=item.sessionname %>';
+            
+            array[i] = longitude;
+            array2[i] = lat;
+            sessionInfo[i] = s;
+            pollinfo[i] = p;
+
+            i++;
+
+
+        </script>   
         <tr>
             <td nowrap="nowrap">
             <% if (pnamecheck != item.pollname){ %>
                     <%= Html.Encode(item.pollname)%>
+                    <%  %>
                 <% pnamecheck = item.pollname; %>
             <%} %>
              </td>
@@ -153,9 +194,10 @@ void Page_Load(object source, EventArgs e){
                 <%= Html.Encode(item.total) %>
             </td>
             
-        <% Session["a1"] = item.latitude;
+<%--        <% Session["a1"] = item.latitude;
            Session["a2"] = item.longitude;
-        %>
+           counter++;
+        %>--%>
         
 
         
@@ -170,5 +212,5 @@ void Page_Load(object source, EventArgs e){
     <br />
 
     
-    <div id="google_map" style="width:360px; height:200px"></div>
+    <div id="google_map" style="width:1000px; height:560px"></div>
      </asp:Content>

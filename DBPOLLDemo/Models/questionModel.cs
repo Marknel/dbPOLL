@@ -245,40 +245,18 @@ namespace DBPOLLDemo.Models
                          from p in dbpollContext.POLLS
                          from s in dbpollContext.SESSIONS
                          from a in dbpollContext.ANSWERS
-                         where ((p.POLL_ID == q.POLL_ID) && (s.POLL_ID == p.POLL_ID) && a.QUESTION_ID==q.QUESTION_ID)
-                         
+                         where ((p.POLL_ID == q.POLL_ID) && (s.POLL_ID == p.POLL_ID) && a.QUESTION_ID == q.QUESTION_ID)
+
                          orderby p.POLL_NAME ascending
                          select new questionModel
                          {
-                             pollname = (String)(from p1 in dbpollContext.POLLS
-                                                 where (p1.POLL_ID == p.POLL_ID)
-                                                 select p1.POLL_NAME).Distinct().FirstOrDefault(),
-
-                             question = (String)(from q1 in dbpollContext.QUESTIONS
-                                                 where (q1.QUESTION_ID == q.QUESTION_ID)
-                                                 //orderby q1.QUESTION_ID
-                                                 select q1.QUESTION1).FirstOrDefault(),
+                             pollname = p.POLL_NAME,
+                             question = q.QUESTION1,
                              sessionid = s.SESSION_ID,
                              sessionname = s.SESSION_NAME,
-                             
-
-                             //sessionid = (int)(from s2 in dbpollContext.SESSIONS
-                             //                  where (s2.POLL_ID == p.POLL_ID)
-                             //                  select s2.SESSION_ID).Distinct().FirstOrDefault(),
-
-                             //answer = (String)(from a1 in dbpollContext.ANSWERS
-                             //                  where (a1.QUESTION_ID == q.QUESTION_ID)
-                             //                  select a1.ANSWER1).GroupBy(a.ANSWER_ID, a.ANSWER_ID),
-                             
                              answer = a.ANSWER1,
-
-                             //totalparticipants = (int)(from s1 in dbpollContext.SESSIONS
-                             //                          from par in dbpollContext.PARTICIPANTS
-                             //                          where ((s1.POLL_ID == p.POLL_ID) && (par.SESSION_ID == s1.SESSION_ID))
-                             //                          select par.USER_ID).Count(),  
-
                              totalparticipants = (int)(from r in dbpollContext.RESPONSES
-                                                       where (r.ANSWER_ID==a.ANSWER_ID && r.FEEDBACK==a.ANSWER1)
+                                                       where (r.ANSWER_ID == a.ANSWER_ID && r.SESSION_ID == s.SESSION_ID)
                                                        select r.USER_ID).Count(),
                          }
 
@@ -484,6 +462,142 @@ namespace DBPOLLDemo.Models
             catch (Exception e) {
                 throw (e);
             }
+        }
+
+        public List<questionModel> includeDemographicQuestions(String demographicGroup)
+        {
+            var query = (from re in dbpollContext.RESPONSES
+                         from a in dbpollContext.ANSWERS
+                         from q in dbpollContext.QUESTIONS
+                         from a2 in dbpollContext.ANSWERS
+                         from q2 in dbpollContext.QUESTIONS
+                         from s in dbpollContext.SESSIONS
+                         from p in dbpollContext.POLLS
+                         where (re.ANSWER_ID == a.ANSWER_ID
+                                && a.QUESTION_ID == q.QUESTION_ID
+                                && q.QUESTION_TYPE == 4 && a.ANSWER1 == demographicGroup
+                             //&& re2.USER_ID == u.USER_ID 
+                                && a2.QUESTION_ID == q2.QUESTION_ID
+                                && p.POLL_ID == s.POLL_ID
+                                && p.POLL_ID == q2.POLL_ID
+                                )
+
+                         select new questionModel
+                         {
+                             question = q2.QUESTION1,
+
+                             questionid = q2.QUESTION_ID,
+
+                             pollname = p.POLL_NAME,
+
+                             pollid = p.POLL_ID,
+
+                             sessionid = s.SESSION_ID,
+
+                             sessionname = s.SESSION_NAME,
+
+                             answer = a2.ANSWER1,
+
+                             totalparticipants = (int)(from r in dbpollContext.RESPONSES
+                                                       where (r.ANSWER_ID == a2.ANSWER_ID && r.SESSION_ID == s.SESSION_ID
+                                                       && r.USER_ID == re.USER_ID)
+                                                       select r.USER_ID).Count(),
+
+                         }
+
+                ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
+
+            return query.ToList();
+        }
+
+        public List<questionModel> excludeDemographicQuestions(String demographicGroup)
+        {
+            var query = (from re in dbpollContext.RESPONSES
+                         from a in dbpollContext.ANSWERS
+                         from q in dbpollContext.QUESTIONS
+                         from a2 in dbpollContext.ANSWERS
+                         from q2 in dbpollContext.QUESTIONS
+                         from s in dbpollContext.SESSIONS
+                         from p in dbpollContext.POLLS
+                         where (re.ANSWER_ID == a.ANSWER_ID
+                                && a.QUESTION_ID == q.QUESTION_ID
+                                && q.QUESTION_TYPE == 4 && a.ANSWER1 != demographicGroup
+                             //&& re2.USER_ID == u.USER_ID 
+                                && a2.QUESTION_ID == q2.QUESTION_ID
+                                && p.POLL_ID == s.POLL_ID
+                                && p.POLL_ID == q2.POLL_ID
+                                )
+
+                         select new questionModel
+                         {
+                             question = q2.QUESTION1,
+
+                             questionid = q2.QUESTION_ID,
+
+                             pollname = p.POLL_NAME,
+
+                             pollid = p.POLL_ID,
+
+                             sessionid = s.SESSION_ID,
+
+                             sessionname = s.SESSION_NAME,
+
+                             answer = a2.ANSWER1,
+
+                             totalparticipants = (int)(from r in dbpollContext.RESPONSES
+                                                       where (r.ANSWER_ID == a2.ANSWER_ID && r.SESSION_ID == s.SESSION_ID
+                                                       && r.USER_ID == re.USER_ID)
+                                                       select r.USER_ID).Count(),
+
+                         }
+
+                ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
+
+            return query.ToList();
+        }
+
+        public List<questionModel> displayOneQuestionAnswer(int pollID)
+        {
+            var query = (from q in dbpollContext.QUESTIONS
+                         from p in dbpollContext.POLLS
+                         from s in dbpollContext.SESSIONS
+                         from a in dbpollContext.ANSWERS
+                         where (
+                         (p.POLL_ID == q.POLL_ID) &&
+                         (s.POLL_ID == p.POLL_ID) &&
+                         (a.QUESTION_ID == q.QUESTION_ID) &&
+                         (p.POLL_ID == pollID)
+                         )
+
+                         orderby p.POLL_NAME ascending
+                         select new questionModel
+                         {
+                             pollname = (String)(from p1 in dbpollContext.POLLS
+                                                 where (p1.POLL_ID == p.POLL_ID)
+                                                 select p1.POLL_NAME).Distinct().FirstOrDefault(),
+
+                             question = (String)(from q1 in dbpollContext.QUESTIONS
+                                                 where (q1.QUESTION_ID == q.QUESTION_ID)
+                                                 //orderby q1.QUESTION_ID
+                                                 select q1.QUESTION1).FirstOrDefault(),
+                             sessionid = s.SESSION_ID,
+                             sessionname = s.SESSION_NAME,
+
+                             answer = a.ANSWER1,
+
+                             totalparticipants = (int)(from r in dbpollContext.RESPONSES
+                                                       where (r.ANSWER_ID == a.ANSWER_ID && r.SESSION_ID == s.SESSION_ID)
+                                                       select r.USER_ID).Count(),
+                         }
+
+                ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
+
+            return query.ToList();
+        }
+
+        public List<questionModel> temp(String demographicGroup)
+        {
+            return null;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.TwoQuestionModels>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.TwoQuestionModels>" %>
 
 <script runat="server">
  
@@ -26,16 +26,18 @@
         int sValuesCounter = 0;
         int aListsCounter = 0; 
         
+
     %>
    
-     <% foreach (var item in Model.data1)
+    
+    <% foreach (var item in Model.data1)
        { %>
         
         <% if (!qcheck.Contains(item.question) && pollnamecheck == null || !qcheck.Contains(item.question) && !pollnamecheck.Contains(item.pollname))
         { %>
                         
             <br />
-            </fieldset>
+ 
             <%
                 scheck = new List<string>();
                 sLists = new String[100];
@@ -47,7 +49,6 @@
             <legend><%= Html.Encode(item.pollname)%></legend>
             <br />
             <%= Html.Encode("Question: " + item.question)%> 
-
             <% qcheck.Add(item.question); %>
 
             <br />
@@ -106,7 +107,6 @@
                 qcheck.Add(item.question);
                 list.Add(item.totalparticipants);
 
-
                 String finalResult = "";
                 int i = 0;
                 while (i < sValuesCounter)
@@ -150,7 +150,7 @@
             </table>
             <br />
             <br />
-            <img src="<%= Url.Action("Chart", new {chartParameter = finalResult}) %>" alt="image" /> 
+            <img src="<%= Url.Action("Chart", new {chartParameter = finalResult}) %>" alt="image" />
             <br />
             <br />
             <br />
@@ -162,12 +162,9 @@
                 aListsCounter = 0;
                 sValuesCounter = 0;
             %>
-
-            
                 
                 
-        <% }
-           else if (!qcheck.Contains(item.question) && pollnamecheck != null || !qcheck.Contains(item.question) && pollnamecheck.Contains(item.pollname))
+        <% } else if (!qcheck.Contains(item.question) && pollnamecheck!= null)
         { %>
  
             <%
@@ -178,8 +175,6 @@
             %>  
 
             <br />
-<%--            <fieldset>
-            <legend><%= Html.Encode(item.pollname)%></legend>--%>
             <%= Html.Encode("Question: " + item.question)%> 
             <% qcheck.Add(item.question); %>
 
@@ -229,6 +224,7 @@
                                             <%}%>
                                     <%} %>
                              <%} %>     
+
                         </tr>
                     <%} %>       
             <%} %>
@@ -236,6 +232,7 @@
                 pollnamecheck.Add(item.pollname); 
                 qcheck.Add(item.question);
                 list.Add(item.totalparticipants);
+
 
                 String finalResult = "";
                 int i = 0;
@@ -285,6 +282,7 @@
             <br />
             <br />
             <br />
+
            <%-- <img src="<%= Url.Action("Chart", new {sessionValues = sValues, sessionLists = sLists, answerLists = aLists}) %>" alt="image" /> --%>
 
             <%
@@ -292,25 +290,17 @@
                 aListsCounter = 0;
                 sValuesCounter = 0;
             %>
-            
         <% }%>
        
-            
-            
     <%} %>
-
+    </fieldset>
+         
    <%-- DO NOT DELETE THIS <p>--%>
            <%--  <input name="submit" type="submit" id="generate" value="Generate excel file" />--%>
           <%--   <input name="submit" type="submit" id="submit" value="Save" />--%>
                 
    <%-- </p>--%>
 
-    </table>
-
-    </fieldset>
-    
-    
-    <p> &nbsp;</p>
 
     </asp:Content>
 

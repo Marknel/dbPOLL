@@ -14,6 +14,19 @@ using System.Web.UI.DataVisualization.Charting;
 
 namespace DBPOLLDemo.Controllers
 {
+    public class TwoQuestionModels
+    {
+        public List<questionModel> data1 { get; set; }
+        public List<questionModel> data2 { get; set; }
+    }
+
+    public class PollQuestionAnswer
+    {
+        public List<questionModel> qModelList { get; set; }
+        public List<pollModel> pModelList { get; set; }
+        public List<answerModel> aModelList { get; set; }
+    }
+
     public class ReportController : Controller
     {
         //
@@ -40,11 +53,26 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult StatisticalReport()
         {
-            
-            return View(new questionModel().displayQuestionsAnswer());
+
+            TwoQuestionModels twoModels = new TwoQuestionModels();
+
+            twoModels.data1 = new questionModel().displayQuestionsAnswer();
+            twoModels.data2 = new questionModel().displayQuestionsAnswer();
+
+            return View(twoModels);
         }
 
-       
+        public ActionResult OneStatisticalReport(int pollID)
+        {
+            //return View(new questionModel().displayOneQuestionAnswer(pollID));
+
+            TwoQuestionModels twoModels = new TwoQuestionModels();
+
+            twoModels.data1 = new questionModel().displayOneQuestionAnswer(pollID);
+            twoModels.data2 = new questionModel().displayOneQuestionAnswer(pollID);
+
+            return View(twoModels);
+        }
 
         public ActionResult SessionHistoryReport()
         {
@@ -120,50 +148,175 @@ namespace DBPOLLDemo.Controllers
             Response.End();
         }
 
-        public ActionResult Chart()
+        public ActionResult Chart(String chartParameter)
         {
-            List<int> list = new List<int>();
-            list.Add(1);
-            list.Add(2);
-            list.Add(4);
-            list.Add(8);
-            list.Add(10);
-            list.Add(20);
-            //list = (List<int>)Session["test"];
+
+            //String[] sessionValues = chartParameter.Split(',')[0];
+
+            //int[] sessionValues = (int[])Session["sValues"];
+            //String[] sessionLists = (String[])Session["sLists"];
+            //String[] answerLists = (String[])Session["aList"];
 
 
-            //ViewData["Chart"] = list;
+            int newCounter = 0;
+            int[] sessionValues = new int[chartParameter.Split(',')[0].Count() / 2 + 1];
+            String[] temp = chartParameter.Split(',')[0].Split('/');
+            foreach (String item in temp)
+            {
+                sessionValues[newCounter] = Convert.ToInt32(item);
+                newCounter++;
+            }
+
+            String[] sessionLists = chartParameter.Split(',')[1].Split('/');
+            String[] answerLists = chartParameter.Split(',')[2].Split('/');
+            String graphType = (String)Session["graphType"];
 
             Chart chart = new Chart();
-            chart.BackColor = System.Drawing.Color.Transparent;
-            //chart.Width = Unit.Pixel(250);
-            //chart.Height = Unit.Pixel(100);
-
-            Series series1 = new Series("Series1");
-            series1.ChartArea = "ca1";
-            series1.ChartType = SeriesChartType.Column;
-            series1.Font = new System.Drawing.Font("Verdana", 8.25f, System.Drawing.FontStyle.Regular);
-            int i = 1;
-            foreach (int value in list)
-            {
-                series1.Points.Add(new DataPoint
-                {
-                    AxisLabel = "Session " + i.ToString(),
-                    YValues = new double[] { value }
-                });
-                i++;
-            }
-            chart.Series.Add(series1);
+            chart.BackColor = System.Drawing.Color.LightGoldenrodYellow;
 
             ChartArea ca1 = new ChartArea("ca1");
             ca1.BackColor = System.Drawing.Color.Transparent;
             chart.ChartAreas.Add(ca1);
+
+            int j = 0;
+            foreach (String value in answerLists)
+            {
+                if (value != null)
+                {
+                    chart.Legends.Add(new Legend(value));
+                    chart.Legends[value].DockedToChartArea = "ca1";
+                    chart.Legends[value].IsTextAutoFit = true;
+
+                    Series series1 = new Series(value);
+                    series1.ChartArea = "ca1";
+                    if (graphType == "Bar")
+                    {
+                        series1.ChartType = SeriesChartType.Bar;
+                    }
+                    else
+                    {
+                        series1.ChartType = SeriesChartType.Column;
+                    }
+
+                    series1.Font = new System.Drawing.Font("Verdana", 9f, System.Drawing.FontStyle.Regular);
+
+                    for (int l = 0; l < sessionLists.Count(); l++)
+                    {
+                        //check if it isnt out of bounds
+                        if (sessionLists[l] != null && sessionValues[j] != null)
+                        {
+                            series1.Points.Add(new DataPoint
+                            {
+                                AxisLabel = sessionLists[l],
+                                YValues = new double[] { sessionValues[j] }
+                            });
+                            j++;
+                        }
+                    }
+
+                    chart.Series.Add(series1);
+                    chart.Series[value].Legend = value;
+                }
+            }
+
             using (var ms = new System.IO.MemoryStream())
             {
                 chart.SaveImage(ms, ChartImageFormat.Png);
                 ms.Seek(0, System.IO.SeekOrigin.Begin);
 
                 return File(ms.ToArray(), "image/png");
+            }
+        }
+
+        public Boolean contains(List<Series> series, Series s)
+        {
+            foreach (Series se in series)
+            {
+                if (se.Name == s.Name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public ActionResult ViewAllPoll()
+        {
+            // need an if statement, check if the current user is only poll master, then he could
+            // only see a list of polls he manages. Else if user == higher level eg poll admin, he
+            // is able to see ALL POLL
+
+            // if poll master:
+            //return View(new pollModel().displayPolls());
+
+            // else
+            //String graphType = Request["graphType"];
+            //Session["graphType"] = graphType;
+            return View(new pollModel().displayPollsThatContainSessions());
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult ViewAllPoll(String graphType)
+        {
+            // need an if statement, check if the current user is only poll master, then he could
+            // only see a list of polls he manages. Else if user == higher level eg poll admin, he
+            // is able to see ALL POLL
+
+            // if poll master:
+            //return View(new pollModel().displayPolls());
+
+            // else
+            Session["graphType"] = graphType;
+            return View(new pollModel().displayPollsThatContainSessions());
+        }
+
+        public ActionResult DemographicComparison()
+        {
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult DemographicComparison(String demographic, String graphType, String includeOrExclude)
+        {
+
+            TwoQuestionModels twoModels = new TwoQuestionModels();
+
+            Session["graphType"] = graphType;
+
+            if (includeOrExclude == "Include")
+            {
+                List<questionModel> result = new questionModel().includeDemographicQuestions(demographic);
+                if (!result.Equals(null))
+                {
+
+                    twoModels.data1 = new questionModel().includeDemographicQuestions(demographic);
+                    twoModels.data2 = new questionModel().includeDemographicQuestions(demographic);
+
+                    return View(twoModels);
+                }
+
+                else
+                {
+                    return View();
+                }
+            }
+
+            //then it's exclude
+            else
+            {
+                List<questionModel> result = new questionModel().excludeDemographicQuestions(demographic);
+                if (!result.Equals(null))
+                {
+                    twoModels.data1 = new questionModel().excludeDemographicQuestions(demographic);
+                    twoModels.data2 = new questionModel().excludeDemographicQuestions(demographic);
+
+                    return View(twoModels);
+                }
+
+                else
+                {
+                    return View();
+                }
             }
         }
     }

@@ -11,7 +11,8 @@
     <p> 
     <%-- <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />--%>
     <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />
-    <%= Html.ActionLink("Statistical Report", "../Report/StatisticalReport")%> <br />
+    <%= Html.ActionLink("Statistical Report", "../Report/ViewAllPoll")%> <br />
+    <%= Html.ActionLink("Demographic Comparison Report", "../Report/DemographicComparison")%> <br />
     
     <%= Html.ActionLink("Session Participation Report", "../Report/SessionParticipation")%> <br />
     

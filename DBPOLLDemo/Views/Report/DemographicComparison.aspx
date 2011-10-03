@@ -1,39 +1,70 @@
-﻿<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.TwoQuestionModels>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.TwoQuestionModels>" %>
 
-<script runat="server">
- 
-    protected void Page_Load(object sender, EventArgs e)
-    {
+<%@ Register assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" namespace="System.Web.UI.DataVisualization.Charting" tagprefix="asp" %>
 
-    }
-</script>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    StatisticalReport
+	DemographicComparison
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <% 
-        List<string> pollnamecheck = new List<string>();
-        List<string> qcheck = new List<string>();
-        List<string> scheck = new List<string>();
-        List<string> acheck = new List<string>();
-        List<int> list = new List<int>();
+
+    <% using (Html.BeginForm()) {%>
+        <fieldset>
+            <legend>Search:</legend>
+
+                <p>
+                    <label for="demographic">Enter demographic group</label> 
+                    <%= Html.TextBox("demographic")%><br /> 
+                </p>
 
 
-        int[] sValues = new int[100];
-        String[] sLists = new String[100];
-        String[] aLists = new String[100];
-        int sListsCounter = 0;
-        int sValuesCounter = 0;
-        int aListsCounter = 0; 
-        
-    %>
+                <p>
+                    <label for="graphType">Graph Type:</label>
+                    <select id="graphType" name="graphType">
+                    <option value="Bar">Bar</option>
+                    <option value="Column">Column</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="includeOrExclude">Graph Type:</label>
+                    <select id="includeOrExclude" name="includeOrExclude">
+                    <option value="Include">Display only data from</option>
+                    <option value="Exclude">Exclude data from</option>
+                    </select>
+                </p>
+               
+                <div>
+               
+                    <input type="submit" value="Search" />
+                    
+                </div>
+        </fieldset>
+
+        <% 
+            List<string> pollnamecheck = new List<string>();
+            List<string> qcheck = new List<string>();
+            List<string> scheck = new List<string>();
+            List<string> acheck = new List<string>();
+            List<int> list = new List<int>();
+            Session["test"] = "";
+
+            int[] sValues = new int[100];
+            String[] sLists = new String[100];
+            String[] aLists = new String[100];
+            int sListsCounter = 0;
+            int sValuesCounter = 0;
+            int aListsCounter = 0; 
+        %>
    
-     <% foreach (var item in Model.data1)
+       <% if (Model != null)
+          {%>
+           <% foreach (var item in Model.data1)
        { %>
         
         <% if (!qcheck.Contains(item.question) && pollnamecheck == null || !qcheck.Contains(item.question) && !pollnamecheck.Contains(item.pollname))
         { %>
-                        
+
             <br />
             </fieldset>
             <%
@@ -54,8 +85,7 @@
             <br />
 
             <table>
-            
-                <tr>
+                  <tr>
                     <th nowrap="nowrap" class="style5">
                         Answer Choices
                     </th>
@@ -82,15 +112,18 @@
                                 aLists[aListsCounter++] = item2.answer;
                             %>
                             </td>         
-                    
+                            <%List<String> lastCheck = new List<string>(); %>
                             <%foreach (var item3 in Model.data2)
                              {
                                     foreach (String s in scheck)
                                     {
-                                            if (item3.sessionname == s && item3.question == item2.question && item3.answer == item2.answer)
+                                            if (item3.sessionname == s && item3.question == item2.question && item3.answer == item2.answer
+                                                && !lastCheck.Contains(item3.answer + item3.sessionname + item3.question
+                                                ))
                                             { %>
                                                 <td nowrap="nowrap" class="style100">
                                                     <%= Html.Encode(item3.totalparticipants)%>
+                                                    <% lastCheck.Add(item3.answer + item3.sessionname + item3.question); %>
                                                     <% sValues[sValuesCounter++] = item3.totalparticipants; %>
                                                 </td>
                                             <%}%>
@@ -101,7 +134,8 @@
                     <%} %>       
             <%} %>
             
-            <%  
+
+             <%  
                 pollnamecheck.Add(item.pollname); 
                 qcheck.Add(item.question);
                 list.Add(item.totalparticipants);
@@ -146,6 +180,7 @@
                     }
                     i++;
                 }
+               
             %>
             </table>
             <br />
@@ -155,7 +190,6 @@
             <br />
             <br />
             <br />
-            <%--<img src="<%= Url.Action("Chart", new {sessionValues = sValues, sessionLists = sLists, answerLists = aLists}) %>" alt="image" /> --%>
 
             <%
                 sListsCounter = 0;
@@ -163,9 +197,6 @@
                 sValuesCounter = 0;
             %>
 
-            
-                
-                
         <% }
            else if (!qcheck.Contains(item.question) && pollnamecheck != null || !qcheck.Contains(item.question) && pollnamecheck.Contains(item.pollname))
         { %>
@@ -176,10 +207,6 @@
                 aLists = new String[100];
                 sValues = new int[100];   
             %>  
-
-            <br />
-<%--            <fieldset>
-            <legend><%= Html.Encode(item.pollname)%></legend>--%>
             <%= Html.Encode("Question: " + item.question)%> 
             <% qcheck.Add(item.question); %>
 
@@ -202,7 +229,6 @@
                         <%} %>
                     <% } %> 
                 </tr> 
-
                 <% foreach (var item2 in Model.data1)
                 {
                     if (item2.question == item.question && item2.pollid == item.pollid && !acheck.Contains(item2.answer))
@@ -215,15 +241,19 @@
                                 aLists[aListsCounter++] = item2.answer;
                             %>
                             </td>         
-                    
+                            <%List<String> lastCheck = new List<string>(); %>
                             <%foreach (var item3 in Model.data2)
                              {
                                     foreach (String s in scheck)
                                     {
-                                            if (item3.sessionname == s && item3.question == item2.question && item3.answer == item2.answer)
+                                            if (item3.sessionname == s && item3.question == item2.question && item3.answer == item2.answer
+                                                 && !lastCheck.Contains(item3.answer + item3.sessionname + item3.question
+                                                ))
+                                                
                                             { %>
                                                 <td nowrap="nowrap" class="style100">
                                                     <%= Html.Encode(item3.totalparticipants)%>
+                                                    <% lastCheck.Add(item3.answer + item3.sessionname + item3.question); %>
                                                     <% sValues[sValuesCounter++] = item3.totalparticipants; %>
                                                 </td>
                                             <%}%>
@@ -231,99 +261,76 @@
                              <%} %>     
                         </tr>
                     <%} %>       
-            <%} %>
-            <%  
-                pollnamecheck.Add(item.pollname); 
-                qcheck.Add(item.question);
-                list.Add(item.totalparticipants);
-
-                String finalResult = "";
-                int i = 0;
-                while (i < sValuesCounter)
-                {
-                    finalResult += Convert.ToString(sValues[i]);
-                    if (i + 1 < sValuesCounter)
+                <%} %>
+                <%  
+                    pollnamecheck.Add(item.pollname); 
+                    qcheck.Add(item.question);
+                    list.Add(item.totalparticipants);
+               
+                    String finalResult = "";
+                    int i = 0;
+                    while (i<sValuesCounter)
                     {
-                        finalResult += "/";
+                        finalResult+=Convert.ToString(sValues[i]);
+                        if (i+1<sValuesCounter){
+                            finalResult += "/";
+                        }
+                        
+                        i++;
                     }
 
-                    i++;
-                }
+                    finalResult += ",";
+                    i = 0;
 
-                finalResult += ",";
-                i = 0;
-
-                while (sLists[i] != null)
-                {
-                    finalResult += sLists[i];
-                    if (sLists[i + 1] != null)
+                    while (sLists[i] != null)
                     {
-                        finalResult += "/";
+                        finalResult += sLists[i];
+                        if (sLists[i+1] != null)
+                        {
+                            finalResult += "/";
+                        }
+                        i++;
                     }
-                    i++;
-                }
 
-                i = 0;
+                    i = 0;
 
-                finalResult += ",";
+                    finalResult += ",";
 
-                while (aLists[i] != null)
-                {
-                    finalResult += aLists[i];
-                    if (aLists[i + 1] != null)
+                    while (aLists[i] != null)
                     {
-                        finalResult += "/";
+                        finalResult +=aLists[i];
+                        if (aLists[i + 1] != null)
+                        {
+                            finalResult += "/";
+                        }
+                        i++;
                     }
-                    i++;
-                }
-            %>
-            </table>
-            <br />
-            <br />
-            <img src="<%= Url.Action("Chart", new {chartParameter = finalResult}) %>" alt="image" /> 
-            <br />
-            <br />
-            <br />
-            <br />
-           <%-- <img src="<%= Url.Action("Chart", new {sessionValues = sValues, sessionLists = sLists, answerLists = aLists}) %>" alt="image" /> --%>
+               
 
-            <%
-                sListsCounter = 0;
-                aListsCounter = 0;
-                sValuesCounter = 0;
-            %>
+                %>
+                </table>
+                <br />
+                <br />
+                <img src="<%= Url.Action("Chart", new {chartParameter = finalResult}) %>" alt="image" /> 
+                <br />
+                <br />
+                <br />
+                <br />
+               <%-- <img src="<%= Url.Action("Chart", new {sessionValues = sValues, sessionLists = sLists, answerLists = aLists}) %>" alt="image" /> --%>
+
+                <%
+                    sListsCounter = 0;
+                    aListsCounter = 0;
+                    sValuesCounter = 0;
+                %>
             
-        <% }%>
+                <% }%>
        
-            
-            
-    <%} %>
+            <% } %>               
+        <% } %>           
+       
+    <% } %>
+    </fieldset></asp:Content>
 
-   <%-- DO NOT DELETE THIS <p>--%>
-           <%--  <input name="submit" type="submit" id="generate" value="Generate excel file" />--%>
-          <%--   <input name="submit" type="submit" id="submit" value="Save" />--%>
-                
-   <%-- </p>--%>
-
-    </table>
-
-    </fieldset>
-    
-    
-    <p> &nbsp;</p>
-
-    </asp:Content>
-
-
-
-<asp:Content ID="Content3" runat="server" contentplaceholderid="HeadContent">
-    <style type="text/css">
-        .special
-        {
-            
-            font-weight: bolder;    
-            text-decoration: underline;
-        }
-    </style>
+<asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
-

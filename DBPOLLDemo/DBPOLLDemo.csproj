@@ -182,6 +182,9 @@
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
+    <Content Include="Views\Report\DemographicComparison.aspx" />
+    <Content Include="Views\Report\OneStatisticalReport.aspx" />
+    <Content Include="Views\Report\ViewAllPoll.aspx" />
     <Content Include="Views\Session\Create.aspx" />
     <Content Include="Views\Poll\Edit.aspx" />
     <Content Include="Views\Session\Edit.aspx" />

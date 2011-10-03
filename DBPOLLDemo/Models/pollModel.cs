@@ -553,5 +553,28 @@ namespace DBPOLLDemo.Models
                 throw (e);
             }
         }
+
+        public List<pollModel> displayPollsThatContainSessions()
+        {
+            var query = (from p in dbpollContext.POLLS
+                         from s in dbpollContext.SESSIONS
+
+                         where (s.POLL_ID == p.POLL_ID)
+
+                         orderby p.POLL_NAME ascending
+                         select new pollModel
+                         {
+                             pollid = p.POLL_ID,
+                             sessionid = s.SESSION_ID,
+                             sessionname = s.SESSION_NAME,
+                             pollname = p.POLL_NAME,
+
+                             createdAt = p.CREATED_AT,
+                         }
+
+                ).Distinct();
+
+            return query.ToList();
+        }
     }
 }
