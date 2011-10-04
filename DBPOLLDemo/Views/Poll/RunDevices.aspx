@@ -1,15 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Test Devices
+	Run Devices
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript" src="http://java.com/js/deployJava.js"></script>
 
     <script type="text/javascript">
-        var attributes = { code: '/Applets/polltestapplet.PollTestApplet', width: 900, height: 700 };
-        var parameters = { jnlp_href: '/Applets/launch.jnlp' };
+        var attributes = { code: '/Applets/pollapplet.PollApplet', width: 900, height: 700 };
+        var parameters = { jnlp_href: '/Applets/launch2.jnlp' };
         deployJava.runApplet(attributes, parameters, '1.6'); 
     </script>
 

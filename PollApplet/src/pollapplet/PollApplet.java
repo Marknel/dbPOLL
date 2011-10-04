@@ -435,7 +435,7 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel1.setMaximumSize(new java.awt.Dimension(800, 600));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
-        nextQuestion.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        nextQuestion.setFont(new java.awt.Font("Tahoma", 0, 36));
         nextQuestion.setText("Next Question");
         nextQuestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -443,7 +443,7 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        startButton.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        startButton.setFont(new java.awt.Font("Tahoma", 0, 36));
         startButton.setText("Start Polling");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -451,7 +451,7 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        pollLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        pollLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
         pollLbl.setText("poll Text");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -460,7 +460,7 @@ public class PollApplet extends javax.swing.JApplet {
         jPanel2.setMinimumSize(new java.awt.Dimension(760, 396));
         jPanel2.setPreferredSize(new java.awt.Dimension(600, 396));
 
-        questionText.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        questionText.setFont(new java.awt.Font("Tahoma", 0, 36));
         questionText.setText("Question text");
         questionText.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         questionText.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -468,19 +468,19 @@ public class PollApplet extends javax.swing.JApplet {
         AnswerPanel1.setBackground(new java.awt.Color(255, 255, 255));
         AnswerPanel1.setPreferredSize(new java.awt.Dimension(351, 310));
 
-        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer6Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer6Text.setText("1. Answer");
 
-        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer10Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer10Text.setText("1. Answer");
 
-        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer8Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer8Text.setText("1. Answer");
 
-        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer7Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer7Text.setText("1. Answer");
 
-        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer9Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer9Text.setText("1. Answer");
 
         javax.swing.GroupLayout AnswerPanel1Layout = new javax.swing.GroupLayout(AnswerPanel1);
@@ -515,19 +515,19 @@ public class PollApplet extends javax.swing.JApplet {
 
         AnswerPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer1Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer1Text.setText("1. Answer");
 
-        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer2Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer2Text.setText("1. Answer");
 
-        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer3Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer3Text.setText("1. Answer");
 
-        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer4Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer4Text.setText("1. Answer");
 
-        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        answer5Text.setFont(new java.awt.Font("Tahoma", 0, 24));
         answer5Text.setText("1. Answer");
 
         javax.swing.GroupLayout AnswerPanel2Layout = new javax.swing.GroupLayout(AnswerPanel2);
@@ -587,7 +587,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addContainerGap())
         );
 
-        prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        prevQuestion.setFont(new java.awt.Font("Tahoma", 0, 36));
         prevQuestion.setText("Prev Question");
         prevQuestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -595,17 +595,17 @@ public class PollApplet extends javax.swing.JApplet {
             }
         });
 
-        detectQuestLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detectQuestLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
         detectQuestLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         detectQuestLbl.setText("0");
 
-        slash.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        slash.setFont(new java.awt.Font("Tahoma", 0, 24));
         slash.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         slash.setText("/");
 
         detectedInfoLabel.setText("Devices Found");
 
-        detectTotalLbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detectTotalLbl.setFont(new java.awt.Font("Tahoma", 0, 24));
         detectTotalLbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         detectTotalLbl.setText("0");
 
@@ -687,7 +687,7 @@ public class PollApplet extends javax.swing.JApplet {
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addComponent(testingInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MasterPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -709,7 +709,7 @@ public class PollApplet extends javax.swing.JApplet {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MasterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(MasterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

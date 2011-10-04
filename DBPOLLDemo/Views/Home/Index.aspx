@@ -43,7 +43,8 @@
     <br />
     <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
     <br />
-   
+    <%= Html.ActionLink("Run Reciever Poll", "../Poll/RunDevices")%>
+    <br />
 
    <p>
     Building Participant List

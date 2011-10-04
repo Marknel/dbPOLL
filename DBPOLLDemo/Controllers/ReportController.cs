@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Threading;
-using System.Globalization;
-using DBPOLLDemo.Models;
-using System.Web.UI;
 using System.IO;
-
+using System.Linq;
+using System.Web.Mvc;
 using System.Web.UI.DataVisualization.Charting;
+using DBPOLLDemo.Models;
 
 
 namespace DBPOLLDemo.Controllers

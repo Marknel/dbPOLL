@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-using DBPOLLDemo.Models;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Web.UI;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Web.Mvc;
+using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Controllers
 {

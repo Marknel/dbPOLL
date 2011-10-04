@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Configuration;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-using System.Threading;
 using System.Globalization;
-using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Models
 {
@@ -151,7 +140,6 @@ namespace DBPOLLDemo.Models
         /// </summary>
         /// <returns>List of polls associated with the user</returns>
         /// 
-
         public List<pollModel> displayPollSessions()
         {
             CultureInfo culture = new CultureInfo("en-AU");
@@ -167,6 +155,7 @@ namespace DBPOLLDemo.Models
                         join session in dbpollContext.SESSIONS on poll.POLL_ID equals session.POLL_ID
                         join assign in dbpollContext.ASSIGNEDPOLLS on poll.POLL_ID equals assign.POLL_ID
                         where assign.USER_ID == userID
+                        orderby poll.POLL_NAME
                         select new pollModel
                         {
                             pollid = poll.POLL_ID,

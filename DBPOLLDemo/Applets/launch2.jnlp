@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<jnlp href="launch.jnlp" spec="1.0+">
+<jnlp href="launch2.jnlp" spec="1.0+">
     <information>
-        <title>PollTestApplet</title>
+        <title>PollApplet</title>
         <vendor>s4200943</vendor>
         <homepage href=""/>
-        <description>PollTestApplet</description>
-        <description kind="short">PollTestApplet</description>
+        <description>PollApplet</description>
+        <description kind="short">PollApplet</description>
         
         
     </information>
@@ -15,7 +15,7 @@
 </security>
     <resources>
         <j2se java-vm-args="-Djava.security.policy=applet.policy" version="1.6+"/>
-        <jar href="PollTestApplet.jar" main="true"/>
+        <jar href="PollApplet.jar" main="true"/>
         
         
     <jar href="lib/jna.jar"/>
@@ -23,8 +23,9 @@
 <jar href="lib/orson-0.5.0.jar"/>
 <jar href="lib/jcommon-1.0.10.jar"/>
 <jar href="lib/jfreechart-1.0.6.jar"/>
+<jar href="lib/classes12.jar"/>
 </resources>
-    <applet-desc height="600" main-class="polltestapplet.PollTestApplet" name="PollTestApplet" width="800">
+    <applet-desc height="600" main-class="pollapplet.PollApplet" name="PollApplet" width="800">
         
     </applet-desc>
 </jnlp>
