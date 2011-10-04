@@ -354,7 +354,7 @@ namespace DBPOLLDemo.Models
 
         public questionModel getQuestion(int quid)
         {
-            var query = from q in dbpollContext.QUESTIONS
+            var query = (from q in dbpollContext.QUESTIONS
                         where q.QUESTION_ID == quid
                         select new questionModel
                         {
@@ -365,7 +365,7 @@ namespace DBPOLLDemo.Models
                             questnum = (int)q.NUM, 
                             createdat = q.CREATED_AT, 
                             pollid = q.POLL_ID
-                        };
+                        }).OrderBy(q => q.questnum);
 
             return query.First();
         }
@@ -597,5 +597,26 @@ namespace DBPOLLDemo.Models
         {
             return null;
         }
+
+        // I know there's a function: displayQuestions(int poll) but im sorting things differently and 
+        // Dont wanna break someone else's code so im just creating another copy of it -Grace-
+        public List<questionModel> displayQuestionsFromAPoll(int poll)
+        {
+            var query = (from q in dbpollContext.QUESTIONS
+                        where q.POLL_ID == poll
+                        orderby q.CREATED_AT ascending
+                        select new questionModel
+                        {
+                            pollid = q.POLL_ID,
+                            questionid = q.QUESTION_ID,
+                            question = q.QUESTION1,
+                            questiontype = q.QUESTION_TYPE,
+                            createdat = q.CREATED_AT,
+                            questnum = (int)q.NUM
+                        }).OrderBy(q => q.questnum);
+
+            return query.ToList();
+        }
+
     }
 }
