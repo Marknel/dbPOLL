@@ -11,6 +11,8 @@
         Everyone can see</h2>
     
     <br />
+    <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = ((USER)ViewData["User"]).USER_ID })%>
+    <br />
     <%= Html.ActionLink("Change Password", "ChangePassword", "User")%>
     <br />
     <%= Html.ActionLink("My Messages", "Messages", "Index")%>

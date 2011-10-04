@@ -31,22 +31,22 @@
     
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Delete", "Delete", new { questionid = item.QuestionID, id = ViewData["id"], name = ViewData["name"] })%> |
-                <%= Html.ActionLink("Edit", "Edit", new { questionid = item.QuestionID })%> |
-                <%= Html.ActionLink("View Answers", "Details", new { id = item.QuestionID, name = item.Question })%> |
-                <%= Html.ActionLink("View objects", "../Object/Index", new { questionid = item.QuestionID})%> 
+                <%= Html.ActionLink("Delete", "Delete", new { questionid = item.questionid, id = ViewData["id"], name = ViewData["name"] })%> |
+                <%= Html.ActionLink("Edit", "Edit", new { questionid = item.questionid })%> |
+                <%= Html.ActionLink("View Answers", "Details", new { id = item.questionid, name = item.question })%> |
+                <%= Html.ActionLink("View objects", "../Object/Index", new { questionid = item.questionid})%> 
                 
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.questnum) %>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.Question) %>
+                <%= Html.Encode(item.question) %>
             </td>
             <td nowrap="nowrap">
                 <%  
                 string test;
-                switch(item.QuestionType)       
+                switch(item.questiontype)       
                   {         
                      case 1:   
                         test = "Short Answer: Numeric Responses Only";
@@ -74,7 +74,7 @@
                  <%=Html.Encode(test)%>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(String.Format("{0:g}", item.QuestionCreated)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
             </td>
             
             
