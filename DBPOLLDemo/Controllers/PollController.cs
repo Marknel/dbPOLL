@@ -307,6 +307,11 @@ namespace DBPOLLDemo.Controllers
             return View();
         }
 
+        public ActionResult RunDevices()
+        {
+            return View();
+        }
+
         public ActionResult AssignPoll(int pollid, String pollname)
         {
             Assign_PollMasters pollMasters = new Assign_PollMasters();
