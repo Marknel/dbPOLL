@@ -151,7 +151,6 @@ namespace DBPOLLDemo.Models
         /// </summary>
         /// <returns>List of polls associated with the user</returns>
         /// 
-
         public List<pollModel> displayPollSessions()
         {
             CultureInfo culture = new CultureInfo("en-AU");
@@ -167,6 +166,7 @@ namespace DBPOLLDemo.Models
                         join session in dbpollContext.SESSIONS on poll.POLL_ID equals session.POLL_ID
                         join assign in dbpollContext.ASSIGNEDPOLLS on poll.POLL_ID equals assign.POLL_ID
                         where assign.USER_ID == userID
+                        orderby poll.POLL_NAME
                         select new pollModel
                         {
                             pollid = poll.POLL_ID,
