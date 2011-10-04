@@ -19,7 +19,7 @@
         <% foreach (var item in Model){ %>
             <tr>
                 <%-- link is still broken, no StartSession page just yet--%>
-                <td><%= Html.ActionLink("Open Session", "../Session/StartSession", new { sessionid = item.sessionid })%></td>
+                <td><%= Html.ActionLink("Open Session", "../Session/StartSession", new { sessionid = item.sessionid, pollid = item.pollid })%></td>
                 <td> <%=Html.Encode(item.sessionname) %></td>
                 <td> <%=Html.Encode(item.expiresat)%></td>
 

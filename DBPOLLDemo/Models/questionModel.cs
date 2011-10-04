@@ -572,16 +572,14 @@ namespace DBPOLLDemo.Models
                          orderby p.POLL_NAME ascending
                          select new questionModel
                          {
-                             pollname = (String)(from p1 in dbpollContext.POLLS
-                                                 where (p1.POLL_ID == p.POLL_ID)
-                                                 select p1.POLL_NAME).Distinct().FirstOrDefault(),
-
-                             question = (String)(from q1 in dbpollContext.QUESTIONS
-                                                 where (q1.QUESTION_ID == q.QUESTION_ID)
-                                                 //orderby q1.QUESTION_ID
-                                                 select q1.QUESTION1).FirstOrDefault(),
+                             pollname = p.POLL_NAME,
+                             pollid = p.POLL_ID,
+                             question = q.QUESTION1,
+                             questiontype = q.QUESTION_TYPE,
+                             questnum = q.NUM,
                              sessionid = s.SESSION_ID,
                              sessionname = s.SESSION_NAME,
+                             
 
                              answer = a.ANSWER1,
 
@@ -590,7 +588,7 @@ namespace DBPOLLDemo.Models
                                                        select r.USER_ID).Count(),
                          }
 
-                ).Distinct().OrderBy(p => p.pollname).ThenBy(q => q.question).ThenBy(s => s.sessionname);
+                ).Distinct().OrderBy(q => q.question).ThenBy(s => s.sessionname);
 
             return query.ToList();
         }

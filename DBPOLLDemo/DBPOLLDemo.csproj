@@ -209,6 +209,7 @@
     <Content Include="Views\Report\SessionParticipation.aspx" />
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
+    <Content Include="Views\Session\StartSession.aspx" />
     <Content Include="Views\Session\ViewAvailableSession.aspx" />
     <Content Include="Views\SysAdmin\DeleteConfirm.aspx" />
     <Content Include="Views\SysAdmin\RegisterUser.aspx" />

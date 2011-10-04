@@ -200,8 +200,6 @@ namespace DBPOLLDemo.Models
 
 
                 var query = from p in dbpollContext.POLLS
-                        //fix meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        //from s in dbpollContext.SESSIONS
 
                         where p.CREATED_BY == userID //|| ((a.USER_ID == userID) && ((a.POLL_ID == p.POLL_ID) && (p.POLL_ID == s.POLL_ID))))
                         select new pollModel
@@ -223,8 +221,6 @@ namespace DBPOLLDemo.Models
                          select a.POLL_ID;
 
                 var query = from p in dbpollContext.POLLS
-                            //fix meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                            //from s in dbpollContext.SESSIONS
                             where q2.Contains(p.POLL_ID) //|| ((a.USER_ID == userID) && ((a.POLL_ID == p.POLL_ID) && (p.POLL_ID == s.POLL_ID))))
                             select new pollModel
                             {
@@ -594,6 +590,28 @@ namespace DBPOLLDemo.Models
                              sessionid = s.SESSION_ID,
                              sessionname = s.SESSION_NAME,
                              pollname = poll.POLL_NAME,
+                             expiresat = poll.EXPIRES_AT,
+                         }
+
+                ).Distinct();
+
+            return query.ToList();
+        }
+
+        public List<pollModel> displaySessionDetails(int sessionid)
+        {
+            var query = (from s in dbpollContext.SESSIONS
+                         from p in dbpollContext.POLLS
+                         where (
+                         s.POLL_ID == p.POLL_ID &&
+                         s.SESSION_ID == sessionid
+                         )
+                         select new pollModel
+                         {
+                             pollid = p.POLL_ID,
+                             pollname = p.POLL_NAME,
+                             sessionid = s.SESSION_ID,
+                             sessionname = s.SESSION_NAME,
                              expiresat = poll.EXPIRES_AT,
                          }
 

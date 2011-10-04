@@ -29,7 +29,7 @@
             </td>
 
             <td>
-                <%= Html.Encode(item.Answer) %>
+                <%= Html.Encode(item.answer) %>
             </td>
             
             <td>

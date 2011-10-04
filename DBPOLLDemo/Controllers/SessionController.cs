@@ -9,6 +9,12 @@ using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
 {
+    public class PollAndQuestions
+    {
+        public List<pollModel> sessionData { get; set; }
+        public List<questionModel> questionData { get; set; }
+    }
+
     public class SessionController : Controller
     {
         //
@@ -305,18 +311,18 @@ namespace DBPOLLDemo.Controllers
             
         }
 
-        //public ActionResult StartSession(int sessionid)
-        //{
-        //    if (Session["uid"] == null)
-        //    {
-        //        return RedirectToAction("Index", "Home");
-        //    }
+        public ActionResult StartSession(int sessionid, int pollid)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-        //    //pollModel poll = new pollModel(sessionid, 1);
-        //    //poll.deleteSession();
+            PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
+            pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
+            pollAndQuestionModel.questionData = new questionModel().displayOneQuestionAnswer(pollid);
 
-        //    //return View(new pollModel().displayAssignedSessions(userid));
-
-        //}
+            return View(pollAndQuestionModel);
+        }
     }
 }
