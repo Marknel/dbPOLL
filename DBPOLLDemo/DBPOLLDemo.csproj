@@ -74,6 +74,7 @@
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
+    <Compile Include="Controllers\participantController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Models\objectModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Models\participantModel.cs" />
     <Compile Include="Models\pollModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

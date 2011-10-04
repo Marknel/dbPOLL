@@ -175,7 +175,7 @@
           <Property Name="MODIFIED_AT" Type="DATE" />
           <Property Name="USER_ID" Type="int" Nullable="false" />
           <Property Name="SESSION_ID" Type="int" Nullable="false" />
-          <Property Name="USER_WEIGHT" Type="decimal" />
+          <Property Name="USER_WEIGHT" Type="int" />
           <Property Name="NAME" Type="VARCHAR2" MaxLength="32" />
           <Property Name="ADDRESS" Type="VARCHAR2" MaxLength="20" />
           <Property Name="CITY" Type="VARCHAR2" MaxLength="20" />
@@ -714,7 +714,7 @@
           <Property Name="SESSION_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SESSION" Relationship="Models.CSSE3004GG_SYS_C001273263" FromRole="PARTICIPANTS" ToRole="SESSIONS" />
           <NavigationProperty Name="USER" Relationship="Models.CSSE3004GG_SYS_C001273262" FromRole="PARTICIPANTS" ToRole="USERS" />
-          <Property Type="Decimal" Name="USER_WEIGHT" Precision="29" Scale="0" />
+          <Property Type="Int32" Name="USER_WEIGHT" />
           <Property Type="String" Name="NAME" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ADDRESS" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CITY" MaxLength="20" FixedLength="false" Unicode="false" />

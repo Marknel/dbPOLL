@@ -2048,7 +2048,7 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> USER_WEIGHT
+        public Nullable<global::System.Int32> USER_WEIGHT
         {
             get
             {
@@ -2063,8 +2063,8 @@ namespace DBPOLLDemo.Models
                 OnUSER_WEIGHTChanged();
             }
         }
-        private Nullable<global::System.Decimal> _USER_WEIGHT;
-        partial void OnUSER_WEIGHTChanging(Nullable<global::System.Decimal> value);
+        private Nullable<global::System.Int32> _USER_WEIGHT;
+        partial void OnUSER_WEIGHTChanging(Nullable<global::System.Int32> value);
         partial void OnUSER_WEIGHTChanged();
     
         /// <summary>
