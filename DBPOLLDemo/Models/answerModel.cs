@@ -31,13 +31,14 @@ namespace DBPOLLDemo.Models
            
         }
 
-        public answerModel(int answerid, String ansnum, String answer)
+        // Grace changed the ansnum from String to int
+        public answerModel(int answerid, int ansnum, String answer)
         {
             int ansnumber = 0;
             ans.ANSWER_ID = this.answerid = answerid;
 
-            try { ansnumber = int.Parse(ansnum); }
-            catch { ansnumber = 0; };
+            //try { ansnumber = int.Parse(ansnum); }
+            //catch { ansnumber = 0; };
             ans.NUM = this.ansnum = ansnumber;
 
             ans.ANSWER1 = this.answer = answer;
@@ -131,18 +132,19 @@ namespace DBPOLLDemo.Models
         public List<answerModel> displayAnswers(int questId)
         {
             var query = from a in dbpollContext.ANSWERS
-                        where a.QUESTION_ID == questId && a.ANSWER_ID == 1
+                        where a.QUESTION_ID == questId
                         //a.UPDATED_TO   FIX ME ANDREW OMG. I AM BROKEN BECAUSE OF YOU! WHAT HAVE YOU DONE!   
                         orderby a.NUM ascending
 
                         select new answerModel
                         {
                             answerid = a.ANSWER_ID,
+                            questionid = questId,
                             ansnum = (int)a.NUM, 
                             answer = a.ANSWER1, 
                             correct = (int)a.CORRECT,
                             weight = (int)a.WEIGHT, 
-                            updatedto = 1,//(int)a.UPDATED_TO,a.UPDATED_TO   FIX ME ANDREW OMG. I AM BROKEN BECAUSE OF YOU! WHAT HAVE YOU DONE!   
+                            //updatedto = 1,//(int)a.UPDATED_TO,a.UPDATED_TO   FIX ME ANDREW OMG. I AM BROKEN BECAUSE OF YOU! WHAT HAVE YOU DONE!   
                             createdat = a.CREATED_AT
                         };
             /**
@@ -278,6 +280,30 @@ namespace DBPOLLDemo.Models
             catch (Exception e) {
                 throw (e);
             }
+        }
+
+        public List<answerModel> getPollAnswers(int pollid)
+        {
+            var query = from a in dbpollContext.ANSWERS
+                        from q in dbpollContext.QUESTIONS
+                        from p in dbpollContext.POLLS
+                        where 
+                        a.QUESTION_ID == q.QUESTION_ID &&
+                        q.POLL_ID == p.POLL_ID &&
+                        p.POLL_ID == pollid
+                        select new answerModel
+                        {
+                            answerid = a.ANSWER_ID,
+                            questionid = q.QUESTION_ID,
+                            ansnum = (int)a.NUM,
+                            answer = a.ANSWER1,
+                            correct = (int)a.CORRECT,
+                            weight = (int)a.WEIGHT,
+                            updatedto = 1,//(int)a.UPDATED_TO,a.UPDATED_TO   FIX ME ANDREW OMG. I AM BROKEN BECAUSE OF YOU! WHAT HAVE YOU DONE!   
+                            createdat = a.CREATED_AT
+                        };
+
+            return query.ToList();
         }
     }
 }

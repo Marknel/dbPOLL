@@ -602,10 +602,11 @@ namespace DBPOLLDemo.Models
                              sessionid = s.SESSION_ID,
                              sessionname = s.SESSION_NAME,
                              expiresat = poll.EXPIRES_AT,
+                             
                          }
 
                 ).Distinct();
-
+            
             return query.ToList();
         }
     }

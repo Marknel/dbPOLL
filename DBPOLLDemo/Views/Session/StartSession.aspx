@@ -1,60 +1,92 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.PollAndQuestions>" %>
 
+<script runat="server">
 
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+</script>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	StartSession
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>StartSession</h2>
+
+    <p class="style1"> <strong>You are now participating in session: <%=Html.Encode(Model.sessionData[0].sessionname) %>
+        </strong></p>
 
 
-    <% foreach (var item in Model.sessionData)
-       { %>
+    <% 
+        //List<DBPOLLDemo.Models.questionModel> questionList = Model.questionData;
+        //List<List<DBPOLLDemo.Models.answerModel>> answerList = Model.answerData;
+        //List<DBPOLLDemo.Models.pollModel> sessionList = Model.sessionData;
+        int currentQuestion = (int)Session["currentwebpollingQuestion"];
+      
+    %>
+    <% using (Html.BeginForm()){%>
 
-       <p> <%=Html.Encode("Session name: " +item.sessionname) %></p>
-       <p> <%=Html.Encode("Session id: "+ item.sessionid) %></p>
-       <p> <%=Html.Encode("poll id: " + item.pollid)%></p>
-       <p> <%=Html.Encode("Poll expires at: " + item.expiresat)%></p>
+            <div style="text-align: center">
+            <fieldset>
+            <legend> <%=Html.Encode("Question " + Model.questionData.questnum)%></legend>
 
-    <%} %>
+                    
+                <%=Html.Encode(Model.questionData.question)%>
 
-    <br />
-    <br />
-    <br />
-    <br />
+                <%foreach (var answers in Model.answerData)
+                    {
+                        int i = 1;
+                        foreach (var answer in answers)
+                        {
 
-    <% foreach (var item in Model.questionData)
-       { %>
+                            if (answer.questionid == Model.questionData.questionid)
+                            { %>
+                                    
+                                    
+                                <center>
+                                    <p>
+                                        <label>
+                                        <%= Html.RadioButton("UserAnswer", answer.answerid)%>     
+                                        <%=Html.Encode(answer.answer)%> 
+                                        </label>
+                                    </p>
+                                </center>
+                                <br />
+                             
+                                    
+                        <%}
+                        }
 
-       <p> <%=Html.Encode("Question number: " + item.questnum)%></p>
-       <p> <%=Html.Encode("Question: " +item.question) %></p>
-       <p> <%=Html.Encode("Question id: "+ item.questionid) %></p>
-       <p> <%=Html.Encode("Question type: " + item.questiontype)%></p>
+                    } %>
 
-       <% if (item.questiontype == 3){ %>
-            
-            <%foreach (var item2 in Model.questionData)
-              { %>
+            <% if (currentQuestion > 1)
+                { %>
+                        
+                <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
+                <button type="submit" name = "button" value="Next Question"> Next Question </button>
 
-                <% if (item2.question == item.question)
-                   { %>
-                      <p> <%=Html.Encode("Answer Choice: " + item2.answer)%></p>
+            <% }else
+                { %>
 
-                <% }%>
+                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
             <%} %>
 
-        <%} %>
+            </fieldset>
+            </div>
+
 
     <%} %>
 
-    <br />
-    <br />
-    <br />
-    <br />
+    
 
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
+    <style type="text/css">
+        .style1
+        {
+            font-size: medium;
+        }
+    </style>
 </asp:Content>

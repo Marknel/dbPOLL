@@ -315,7 +315,6 @@ namespace DBPOLLDemo.Controllers
         {
             int questnum = 0;
 
-
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -337,10 +336,8 @@ namespace DBPOLLDemo.Controllers
 
             Session["currentWebpollingSessionid"] = sessionid;
             Session["currentWebpollingPollid"] = pollid;
-
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
-            
             Session["currentwebpollingQuestion"] = questnum+1;
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
