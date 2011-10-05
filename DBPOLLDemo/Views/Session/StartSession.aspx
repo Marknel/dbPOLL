@@ -30,9 +30,11 @@
             <div style="text-align: center">
             <fieldset>
             <legend> <%=Html.Encode("Question " + Model.questionData.questnum)%></legend>
-
+            
                     
                 <%=Html.Encode(Model.questionData.question)%>
+                <br />
+                <br />
 
 <%--                <p>
                     <%=Html.RadioButton("ANSWER_LIST", "VALUE_LIST")%>
@@ -108,6 +110,7 @@
                      <button type="submit" name = "button" value="Next Question"> Next Question </button>
 
              <%} %>
+
 
             </fieldset>
             </div>

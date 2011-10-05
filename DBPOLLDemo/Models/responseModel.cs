@@ -34,14 +34,7 @@ namespace DBPOLLDemo.Models
             resp.ANSWER_ID = this.answerid = answerid;
         }
 
-        //public responseModel(int responseid, DateTime createdat, DateTime modifiedat, int userid, int answerid)
-        //{
-        //    resp.RESPONSE_ID = this.responseid = responseid;
-        //    resp.CREATED_AT = this.createdat = createdat;
-        //    resp.MODIFIED_AT = this.modifiedat = modifiedat;
-        //    resp.USER_ID = this.userid = userid;
-        //    resp.ANSWER_ID = this.answerid = answerid;
-        //}
+
 
         public int getMaxResponseID()
         {
@@ -52,7 +45,17 @@ namespace DBPOLLDemo.Models
         }
 
 
+        public responseModel(int responseid, DateTime createdat, DateTime modifiedat, int userid, int answerid)
+        {
+            resp.RESPONSE_ID = this.responseid = responseid;
+            resp.CREATED_AT = this.createdat = createdat;
+            resp.MODIFIED_AT = this.modifiedat = modifiedat;
+            resp.USER_ID = this.userid = userid;
+            resp.ANSWER_ID = this.answerid = answerid;
+        }
+
         public void createResponse(int userid, int answerid, int sessionid)
+
         {
             try
             {
@@ -66,6 +69,7 @@ namespace DBPOLLDemo.Models
                 response.MODIFIED_AT = null;
                 response.SESSION_ID = sessionid;
 
+
                 dbpollContext.AddToRESPONSES(response);
                 dbpollContext.SaveChanges();
 
@@ -76,13 +80,16 @@ namespace DBPOLLDemo.Models
             }
         }
 
+
         public void updateResponse(int responseid, int answerid)
+        
         {
             try
             {
                 var getResponse = from r in dbpollContext.RESPONSES
                                   where r.RESPONSE_ID == responseid
                                   select r;
+
 
 
                 RESPONS response = getResponse.First<RESPONS>();
@@ -93,12 +100,14 @@ namespace DBPOLLDemo.Models
                 response.MODIFIED_AT = DateTime.Now;
                 dbpollContext.SaveChanges();
 
+
             }
             catch (Exception e)
             {
                 throw (e);
             }
         }
+
 
         //public int getResponseId(int userid, int sessionid, int answerid, int questionid)
         //{

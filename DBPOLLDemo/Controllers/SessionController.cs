@@ -339,15 +339,16 @@ namespace DBPOLLDemo.Controllers
             Session["currentWebpollingSessionid"] = sessionid;
             Session["currentWebpollingPollid"] = pollid;
 
-
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
             Session["currentQuestionId"] = pollAndQuestionModel.questionData.questionid;
+
             //questionModel tempQuestionModel = tempList[questnum+1];
             if (tempList.Count() == questnum+1)
             {
                 Session["endOfQuestion"] = true;
             }
+
             Session["currentwebpollingQuestion"] = questnum;
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
@@ -382,6 +383,7 @@ namespace DBPOLLDemo.Controllers
             int sessionid = (int)Session["currentWebpollingSessionid"];
             int pollid = (int)Session["currentWebpollingPollid"];
             int questnum = (int)Session["currentwebpollingQuestion"];
+
             Session["selectedAnswer"] = 0;
 
             // Get user answer from radio button
@@ -452,36 +454,5 @@ namespace DBPOLLDemo.Controllers
         //    return false;
         //}
 
-        private void buildAnswerRadioButton(String[] answers)
-        {
-
-            userModel user = new userModel();
-            var userDetails = user.get_details((int)Session["uid"]);
-            ViewData["User"] = userDetails;
-
-            List<SelectListItem> ListItems = new List<SelectListItem>();
-            ListItems.Add(new SelectListItem
-            {
-                Text = "Poll User",
-                Value = "1"
-            });
-            ListItems.Add(new SelectListItem
-            {
-                Text = "Poll Master",
-                Value = "2",
-                Selected = true
-            });
-            ListItems.Add(new SelectListItem
-            {
-                Text = "Poll Creator",
-                Value = "3"
-            });
-            ListItems.Add(new SelectListItem
-            {
-                Text = "Poll Administrator",
-                Value = "4"
-            });
-            ViewData["USER_TYPE"] = ListItems;
-        }
     }
 }
