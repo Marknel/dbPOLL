@@ -7,9 +7,7 @@
     <legend>Recieved Messages</legend>
     <table>
         <tr>
-        <th nowrap="nowrap">
-                Actions
-            </th>
+        
             <th nowrap="nowrap">
                 Message
             </th>
@@ -33,9 +31,7 @@
         <% foreach (var item in Model)
            { %>
         <tr>
-         <td nowrap="nowrap">
-                    <%= Html.ActionLink("Reply", "ReplyConfirm", new { UserID = item.UserID })%>
-                </td>
+        
             <td nowrap="nowrap">
                 <%= Html.Encode(item.Message)%>
             </td>
