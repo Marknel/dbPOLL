@@ -30,11 +30,13 @@
             <div style="text-align: center">
             <fieldset>
             <legend> <%=Html.Encode("Question " + Model.questionData.questnum)%></legend>
-            
+
                     
                 <%=Html.Encode(Model.questionData.question)%>
-                <br />
-                <br />
+
+<%--                <p>
+                    <%=Html.RadioButton("ANSWER_LIST", "VALUE_LIST")%>
+                </p>--%>
 
                 <%foreach (var answers in Model.answerData)
                     {
@@ -44,16 +46,40 @@
 
                             if (answer.questionid == Model.questionData.questionid)
                             { %>
-                                    
-                                    
-                                <center>
+                                
+                                <% 
+                                if (Session["selectedAnswer"] != null){ %>    
+                                    <% 
+                                       if ((int)Session["selectedAnswer"] == answer.answerid)
+                                       { %>    
+                                        <center>
+                                            <p>
+                                                <label>
+                                                <%=Html.RadioButton("UserAnswer", answer.answerid, true)%>     
+                                                <%=Html.Encode(answer.answer)%> 
+                                                </label>
+                                            </p>
+                                        </center>
+                                    <%} else {%>
+                                        <center>
+                                            <p>
+                                                <label>
+                                                <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
+                                                <%=Html.Encode(answer.answer)%> 
+                                                </label>
+                                            </p>
+                                        </center>
+                                    <%} %>
+                                <%} else {%>
+                                 <center>
                                     <p>
                                         <label>
-                                        <%= Html.RadioButton("UserAnswer", answer.answerid)%>     
+                                        <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
                                         <%=Html.Encode(answer.answer)%> 
                                         </label>
                                     </p>
                                 </center>
+                                <%} %>
                                 <br />
                              
                                     
@@ -63,17 +89,25 @@
                     } %>
 
             <%  if(currentQuestion == 1)
-                { %>
-                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
+
+            { %>
+                        <%--this is how to disable a button--%>
+                       <%-- <button type="submit" name = "button" value="Next Question" disabled = true> Next Question </button>--%>
+                        <button type="submit" name = "button" value="Next Question"> Next Question </button>
 
             <% } else if ((Boolean)Session["endOfQuestion"] == true)
-                { %>
-                    <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
+
+            { %>
+
+                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
 
             <%} else {%>
-                    <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
-                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
-            <%} %>
+
+                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
+
+                     <button type="submit" name = "button" value="Next Question"> Next Question </button>
+
+             <%} %>
 
             </fieldset>
             </div>
