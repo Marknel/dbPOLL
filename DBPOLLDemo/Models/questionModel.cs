@@ -618,5 +618,29 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
+        // Get all of the questions that have been answered by a user in one particular session
+        // ansnum!
+        public List<questionModel> AnsweredQuestions(int sessionid, int userid)
+        {
+            var query = (from q in dbpollContext.QUESTIONS
+                         from a in dbpollContext.ANSWERS
+                         from r in dbpollContext.RESPONSES
+                         where
+                            q.QUESTION_ID == a.QUESTION_ID &&
+                            a.ANSWER_ID == r.ANSWER_ID &&
+                            r.USER_ID == userid &&
+                            r.SESSION_ID == sessionid
+                         select new questionModel
+                         {
+                             question = q.QUESTION1,
+                             questionid = q.QUESTION_ID,
+                             questiontype = q.QUESTION_TYPE,
+                             answernum = r.ANSWER_ID,
+                             answer = r.FEEDBACK
+                         });
+
+            return query.ToList();
+        }
+
     }
 }

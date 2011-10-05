@@ -326,10 +326,11 @@ namespace DBPOLLDemo.Controllers
                 questnum = (int)Session["currentwebpollingQuestion"];
             }
             else {
-                questnum = (int)Session["currentwebpollingQuestion"] - 1;
+                questnum = (int)Session["currentwebpollingQuestion"];
             }
 
             Session["endOfQuestion"] = false;
+
 
             PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
@@ -341,12 +342,13 @@ namespace DBPOLLDemo.Controllers
 
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+
             //questionModel tempQuestionModel = tempList[questnum+1];
             if (tempList.Count() == questnum+1)
             {
                 Session["endOfQuestion"] = true;
             }
-            Session["currentwebpollingQuestion"] = questnum+1;
+            Session["currentwebpollingQuestion"] = questnum;
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
             List<List<answerModel>> sorted = new List<List<answerModel>>();
@@ -381,6 +383,7 @@ namespace DBPOLLDemo.Controllers
 
             int sessionid = (int)Session["currentWebpollingSessionid"];
             int pollid = (int)Session["currentWebpollingPollid"];
+
             int questnum = (int)Session["currentwebpollingQuestion"];
 
             List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
@@ -397,7 +400,7 @@ namespace DBPOLLDemo.Controllers
                 Session["currentwebpollingQuestion"] = questnum+1;
             }
 
-             
+
             return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid});
         }
     }

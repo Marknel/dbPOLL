@@ -305,5 +305,15 @@ namespace DBPOLLDemo.Models
 
             return query.ToList();
         }
+
+        // Get an associated answer value from answer table
+        public String getFeedback(int answerid)
+        {
+            var query = (from a in dbpollContext.ANSWERS
+                         where a.ANSWER_ID == answerid
+                         select a.ANSWER1);
+
+            return query.First();
+        }
     }
 }
