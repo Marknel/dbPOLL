@@ -326,7 +326,7 @@ namespace DBPOLLDemo.Controllers
                 questnum = (int)Session["currentwebpollingQuestion"];
             }
             else {
-                questnum = (int)Session["currentwebpollingQuestion"] - 1;
+                questnum = (int)Session["currentwebpollingQuestion"];
             }
 
             Session["endOfQuestion"] = false;
@@ -339,14 +339,16 @@ namespace DBPOLLDemo.Controllers
             Session["currentWebpollingSessionid"] = sessionid;
             Session["currentWebpollingPollid"] = pollid;
 
+
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+            Session["currentQuestionId"] = pollAndQuestionModel.questionData.questionid;
             //questionModel tempQuestionModel = tempList[questnum+1];
             if (tempList.Count() == questnum+1)
             {
                 Session["endOfQuestion"] = true;
             }
-            Session["currentwebpollingQuestion"] = questnum+1;
+            Session["currentwebpollingQuestion"] = questnum;
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
             List<List<answerModel>> sorted = new List<List<answerModel>>();
@@ -376,29 +378,110 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // answer id
-            int selectedAnswer = Convert.ToInt32(Request["UserAnswer"]);
-
+            PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             int sessionid = (int)Session["currentWebpollingSessionid"];
             int pollid = (int)Session["currentWebpollingPollid"];
             int questnum = (int)Session["currentwebpollingQuestion"];
+            Session["selectedAnswer"] = 0;
 
-            List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+            // Get user answer from radio button
 
-            if (button == "Previous Question")
+            if (Request["UserAnswer"] !=  null)
             {
+                int selectedAnswer = Convert.ToInt32(Request["UserAnswer"]);
+            
+                List<questionModel> answeredQuestions = new questionModel().AnsweredQuestions(sessionid, (int)Session["uid"]);
+
+                questionModel answeredQuestion = new questionModel();
+
+                foreach (var item in answeredQuestions)
+                {
+                    if (item.questionid == (int)Session["currentQuestionId"])
+                    {
+                        answeredQuestion = item;
+                    }
+                }
+
+                // If a question has been answered by this user before, then create a new response data
+                if (answeredQuestion.question != null )
+                {
+                    int responseId = new responseModel().getResponseId(sessionid, (int)Session["uid"], answeredQuestion.answer);
+                    try
+                    {
+                        new responseModel().updateResponse(responseId, selectedAnswer);
+                    }
+                    catch (Exception e)
+                    {
+                        throw (e);
+                    }
+                }
+                // else just update the response for this answer
+                else 
+                {
+                    Session["selectedAnswer"] = answeredQuestion.answernum;
+                    try
+                    {
+                        new responseModel().createResponse((int)Session["uid"], selectedAnswer, sessionid);
+                    }
+                    catch (Exception e)
+                    {
+                        throw (e);
+                    }
+                }
+
+                List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+                if (button == "Previous Question")
+                {
                 
-                Session["currentwebpollingQuestion"] = questnum-1;
-            }
+                    Session["currentwebpollingQuestion"] = questnum-1;
+                }
 
-            else
-            {
-                // TODO check if its end of the question, else line below will throw an error when index outta bound
-                Session["currentwebpollingQuestion"] = questnum+1;
+                else
+                {
+                    // TODO check if its end of the question, else line below will throw an error when index outta bound
+                    Session["currentwebpollingQuestion"] = questnum+1;
+                }
             }
-
              
             return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid});
+        }
+
+        //public Boolean isAnswered(int questionid, int sessionid, int userid, int pollid)
+        //{
+        //    List<questionModel> questionList = new questionModel().displayQuestionsFromAPoll(pollid);
+        //    return false;
+        //}
+
+        private void buildAnswerRadioButton(String[] answers)
+        {
+
+            userModel user = new userModel();
+            var userDetails = user.get_details((int)Session["uid"]);
+            ViewData["User"] = userDetails;
+
+            List<SelectListItem> ListItems = new List<SelectListItem>();
+            ListItems.Add(new SelectListItem
+            {
+                Text = "Poll User",
+                Value = "1"
+            });
+            ListItems.Add(new SelectListItem
+            {
+                Text = "Poll Master",
+                Value = "2",
+                Selected = true
+            });
+            ListItems.Add(new SelectListItem
+            {
+                Text = "Poll Creator",
+                Value = "3"
+            });
+            ListItems.Add(new SelectListItem
+            {
+                Text = "Poll Administrator",
+                Value = "4"
+            });
+            ViewData["USER_TYPE"] = ListItems;
         }
     }
 }
