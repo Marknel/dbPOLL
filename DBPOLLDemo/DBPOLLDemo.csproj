@@ -107,6 +107,9 @@
     <Compile Include="Models\questionModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Models\responseModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\userModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

@@ -329,6 +329,8 @@ namespace DBPOLLDemo.Controllers
                 questnum = (int)Session["currentwebpollingQuestion"] - 1;
             }
 
+            Session["endOfQuestion"] = false;
+
             PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
  
@@ -339,6 +341,11 @@ namespace DBPOLLDemo.Controllers
 
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+            //questionModel tempQuestionModel = tempList[questnum+1];
+            if (tempList.Count() == questnum+1)
+            {
+                Session["endOfQuestion"] = true;
+            }
             Session["currentwebpollingQuestion"] = questnum+1;
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
@@ -374,46 +381,23 @@ namespace DBPOLLDemo.Controllers
 
             int sessionid = (int)Session["currentWebpollingSessionid"];
             int pollid = (int)Session["currentWebpollingPollid"];
-
-            PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
+            int questnum = (int)Session["currentwebpollingQuestion"];
 
             List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
-            pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
 
-            int questnum = (int)Session["currentwebpollingQuestion"];
             if (button == "Previous Question")
             {
-                pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+                
                 Session["currentwebpollingQuestion"] = questnum-1;
             }
 
-            // else its next
             else
             {
                 // TODO check if its end of the question, else line below will throw an error when index outta bound
-                pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
                 Session["currentwebpollingQuestion"] = questnum+1;
             }
 
-            List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
-            List<List<answerModel>> sorted = new List<List<answerModel>>();
-
-            List<int> questionCheck = new List<int>();
-
-            foreach (var answer in unsorted)
-            {
-                if (pollAndQuestionModel.questionData.questionid == answer.questionid && !questionCheck.Contains(pollAndQuestionModel.questionData.questionid))
-                {
-                    sorted.Add(new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid));
-                    questionCheck.Add(pollAndQuestionModel.questionData.questionid);
-                }
-            }
-            pollAndQuestionModel.answerData = sorted;
-            
-
-
-
-            //return View("StartSession", new { sessionid = sessionid, pollid = pollid });
+             
             return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid});
         }
     }
