@@ -10,7 +10,9 @@ namespace DBPOLLDemo.Controllers
     public class PollAndQuestions
     {
         public List<pollModel> sessionData { get; set; }
-        public List<questionModel> questionData { get; set; }
+        public questionModel questionData { get; set; }
+        public List<List<answerModel>> answerData { get; set; }
+     
     }
 
     public class SessionController : Controller
@@ -311,16 +313,110 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult StartSession(int sessionid, int pollid)
         {
+            int questnum = 0;
+
+
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            if (Session["currentwebpollingQuestion"] == null)
+            {
+                Session["currentwebpollingQuestion"] = 0;
+                questnum = (int)Session["currentwebpollingQuestion"];
+            }
+            else {
+                questnum = (int)Session["currentwebpollingQuestion"] - 1;
+            }
+
             PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
-            pollAndQuestionModel.questionData = new questionModel().displayOneQuestionAnswer(pollid);
+ 
+            List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
 
+            Session["currentWebpollingSessionid"] = sessionid;
+            Session["currentWebpollingPollid"] = pollid;
+
+            
+            pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+            
+            Session["currentwebpollingQuestion"] = questnum+1;
+
+            List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
+            List<List<answerModel>> sorted = new List<List<answerModel>>();
+            
+            List<int> questionCheck = new List<int>();
+
+                foreach (var answer in unsorted)
+                {
+                    if (pollAndQuestionModel.questionData.questionid == answer.questionid && !questionCheck.Contains(pollAndQuestionModel.questionData.questionid))
+                    {
+                        sorted.Add(new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid));
+                        questionCheck.Add(pollAndQuestionModel.questionData.questionid);
+                    }
+                }
+            pollAndQuestionModel.answerData = sorted;
+            
+            
             return View(pollAndQuestionModel);
+        }
+
+        
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult StartSession(String button)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // answer id
+            int selectedAnswer = Convert.ToInt32(Request["UserAnswer"]);
+
+            int sessionid = (int)Session["currentWebpollingSessionid"];
+            int pollid = (int)Session["currentWebpollingPollid"];
+
+            PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
+
+            List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+            pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
+
+            int questnum = (int)Session["currentwebpollingQuestion"];
+            if (button == "Previous Question")
+            {
+                pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+                Session["currentwebpollingQuestion"] = questnum-1;
+            }
+
+            // else its next
+            else
+            {
+                // TODO check if its end of the question, else line below will throw an error when index outta bound
+                pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+                Session["currentwebpollingQuestion"] = questnum+1;
+            }
+
+            List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
+            List<List<answerModel>> sorted = new List<List<answerModel>>();
+
+            List<int> questionCheck = new List<int>();
+
+            foreach (var answer in unsorted)
+            {
+                if (pollAndQuestionModel.questionData.questionid == answer.questionid && !questionCheck.Contains(pollAndQuestionModel.questionData.questionid))
+                {
+                    sorted.Add(new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid));
+                    questionCheck.Add(pollAndQuestionModel.questionData.questionid);
+                }
+            }
+            pollAndQuestionModel.answerData = sorted;
+            
+
+
+
+            //return View("StartSession", new { sessionid = sessionid, pollid = pollid });
+            return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid});
         }
     }
 }
