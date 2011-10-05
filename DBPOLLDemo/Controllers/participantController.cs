@@ -1,12 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Controllers
 {
-    public class participantController : Controller
+    public class AssignedAndUnassignedParticipants
+    {
+        public List<participantModel> participants;
+        public List<userModel> unassigned;
+    }
+
+
+    public class ParticipantController : Controller
     {
         //
         // GET: /participant/
@@ -27,16 +33,23 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /participant/Create
 
-        public ActionResult Create()
+        public ActionResult Modify(int sessionid, String sessionname)
         {
-            return View();
+            AssignedAndUnassignedParticipants comp = new AssignedAndUnassignedParticipants();
+            comp.participants = new participantModel().displayParticipants(sessionid);
+            comp.unassigned = new userModel().displayUnassignedParticipants(sessionid);
+
+            ViewData["sessionid"] = sessionid;
+            ViewData["sessionname"] = sessionname;
+
+            return View(comp);
         } 
 
         //
         // POST: /participant/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Modify(FormCollection collection)
         {
             try
             {
@@ -79,9 +92,10 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /participant/Delete/5
  
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int userid, int sessionid, String sessionname)
         {
-            return View();
+            new participantModel().deleteParticipant(userid, sessionid);
+            return RedirectToAction("Modify", new { sessionid = sessionid, sessionname = sessionname});
         }
 
         //

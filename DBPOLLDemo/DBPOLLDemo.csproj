@@ -74,7 +74,7 @@
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
-    <Compile Include="Controllers\participantController.cs" />
+    <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -184,6 +184,7 @@
     <Content Include="Views\Home\PollsIManage.ascx" />
     <Content Include="Views\Home\PollsImCreating.ascx" />
     <Content Include="Views\Home\ResetPassword.aspx" />
+    <Content Include="Views\Participant\Modify.aspx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\RunDevices.aspx" />

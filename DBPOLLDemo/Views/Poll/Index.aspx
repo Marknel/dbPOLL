@@ -34,6 +34,7 @@
             <th nowrap="nowrap">Actions</th>
              <th nowrap="nowrap">Poll Name</th>
              <th nowrap="nowrap">Creation Date</th>
+             <th></th>
         </tr>
 
     <% foreach (var item in Model.pollData) { 
@@ -42,7 +43,6 @@
     
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Run", "Run", new {pollid=item.pollid}) %> |
                 <a id="<%=item.pollid%>" href="/Poll/Delete?pollid=<%=item.pollid%>" onclick="return check(<%=item.pollid%>);">Delete</a>|
                 <%= Html.ActionLink("Edit", "Edit", new {name=item.pollname, id = item.pollid}) %> |
                 <%= Html.ActionLink(" View Questions", "Details", new {id=item.pollid, name=item.pollname})%> |
@@ -86,6 +86,8 @@
             <th class="style2">Actions</th>
              <th class="style2">Session Name</th>
              <th class="style2">Poll Name</th>
+             <th class="style2">Participant List</th>
+             <th></th>
         </tr>
 
     <% foreach (var item in Model.sessionData)
@@ -95,6 +97,7 @@
     
         <tr>
             <td nowrap="nowrap">
+                <%= Html.ActionLink("Run", "Run", new {pollid=item.pollid}) %> |
                 <a id="<%=item.sessionid%>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>" onclick="return check(<%=item.sessionid%>);">Delete</a>|
                 <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollid, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
             </td>
@@ -103,6 +106,12 @@
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.pollname) %>
+            </td>
+            <td nowrap="nowrap">
+                Participant List Id
+            </td>
+            <td nowrap="nowrap">
+                <%= Html.ActionLink("Create List", "../Participant/Modify", new { sessionid = item.sessionid, sessionname = item.sessionName })%>
             </td>
         </tr>
     

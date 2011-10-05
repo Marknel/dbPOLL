@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace DBPOLLDemo.Models
 {
     public class answerModel : System.Web.UI.Page
@@ -223,10 +224,9 @@ namespace DBPOLLDemo.Models
         {
             try
             {
-                var answerList =
-                from answers in dbpollContext.ANSWERS   
-                where answers.ANSWER_ID == answerid
-                select answers;
+                var answerList = from answers in dbpollContext.ANSWERS   
+                                 where answers.ANSWER_ID == answerid
+                                 select answers;
 
 
                 /* If an answer is updated, it is archived and points to a new answer with the same properties and updated answer field, 

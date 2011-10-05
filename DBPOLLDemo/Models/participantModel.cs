@@ -59,7 +59,7 @@ namespace DBPOLLDemo.Models
         }
 
         /// <summary>
-        /// Returns a list of participants for a given session. Partic
+        /// Returns a list of participants for a given session.
         /// </summary>
         /// <param name="sessionID">Session to get participants for</param>
         /// <returns>A List of participants for the given session</returns>
@@ -67,6 +67,48 @@ namespace DBPOLLDemo.Models
 
             var participants = from part in dbpollContext.PARTICIPANTS
                                where part.SESSION_ID == sessionID
+                               select new participantModel
+                               {
+                                   userid = part.USER_ID,
+                                   sessionid = part.SESSION_ID,
+                                   createdat = part.CREATED_AT,
+                                   userweight = (int)part.USER_WEIGHT,
+                                   name = part.NAME,
+                                   address = part.ADDRESS,
+                                   city = part.CITY,
+                                   postcode = part.POSTCODE,
+                                   state = part.STATE,
+                                   country = part.COUNTRY,
+                                   department = part.DEPARTMENT,
+                                   company = part.COMPANY,
+                                   email = part.EMAIL,
+                                   fax = part.FAX,
+                                   phone = part.PHONE,
+                                   title = part.TITLE
+
+                               };
+            return participants.ToList();
+        }
+
+        /// <summary>
+        /// Returns a list of unassigned participants for a given session.
+        /// </summary>
+        /// <param name="sessionID">Session to get participants for</param>
+        /// <returns>A List of participants for the given session</returns>
+       /* public List<participantModel> displayUnassignedParticipants(int sessionID)
+        {
+            var users = from parti in dbpollContext.PARTICIPANTS
+                        join us in dbpollContext.USERS on parti.USER_ID equals us.USER_ID
+                        where parti.USER_ID == us.USER_ID
+                        select parti;
+
+            var part = from user in dbpollContext.USERS
+                       join p in dbpollContext.PARTICIPANTS on user.USER_ID equals p.USER_ID
+                       where
+
+            var participants = from part in dbpollContext.PARTICIPANTS
+                               join us in dbpollContext.USERS on part.USER_ID equals us.USER_ID 
+                               where part.SESSION_ID == sessionID && part.USER_ID != us.USER_ID
                                select new participantModel
                                {
                                    userid = part.USER_ID,
@@ -88,7 +130,7 @@ namespace DBPOLLDemo.Models
 
                                };
             return participants.ToList();
-        }
+        }*/
 
         /// <summary>
         /// Due to the Number of nullable and not required params. Create and populate a Participant FIRST.
