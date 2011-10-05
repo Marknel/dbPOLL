@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models.Store" Alias="Self" Provider="Devart.Data.Oracle" ProviderManifestToken="ORA" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="ANSWERS" EntityType="Models.Store.ANSWERS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="ANSWER_HISTORY" EntityType="Models.Store.ANSWER_HISTORY" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="ASSIGNEDPOLLS" EntityType="Models.Store.ASSIGNEDPOLLS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="MANAGEMENTS" EntityType="Models.Store.MANAGEMENTS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="MESSAGES" EntityType="Models.Store.MESSAGES" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="OBJECTS" EntityType="Models.Store.OBJECTS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="PARTICIPANTS" EntityType="Models.Store.PARTICIPANTS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="PARTICIPANT_CUSTOM" EntityType="Models.Store.PARTICIPANT_CUSTOM" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="POLLS" EntityType="Models.Store.POLLS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="QUESTIONS" EntityType="Models.Store.QUESTIONS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="RESPONSES" EntityType="Models.Store.RESPONSES" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="SESSIONS" EntityType="Models.Store.SESSIONS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="SYSADMINS" EntityType="Models.Store.SYSADMINS" store:Type="Tables" Schema="CSSE3004GG" />
+    <EntitySet Name="USERS" EntityType="Models.Store.USERS" store:Type="Tables" Schema="CSSE3004GG" />
+    <AssociationSet Name="CSSE3004GG_FK" Association="Models.Store.CSSE3004GG_FK">
+      <End Role="ANSWERS" EntitySet="ANSWERS" />
+      <End Role="ANSWER_HISTORY" EntitySet="ANSWER_HISTORY" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273272" Association="Models.Store.CSSE3004GG_SYS_C001273272">
+      <End Role="ANSWERS" EntitySet="ANSWERS" />
+      <End Role="RESPONSES" EntitySet="RESPONSES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1" Association="Models.Store.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1">
+      <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+      <End Role="PARTICIPANT_CUSTOM" EntitySet="PARTICIPANT_CUSTOM" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273229" Association="Models.Store.CSSE3004GG_SYS_C001273229">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="SESSIONS" EntitySet="SESSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273235" Association="Models.Store.CSSE3004GG_SYS_C001273235">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="MANAGEMENTS" EntitySet="MANAGEMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273244" Association="Models.Store.CSSE3004GG_SYS_C001273244">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273281" Association="Models.Store.CSSE3004GG_SYS_C001273281">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="MESSAGES" EntitySet="MESSAGES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001293084" Association="Models.Store.CSSE3004GG_SYS_C001293084">
+      <End Role="POLLS" EntitySet="POLLS" />
+      <End Role="ASSIGNEDPOLLS" EntitySet="ASSIGNEDPOLLS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273250" Association="Models.Store.CSSE3004GG_SYS_C001273250">
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+      <End Role="OBJECTS" EntitySet="OBJECTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273256" Association="Models.Store.CSSE3004GG_SYS_C001273256">
+      <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+      <End Role="ANSWERS" EntitySet="ANSWERS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273263" Association="Models.Store.CSSE3004GG_SYS_C001273263">
+      <End Role="SESSIONS" EntitySet="SESSIONS" />
+      <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273273" Association="Models.Store.CSSE3004GG_SYS_C001273273">
+      <End Role="SESSIONS" EntitySet="SESSIONS" />
+      <End Role="RESPONSES" EntitySet="RESPONSES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273218" Association="Models.Store.CSSE3004GG_SYS_C001273218">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="USERS1" EntitySet="USERS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273223" Association="Models.Store.CSSE3004GG_SYS_C001273223">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="POLLS" EntitySet="POLLS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273234" Association="Models.Store.CSSE3004GG_SYS_C001273234">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="MANAGEMENTS" EntitySet="MANAGEMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273262" Association="Models.Store.CSSE3004GG_SYS_C001273262">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273271" Association="Models.Store.CSSE3004GG_SYS_C001273271">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="RESPONSES" EntitySet="RESPONSES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273280" Association="Models.Store.CSSE3004GG_SYS_C001273280">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="MESSAGES" EntitySet="MESSAGES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001273282" Association="Models.Store.CSSE3004GG_SYS_C001273282">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="MESSAGES" EntitySet="MESSAGES" />
+    </AssociationSet>
+    <AssociationSet Name="CSSE3004GG_SYS_C001293085" Association="Models.Store.CSSE3004GG_SYS_C001293085">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="ASSIGNEDPOLLS" EntitySet="ASSIGNEDPOLLS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ANSWERS">
+    <Key>
+      <PropertyRef Name="ANSWER_ID" />
+    </Key>
+    <Property Name="ANSWER_ID" Type="int" Nullable="false" />
+    <Property Name="ANSWER" Type="VARCHAR2" Nullable="false" MaxLength="256" />
+    <Property Name="CORRECT" Type="int" />
+    <Property Name="WEIGHT" Type="int" />
+    <Property Name="NUM" Type="int" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="QUESTION_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ANSWER_HISTORY">
+    <Key>
+      <PropertyRef Name="ANSWERH_ID" />
+    </Key>
+    <Property Name="ANSWERH_ID" Type="int" Nullable="false" />
+    <Property Name="ANSWER" Type="VARCHAR2" Nullable="false" MaxLength="256" />
+    <Property Name="CORRECT" Type="int" />
+    <Property Name="WEIGHT" Type="int" />
+    <Property Name="NUM" Type="int" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="ANSWER_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ASSIGNEDPOLLS">
+    <Key>
+      <PropertyRef Name="ASSIGNED_ID" />
+    </Key>
+    <Property Name="ASSIGNED_ID" Type="int" Nullable="false" />
+    <Property Name="POLL_ID" Type="int" />
+    <Property Name="USER_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="MANAGEMENTS">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+      <PropertyRef Name="POLL_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="POLL_ID" Type="int" Nullable="false" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+  </EntityType>
+  <EntityType Name="MESSAGES">
+    <Key>
+      <PropertyRef Name="MESSAGE_ID" />
+    </Key>
+    <Property Name="MESSAGE_ID" Type="int" Nullable="false" />
+    <Property Name="MESSAGE" Type="VARCHAR2" MaxLength="256" />
+    <Property Name="Sender_UID" Type="int" Nullable="false" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="Reciever_UID" Type="int" Nullable="false" />
+    <Property Name="POLL_ID" Type="int" Nullable="false" />
+    <Property Name="QUESTION_ID" Type="decimal" />
+  </EntityType>
+  <EntityType Name="OBJECTS">
+    <Key>
+      <PropertyRef Name="OBJ_ID" />
+    </Key>
+    <Property Name="OBJ_ID" Type="int" Nullable="false" />
+    <Property Name="OBJ_TYPE" Type="int" Nullable="false" />
+    <Property Name="ATTRIBUTE" Type="VARCHAR2" Nullable="false" MaxLength="64" />
+    <Property Name="QUESTION_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PARTICIPANTS">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+      <PropertyRef Name="SESSION_ID" />
+    </Key>
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="SESSION_ID" Type="int" Nullable="false" />
+    <Property Name="USER_WEIGHT" Type="int" />
+    <Property Name="NAME" Type="VARCHAR2" MaxLength="32" />
+    <Property Name="ADDRESS" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="CITY" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="POSTCODE" Type="int" />
+    <Property Name="STATE" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="COUNTRY" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="DEPARTMENT" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="COMPANY" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="EMAIL" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="FAX" Type="int" />
+    <Property Name="PHONE" Type="int" />
+    <Property Name="TITLE" Type="VARCHAR2" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="PARTICIPANT_CUSTOM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="SESSION_ID" Type="int" Nullable="false" />
+    <Property Name="CUSTOM_FIELD" Type="VARCHAR2" MaxLength="64" />
+    <Property Name="CUSTOM_VALUE" Type="VARCHAR2" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="POLLS">
+    <Key>
+      <PropertyRef Name="POLL_ID" />
+    </Key>
+    <Property Name="POLL_ID" Type="int" Nullable="false" />
+    <Property Name="POLL_NAME" Type="VARCHAR2" MaxLength="256" />
+    <Property Name="CREATED_BY" Type="int" Nullable="false" />
+    <Property Name="EXPIRES_AT" Type="DATE" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="LONGITUDE" Type="decimal" />
+    <Property Name="LATITUDE" Type="decimal" />
+  </EntityType>
+  <EntityType Name="QUESTIONS">
+    <Key>
+      <PropertyRef Name="QUESTION_ID" />
+    </Key>
+    <Property Name="QUESTION_ID" Type="int" Nullable="false" />
+    <Property Name="QUESTION_TYPE" Type="int" Nullable="false" />
+    <Property Name="QUESTION" Type="VARCHAR2" Nullable="false" MaxLength="256" />
+    <Property Name="NUMBER_OF_RESPONSES" Type="int" />
+    <Property Name="CHART_STYLE" Type="int" />
+    <Property Name="SHORT_ANSWER_TYPE" Type="int" />
+    <Property Name="NUM" Type="int" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="POLL_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RESPONSES">
+    <Key>
+      <PropertyRef Name="RESPONSE_ID" />
+    </Key>
+    <Property Name="RESPONSE_ID" Type="int" Nullable="false" />
+    <Property Name="FEEDBACK" Type="VARCHAR2" Nullable="false" MaxLength="256" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="SESSION_ID" Type="int" Nullable="false" />
+    <Property Name="ANSWER_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SESSIONS">
+    <Key>
+      <PropertyRef Name="SESSION_ID" />
+    </Key>
+    <Property Name="SESSION_ID" Type="int" Nullable="false" />
+    <Property Name="SESSION_NAME" Type="VARCHAR2" MaxLength="256" />
+    <Property Name="LONGITUDE" Type="FLOAT" Nullable="false" />
+    <Property Name="LATITUDE" Type="FLOAT" Nullable="false" />
+    <Property Name="POLL_ID" Type="int" />
+    <Property Name="SESSION_TIME" Type="DATE" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SYSADMINS">
+    <Key>
+      <PropertyRef Name="SYSADMINS_ID" />
+    </Key>
+    <Property Name="SYSADMINS_ID" Type="int" Nullable="false" />
+    <Property Name="NAME" Type="VARCHAR2" Nullable="false" MaxLength="30" />
+    <Property Name="USERNAME" Type="VARCHAR2" MaxLength="30" />
+    <Property Name="PASSWORD" Type="VARCHAR2" MaxLength="64" />
+    <Property Name="SALT" Type="VARCHAR2" MaxLength="16" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="USER_TYPE" Type="int" Nullable="false" />
+    <Property Name="NAME" Type="VARCHAR2" MaxLength="64" />
+    <Property Name="USERNAME" Type="VARCHAR2" MaxLength="64" />
+    <Property Name="PASSWORD" Type="VARCHAR2" MaxLength="64" />
+    <Property Name="SALT" Type="VARCHAR2" MaxLength="16" />
+    <Property Name="EXPIRES_AT" Type="DATE" />
+    <Property Name="CREATED_BY" Type="int" />
+    <Property Name="RESET_PASSWORD_KEY" Type="VARCHAR2" MaxLength="16" />
+    <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
+    <Property Name="MODIFIED_AT" Type="DATE" />
+    <Property Name="SYSADMIN_ID" Type="int" />
+  </EntityType>
+  <Association Name="CSSE3004GG_FK">
+    <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="1" />
+    <End Role="ANSWER_HISTORY" Type="Models.Store.ANSWER_HISTORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANSWERS">
+        <PropertyRef Name="ANSWER_ID" />
+      </Principal>
+      <Dependent Role="ANSWER_HISTORY">
+        <PropertyRef Name="ANSWER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273272">
+    <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="1" />
+    <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANSWERS">
+        <PropertyRef Name="ANSWER_ID" />
+      </Principal>
+      <Dependent Role="RESPONSES">
+        <PropertyRef Name="ANSWER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1">
+    <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PARTICIPANT_CUSTOM" Type="Models.Store.PARTICIPANT_CUSTOM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PARTICIPANTS">
+        <PropertyRef Name="USER_ID" />
+        <PropertyRef Name="SESSION_ID" />
+      </Principal>
+      <Dependent Role="PARTICIPANT_CUSTOM">
+        <PropertyRef Name="USER_ID" />
+        <PropertyRef Name="SESSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273229">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="0..1" />
+    <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="SESSIONS">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273235">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1" />
+    <End Role="MANAGEMENTS" Type="Models.Store.MANAGEMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="MANAGEMENTS">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273244">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="QUESTIONS">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273281">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1" />
+    <End Role="MESSAGES" Type="Models.Store.MESSAGES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="MESSAGES">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001293084">
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="0..1" />
+    <End Role="ASSIGNEDPOLLS" Type="Models.Store.ASSIGNEDPOLLS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="POLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Principal>
+      <Dependent Role="ASSIGNEDPOLLS">
+        <PropertyRef Name="POLL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273250">
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OBJECTS" Type="Models.Store.OBJECTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTIONS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="OBJECTS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273256">
+    <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="1" />
+    <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTIONS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="ANSWERS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273263">
+    <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="1" />
+    <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESSIONS">
+        <PropertyRef Name="SESSION_ID" />
+      </Principal>
+      <Dependent Role="PARTICIPANTS">
+        <PropertyRef Name="SESSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273273">
+    <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="1" />
+    <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESSIONS">
+        <PropertyRef Name="SESSION_ID" />
+      </Principal>
+      <Dependent Role="RESPONSES">
+        <PropertyRef Name="SESSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273218">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="0..1" />
+    <End Role="USERS1" Type="Models.Store.USERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="USERS1">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273223">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="POLLS">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273234">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="MANAGEMENTS" Type="Models.Store.MANAGEMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="MANAGEMENTS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273262">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="PARTICIPANTS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273271">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="RESPONSES">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273280">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="MESSAGES" Type="Models.Store.MESSAGES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="MESSAGES">
+        <PropertyRef Name="Reciever_UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001273282">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+    <End Role="MESSAGES" Type="Models.Store.MESSAGES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="MESSAGES">
+        <PropertyRef Name="Sender_UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CSSE3004GG_SYS_C001293085">
+    <End Role="USERS" Type="Models.Store.USERS" Multiplicity="0..1" />
+    <End Role="ASSIGNEDPOLLS" Type="Models.Store.ASSIGNEDPOLLS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="ASSIGNEDPOLLS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
