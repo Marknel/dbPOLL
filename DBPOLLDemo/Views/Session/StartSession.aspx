@@ -30,9 +30,11 @@
             <div style="text-align: center">
             <fieldset>
             <legend> <%=Html.Encode("Question " + Model.questionData.questnum)%></legend>
-
+            
                     
                 <%=Html.Encode(Model.questionData.question)%>
+                <br />
+                <br />
 
                 <%foreach (var answers in Model.answerData)
                     {
@@ -60,15 +62,16 @@
 
                     } %>
 
-            <% if (currentQuestion > 1)
+            <%  if(currentQuestion == 1)
                 { %>
-                        
-                <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
-                <button type="submit" name = "button" value="Next Question"> Next Question </button>
+                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
 
-            <% }else
+            <% } else if ((Boolean)Session["endOfQuestion"] == true)
                 { %>
+                    <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
 
+            <%} else {%>
+                    <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
                     <button type="submit" name = "button" value="Next Question"> Next Question </button>
             <%} %>
 
