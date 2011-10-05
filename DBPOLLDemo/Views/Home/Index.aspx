@@ -11,12 +11,11 @@
         Everyone can see</h2>
     
     <br />
-    <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = ((USER)ViewData["User"]).USER_ID })%>
-    <br />
     <%= Html.ActionLink("Change Password", "ChangePassword", "User")%>
     <br />
-    <%= Html.ActionLink("My Messages", "Messages", "Index")%>
+    <%= Html.ActionLink("My Messages", "Index", "Message")%>
     <br />
+       <% Html.RenderPartial("../Message/sendMessage"); %>
     <hr />
     <hr />
 
@@ -43,8 +42,7 @@
     <br />
     <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
     <br />
-    <%= Html.ActionLink("Run Reciever Poll", "../Poll/RunDevices")%>
-    <br />
+   
 
    <p>
     Building Participant List
