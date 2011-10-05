@@ -11,6 +11,7 @@ namespace DBPOLLDemo.Controllers
 {
     public class HomeController : Controller
     {
+        
         private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
 
         public ActionResult Index()

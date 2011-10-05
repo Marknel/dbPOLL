@@ -73,6 +73,7 @@
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -94,6 +95,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBPOLL.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\messageModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\modelConstants.cs" />
     <Compile Include="Models\objectModel.cs">
@@ -179,6 +183,12 @@
     <Content Include="Views\Home\PollsIManage.ascx" />
     <Content Include="Views\Home\PollsImCreating.ascx" />
     <Content Include="Views\Home\ResetPassword.aspx" />
+    <Content Include="Views\Message\Index.aspx" />
+    <Content Include="Views\Message\publicMessages.ascx" />
+    <Content Include="Views\Message\recievedMessages.ascx" />
+    <Content Include="Views\Message\sendFeedback.aspx" />
+    <Content Include="Views\Message\sendMessage.ascx" />
+    <Content Include="Views\Message\sentMessages.ascx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\Create.aspx" />

@@ -29,6 +29,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273280", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "MESSAGES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.MESSAGE), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273282", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "MESSAGES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.MESSAGE), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273250", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.QUESTION), "OBJECTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.OBJECT), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.PARTICIPANT), "PARTICIPANT_CUSTOM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT_CUSTOM), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273263", "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.SESSION), "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273262", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273229", "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.POLL), "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.SESSION), true)]
@@ -203,6 +204,22 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<PARTICIPANT_CUSTOM> PARTICIPANT_CUSTOM
+        {
+            get
+            {
+                if ((_PARTICIPANT_CUSTOM == null))
+                {
+                    _PARTICIPANT_CUSTOM = base.CreateObjectSet<PARTICIPANT_CUSTOM>("PARTICIPANT_CUSTOM");
+                }
+                return _PARTICIPANT_CUSTOM;
+            }
+        }
+        private ObjectSet<PARTICIPANT_CUSTOM> _PARTICIPANT_CUSTOM;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<POLL> POLLS
         {
             get
@@ -353,6 +370,14 @@ namespace DBPOLLDemo.Models
         public void AddToPARTICIPANTS(PARTICIPANT pARTICIPANT)
         {
             base.AddObject("PARTICIPANTS", pARTICIPANT);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PARTICIPANT_CUSTOM EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPARTICIPANT_CUSTOM(PARTICIPANT_CUSTOM pARTICIPANT_CUSTOM)
+        {
+            base.AddObject("PARTICIPANT_CUSTOM", pARTICIPANT_CUSTOM);
         }
     
         /// <summary>
@@ -1404,17 +1429,17 @@ namespace DBPOLLDemo.Models
         /// Create a new MESSAGE object.
         /// </summary>
         /// <param name="mESSAGE_ID">Initial value of the MESSAGE_ID property.</param>
-        /// <param name="cREATED_BY">Initial value of the CREATED_BY property.</param>
+        /// <param name="sender_UID">Initial value of the Sender_UID property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
-        /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
+        /// <param name="reciever_UID">Initial value of the Reciever_UID property.</param>
         /// <param name="pOLL_ID">Initial value of the POLL_ID property.</param>
-        public static MESSAGE CreateMESSAGE(global::System.Int32 mESSAGE_ID, global::System.Int32 cREATED_BY, global::System.DateTime cREATED_AT, global::System.Int32 uSER_ID, global::System.Int32 pOLL_ID)
+        public static MESSAGE CreateMESSAGE(global::System.Int32 mESSAGE_ID, global::System.Int32 sender_UID, global::System.DateTime cREATED_AT, global::System.Int32 reciever_UID, global::System.Int32 pOLL_ID)
         {
             MESSAGE mESSAGE = new MESSAGE();
             mESSAGE.MESSAGE_ID = mESSAGE_ID;
-            mESSAGE.CREATED_BY = cREATED_BY;
+            mESSAGE.Sender_UID = sender_UID;
             mESSAGE.CREATED_AT = cREATED_AT;
-            mESSAGE.USER_ID = uSER_ID;
+            mESSAGE.Reciever_UID = reciever_UID;
             mESSAGE.POLL_ID = pOLL_ID;
             return mESSAGE;
         }
@@ -1478,24 +1503,24 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 CREATED_BY
+        public global::System.Int32 Sender_UID
         {
             get
             {
-                return _CREATED_BY;
+                return _Sender_UID;
             }
             set
             {
-                OnCREATED_BYChanging(value);
-                ReportPropertyChanging("CREATED_BY");
-                _CREATED_BY = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATED_BY");
-                OnCREATED_BYChanged();
+                OnSender_UIDChanging(value);
+                ReportPropertyChanging("Sender_UID");
+                _Sender_UID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Sender_UID");
+                OnSender_UIDChanged();
             }
         }
-        private global::System.Int32 _CREATED_BY;
-        partial void OnCREATED_BYChanging(global::System.Int32 value);
-        partial void OnCREATED_BYChanged();
+        private global::System.Int32 _Sender_UID;
+        partial void OnSender_UIDChanging(global::System.Int32 value);
+        partial void OnSender_UIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1550,24 +1575,24 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 USER_ID
+        public global::System.Int32 Reciever_UID
         {
             get
             {
-                return _USER_ID;
+                return _Reciever_UID;
             }
             set
             {
-                OnUSER_IDChanging(value);
-                ReportPropertyChanging("USER_ID");
-                _USER_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("USER_ID");
-                OnUSER_IDChanged();
+                OnReciever_UIDChanging(value);
+                ReportPropertyChanging("Reciever_UID");
+                _Reciever_UID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Reciever_UID");
+                OnReciever_UIDChanged();
             }
         }
-        private global::System.Int32 _USER_ID;
-        partial void OnUSER_IDChanging(global::System.Int32 value);
-        partial void OnUSER_IDChanged();
+        private global::System.Int32 _Reciever_UID;
+        partial void OnReciever_UIDChanging(global::System.Int32 value);
+        partial void OnReciever_UIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1592,6 +1617,30 @@ namespace DBPOLLDemo.Models
         private global::System.Int32 _POLL_ID;
         partial void OnPOLL_IDChanging(global::System.Int32 value);
         partial void OnPOLL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> QUESTION_ID
+        {
+            get
+            {
+                return _QUESTION_ID;
+            }
+            set
+            {
+                OnQUESTION_IDChanging(value);
+                ReportPropertyChanging("QUESTION_ID");
+                _QUESTION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QUESTION_ID");
+                OnQUESTION_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _QUESTION_ID;
+        partial void OnQUESTION_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnQUESTION_IDChanged();
 
         #endregion
     
@@ -1642,7 +1691,7 @@ namespace DBPOLLDemo.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273280", "USERS")]
-        public USER USER
+        public USER sender
         {
             get
             {
@@ -1658,7 +1707,7 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<USER> USERReference
+        public EntityReference<USER> senderReference
         {
             get
             {
@@ -1680,7 +1729,7 @@ namespace DBPOLLDemo.Models
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273282", "USERS")]
-        public USER USER1
+        public USER reciever
         {
             get
             {
@@ -1696,7 +1745,7 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<USER> USER1Reference
+        public EntityReference<USER> recieverReference
         {
             get
             {
@@ -2023,7 +2072,7 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> USER_WEIGHT
+        public Nullable<global::System.Int32> USER_WEIGHT
         {
             get
             {
@@ -2038,13 +2087,323 @@ namespace DBPOLLDemo.Models
                 OnUSER_WEIGHTChanged();
             }
         }
-        private Nullable<global::System.Decimal> _USER_WEIGHT;
-        partial void OnUSER_WEIGHTChanging(Nullable<global::System.Decimal> value);
+        private Nullable<global::System.Int32> _USER_WEIGHT;
+        partial void OnUSER_WEIGHTChanging(Nullable<global::System.Int32> value);
         partial void OnUSER_WEIGHTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NAME
+        {
+            get
+            {
+                return _NAME;
+            }
+            set
+            {
+                OnNAMEChanging(value);
+                ReportPropertyChanging("NAME");
+                _NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NAME");
+                OnNAMEChanged();
+            }
+        }
+        private global::System.String _NAME;
+        partial void OnNAMEChanging(global::System.String value);
+        partial void OnNAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ADDRESS
+        {
+            get
+            {
+                return _ADDRESS;
+            }
+            set
+            {
+                OnADDRESSChanging(value);
+                ReportPropertyChanging("ADDRESS");
+                _ADDRESS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ADDRESS");
+                OnADDRESSChanged();
+            }
+        }
+        private global::System.String _ADDRESS;
+        partial void OnADDRESSChanging(global::System.String value);
+        partial void OnADDRESSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CITY
+        {
+            get
+            {
+                return _CITY;
+            }
+            set
+            {
+                OnCITYChanging(value);
+                ReportPropertyChanging("CITY");
+                _CITY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CITY");
+                OnCITYChanged();
+            }
+        }
+        private global::System.String _CITY;
+        partial void OnCITYChanging(global::System.String value);
+        partial void OnCITYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> POSTCODE
+        {
+            get
+            {
+                return _POSTCODE;
+            }
+            set
+            {
+                OnPOSTCODEChanging(value);
+                ReportPropertyChanging("POSTCODE");
+                _POSTCODE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("POSTCODE");
+                OnPOSTCODEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _POSTCODE;
+        partial void OnPOSTCODEChanging(Nullable<global::System.Int32> value);
+        partial void OnPOSTCODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STATE
+        {
+            get
+            {
+                return _STATE;
+            }
+            set
+            {
+                OnSTATEChanging(value);
+                ReportPropertyChanging("STATE");
+                _STATE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STATE");
+                OnSTATEChanged();
+            }
+        }
+        private global::System.String _STATE;
+        partial void OnSTATEChanging(global::System.String value);
+        partial void OnSTATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COUNTRY
+        {
+            get
+            {
+                return _COUNTRY;
+            }
+            set
+            {
+                OnCOUNTRYChanging(value);
+                ReportPropertyChanging("COUNTRY");
+                _COUNTRY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COUNTRY");
+                OnCOUNTRYChanged();
+            }
+        }
+        private global::System.String _COUNTRY;
+        partial void OnCOUNTRYChanging(global::System.String value);
+        partial void OnCOUNTRYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DEPARTMENT
+        {
+            get
+            {
+                return _DEPARTMENT;
+            }
+            set
+            {
+                OnDEPARTMENTChanging(value);
+                ReportPropertyChanging("DEPARTMENT");
+                _DEPARTMENT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DEPARTMENT");
+                OnDEPARTMENTChanged();
+            }
+        }
+        private global::System.String _DEPARTMENT;
+        partial void OnDEPARTMENTChanging(global::System.String value);
+        partial void OnDEPARTMENTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COMPANY
+        {
+            get
+            {
+                return _COMPANY;
+            }
+            set
+            {
+                OnCOMPANYChanging(value);
+                ReportPropertyChanging("COMPANY");
+                _COMPANY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COMPANY");
+                OnCOMPANYChanged();
+            }
+        }
+        private global::System.String _COMPANY;
+        partial void OnCOMPANYChanging(global::System.String value);
+        partial void OnCOMPANYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EMAIL
+        {
+            get
+            {
+                return _EMAIL;
+            }
+            set
+            {
+                OnEMAILChanging(value);
+                ReportPropertyChanging("EMAIL");
+                _EMAIL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EMAIL");
+                OnEMAILChanged();
+            }
+        }
+        private global::System.String _EMAIL;
+        partial void OnEMAILChanging(global::System.String value);
+        partial void OnEMAILChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> FAX
+        {
+            get
+            {
+                return _FAX;
+            }
+            set
+            {
+                OnFAXChanging(value);
+                ReportPropertyChanging("FAX");
+                _FAX = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FAX");
+                OnFAXChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _FAX;
+        partial void OnFAXChanging(Nullable<global::System.Int32> value);
+        partial void OnFAXChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PHONE
+        {
+            get
+            {
+                return _PHONE;
+            }
+            set
+            {
+                OnPHONEChanging(value);
+                ReportPropertyChanging("PHONE");
+                _PHONE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PHONE");
+                OnPHONEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PHONE;
+        partial void OnPHONEChanging(Nullable<global::System.Int32> value);
+        partial void OnPHONEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TITLE
+        {
+            get
+            {
+                return _TITLE;
+            }
+            set
+            {
+                OnTITLEChanging(value);
+                ReportPropertyChanging("TITLE");
+                _TITLE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TITLE");
+                OnTITLEChanged();
+            }
+        }
+        private global::System.String _TITLE;
+        partial void OnTITLEChanging(global::System.String value);
+        partial void OnTITLEChanged();
 
         #endregion
     
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANT_CUSTOM")]
+        public EntityCollection<PARTICIPANT_CUSTOM> PARTICIPANT_CUSTOM
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PARTICIPANT_CUSTOM>("Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANT_CUSTOM");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PARTICIPANT_CUSTOM>("Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANT_CUSTOM", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2118,6 +2477,202 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<USER>("Models.CSSE3004GG_SYS_C001273262", "USERS", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Models", Name="PARTICIPANT_CUSTOM")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PARTICIPANT_CUSTOM : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PARTICIPANT_CUSTOM object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
+        /// <param name="sESSION_ID">Initial value of the SESSION_ID property.</param>
+        public static PARTICIPANT_CUSTOM CreatePARTICIPANT_CUSTOM(global::System.Int32 id, global::System.Int32 uSER_ID, global::System.Int32 sESSION_ID)
+        {
+            PARTICIPANT_CUSTOM pARTICIPANT_CUSTOM = new PARTICIPANT_CUSTOM();
+            pARTICIPANT_CUSTOM.ID = id;
+            pARTICIPANT_CUSTOM.USER_ID = uSER_ID;
+            pARTICIPANT_CUSTOM.SESSION_ID = sESSION_ID;
+            return pARTICIPANT_CUSTOM;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 USER_ID
+        {
+            get
+            {
+                return _USER_ID;
+            }
+            set
+            {
+                OnUSER_IDChanging(value);
+                ReportPropertyChanging("USER_ID");
+                _USER_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("USER_ID");
+                OnUSER_IDChanged();
+            }
+        }
+        private global::System.Int32 _USER_ID;
+        partial void OnUSER_IDChanging(global::System.Int32 value);
+        partial void OnUSER_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SESSION_ID
+        {
+            get
+            {
+                return _SESSION_ID;
+            }
+            set
+            {
+                OnSESSION_IDChanging(value);
+                ReportPropertyChanging("SESSION_ID");
+                _SESSION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SESSION_ID");
+                OnSESSION_IDChanged();
+            }
+        }
+        private global::System.Int32 _SESSION_ID;
+        partial void OnSESSION_IDChanging(global::System.Int32 value);
+        partial void OnSESSION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CUSTOM_FIELD
+        {
+            get
+            {
+                return _CUSTOM_FIELD;
+            }
+            set
+            {
+                OnCUSTOM_FIELDChanging(value);
+                ReportPropertyChanging("CUSTOM_FIELD");
+                _CUSTOM_FIELD = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CUSTOM_FIELD");
+                OnCUSTOM_FIELDChanged();
+            }
+        }
+        private global::System.String _CUSTOM_FIELD;
+        partial void OnCUSTOM_FIELDChanging(global::System.String value);
+        partial void OnCUSTOM_FIELDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CUSTOM_VALUE
+        {
+            get
+            {
+                return _CUSTOM_VALUE;
+            }
+            set
+            {
+                OnCUSTOM_VALUEChanging(value);
+                ReportPropertyChanging("CUSTOM_VALUE");
+                _CUSTOM_VALUE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CUSTOM_VALUE");
+                OnCUSTOM_VALUEChanged();
+            }
+        }
+        private global::System.String _CUSTOM_VALUE;
+        partial void OnCUSTOM_VALUEChanging(global::System.String value);
+        partial void OnCUSTOM_VALUEChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANTS")]
+        public PARTICIPANT PARTICIPANT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT>("Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANTS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT>("Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANTS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PARTICIPANT> PARTICIPANTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT>("Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANTS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PARTICIPANT>("Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1", "PARTICIPANTS", value);
                 }
             }
         }

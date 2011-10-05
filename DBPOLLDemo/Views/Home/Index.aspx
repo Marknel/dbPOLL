@@ -13,8 +13,9 @@
     <br />
     <%= Html.ActionLink("Change Password", "ChangePassword", "User")%>
     <br />
-    <%= Html.ActionLink("My Messages", "Messages", "Index")%>
+    <%= Html.ActionLink("My Messages", "Index", "Message")%>
     <br />
+       <% Html.RenderPartial("../Message/sendMessage"); %>
     <hr />
     <hr />
 
