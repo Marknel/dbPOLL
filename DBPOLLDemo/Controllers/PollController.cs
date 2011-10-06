@@ -44,7 +44,6 @@ namespace DBPOLLDemo.Controllers
             pollSession.pollData = new pollModel().displayPolls();
             pollSession.sessionData = new pollModel().displayPollSessions();
             
-
             return View(pollSession);
         }
 

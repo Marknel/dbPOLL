@@ -59,6 +59,15 @@ namespace DBPOLLDemo.Models
 
         }
 
+        public bool AssignedList(int sessionid)
+        {
+            var participants = from part in dbpollContext.PARTICIPANTS
+                               where part.SESSION_ID == sessionid
+                               select part.SESSION_ID;
+
+            return participants.Contains(sessionid);
+        }
+
         /// <summary>
         /// Returns a list of participants for a given session.
         /// </summary>

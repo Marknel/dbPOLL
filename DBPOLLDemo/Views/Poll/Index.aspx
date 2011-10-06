@@ -25,8 +25,6 @@
             
             </script>
 
-
-
     <h2>Poll Index </h2>
 
     <table>
@@ -108,10 +106,11 @@
                 <%= Html.Encode(item.pollname) %>
             </td>
             <td nowrap="nowrap">
-                Participant List Id
-            </td>
-            <td nowrap="nowrap">
-                <%= Html.ActionLink("Create List", "../Participant/Modify", new { sessionid = item.sessionid, sessionname = item.sessionName })%>
+            <%String text = "";
+            if(item.sessionParticipantList){text = "Edit Participant List";
+            }else{text = "Create Participant List"; } 
+            %>
+                <%= Html.ActionLink(text, "../Participant/Modify", new { sessionid = item.sessionid, sessionname = item.sessionName })%>
             </td>
         </tr>
     

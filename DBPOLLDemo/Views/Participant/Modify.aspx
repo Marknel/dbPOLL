@@ -119,14 +119,13 @@
         <%}%>
         </table>
 
-
         <input type="hidden" id="sessionid" name="sessionid" value="<%=ViewData["sessionid"] %>" />
         <input type="hidden" id="sessionname" name="sessionname" value="<%=ViewData["sessionname"] %>" />
         <input type="submit" id="submit" name="submit" value="Add Participants" />
         <% Html.EndForm(); %>
 
+        <p>
+        <%= Html.ActionLink("Back to Polls", "../Poll/Index")%>
+    </p>
 
-</asp:Content>
-
-<asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
