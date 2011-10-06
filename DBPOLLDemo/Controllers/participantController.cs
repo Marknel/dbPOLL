@@ -37,56 +37,37 @@ namespace DBPOLLDemo.Controllers
         {
             AssignedAndUnassignedParticipants comp = new AssignedAndUnassignedParticipants();
             comp.participants = new participantModel().displayParticipants(sessionid);
-            comp.unassigned = new userModel().displayUnassignedParticipants(sessionid);
+            comp.unassigned = new participantModel().displayUnassignedParticipants(sessionid);
 
             ViewData["sessionid"] = sessionid;
             ViewData["sessionname"] = sessionname;
-
             return View(comp);
         } 
 
         //
         // POST: /participant/Create
-
         [HttpPost]
         public ActionResult Modify(FormCollection collection)
         {
-            try
+            // Check if we are adding participants or updating existing data
+            if (collection["submit"].ToString().Equals("Add Participants"))
             {
-                // TODO: Add insert logic here
+                // Adding new participant(s)
+                new participantModel().createParticipantsFromCollection(collection);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Modify", new { sessionid = int.Parse(collection["sessionid"]), sessionname = collection["sessionname"] });
             }
-            catch
+            else
             {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /participant/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+                // Updating existing data
 
-        //
-        // POST: /participant/Edit/5
+                new participantModel().editParticipantDataFromCollection(collection);
 
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
+                return RedirectToAction("Modify", new { sessionid = int.Parse(collection["sessionid"]), sessionname = collection["sessionname"] });
             }
-            catch
-            {
-                return View();
-            }
+
+
+
         }
 
         //
@@ -98,22 +79,5 @@ namespace DBPOLLDemo.Controllers
             return RedirectToAction("Modify", new { sessionid = sessionid, sessionname = sessionname});
         }
 
-        //
-        // POST: /participant/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -386,25 +386,6 @@ namespace DBPOLLDemo.Models
             return unassignedUsers.ToList();
         }
 
-        public List<userModel> displayUnassignedParticipants(int sessionid)
-        {
-            var assignedUsers = from part in dbpollContext.PARTICIPANTS
-                        where part.SESSION_ID == sessionid
-                        select part.USER_ID;
-
-            var unassignedUsers = from user in dbpollContext.USERS
-                                  where !assignedUsers.Contains(user.USER_ID) && (user.USER_TYPE == User_Type.POLL_USER || user.USER_TYPE == User_Type.KEYPAD_USER)
-                         select new userModel
-                         {
-                             UserID = user.USER_ID,
-                             UserType = user.USER_TYPE,
-                             username = user.USERNAME,
-                             Name = user.NAME
-                         };
-
-            return unassignedUsers.ToList();
-        }
-
         public List<userModel> displayAllUsers()
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;

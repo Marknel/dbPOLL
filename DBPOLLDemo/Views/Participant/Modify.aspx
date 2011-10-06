@@ -25,9 +25,10 @@
              <th class="style2">Country</th>
              <th class="style2">Department</th>
              <th class="style2">Company</th>
-             <th class="style2"></th>
+             <th class="style2">Weight</th>
 
         </tr>
+        <% using (Html.BeginForm()) {  %>
         <% foreach (var par in Model.participants) { %>
         <tr>
          <td class="style2">
@@ -35,6 +36,7 @@
             </td>
             <td>
             <%= par.userid%>
+            <input type="hidden" id="userid" name="userid" value="<%= par.userid%>" />
             </td>
             <td>
             <input type="text" name="titletxt" size="10" style="width:auto;" value="<%= par.title%>"/>
@@ -73,13 +75,21 @@
             <input type="text" name="companytxt" size="10" style="width:auto;" value="<%= par.company%>"/>
             </td>
             <td>
-            <input type="submit" value="Save Changes" />
+            <input type="text" name="weight" size="10" style="width:auto;" value="<%= par.userweight%>"/>
             </td>
             </tr>
         <%}%>
+            
+        
         </table>
 
-    <h3>Participants Unassigned to: <%=ViewData["sessionname"] %></h3>
+            <input type="hidden" id="session2" name="sessionid" value="<%=ViewData["sessionid"] %>" />
+            <input type="hidden" id="sessionname2" name="sessionname" value="<%=ViewData["sessionname"] %>" />
+            <input type="submit" id="submit2" name="submit" value="Save Changes" />
+
+        <%} %>
+
+    <h3>Participants Unassigned to Session: <%=ViewData["sessionname"] %></h3>
 
     <table>
     <tr>
@@ -89,7 +99,9 @@
              <th class="style2">Name</th>
 
         </tr>
-        <% foreach (var par in Model.unassigned) { %>
+        <% Html.BeginForm(); %>
+        <% foreach (var par in Model.unassigned)
+           { %>
         <tr>
          <td class="style2">
            <input type="checkbox" name="selectedObjects" value="<%= par.UserID%> "/>
@@ -98,14 +110,20 @@
             <%= par.UserID%>
             </td>
             <td>
-            <%= par.username %>
+            <%= par.username%>
             </td>
             <td>
-            <%= par.Name %>
+            <%= par.Name%>
             </td>
             </tr>
         <%}%>
         </table>
+
+
+        <input type="hidden" id="sessionid" name="sessionid" value="<%=ViewData["sessionid"] %>" />
+        <input type="hidden" id="sessionname" name="sessionname" value="<%=ViewData["sessionname"] %>" />
+        <input type="submit" id="submit" name="submit" value="Add Participants" />
+        <% Html.EndForm(); %>
 
 
 </asp:Content>
