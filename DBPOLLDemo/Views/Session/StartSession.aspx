@@ -22,7 +22,7 @@
         //List<DBPOLLDemo.Models.questionModel> questionList = Model.questionData;
         //List<List<DBPOLLDemo.Models.answerModel>> answerList = Model.answerData;
         //List<DBPOLLDemo.Models.pollModel> sessionList = Model.sessionData;
-        int currentQuestion = (int)Session["currentwebpollingQuestion"];
+        int currentQuestion = (int)Session["currentQuestionNumber"];
       
     %>
     <% using (Html.BeginForm()){%>
@@ -35,63 +35,79 @@
                 <%=Html.Encode(Model.questionData.question)%>
                 <br />
 
-<%--                <p>
-                    <%=Html.RadioButton("ANSWER_LIST", "VALUE_LIST")%>
-                </p>--%>
+                <%--if there is answerdata, then it's multiple choice type of question--%>
+                <% 
+           if (Model.answerData.Count() != 0){ %>
 
-                <%foreach (var answers in Model.answerData)
-                    {
-                        int i = 1;
-                        foreach (var answer in answers)
+                    <%foreach (var answers in Model.answerData)
                         {
+                            int i = 1;
+                            foreach (var answer in answers)
+                            {
 
-                            if (answer.questionid == Model.questionData.questionid)
-                            { %>
+                                if (answer.questionid == Model.questionData.questionid)
+                                { %>
                                 
-                                <% 
-                                if (Session["selectedAnswer"] != null){ %>    
                                     <% 
-                                       if ((int)Session["selectedAnswer"] == answer.answerid)
-                                       { %>    
-                                        <center>
-                                            <p>
-                                                <label>
-                                                <%=Html.RadioButton("UserAnswer", answer.answerid, true)%>     
-                                                <%=Html.Encode(answer.answer)%> 
-                                                </label>
-                                            </p>
-                                        </center>
-                                    <%} 
-                                    else {%>
-                                        <center>
-                                            <p>
-                                                <label>
-                                                <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
-                                                <%=Html.Encode(answer.answer)%> 
-                                                </label>
-                                            </p>
-                                        </center>
-                                    <%} %>
-                                <%} else {%>
-                                 <center>
-                                    <p>
-                                        <label>
-                                        <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
-                                        <%=Html.Encode(answer.answer)%> 
+                                        if ((String)Session["selectedAnswer"] != null || (String)Session["selectedAnswer"] != "")
+                                        { %>    
+                                        <% 
+                                           if ((String)Session["selectedAnswer"] == answer.answer)
+                                           { %>    
+                                            <center>
+                                                <p>
+                                                    <label>
+                                                    <%=Html.RadioButton("UserAnswer", answer.answerid, true)%>     
+                                                    <%=Html.Encode(answer.answer)%> 
+                                                    </label>
+                                                </p>
+                                            </center>
+                                        <%} 
+                                        else {%>
+                                            <center>
+                                                <p>
+                                                    <label>
+                                                    <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
+                                                    <%=Html.Encode(answer.answer)%> 
+                                                    </label>
+                                                </p>
+                                            </center>
+                                        <%} %>
+                                    <%} else {%>
+                                     <center>
+                                        <p>
+                                            <label>
+                                            <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
+                                            <%=Html.Encode(answer.answer)%> 
                                         
-                                        </label>
-                                    </p>
-                                </center>
-                                <%} %>
-                                <br />
+                                            </label>
+                                        </p>
+                                    </center>
+                                    <%} %>
+                                    <br />
                               
-                        <%}
-                        }
+                                <%}
+                            }
 
-                    } %>
-                    <%= Html.ValidationMessage("webpollingError")%>
-                    <br />
+                        }%>
+                        <br />
+
+                <%} %>
+                <% 
+                else { %>
+                        <center>
+                            <br />
+                            <br />
+                            <% if ((String)Session["shortAnswer"] != null || (String)Session["shortAnswer"] != "") { %>
+                                <%=Html.TextArea("ShortQuestionAnswer", (String)Session["shortAnswer"]) %>
+                            <%} %>
+                        </center>
+                <%} %>
                     
+
+
+            <%= Html.ValidationMessage("webpollingError")%>
+
             <%  if(currentQuestion == 0)
 
             { %>

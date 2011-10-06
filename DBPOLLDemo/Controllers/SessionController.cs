@@ -320,14 +320,14 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            if (Session["currentwebpollingQuestion"] == null || (int)Session["currentWebpollingSessionid"] != sessionid)
+            if (Session["currentQuestionNumber"] == null || (int)Session["currentWebpollingSessionid"] != sessionid)
             {
-                Session["currentwebpollingQuestion"] = 0;
-                questnum = (int)Session["currentwebpollingQuestion"];
+                Session["currentQuestionNumber"] = 0;
+                questnum = (int)Session["currentQuestionNumber"];
             }
             else 
             {
-                questnum = (int)Session["currentwebpollingQuestion"];
+                questnum = (int)Session["currentQuestionNumber"];
             }
 
             if (TempData["webpollingError"] != null)
@@ -346,21 +346,24 @@ namespace DBPOLLDemo.Controllers
             Session["currentWebpollingPollid"] = pollid;
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
-            Session["currentQuestionId"] = pollAndQuestionModel.questionData.questionid;
+            Session["AllQuestion"] = tempList;
+            
 
-            //if its the last question
+            //if its the last question, then let the view know so that the next button could be replaced with submit last answer
             Session["endOfQuestion"] = false;
             if (tempList.Count() == questnum+1)
             {
                 Session["endOfQuestion"] = true;
             }
-            Session["currentwebpollingQuestion"] = questnum;
+            Session["currentQuestionNumber"] = questnum;
 
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
             List<List<answerModel>> sorted = new List<List<answerModel>>();
             List<int> questionCheck = new List<int>();
+            List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, (int)Session["uid"]);
 
+            // Get a set of answer list for this question
             foreach (var answer in unsorted)
             {
                 if (pollAndQuestionModel.questionData.questionid == answer.questionid && !questionCheck.Contains(pollAndQuestionModel.questionData.questionid))
@@ -371,13 +374,23 @@ namespace DBPOLLDemo.Controllers
             }
             pollAndQuestionModel.answerData = sorted;
 
-            List<questionModel> answeredQuestions = new questionModel().AnsweredQuestions(sessionid, (int)Session["uid"]);
-            foreach (var answeredquestion in answeredQuestions){
-                if (answeredquestion.questionid == pollAndQuestionModel.questionData.questionid)
+
+            // To set the first question's radio button to user's previous answer if he's answered it before
+            foreach (var answeredquestion in answeredQuestions)
+            {
+                foreach (var answer in sorted)
                 {
-                    Session["selectedAnswer"] = answeredquestion.answernum;
+                    foreach (var a in answer) { 
+                        if (answeredquestion.answer == a.answer)
+                        {
+                            Session["selectedAnswer"] = answeredquestion.answer;
+                        }
+
+                    }
                 }
-             }
+            }
+            
+
             return View(pollAndQuestionModel);
         }
 
@@ -393,81 +406,202 @@ namespace DBPOLLDemo.Controllers
             PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             int sessionid = (int)Session["currentWebpollingSessionid"];
             int pollid = (int)Session["currentWebpollingPollid"];
-            int questnum = (int)Session["currentwebpollingQuestion"];
+            int questnum = (int)Session["currentQuestionNumber"];
+            
 
-            Session["selectedAnswer"] = 0;
+            List<questionModel> allquestion = (List<questionModel>)Session["AllQuestion"];
+            int currentquestion = allquestion[questnum].questionid;
 
-            // Get user answer from radio button
 
-            if (Request["UserAnswer"] != null)
+            Session["selectedAnswer"] = "";
+
+
+            // if the user is currently answering a MCQ type
+            if (Request["UserAnswer"] != null )
             {
                 int selectedAnswer = Convert.ToInt32(Request["UserAnswer"]);
+                AnswerMultipleChoiceQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
 
-                List<questionModel> answeredQuestions = new questionModel().AnsweredQuestions(sessionid, (int)Session["uid"]);
-
-                questionModel answeredQuestion = new questionModel();
-
-                foreach (var item in answeredQuestions)
-                {
-                    if (item.questionid == (int)Session["currentQuestionId"])
-                    {
-                        answeredQuestion = item;
-                    }
-                }
-
-                // If a question has been answered by this user before, then create a new response data
-                if (answeredQuestion.question != null)
-                {
-                    int responseId = new responseModel().getResponseId(sessionid, (int)Session["uid"], answeredQuestion.answer);
-                    
-                    try
-                    {
-                        new responseModel().updateResponse(responseId, selectedAnswer);
-                    }
-                    catch (Exception e)
-                    {
-                        throw (e);
-                    }
-                }
-                // else just update the response for this answer
-                else
-                {
-                    try
-                    {
-                        new responseModel().createResponse((int)Session["uid"], selectedAnswer, sessionid);
-                    }
-                    catch (Exception e)
-                    {
-                        throw (e);
-                    }
-                }
 
                 List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
                 if (button == "Previous Question")
                 {
-                    Session["currentwebpollingQuestion"] = questnum - 1;
+                    Session["currentQuestionNumber"] = questnum - 1;
+                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                    setNextAnswer(questnum + 1, nextquestion, sessionid, (int)Session["uid"]);
                 }
 
                 // if its the last question, then submit/ update answer but stay on the same question
                 else if (button == "Submit Last Answer")
                 {
-                    Session["currentwebpollingQuestion"] = questnum;
+                    Session["currentQuestionNumber"] = questnum;
+                    Session["selectedAnswer"] = Request["UserAnswer"];
                 }
                 // its the next button
                 else
                 {
-                    Session["currentwebpollingQuestion"] = questnum + 1;
+                    Session["currentQuestionNumber"] = questnum + 1;
+                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                    setNextAnswer(questnum - 1, nextquestion, sessionid, (int)Session["uid"]);
                 }    
 
             }
+
+            // if the user is currently answering a short answer question type
+            else if (Request["ShortQuestionAnswer"] != "")
+            {
+                String selectedAnswer = Request["ShortQuestionAnswer"];
+                AnswerShortAnswerQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
+
+                List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+                if (button == "Previous Question")
+                {
+                    Session["currentQuestionNumber"] = questnum - 1;
+                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                    setNextAnswer(questnum + 1, nextquestion, sessionid, (int)Session["uid"]);
+                    
+                }
+
+                // if its the last question, then submit/ update answer but stay on the same question
+                else if (button == "Submit Last Answer")
+                {
+                    Session["currentQuestionNumber"] = questnum;
+                    Session["shortAnswer"] = Request["ShortQuestionAnswer"];
+                }
+                // its the next button
+                else
+                {
+                    Session["currentQuestionNumber"] = questnum + 1;
+                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                    setNextAnswer(questnum - 1, nextquestion, sessionid, (int)Session["uid"]);
+                }    
+            }
+
+            // if the user hasnt answered anything, then display error and ask em to answer it NAO
             else
             {
-                String error = "webpollingError" + "," + "Please select one of the answer";
+                String error = "webpollingError" + "," + "Please provide your answer";
                 TempData["webpollingError"] = error;
                 
             }
 
             return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid });
         }
+
+
+        public void AnswerMultipleChoiceQuestion(int selectedAnswer, int sessionid, int userid, int currentquestionid)
+        {
+
+            List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, userid);
+
+            questionModel answeredQuestion = new questionModel();
+
+            foreach (var item in answeredQuestions)
+            {
+                if (item.questionid == currentquestionid)
+                {
+                    answeredQuestion = item;
+                }
+            }
+
+            // If a question has been answered by this user before, then create a new response data
+            if (answeredQuestion.question != null)
+            {
+                int responseId = new responseModel().getResponseId(sessionid, userid, answeredQuestion.answer);
+
+                try
+                {
+                    new responseModel().updateMCQResponse(responseId, selectedAnswer);
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+            // else just update the response for this answer
+            else
+            {
+                try
+                {
+                    new responseModel().createMCQResponse(userid, selectedAnswer, sessionid);
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+
+        }
+
+        public void AnswerShortAnswerQuestion(String answer, int sessionid, int userid, int currentquestionid)
+        {
+
+            List<questionModel> answeredQuestions = new questionModel().GetAnsweredShortAnswerQuestions(currentquestionid, userid);
+
+            questionModel answeredQuestion = new questionModel();
+
+            foreach (var item in answeredQuestions)
+            {
+                if (item.questionid == currentquestionid)
+                {
+                    answeredQuestion = item;
+                }
+            }
+
+            // If a question has been answered by this user before, then create a new response data
+            if (answeredQuestion.question != null)
+            {
+                int responseId = new responseModel().getResponseId(sessionid, userid, answeredQuestion.answer);
+
+                try
+                {
+                    new responseModel().updateShortAnswerResponse(responseId, answer);
+                    
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+            // else just update the response for this answer
+            else
+            {
+                try
+                {
+                    new responseModel().createShortAnswerResponse(answer, userid, sessionid, currentquestionid);
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+
+        }
+
+        public void setNextAnswer(int currentQuestionId, int nextQuestionId, int sessionid, int userid)
+        {
+
+            List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, userid);
+            List<questionModel> answeredQuestions2 = new questionModel().GetAnsweredShortAnswerQuestions(currentQuestionId, userid);
+
+            foreach (var answeredquestion in answeredQuestions)
+            {
+                if (answeredquestion.questionid == nextQuestionId)
+                {
+                    Session["selectedAnswer"] = answeredquestion.answer;
+                }
+            }
+
+            foreach (var answeredquestion in answeredQuestions2)
+            {
+                if (answeredquestion.questionid == nextQuestionId)
+                {
+                    Session["shortAnswer"] = answeredquestion.answer;
+                }
+            }
+
+        }
+
+
     }
 }

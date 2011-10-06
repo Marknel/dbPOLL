@@ -52,7 +52,7 @@ namespace DBPOLLDemo.Models
         }
 
 
-        public void createResponse(int userid, int answerid, int sessionid)
+        public void createMCQResponse(int userid, int answerid, int sessionid)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace DBPOLLDemo.Models
             }
         }
 
-        public void updateResponse(int responseid, int answerid)
+        public void updateMCQResponse(int responseid, int answerid)
         {
             try
             {
@@ -100,18 +100,52 @@ namespace DBPOLLDemo.Models
             }
         }
 
-        //public int getResponseId(int userid, int sessionid, int answerid, int questionid)
-        //{
-        //    var query = ( from u in dbpollContext.USERS
-        //                  from s in dbpollContext.SESSIONS
-        //                  from a in dbpollContext.ANSWERS
-        //                  from q in dbpollContext.QUESTIONS
-        //                  where 
-                        
-        //                );
-                
-        //    return 1;
-        //}
+        public void createShortAnswerResponse(String feedback, int userid, int sessionid, int questionid)
+        {
+            try
+            {
+                RESPONS response = new RESPONS();
+
+                response.FEEDBACK = feedback;
+                response.RESPONSE_ID = getMaxResponseID() + 1;
+                response.USER_ID = userid;
+                response.CREATED_AT = DateTime.Now;
+                response.MODIFIED_AT = null;
+                response.SESSION_ID = sessionid;
+                response.QUESTION_ID = questionid;
+
+                dbpollContext.AddToRESPONSES(response);
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void updateShortAnswerResponse(int responseid, String feedback)
+        {
+            try
+            {
+                var getResponse = from r in dbpollContext.RESPONSES
+                                  where r.RESPONSE_ID == responseid
+                                  select r;
+
+
+                RESPONS response = getResponse.First<RESPONS>();
+
+                response.RESPONSE_ID = responseid;
+                response.FEEDBACK = feedback;
+                response.MODIFIED_AT = DateTime.Now;
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
 
         public int getResponseId(int sessionid, int userid, String feedback)
         {

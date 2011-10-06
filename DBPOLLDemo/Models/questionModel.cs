@@ -620,7 +620,7 @@ namespace DBPOLLDemo.Models
 
         // Get all of the questions that have been answered by a user in one particular session
         // ansnum!
-        public List<questionModel> AnsweredQuestions(int sessionid, int userid)
+        public List<questionModel> GetAnsweredMCQQuestions(int sessionid, int userid)
         {
             var query = (from q in dbpollContext.QUESTIONS
                          from a in dbpollContext.ANSWERS
@@ -635,7 +635,24 @@ namespace DBPOLLDemo.Models
                              question = q.QUESTION1,
                              questionid = q.QUESTION_ID,
                              questiontype = q.QUESTION_TYPE,
-                             answernum = r.ANSWER_ID,
+                             answer = r.FEEDBACK
+                         });
+
+            return query.ToList();
+        }
+
+        public List<questionModel> GetAnsweredShortAnswerQuestions(int questionid, int userid)
+        {
+            var query = (from q in dbpollContext.QUESTIONS
+                         from r in dbpollContext.RESPONSES
+                         where
+                            r.QUESTION_ID == q.QUESTION_ID &&
+                            r.USER_ID == userid
+                         select new questionModel
+                         {
+                             question = q.QUESTION1,
+                             questionid = q.QUESTION_ID,
+                             questiontype = q.QUESTION_TYPE,
                              answer = r.FEEDBACK
                          });
 
