@@ -20,6 +20,7 @@ namespace DBPOLLDemo.Models
         public String createdmaster;
         public String createdcreator1;
         public String sessionName;
+        public bool sessionParticipantList;
         public int total;
 
         public int sessionid;
@@ -165,10 +166,16 @@ namespace DBPOLLDemo.Models
                             time = session.SESSION_TIME,
                             longitude = session.LONGITUDE,
                             latitude = session.LATITUDE,
+                            sessionParticipantList = false
                         };
 
+           List<pollModel> pollModels = query.ToList();
 
-            return query.ToList();
+            foreach(pollModel pollmodel in pollModels){
+                pollmodel.sessionParticipantList = new participantModel().AssignedList(pollmodel.sessionid);
+            }
+
+            return pollModels;
         }
 
         public List<pollModel> displayPolls()
