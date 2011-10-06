@@ -320,7 +320,7 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            if (Session["currentwebpollingQuestion"] == null)
+            if (Session["currentwebpollingQuestion"] == null || (int)Session["currentWebpollingSessionid"] != sessionid)
             {
                 Session["currentwebpollingQuestion"] = 0;
                 questnum = (int)Session["currentwebpollingQuestion"];
@@ -342,6 +342,7 @@ namespace DBPOLLDemo.Controllers
 
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
+            Session["currentQuestionId"] = pollAndQuestionModel.questionData.questionid;
 
             //questionModel tempQuestionModel = tempList[questnum+1];
             if (tempList.Count() == questnum+1)
@@ -378,30 +379,78 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // answer id
-            int selectedAnswer = Convert.ToInt32(Request["UserAnswer"]);
-
+            PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             int sessionid = (int)Session["currentWebpollingSessionid"];
             int pollid = (int)Session["currentWebpollingPollid"];
-
             int questnum = (int)Session["currentwebpollingQuestion"];
 
-            List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+            Session["selectedAnswer"] = 0;
 
-            if (button == "Previous Question")
+            // Get user answer from radio button
+
+            if (Request["UserAnswer"] != null)
             {
-                
-                Session["currentwebpollingQuestion"] = questnum-1;
+                int selectedAnswer = Convert.ToInt32(Request["UserAnswer"]);
+
+                List<questionModel> answeredQuestions = new questionModel().AnsweredQuestions(sessionid, (int)Session["uid"]);
+
+                questionModel answeredQuestion = new questionModel();
+
+                foreach (var item in answeredQuestions)
+                {
+                    if (item.questionid == (int)Session["currentQuestionId"])
+                    {
+                        answeredQuestion = item;
+                    }
+                }
+
+                // If a question has been answered by this user before, then create a new response data
+                if (answeredQuestion.question != null)
+                {
+                    int responseId = new responseModel().getResponseId(sessionid, (int)Session["uid"], answeredQuestion.answer);
+                    try
+                    {
+                        new responseModel().updateResponse(responseId, selectedAnswer);
+                    }
+                    catch (Exception e)
+                    {
+                        throw (e);
+                    }
+                }
+                // else just update the response for this answer
+                else
+                {
+                    Session["selectedAnswer"] = answeredQuestion.answernum;
+                    try
+                    {
+                        new responseModel().createResponse((int)Session["uid"], selectedAnswer, sessionid);
+                    }
+                    catch (Exception e)
+                    {
+                        throw (e);
+                    }
+                }
+
+                List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+                if (button == "Previous Question")
+                {
+
+                    Session["currentwebpollingQuestion"] = questnum - 1;
+                }
+
+                // if its the last question, then submit/ update answer but stay on the same question
+                else if (button == "Submit Last Answer")
+                {
+                    Session["currentwebpollingQuestion"] = questnum;
+                }
+                // its the next button
+                else
+                {
+                    Session["currentwebpollingQuestion"] = questnum + 1;
+                }
             }
 
-            else
-            {
-                // TODO check if its end of the question, else line below will throw an error when index outta bound
-                Session["currentwebpollingQuestion"] = questnum+1;
-            }
-
-
-            return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid});
+            return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid });
         }
     }
 }

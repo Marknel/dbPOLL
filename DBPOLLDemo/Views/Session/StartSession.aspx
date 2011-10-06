@@ -33,6 +33,7 @@
 
                     
                 <%=Html.Encode(Model.questionData.question)%>
+                <br />
 
 <%--                <p>
                     <%=Html.RadioButton("ANSWER_LIST", "VALUE_LIST")%>
@@ -88,24 +89,26 @@
 
                     } %>
 
-            <%  if(currentQuestion == 1)
+            <%  if(currentQuestion == 0)
 
             { %>
                         <%--this is how to disable a button--%>
                        <%-- <button type="submit" name = "button" value="Next Question" disabled = true> Next Question </button>--%>
-                        <button type="submit" name = "button" value="Next Question"> Next Question </button>
+
+                    <button type="submit" name = "button" value="Previous Question" disabled = true> Previous Question </button>
+                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
 
             <% } else if ((Boolean)Session["endOfQuestion"] == true)
 
             { %>
 
-                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
+                    <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
+                    <button type="submit" name = "button" value="Submit Last Answer"> Submit Last Answer </button>
 
             <%} else {%>
 
-                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
-
-                     <button type="submit" name = "button" value="Next Question"> Next Question </button>
+                    <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
+                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
 
              <%} %>
 
