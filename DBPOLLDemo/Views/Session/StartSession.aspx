@@ -61,7 +61,8 @@
                                                 </label>
                                             </p>
                                         </center>
-                                    <%} else {%>
+                                    <%} 
+                                    else {%>
                                         <center>
                                             <p>
                                                 <label>
@@ -77,18 +78,20 @@
                                         <label>
                                         <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
                                         <%=Html.Encode(answer.answer)%> 
+                                        
                                         </label>
                                     </p>
                                 </center>
                                 <%} %>
                                 <br />
-                             
-                                    
+                              
                         <%}
                         }
 
                     } %>
-
+                    <%= Html.ValidationMessage("webpollingError")%>
+                    <br />
+                    
             <%  if(currentQuestion == 0)
 
             { %>

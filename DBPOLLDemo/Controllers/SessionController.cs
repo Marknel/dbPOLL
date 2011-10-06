@@ -325,13 +325,18 @@ namespace DBPOLLDemo.Controllers
                 Session["currentwebpollingQuestion"] = 0;
                 questnum = (int)Session["currentwebpollingQuestion"];
             }
-            else {
+            else 
+            {
                 questnum = (int)Session["currentwebpollingQuestion"];
             }
 
-            Session["endOfQuestion"] = false;
+            if (TempData["webpollingError"] != null)
+            {
+                String[] error = TempData["webpollingError"].ToString().Split(',');
+                ModelState.AddModelError(error[0], error[1]);
+            }
 
-
+            
             PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
  
@@ -339,34 +344,40 @@ namespace DBPOLLDemo.Controllers
 
             Session["currentWebpollingSessionid"] = sessionid;
             Session["currentWebpollingPollid"] = pollid;
-
             
             pollAndQuestionModel.questionData = new questionModel().getQuestion(tempList[questnum].questionid);
             Session["currentQuestionId"] = pollAndQuestionModel.questionData.questionid;
 
-            //questionModel tempQuestionModel = tempList[questnum+1];
+            //if its the last question
+            Session["endOfQuestion"] = false;
             if (tempList.Count() == questnum+1)
             {
                 Session["endOfQuestion"] = true;
             }
             Session["currentwebpollingQuestion"] = questnum;
 
+
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
             List<List<answerModel>> sorted = new List<List<answerModel>>();
-            
             List<int> questionCheck = new List<int>();
 
-                foreach (var answer in unsorted)
+            foreach (var answer in unsorted)
+            {
+                if (pollAndQuestionModel.questionData.questionid == answer.questionid && !questionCheck.Contains(pollAndQuestionModel.questionData.questionid))
                 {
-                    if (pollAndQuestionModel.questionData.questionid == answer.questionid && !questionCheck.Contains(pollAndQuestionModel.questionData.questionid))
-                    {
-                        sorted.Add(new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid));
-                        questionCheck.Add(pollAndQuestionModel.questionData.questionid);
-                    }
+                    sorted.Add(new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid));
+                    questionCheck.Add(pollAndQuestionModel.questionData.questionid);
                 }
+            }
             pollAndQuestionModel.answerData = sorted;
-            
-            
+
+            List<questionModel> answeredQuestions = new questionModel().AnsweredQuestions(sessionid, (int)Session["uid"]);
+            foreach (var answeredquestion in answeredQuestions){
+                if (answeredquestion.questionid == pollAndQuestionModel.questionData.questionid)
+                {
+                    Session["selectedAnswer"] = answeredquestion.answernum;
+                }
+             }
             return View(pollAndQuestionModel);
         }
 
@@ -408,6 +419,7 @@ namespace DBPOLLDemo.Controllers
                 if (answeredQuestion.question != null)
                 {
                     int responseId = new responseModel().getResponseId(sessionid, (int)Session["uid"], answeredQuestion.answer);
+                    
                     try
                     {
                         new responseModel().updateResponse(responseId, selectedAnswer);
@@ -420,7 +432,6 @@ namespace DBPOLLDemo.Controllers
                 // else just update the response for this answer
                 else
                 {
-                    Session["selectedAnswer"] = answeredQuestion.answernum;
                     try
                     {
                         new responseModel().createResponse((int)Session["uid"], selectedAnswer, sessionid);
@@ -434,7 +445,6 @@ namespace DBPOLLDemo.Controllers
                 List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
                 if (button == "Previous Question")
                 {
-
                     Session["currentwebpollingQuestion"] = questnum - 1;
                 }
 
@@ -447,7 +457,14 @@ namespace DBPOLLDemo.Controllers
                 else
                 {
                     Session["currentwebpollingQuestion"] = questnum + 1;
-                }
+                }    
+
+            }
+            else
+            {
+                String error = "webpollingError" + "," + "Please select one of the answer";
+                TempData["webpollingError"] = error;
+                
             }
 
             return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid });
