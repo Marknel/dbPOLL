@@ -314,6 +314,7 @@ namespace DBPOLLDemo.Controllers
         public ActionResult StartSession(int sessionid, int pollid)
         {
             int questnum = 0;
+            
 
             if (Session["uid"] == null)
             {
