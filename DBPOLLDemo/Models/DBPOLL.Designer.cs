@@ -3473,7 +3473,9 @@ namespace DBPOLLDemo.Models
         /// <param name="qUESTION1">Initial value of the QUESTION1 property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
         /// <param name="pOLL_ID">Initial value of the POLL_ID property.</param>
-        public static QUESTION CreateQUESTION(global::System.Int32 qUESTION_ID, global::System.Int32 qUESTION_TYPE, global::System.String qUESTION1, global::System.DateTime cREATED_AT, global::System.Int32 pOLL_ID)
+        /// <param name="qUESTION_OPEN">Initial value of the QUESTION_OPEN property.</param>
+        /// <param name="nEXT_QUESTION">Initial value of the NEXT_QUESTION property.</param>
+        public static QUESTION CreateQUESTION(global::System.Int32 qUESTION_ID, global::System.Int32 qUESTION_TYPE, global::System.String qUESTION1, global::System.DateTime cREATED_AT, global::System.Int32 pOLL_ID, global::System.Int32 qUESTION_OPEN, global::System.Int32 nEXT_QUESTION)
         {
             QUESTION qUESTION = new QUESTION();
             qUESTION.QUESTION_ID = qUESTION_ID;
@@ -3481,6 +3483,8 @@ namespace DBPOLLDemo.Models
             qUESTION.QUESTION1 = qUESTION1;
             qUESTION.CREATED_AT = cREATED_AT;
             qUESTION.POLL_ID = pOLL_ID;
+            qUESTION.QUESTION_OPEN = qUESTION_OPEN;
+            qUESTION.NEXT_QUESTION = nEXT_QUESTION;
             return qUESTION;
         }
 
@@ -3729,6 +3733,54 @@ namespace DBPOLLDemo.Models
         private global::System.Int32 _POLL_ID;
         partial void OnPOLL_IDChanging(global::System.Int32 value);
         partial void OnPOLL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 QUESTION_OPEN
+        {
+            get
+            {
+                return _QUESTION_OPEN;
+            }
+            set
+            {
+                OnQUESTION_OPENChanging(value);
+                ReportPropertyChanging("QUESTION_OPEN");
+                _QUESTION_OPEN = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QUESTION_OPEN");
+                OnQUESTION_OPENChanged();
+            }
+        }
+        private global::System.Int32 _QUESTION_OPEN;
+        partial void OnQUESTION_OPENChanging(global::System.Int32 value);
+        partial void OnQUESTION_OPENChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NEXT_QUESTION
+        {
+            get
+            {
+                return _NEXT_QUESTION;
+            }
+            set
+            {
+                OnNEXT_QUESTIONChanging(value);
+                ReportPropertyChanging("NEXT_QUESTION");
+                _NEXT_QUESTION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NEXT_QUESTION");
+                OnNEXT_QUESTIONChanged();
+            }
+        }
+        private global::System.Int32 _NEXT_QUESTION;
+        partial void OnNEXT_QUESTIONChanging(global::System.Int32 value);
+        partial void OnNEXT_QUESTIONChanged();
 
         #endregion
     
@@ -4254,6 +4306,30 @@ namespace DBPOLLDemo.Models
         private Nullable<global::System.Int32> _QUESTION_ID;
         partial void OnQUESTION_IDChanging(Nullable<global::System.Int32> value);
         partial void OnQUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PREFERENCE_NUMBER
+        {
+            get
+            {
+                return _PREFERENCE_NUMBER;
+            }
+            set
+            {
+                OnPREFERENCE_NUMBERChanging(value);
+                ReportPropertyChanging("PREFERENCE_NUMBER");
+                _PREFERENCE_NUMBER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PREFERENCE_NUMBER");
+                OnPREFERENCE_NUMBERChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PREFERENCE_NUMBER;
+        partial void OnPREFERENCE_NUMBERChanging(Nullable<global::System.Int32> value);
+        partial void OnPREFERENCE_NUMBERChanged();
 
         #endregion
     

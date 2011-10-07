@@ -65,6 +65,7 @@ namespace DBPOLLDemo.Models
                 response.CREATED_AT = DateTime.Now;
                 response.MODIFIED_AT = null;
                 response.SESSION_ID = sessionid;
+                response.PREFERENCE_NUMBER = null;
 
                 dbpollContext.AddToRESPONSES(response);
                 dbpollContext.SaveChanges();
@@ -100,7 +101,7 @@ namespace DBPOLLDemo.Models
             }
         }
 
-        public void createRankingResponse(int userid, int answerid, int sessionid)
+        public void createRankingResponse(int userid, int answerid, int sessionid, int preferencenumber)
         {
             try
             {
@@ -113,9 +114,35 @@ namespace DBPOLLDemo.Models
                 response.CREATED_AT = DateTime.Now;
                 response.MODIFIED_AT = null;
                 response.SESSION_ID = sessionid;
+                response.PREFERENCE_NUMBER = preferencenumber;
                 
 
                 dbpollContext.AddToRESPONSES(response);
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void updateRankingResponse(int responseid, int answerid, int preferencenumber)
+        {
+            try
+            {
+                var getResponse = from r in dbpollContext.RESPONSES
+                                  where r.RESPONSE_ID == responseid
+                                  select r;
+
+
+                RESPONS response = getResponse.First<RESPONS>();
+
+                response.RESPONSE_ID = responseid;
+                response.ANSWER_ID = answerid;
+                response.FEEDBACK = new answerModel().getFeedback(answerid);
+                response.MODIFIED_AT = DateTime.Now;
+                response.PREFERENCE_NUMBER = preferencenumber;
                 dbpollContext.SaveChanges();
 
             }
@@ -186,5 +213,18 @@ namespace DBPOLLDemo.Models
         }
 
 
+        public List<int?> getResponseAnswerIds(int sessionid, int userid)
+        {
+            var query = (from r in dbpollContext.RESPONSES
+                         where
+                            r.SESSION_ID == sessionid &&
+                            r.USER_ID == userid &&
+                            r.PREFERENCE_NUMBER != null
+                         orderby r.PREFERENCE_NUMBER ascending
+                         select r.ANSWER_ID
+                        );
+
+            return query.ToList();
+        }
     }
 }

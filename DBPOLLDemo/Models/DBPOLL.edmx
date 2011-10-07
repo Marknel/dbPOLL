@@ -257,6 +257,8 @@
           <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DATE" />
           <Property Name="POLL_ID" Type="int" Nullable="false" />
+          <Property Name="QUESTION_OPEN" Type="int" Nullable="false" />
+          <Property Name="NEXT_QUESTION" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="QUESTION_OBJECTS">
           <Key>
@@ -279,6 +281,7 @@
           <Property Name="SESSION_ID" Type="int" Nullable="false" />
           <Property Name="ANSWER_ID" Type="int" />
           <Property Name="QUESTION_ID" Type="int" />
+          <Property Name="PREFERENCE_NUMBER" Type="int" />
         </EntityType>
         <EntityType Name="SESSIONS">
           <Key>
@@ -892,6 +895,8 @@
           <NavigationProperty Name="POLL" Relationship="Models.CSSE3004GG_SYS_C001273244" FromRole="QUESTIONS" ToRole="POLLS" />
           <NavigationProperty Name="QUESTION_OBJECTS" Relationship="Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1" FromRole="QUESTIONS" ToRole="QUESTION_OBJECTS" />
           <NavigationProperty Name="RESPONSES" Relationship="Models.CSSE3004GG_SYS_C001273273" FromRole="QUESTIONS" ToRole="RESPONSES" />
+          <Property Type="Int32" Name="QUESTION_OPEN" Nullable="false" />
+          <Property Type="Int32" Name="NEXT_QUESTION" Nullable="false" />
         </EntityType>
         <EntityType Name="QUESTION_OBJECTS">
           <Key>
@@ -918,6 +923,7 @@
           <Property Name="QUESTION_ID" Type="Int32" />
           <NavigationProperty Name="QUESTION" Relationship="Models.CSSE3004GG_SYS_C001273273" FromRole="RESPONSES" ToRole="QUESTIONS" />
           <NavigationProperty Name="USER" Relationship="Models.CSSE3004GG_SYS_C001273271" FromRole="RESPONSES" ToRole="USERS" />
+          <Property Type="Int32" Name="PREFERENCE_NUMBER" />
         </EntityType>
         <EntityType Name="SESSION">
           <Key>
@@ -1354,7 +1360,9 @@
             <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="QUESTIONS"><EntityTypeMapping TypeName="Models.QUESTION"><MappingFragment StoreEntitySet="QUESTIONS">
-            <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
+            <ScalarProperty Name="NEXT_QUESTION" ColumnName="NEXT_QUESTION" />
+                <ScalarProperty Name="QUESTION_OPEN" ColumnName="QUESTION_OPEN" />
+                <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
             <ScalarProperty Name="QUESTION_TYPE" ColumnName="QUESTION_TYPE" />
             <ScalarProperty Name="QUESTION1" ColumnName="QUESTION" />
             <ScalarProperty Name="NUMBER_OF_RESPONSES" ColumnName="NUMBER_OF_RESPONSES" />
@@ -1371,7 +1379,8 @@
             <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="RESPONSES"><EntityTypeMapping TypeName="Models.RESPONS"><MappingFragment StoreEntitySet="RESPONSES">
-            <ScalarProperty Name="RESPONSE_ID" ColumnName="RESPONSE_ID" />
+            <ScalarProperty Name="PREFERENCE_NUMBER" ColumnName="PREFERENCE_NUMBER" />
+                <ScalarProperty Name="RESPONSE_ID" ColumnName="RESPONSE_ID" />
             <ScalarProperty Name="FEEDBACK" ColumnName="FEEDBACK" />
             <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
             <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
