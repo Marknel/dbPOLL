@@ -14,8 +14,11 @@
           <EntitySet Name="OBJECTS" EntityType="Models.Store.OBJECTS" store:Type="Tables" Schema="CSSE3004GG" />
           <EntitySet Name="PARTICIPANTS" EntityType="Models.Store.PARTICIPANTS" store:Type="Tables" Schema="CSSE3004GG" />
           <EntitySet Name="PARTICIPANT_CUSTOM" EntityType="Models.Store.PARTICIPANT_CUSTOM" store:Type="Tables" Schema="CSSE3004GG" />
+          <EntitySet Name="PARTICIPANT_DATA" EntityType="Models.Store.PARTICIPANT_DATA" store:Type="Tables" Schema="CSSE3004GG" />
           <EntitySet Name="POLLS" EntityType="Models.Store.POLLS" store:Type="Tables" Schema="CSSE3004GG" />
+          <EntitySet Name="POLL_OBJECTS_DFLT" EntityType="Models.Store.POLL_OBJECTS_DFLT" store:Type="Tables" Schema="CSSE3004GG" />
           <EntitySet Name="QUESTIONS" EntityType="Models.Store.QUESTIONS" store:Type="Tables" Schema="CSSE3004GG" />
+          <EntitySet Name="QUESTION_OBJECTS" EntityType="Models.Store.QUESTION_OBJECTS" store:Type="Tables" Schema="CSSE3004GG" />
           <EntitySet Name="RESPONSES" EntityType="Models.Store.RESPONSES" store:Type="Tables" Schema="CSSE3004GG" />
           <EntitySet Name="SESSIONS" EntityType="Models.Store.SESSIONS" store:Type="Tables" Schema="CSSE3004GG" />
           <EntitySet Name="SYSADMINS" EntityType="Models.Store.SYSADMINS" store:Type="Tables" Schema="CSSE3004GG" />
@@ -24,13 +27,25 @@
             <End Role="ANSWERS" EntitySet="ANSWERS" />
             <End Role="ANSWER_HISTORY" EntitySet="ANSWER_HISTORY" />
           </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273272" Association="Models.Store.CSSE3004GG_SYS_C001273272">
-            <End Role="ANSWERS" EntitySet="ANSWERS" />
-            <End Role="RESPONSES" EntitySet="RESPONSES" />
+          <AssociationSet Name="CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1" Association="Models.Store.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1">
+            <End Role="OBJECTS" EntitySet="OBJECTS" />
+            <End Role="POLL_OBJECTS_DFLT" EntitySet="POLL_OBJECTS_DFLT" />
           </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1" Association="Models.Store.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1">
+          <AssociationSet Name="CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1" Association="Models.Store.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1">
+            <End Role="OBJECTS" EntitySet="OBJECTS" />
+            <End Role="QUESTION_OBJECTS" EntitySet="QUESTION_OBJECTS" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_SYS_C001307248" Association="Models.Store.CSSE3004GG_SYS_C001307248">
             <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+            <End Role="PARTICIPANT_DATA" EntitySet="PARTICIPANT_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_SYS_C001307252" Association="Models.Store.CSSE3004GG_SYS_C001307252">
+            <End Role="PARTICIPANT_DATA" EntitySet="PARTICIPANT_DATA" />
             <End Role="PARTICIPANT_CUSTOM" EntitySet="PARTICIPANT_CUSTOM" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1" Association="Models.Store.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1">
+            <End Role="POLLS" EntitySet="POLLS" />
+            <End Role="POLL_OBJECTS_DFLT" EntitySet="POLL_OBJECTS_DFLT" />
           </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273229" Association="Models.Store.CSSE3004GG_SYS_C001273229">
             <End Role="POLLS" EntitySet="POLLS" />
@@ -52,21 +67,21 @@
             <End Role="POLLS" EntitySet="POLLS" />
             <End Role="ASSIGNEDPOLLS" EntitySet="ASSIGNEDPOLLS" />
           </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273250" Association="Models.Store.CSSE3004GG_SYS_C001273250">
+          <AssociationSet Name="CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1" Association="Models.Store.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1">
             <End Role="QUESTIONS" EntitySet="QUESTIONS" />
-            <End Role="OBJECTS" EntitySet="OBJECTS" />
+            <End Role="QUESTION_OBJECTS" EntitySet="QUESTION_OBJECTS" />
           </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273256" Association="Models.Store.CSSE3004GG_SYS_C001273256">
             <End Role="QUESTIONS" EntitySet="QUESTIONS" />
             <End Role="ANSWERS" EntitySet="ANSWERS" />
           </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273263" Association="Models.Store.CSSE3004GG_SYS_C001273263">
+          <AssociationSet Name="CSSE3004GG_SYS_C001273273" Association="Models.Store.CSSE3004GG_SYS_C001273273">
+            <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+            <End Role="RESPONSES" EntitySet="RESPONSES" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_SYS_C001307244" Association="Models.Store.CSSE3004GG_SYS_C001307244">
             <End Role="SESSIONS" EntitySet="SESSIONS" />
             <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
-          </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273273" Association="Models.Store.CSSE3004GG_SYS_C001273273">
-            <End Role="SESSIONS" EntitySet="SESSIONS" />
-            <End Role="RESPONSES" EntitySet="RESPONSES" />
           </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273218" Association="Models.Store.CSSE3004GG_SYS_C001273218">
             <End Role="USERS" EntitySet="USERS" />
@@ -79,10 +94,6 @@
           <AssociationSet Name="CSSE3004GG_SYS_C001273234" Association="Models.Store.CSSE3004GG_SYS_C001273234">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="MANAGEMENTS" EntitySet="MANAGEMENTS" />
-          </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273262" Association="Models.Store.CSSE3004GG_SYS_C001273262">
-            <End Role="USERS" EntitySet="USERS" />
-            <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
           </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273271" Association="Models.Store.CSSE3004GG_SYS_C001273271">
             <End Role="USERS" EntitySet="USERS" />
@@ -100,6 +111,10 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="ASSIGNEDPOLLS" EntitySet="ASSIGNEDPOLLS" />
           </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_SYS_C001307243" Association="Models.Store.CSSE3004GG_SYS_C001307243">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ANSWERS">
           <Key>
@@ -112,7 +127,7 @@
           <Property Name="NUM" Type="int" />
           <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DATE" />
-          <Property Name="QUESTION_ID" Type="int" Nullable="false" />
+          <Property Name="QUESTION_ID" Type="int" />
         </EntityType>
         <EntityType Name="ANSWER_HISTORY">
           <Key>
@@ -125,7 +140,7 @@
           <Property Name="NUM" Type="int" />
           <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DATE" />
-          <Property Name="ANSWER_ID" Type="int" Nullable="false" />
+          <Property Name="ANSWER_ID" Type="int" />
         </EntityType>
         <EntityType Name="ASSIGNEDPOLLS">
           <Key>
@@ -151,53 +166,60 @@
           </Key>
           <Property Name="MESSAGE_ID" Type="int" Nullable="false" />
           <Property Name="MESSAGE" Type="VARCHAR2" MaxLength="256" />
-          <Property Name="CREATED_BY" Type="int" Nullable="false" />
+          <Property Name="Sender_UID" Type="int" Nullable="false" />
           <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DATE" />
-          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="Reciever_UID" Type="int" Nullable="false" />
           <Property Name="POLL_ID" Type="int" Nullable="false" />
+          <Property Name="QUESTION_ID" Type="decimal" />
+          <Property Name="SESSION_ID" Type="decimal" />
         </EntityType>
         <EntityType Name="OBJECTS">
           <Key>
             <PropertyRef Name="OBJ_ID" />
           </Key>
           <Property Name="OBJ_ID" Type="int" Nullable="false" />
-          <Property Name="OBJ_TYPE" Type="int" Nullable="false" />
-          <Property Name="ATTRIBUTE" Type="VARCHAR2" Nullable="false" MaxLength="64" />
-          <Property Name="QUESTION_ID" Type="int" Nullable="false" />
+          <Property Name="OBJ_NAME" Type="VARCHAR2" MaxLength="20" />
         </EntityType>
         <EntityType Name="PARTICIPANTS">
           <Key>
-            <PropertyRef Name="USER_ID" />
-            <PropertyRef Name="SESSION_ID" />
+            <PropertyRef Name="PARTICIPANT_ID" />
           </Key>
+          <Property Name="PARTICIPANT_ID" Type="int" Nullable="false" />
           <Property Name="CREATED_AT" Type="DATE" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DATE" />
           <Property Name="USER_ID" Type="int" Nullable="false" />
           <Property Name="SESSION_ID" Type="int" Nullable="false" />
-          <Property Name="USER_WEIGHT" Type="int" />
-          <Property Name="NAME" Type="VARCHAR2" MaxLength="32" />
-          <Property Name="ADDRESS" Type="VARCHAR2" MaxLength="20" />
-          <Property Name="CITY" Type="VARCHAR2" MaxLength="20" />
-          <Property Name="POSTCODE" Type="int" />
-          <Property Name="STATE" Type="VARCHAR2" MaxLength="20" />
-          <Property Name="COUNTRY" Type="VARCHAR2" MaxLength="20" />
-          <Property Name="DEPARTMENT" Type="VARCHAR2" MaxLength="20" />
-          <Property Name="COMPANY" Type="VARCHAR2" MaxLength="20" />
-          <Property Name="EMAIL" Type="VARCHAR2" MaxLength="20" />
-          <Property Name="FAX" Type="int" />
-          <Property Name="PHONE" Type="int" />
-          <Property Name="TITLE" Type="VARCHAR2" MaxLength="20" />
         </EntityType>
         <EntityType Name="PARTICIPANT_CUSTOM">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="USER_ID" Type="int" Nullable="false" />
-          <Property Name="SESSION_ID" Type="int" Nullable="false" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
           <Property Name="CUSTOM_FIELD" Type="VARCHAR2" MaxLength="64" />
-          <Property Name="CUSTOM_VALUE" Type="VARCHAR2" MaxLength="20" />
+          <Property Name="CUSTOM_VALUE" Type="VARCHAR2" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="PARTICIPANT_DATA">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+          </Key>
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="PARTICIPANT_ID" Type="int" />
+          <Property Name="USER_WEIGHT" Type="int" />
+          <Property Name="TITLE" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="NAME" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="ADDRESS" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="CITY" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="POSTCODE" Type="int" />
+          <Property Name="STATE" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="COUNTRY" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="DEPARTMENT" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="COMPANY" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="EMAIL" Type="VARCHAR2" MaxLength="32" />
+          <Property Name="FAX" Type="int" />
+          <Property Name="PHONE" Type="int" />
+          <Property Name="MODIFIED_AT" Type="DATE" />
         </EntityType>
         <EntityType Name="POLLS">
           <Key>
@@ -211,6 +233,15 @@
           <Property Name="MODIFIED_AT" Type="DATE" />
           <Property Name="LONGITUDE" Type="decimal" />
           <Property Name="LATITUDE" Type="decimal" />
+        </EntityType>
+        <EntityType Name="POLL_OBJECTS_DFLT">
+          <Key>
+            <PropertyRef Name="O_ID" />
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="O_ID" Type="int" Nullable="false" />
+          <Property Name="P_ID" Type="int" Nullable="false" />
+          <Property Name="ATTRIBUTE" Type="VARCHAR2" MaxLength="20" />
         </EntityType>
         <EntityType Name="QUESTIONS">
           <Key>
@@ -227,6 +258,15 @@
           <Property Name="MODIFIED_AT" Type="DATE" />
           <Property Name="POLL_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="QUESTION_OBJECTS">
+          <Key>
+            <PropertyRef Name="O_ID" />
+            <PropertyRef Name="Q_ID" />
+          </Key>
+          <Property Name="O_ID" Type="int" Nullable="false" />
+          <Property Name="Q_ID" Type="int" Nullable="false" />
+          <Property Name="ATTRIBUTE" Type="VARCHAR2" MaxLength="20" />
+        </EntityType>
         <EntityType Name="RESPONSES">
           <Key>
             <PropertyRef Name="RESPONSE_ID" />
@@ -237,7 +277,8 @@
           <Property Name="MODIFIED_AT" Type="DATE" />
           <Property Name="USER_ID" Type="int" Nullable="false" />
           <Property Name="SESSION_ID" Type="int" Nullable="false" />
-          <Property Name="ANSWER_ID" Type="int" Nullable="false" />
+          <Property Name="ANSWER_ID" Type="int" />
+          <Property Name="QUESTION_ID" Type="int" />
         </EntityType>
         <EntityType Name="SESSIONS">
           <Key>
@@ -279,7 +320,9 @@
           <Property Name="SYSADMIN_ID" Type="int" />
         </EntityType>
         <Association Name="CSSE3004GG_FK">
-          <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="1" />
+          <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ANSWER_HISTORY" Type="Models.Store.ANSWER_HISTORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ANSWERS">
@@ -290,31 +333,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273272">
-          <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="1" />
-          <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
+        <Association Name="CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1">
+          <End Role="OBJECTS" Type="Models.Store.OBJECTS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="POLL_OBJECTS_DFLT" Type="Models.Store.POLL_OBJECTS_DFLT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ANSWERS">
-              <PropertyRef Name="ANSWER_ID" />
+            <Principal Role="OBJECTS">
+              <PropertyRef Name="OBJ_ID" />
             </Principal>
-            <Dependent Role="RESPONSES">
-              <PropertyRef Name="ANSWER_ID" />
+            <Dependent Role="POLL_OBJECTS_DFLT">
+              <PropertyRef Name="O_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1">
-          <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="1">
+        <Association Name="CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1">
+          <End Role="OBJECTS" Type="Models.Store.OBJECTS" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="PARTICIPANT_CUSTOM" Type="Models.Store.PARTICIPANT_CUSTOM" Multiplicity="*" />
+          <End Role="QUESTION_OBJECTS" Type="Models.Store.QUESTION_OBJECTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OBJECTS">
+              <PropertyRef Name="OBJ_ID" />
+            </Principal>
+            <Dependent Role="QUESTION_OBJECTS">
+              <PropertyRef Name="O_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_SYS_C001307248">
+          <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="0..1" />
+          <End Role="PARTICIPANT_DATA" Type="Models.Store.PARTICIPANT_DATA" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PARTICIPANTS">
-              <PropertyRef Name="USER_ID" />
-              <PropertyRef Name="SESSION_ID" />
+              <PropertyRef Name="PARTICIPANT_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPANT_DATA">
+              <PropertyRef Name="PARTICIPANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_SYS_C001307252">
+          <End Role="PARTICIPANT_DATA" Type="Models.Store.PARTICIPANT_DATA" Multiplicity="1" />
+          <End Role="PARTICIPANT_CUSTOM" Type="Models.Store.PARTICIPANT_CUSTOM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARTICIPANT_DATA">
+              <PropertyRef Name="DATA_ID" />
             </Principal>
             <Dependent Role="PARTICIPANT_CUSTOM">
-              <PropertyRef Name="USER_ID" />
-              <PropertyRef Name="SESSION_ID" />
+              <PropertyRef Name="DATA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1">
+          <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="POLL_OBJECTS_DFLT" Type="Models.Store.POLL_OBJECTS_DFLT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POLLS">
+              <PropertyRef Name="POLL_ID" />
+            </Principal>
+            <Dependent Role="POLL_OBJECTS_DFLT">
+              <PropertyRef Name="P_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -343,9 +424,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CSSE3004GG_SYS_C001273244">
-          <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="POLLS" Type="Models.Store.POLLS" Multiplicity="1" />
           <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="POLLS">
@@ -380,22 +459,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273250">
+        <Association Name="CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1">
           <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="OBJECTS" Type="Models.Store.OBJECTS" Multiplicity="*" />
+          <End Role="QUESTION_OBJECTS" Type="Models.Store.QUESTION_OBJECTS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QUESTIONS">
               <PropertyRef Name="QUESTION_ID" />
             </Principal>
-            <Dependent Role="OBJECTS">
-              <PropertyRef Name="QUESTION_ID" />
+            <Dependent Role="QUESTION_OBJECTS">
+              <PropertyRef Name="Q_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="CSSE3004GG_SYS_C001273256">
-          <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="1" />
+          <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="0..1" />
           <End Role="ANSWERS" Type="Models.Store.ANSWERS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QUESTIONS">
@@ -406,7 +485,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273263">
+        <Association Name="CSSE3004GG_SYS_C001273273">
+          <End Role="QUESTIONS" Type="Models.Store.QUESTIONS" Multiplicity="0..1" />
+          <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QUESTIONS">
+              <PropertyRef Name="QUESTION_ID" />
+            </Principal>
+            <Dependent Role="RESPONSES">
+              <PropertyRef Name="QUESTION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_SYS_C001307244">
           <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="1" />
           <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -414,18 +505,6 @@
               <PropertyRef Name="SESSION_ID" />
             </Principal>
             <Dependent Role="PARTICIPANTS">
-              <PropertyRef Name="SESSION_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CSSE3004GG_SYS_C001273273">
-          <End Role="SESSIONS" Type="Models.Store.SESSIONS" Multiplicity="1" />
-          <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SESSIONS">
-              <PropertyRef Name="SESSION_ID" />
-            </Principal>
-            <Dependent Role="RESPONSES">
               <PropertyRef Name="SESSION_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -466,18 +545,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273262">
-          <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
-          <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USERS">
-              <PropertyRef Name="USER_ID" />
-            </Principal>
-            <Dependent Role="PARTICIPANTS">
-              <PropertyRef Name="USER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CSSE3004GG_SYS_C001273271">
           <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
           <End Role="RESPONSES" Type="Models.Store.RESPONSES" Multiplicity="*" />
@@ -498,7 +565,7 @@
               <PropertyRef Name="USER_ID" />
             </Principal>
             <Dependent Role="MESSAGES">
-              <PropertyRef Name="USER_ID" />
+              <PropertyRef Name="Reciever_UID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -510,7 +577,7 @@
               <PropertyRef Name="USER_ID" />
             </Principal>
             <Dependent Role="MESSAGES">
-              <PropertyRef Name="CREATED_BY" />
+              <PropertyRef Name="Sender_UID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -522,6 +589,18 @@
               <PropertyRef Name="USER_ID" />
             </Principal>
             <Dependent Role="ASSIGNEDPOLLS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_SYS_C001307243">
+          <End Role="USERS" Type="Models.Store.USERS" Multiplicity="1" />
+          <End Role="PARTICIPANTS" Type="Models.Store.PARTICIPANTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPANTS">
               <PropertyRef Name="USER_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -538,8 +617,12 @@
           <EntitySet Name="MESSAGES" EntityType="Models.MESSAGE" />
           <EntitySet Name="OBJECTS" EntityType="Models.OBJECT" />
           <EntitySet Name="PARTICIPANTS" EntityType="Models.PARTICIPANT" />
+          <EntitySet Name="PARTICIPANT_CUSTOM" EntityType="Models.PARTICIPANT_CUSTOM" />
+          <EntitySet Name="PARTICIPANT_DATA" EntityType="Models.PARTICIPANT_DATA" />
           <EntitySet Name="POLLS" EntityType="Models.POLL" />
+          <EntitySet Name="POLL_OBJECTS_DFLT" EntityType="Models.POLL_OBJECTS_DFLT" />
           <EntitySet Name="QUESTIONS" EntityType="Models.QUESTION" />
+          <EntitySet Name="QUESTION_OBJECTS" EntityType="Models.QUESTION_OBJECTS" />
           <EntitySet Name="RESPONSES" EntityType="Models.RESPONS" />
           <EntitySet Name="SESSIONS" EntityType="Models.SESSION" />
           <EntitySet Name="SYSADMINS" EntityType="Models.SYSADMIN" />
@@ -547,10 +630,6 @@
           <AssociationSet Name="CSSE3004GG_FK" Association="Models.CSSE3004GG_FK">
             <End Role="ANSWERS" EntitySet="ANSWERS" />
             <End Role="ANSWER_HISTORY" EntitySet="ANSWER_HISTORY" />
-          </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273272" Association="Models.CSSE3004GG_SYS_C001273272">
-            <End Role="ANSWERS" EntitySet="ANSWERS" />
-            <End Role="RESPONSES" EntitySet="RESPONSES" />
           </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273256" Association="Models.CSSE3004GG_SYS_C001273256">
             <End Role="QUESTIONS" EntitySet="QUESTIONS" />
@@ -584,17 +663,33 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="MESSAGES" EntitySet="MESSAGES" />
           </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273250" Association="Models.CSSE3004GG_SYS_C001273250">
-            <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+          <AssociationSet Name="CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1" Association="Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1">
             <End Role="OBJECTS" EntitySet="OBJECTS" />
+            <End Role="POLL_OBJECTS_DFLT" EntitySet="POLL_OBJECTS_DFLT" />
           </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273263" Association="Models.CSSE3004GG_SYS_C001273263">
+          <AssociationSet Name="CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1" Association="Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1">
+            <End Role="OBJECTS" EntitySet="OBJECTS" />
+            <End Role="QUESTION_OBJECTS" EntitySet="QUESTION_OBJECTS" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_SYS_C001307248" Association="Models.CSSE3004GG_SYS_C001307248">
+            <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+            <End Role="PARTICIPANT_DATA" EntitySet="PARTICIPANT_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_SYS_C001307244" Association="Models.CSSE3004GG_SYS_C001307244">
             <End Role="SESSIONS" EntitySet="SESSIONS" />
             <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
           </AssociationSet>
-          <AssociationSet Name="CSSE3004GG_SYS_C001273262" Association="Models.CSSE3004GG_SYS_C001273262">
+          <AssociationSet Name="CSSE3004GG_SYS_C001307243" Association="Models.CSSE3004GG_SYS_C001307243">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="PARTICIPANTS" EntitySet="PARTICIPANTS" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_SYS_C001307252" Association="Models.CSSE3004GG_SYS_C001307252">
+            <End Role="PARTICIPANT_DATA" EntitySet="PARTICIPANT_DATA" />
+            <End Role="PARTICIPANT_CUSTOM" EntitySet="PARTICIPANT_CUSTOM" />
+          </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1" Association="Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1">
+            <End Role="POLLS" EntitySet="POLLS" />
+            <End Role="POLL_OBJECTS_DFLT" EntitySet="POLL_OBJECTS_DFLT" />
           </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273229" Association="Models.CSSE3004GG_SYS_C001273229">
             <End Role="POLLS" EntitySet="POLLS" />
@@ -608,8 +703,12 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="POLLS" EntitySet="POLLS" />
           </AssociationSet>
+          <AssociationSet Name="CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1" Association="Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1">
+            <End Role="QUESTIONS" EntitySet="QUESTIONS" />
+            <End Role="QUESTION_OBJECTS" EntitySet="QUESTION_OBJECTS" />
+          </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273273" Association="Models.CSSE3004GG_SYS_C001273273">
-            <End Role="SESSIONS" EntitySet="SESSIONS" />
+            <End Role="QUESTIONS" EntitySet="QUESTIONS" />
             <End Role="RESPONSES" EntitySet="RESPONSES" />
           </AssociationSet>
           <AssociationSet Name="CSSE3004GG_SYS_C001273271" Association="Models.CSSE3004GG_SYS_C001273271">
@@ -619,11 +718,6 @@
           <AssociationSet Name="CSSE3004GG_SYS_C001273218" Association="Models.CSSE3004GG_SYS_C001273218">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="USERS1" EntitySet="USERS" />
-          </AssociationSet>
-          <EntitySet Name="PARTICIPANT_CUSTOM" EntityType="Models.PARTICIPANT_CUSTOM" />
-          <AssociationSet Name="CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1" Association="Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1">
-            <End Role="PARTICIPANT" EntitySet="PARTICIPANTS" />
-            <End Role="PARTICIPANT_CUSTOM" EntitySet="PARTICIPANT_CUSTOM" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ANSWER">
@@ -637,9 +731,8 @@
           <Property Name="NUM" Type="Int32" />
           <Property Name="CREATED_AT" Type="DateTime" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DateTime" />
-          <Property Name="QUESTION_ID" Type="Int32" Nullable="false" />
+          <Property Name="QUESTION_ID" Type="Int32" />
           <NavigationProperty Name="ANSWER_HISTORY" Relationship="Models.CSSE3004GG_FK" FromRole="ANSWERS" ToRole="ANSWER_HISTORY" />
-          <NavigationProperty Name="RESPONSES" Relationship="Models.CSSE3004GG_SYS_C001273272" FromRole="ANSWERS" ToRole="RESPONSES" />
           <NavigationProperty Name="QUESTION" Relationship="Models.CSSE3004GG_SYS_C001273256" FromRole="ANSWERS" ToRole="QUESTIONS" />
         </EntityType>
         <EntityType Name="ANSWER_HISTORY">
@@ -653,7 +746,7 @@
           <Property Name="NUM" Type="Int32" />
           <Property Name="CREATED_AT" Type="DateTime" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DateTime" />
-          <Property Name="ANSWER_ID" Type="Int32" Nullable="false" />
+          <Property Name="ANSWER_ID" Type="Int32" />
           <NavigationProperty Name="ANSWER1" Relationship="Models.CSSE3004GG_FK" FromRole="ANSWER_HISTORY" ToRole="ANSWERS" />
         </EntityType>
         <EntityType Name="ASSIGNEDPOLL">
@@ -684,11 +777,13 @@
           </Key>
           <Property Name="MESSAGE_ID" Type="Int32" Nullable="false" />
           <Property Name="MESSAGE1" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
-          <Property Name="CREATED_BY" Type="Int32" Nullable="false" />
+          <Property Name="Sender_UID" Type="Int32" Nullable="false" />
           <Property Name="CREATED_AT" Type="DateTime" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DateTime" />
-          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="Reciever_UID" Type="Int32" Nullable="false" />
           <Property Name="POLL_ID" Type="Int32" Nullable="false" />
+          <Property Name="QUESTION_ID" Type="Decimal" Precision="29" Scale="0" />
+          <Property Name="SESSION_ID" Type="Decimal" Precision="29" Scale="0" />
           <NavigationProperty Name="POLL" Relationship="Models.CSSE3004GG_SYS_C001273281" FromRole="MESSAGES" ToRole="POLLS" />
           <NavigationProperty Name="USER" Relationship="Models.CSSE3004GG_SYS_C001273280" FromRole="MESSAGES" ToRole="USERS" />
           <NavigationProperty Name="USER1" Relationship="Models.CSSE3004GG_SYS_C001273282" FromRole="MESSAGES" ToRole="USERS" />
@@ -698,36 +793,55 @@
             <PropertyRef Name="OBJ_ID" />
           </Key>
           <Property Name="OBJ_ID" Type="Int32" Nullable="false" />
-          <Property Name="OBJ_TYPE" Type="Int32" Nullable="false" />
-          <Property Name="ATTRIBUTE" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
-          <Property Name="QUESTION_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="QUESTION" Relationship="Models.CSSE3004GG_SYS_C001273250" FromRole="OBJECTS" ToRole="QUESTIONS" />
+          <Property Name="OBJ_NAME" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="POLL_OBJECTS_DFLT" Relationship="Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1" FromRole="OBJECTS" ToRole="POLL_OBJECTS_DFLT" />
+          <NavigationProperty Name="QUESTION_OBJECTS" Relationship="Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1" FromRole="OBJECTS" ToRole="QUESTION_OBJECTS" />
         </EntityType>
         <EntityType Name="PARTICIPANT">
           <Key>
-            <PropertyRef Name="USER_ID" />
-            <PropertyRef Name="SESSION_ID" />
+            <PropertyRef Name="PARTICIPANT_ID" />
           </Key>
+          <Property Name="PARTICIPANT_ID" Type="Int32" Nullable="false" />
           <Property Name="CREATED_AT" Type="DateTime" Nullable="false" />
           <Property Name="MODIFIED_AT" Type="DateTime" />
           <Property Name="USER_ID" Type="Int32" Nullable="false" />
           <Property Name="SESSION_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SESSION" Relationship="Models.CSSE3004GG_SYS_C001273263" FromRole="PARTICIPANTS" ToRole="SESSIONS" />
-          <NavigationProperty Name="USER" Relationship="Models.CSSE3004GG_SYS_C001273262" FromRole="PARTICIPANTS" ToRole="USERS" />
-          <Property Type="Int32" Name="USER_WEIGHT" />
-          <Property Type="String" Name="NAME" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ADDRESS" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CITY" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="POSTCODE" />
-          <Property Type="String" Name="STATE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="COUNTRY" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DEPARTMENT" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="COMPANY" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="EMAIL" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="FAX" />
-          <Property Type="Int32" Name="PHONE" />
-          <Property Type="String" Name="TITLE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PARTICIPANT_CUSTOM" Relationship="Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1" FromRole="PARTICIPANT" ToRole="PARTICIPANT_CUSTOM" />
+          <NavigationProperty Name="PARTICIPANT_DATA" Relationship="Models.CSSE3004GG_SYS_C001307248" FromRole="PARTICIPANTS" ToRole="PARTICIPANT_DATA" />
+          <NavigationProperty Name="SESSION" Relationship="Models.CSSE3004GG_SYS_C001307244" FromRole="PARTICIPANTS" ToRole="SESSIONS" />
+          <NavigationProperty Name="USER" Relationship="Models.CSSE3004GG_SYS_C001307243" FromRole="PARTICIPANTS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="PARTICIPANT_CUSTOM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="CUSTOM_FIELD" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="CUSTOM_VALUE" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PARTICIPANT_DATA" Relationship="Models.CSSE3004GG_SYS_C001307252" FromRole="PARTICIPANT_CUSTOM" ToRole="PARTICIPANT_DATA" />
+        </EntityType>
+        <EntityType Name="PARTICIPANT_DATA">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+          </Key>
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="PARTICIPANT_ID" Type="Int32" Nullable="true" />
+          <Property Name="USER_WEIGHT" Type="Int32" />
+          <Property Name="TITLE" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="NAME" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="ADDRESS" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="CITY" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="POSTCODE" Type="Int32" />
+          <Property Name="STATE" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="COUNTRY" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="DEPARTMENT" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="COMPANY" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="FAX" Type="Int32" />
+          <Property Name="PHONE" Type="Int32" />
+          <Property Name="MODIFIED_AT" Type="DateTime" />
+          <NavigationProperty Name="PARTICIPANT" Relationship="Models.CSSE3004GG_SYS_C001307248" FromRole="PARTICIPANT_DATA" ToRole="PARTICIPANTS" />
+          <NavigationProperty Name="PARTICIPANT_CUSTOM" Relationship="Models.CSSE3004GG_SYS_C001307252" FromRole="PARTICIPANT_DATA" ToRole="PARTICIPANT_CUSTOM" />
         </EntityType>
         <EntityType Name="POLL">
           <Key>
@@ -744,9 +858,21 @@
           <NavigationProperty Name="ASSIGNEDPOLLS" Relationship="Models.CSSE3004GG_SYS_C001293084" FromRole="POLLS" ToRole="ASSIGNEDPOLLS" />
           <NavigationProperty Name="MANAGEMENTS" Relationship="Models.CSSE3004GG_SYS_C001273235" FromRole="POLLS" ToRole="MANAGEMENTS" />
           <NavigationProperty Name="MESSAGES" Relationship="Models.CSSE3004GG_SYS_C001273281" FromRole="POLLS" ToRole="MESSAGES" />
+          <NavigationProperty Name="POLL_OBJECTS_DFLT" Relationship="Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1" FromRole="POLLS" ToRole="POLL_OBJECTS_DFLT" />
           <NavigationProperty Name="SESSIONS" Relationship="Models.CSSE3004GG_SYS_C001273229" FromRole="POLLS" ToRole="SESSIONS" />
           <NavigationProperty Name="QUESTIONS" Relationship="Models.CSSE3004GG_SYS_C001273244" FromRole="POLLS" ToRole="QUESTIONS" />
           <NavigationProperty Name="USER" Relationship="Models.CSSE3004GG_SYS_C001273223" FromRole="POLLS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="POLL_OBJECTS_DFLT">
+          <Key>
+            <PropertyRef Name="O_ID" />
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="O_ID" Type="Int32" Nullable="false" />
+          <Property Name="P_ID" Type="Int32" Nullable="false" />
+          <Property Name="ATTRIBUTE" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="OBJECT" Relationship="Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1" FromRole="POLL_OBJECTS_DFLT" ToRole="OBJECTS" />
+          <NavigationProperty Name="POLL" Relationship="Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1" FromRole="POLL_OBJECTS_DFLT" ToRole="POLLS" />
         </EntityType>
         <EntityType Name="QUESTION">
           <Key>
@@ -763,8 +889,20 @@
           <Property Name="MODIFIED_AT" Type="DateTime" />
           <Property Name="POLL_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ANSWERS" Relationship="Models.CSSE3004GG_SYS_C001273256" FromRole="QUESTIONS" ToRole="ANSWERS" />
-          <NavigationProperty Name="OBJECTS" Relationship="Models.CSSE3004GG_SYS_C001273250" FromRole="QUESTIONS" ToRole="OBJECTS" />
           <NavigationProperty Name="POLL" Relationship="Models.CSSE3004GG_SYS_C001273244" FromRole="QUESTIONS" ToRole="POLLS" />
+          <NavigationProperty Name="QUESTION_OBJECTS" Relationship="Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1" FromRole="QUESTIONS" ToRole="QUESTION_OBJECTS" />
+          <NavigationProperty Name="RESPONSES" Relationship="Models.CSSE3004GG_SYS_C001273273" FromRole="QUESTIONS" ToRole="RESPONSES" />
+        </EntityType>
+        <EntityType Name="QUESTION_OBJECTS">
+          <Key>
+            <PropertyRef Name="O_ID" />
+            <PropertyRef Name="Q_ID" />
+          </Key>
+          <Property Name="O_ID" Type="Int32" Nullable="false" />
+          <Property Name="Q_ID" Type="Int32" Nullable="false" />
+          <Property Name="ATTRIBUTE" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="OBJECT" Relationship="Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1" FromRole="QUESTION_OBJECTS" ToRole="OBJECTS" />
+          <NavigationProperty Name="QUESTION" Relationship="Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1" FromRole="QUESTION_OBJECTS" ToRole="QUESTIONS" />
         </EntityType>
         <EntityType Name="RESPONS">
           <Key>
@@ -776,9 +914,9 @@
           <Property Name="MODIFIED_AT" Type="DateTime" />
           <Property Name="USER_ID" Type="Int32" Nullable="false" />
           <Property Name="SESSION_ID" Type="Int32" Nullable="false" />
-          <Property Name="ANSWER_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ANSWER" Relationship="Models.CSSE3004GG_SYS_C001273272" FromRole="RESPONSES" ToRole="ANSWERS" />
-          <NavigationProperty Name="SESSION" Relationship="Models.CSSE3004GG_SYS_C001273273" FromRole="RESPONSES" ToRole="SESSIONS" />
+          <Property Name="ANSWER_ID" Type="Int32" />
+          <Property Name="QUESTION_ID" Type="Int32" />
+          <NavigationProperty Name="QUESTION" Relationship="Models.CSSE3004GG_SYS_C001273273" FromRole="RESPONSES" ToRole="QUESTIONS" />
           <NavigationProperty Name="USER" Relationship="Models.CSSE3004GG_SYS_C001273271" FromRole="RESPONSES" ToRole="USERS" />
         </EntityType>
         <EntityType Name="SESSION">
@@ -791,9 +929,8 @@
           <Property Name="LATITUDE" Type="Decimal" Nullable="false" Precision="29" Scale="15" />
           <Property Name="POLL_ID" Type="Int32" />
           <Property Name="SESSION_TIME" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="PARTICIPANTS" Relationship="Models.CSSE3004GG_SYS_C001273263" FromRole="SESSIONS" ToRole="PARTICIPANTS" />
+          <NavigationProperty Name="PARTICIPANTS" Relationship="Models.CSSE3004GG_SYS_C001307244" FromRole="SESSIONS" ToRole="PARTICIPANTS" />
           <NavigationProperty Name="POLL" Relationship="Models.CSSE3004GG_SYS_C001273229" FromRole="SESSIONS" ToRole="POLLS" />
-          <NavigationProperty Name="RESPONSES" Relationship="Models.CSSE3004GG_SYS_C001273273" FromRole="SESSIONS" ToRole="RESPONSES" />
         </EntityType>
         <EntityType Name="SYSADMIN">
           <Key>
@@ -826,14 +963,16 @@
           <NavigationProperty Name="MANAGEMENTS" Relationship="Models.CSSE3004GG_SYS_C001273234" FromRole="USERS" ToRole="MANAGEMENTS" />
           <NavigationProperty Name="MESSAGES" Relationship="Models.CSSE3004GG_SYS_C001273280" FromRole="USERS" ToRole="MESSAGES" />
           <NavigationProperty Name="MESSAGES1" Relationship="Models.CSSE3004GG_SYS_C001273282" FromRole="USERS" ToRole="MESSAGES" />
-          <NavigationProperty Name="PARTICIPANTS" Relationship="Models.CSSE3004GG_SYS_C001273262" FromRole="USERS" ToRole="PARTICIPANTS" />
+          <NavigationProperty Name="PARTICIPANTS" Relationship="Models.CSSE3004GG_SYS_C001307243" FromRole="USERS" ToRole="PARTICIPANTS" />
           <NavigationProperty Name="POLLS" Relationship="Models.CSSE3004GG_SYS_C001273223" FromRole="USERS" ToRole="POLLS" />
           <NavigationProperty Name="RESPONSES" Relationship="Models.CSSE3004GG_SYS_C001273271" FromRole="USERS" ToRole="RESPONSES" />
           <NavigationProperty Name="USERS1" Relationship="Models.CSSE3004GG_SYS_C001273218" FromRole="USERS" ToRole="USERS1" />
           <NavigationProperty Name="USER1" Relationship="Models.CSSE3004GG_SYS_C001273218" FromRole="USERS1" ToRole="USERS" />
         </EntityType>
         <Association Name="CSSE3004GG_FK">
-          <End Role="ANSWERS" Type="Models.ANSWER" Multiplicity="1" />
+          <End Role="ANSWERS" Type="Models.ANSWER" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ANSWER_HISTORY" Type="Models.ANSWER_HISTORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ANSWERS">
@@ -844,20 +983,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273272">
-          <End Role="ANSWERS" Type="Models.ANSWER" Multiplicity="1" />
-          <End Role="RESPONSES" Type="Models.RESPONS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ANSWERS">
-              <PropertyRef Name="ANSWER_ID" />
-            </Principal>
-            <Dependent Role="RESPONSES">
-              <PropertyRef Name="ANSWER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CSSE3004GG_SYS_C001273256">
-          <End Role="QUESTIONS" Type="Models.QUESTION" Multiplicity="1" />
+          <End Role="QUESTIONS" Type="Models.QUESTION" Multiplicity="0..1" />
           <End Role="ANSWERS" Type="Models.ANSWER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QUESTIONS">
@@ -936,7 +1063,7 @@
               <PropertyRef Name="USER_ID" />
             </Principal>
             <Dependent Role="MESSAGES">
-              <PropertyRef Name="USER_ID" />
+              <PropertyRef Name="Reciever_UID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -948,25 +1075,51 @@
               <PropertyRef Name="USER_ID" />
             </Principal>
             <Dependent Role="MESSAGES">
-              <PropertyRef Name="CREATED_BY" />
+              <PropertyRef Name="Sender_UID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273250">
-          <End Role="QUESTIONS" Type="Models.QUESTION" Multiplicity="1">
+        <Association Name="CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1">
+          <End Role="OBJECTS" Type="Models.OBJECT" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="OBJECTS" Type="Models.OBJECT" Multiplicity="*" />
+          <End Role="POLL_OBJECTS_DFLT" Type="Models.POLL_OBJECTS_DFLT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="QUESTIONS">
-              <PropertyRef Name="QUESTION_ID" />
+            <Principal Role="OBJECTS">
+              <PropertyRef Name="OBJ_ID" />
             </Principal>
-            <Dependent Role="OBJECTS">
-              <PropertyRef Name="QUESTION_ID" />
+            <Dependent Role="POLL_OBJECTS_DFLT">
+              <PropertyRef Name="O_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273263">
+        <Association Name="CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1">
+          <End Role="OBJECTS" Type="Models.OBJECT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QUESTION_OBJECTS" Type="Models.QUESTION_OBJECTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OBJECTS">
+              <PropertyRef Name="OBJ_ID" />
+            </Principal>
+            <Dependent Role="QUESTION_OBJECTS">
+              <PropertyRef Name="O_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_SYS_C001307248">
+          <End Role="PARTICIPANTS" Type="Models.PARTICIPANT" Multiplicity="0..1" />
+          <End Role="PARTICIPANT_DATA" Type="Models.PARTICIPANT_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARTICIPANTS">
+              <PropertyRef Name="PARTICIPANT_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPANT_DATA">
+              <PropertyRef Name="PARTICIPANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_SYS_C001307244">
           <End Role="SESSIONS" Type="Models.SESSION" Multiplicity="1" />
           <End Role="PARTICIPANTS" Type="Models.PARTICIPANT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -978,7 +1131,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CSSE3004GG_SYS_C001273262">
+        <Association Name="CSSE3004GG_SYS_C001307243">
           <End Role="USERS" Type="Models.USER" Multiplicity="1" />
           <End Role="PARTICIPANTS" Type="Models.PARTICIPANT" Multiplicity="*" />
           <ReferentialConstraint>
@@ -987,6 +1140,32 @@
             </Principal>
             <Dependent Role="PARTICIPANTS">
               <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_SYS_C001307252">
+          <End Role="PARTICIPANT_DATA" Type="Models.PARTICIPANT_DATA" Multiplicity="1" />
+          <End Role="PARTICIPANT_CUSTOM" Type="Models.PARTICIPANT_CUSTOM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARTICIPANT_DATA">
+              <PropertyRef Name="DATA_ID" />
+            </Principal>
+            <Dependent Role="PARTICIPANT_CUSTOM">
+              <PropertyRef Name="DATA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1">
+          <End Role="POLLS" Type="Models.POLL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="POLL_OBJECTS_DFLT" Type="Models.POLL_OBJECTS_DFLT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POLLS">
+              <PropertyRef Name="POLL_ID" />
+            </Principal>
+            <Dependent Role="POLL_OBJECTS_DFLT">
+              <PropertyRef Name="P_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1003,9 +1182,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CSSE3004GG_SYS_C001273244">
-          <End Role="POLLS" Type="Models.POLL" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="POLLS" Type="Models.POLL" Multiplicity="1" />
           <End Role="QUESTIONS" Type="Models.QUESTION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="POLLS">
@@ -1028,15 +1205,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1">
+          <End Role="QUESTIONS" Type="Models.QUESTION" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QUESTION_OBJECTS" Type="Models.QUESTION_OBJECTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QUESTIONS">
+              <PropertyRef Name="QUESTION_ID" />
+            </Principal>
+            <Dependent Role="QUESTION_OBJECTS">
+              <PropertyRef Name="Q_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="CSSE3004GG_SYS_C001273273">
-          <End Role="SESSIONS" Type="Models.SESSION" Multiplicity="1" />
+          <End Role="QUESTIONS" Type="Models.QUESTION" Multiplicity="0..1" />
           <End Role="RESPONSES" Type="Models.RESPONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SESSIONS">
-              <PropertyRef Name="SESSION_ID" />
+            <Principal Role="QUESTIONS">
+              <PropertyRef Name="QUESTION_ID" />
             </Principal>
             <Dependent Role="RESPONSES">
-              <PropertyRef Name="SESSION_ID" />
+              <PropertyRef Name="QUESTION_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1061,31 +1252,6 @@
             </Principal>
             <Dependent Role="USERS1">
               <PropertyRef Name="CREATED_BY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="PARTICIPANT_CUSTOM">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="USER_ID" Nullable="false" />
-          <Property Type="Int32" Name="SESSION_ID" Nullable="false" />
-          <Property Type="String" Name="CUSTOM_FIELD" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CUSTOM_VALUE" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PARTICIPANT" Relationship="Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1" FromRole="PARTICIPANT_CUSTOM" ToRole="PARTICIPANT" />
-        </EntityType>
-        <Association Name="CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1">
-          <End Type="Models.PARTICIPANT" Role="PARTICIPANT" Multiplicity="1" />
-          <End Type="Models.PARTICIPANT_CUSTOM" Role="PARTICIPANT_CUSTOM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PARTICIPANT">
-              <PropertyRef Name="USER_ID" />
-              <PropertyRef Name="SESSION_ID" />
-            </Principal>
-            <Dependent Role="PARTICIPANT_CUSTOM">
-              <PropertyRef Name="USER_ID" />
-              <PropertyRef Name="SESSION_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1129,36 +1295,48 @@
           <EntitySetMapping Name="MESSAGES"><EntityTypeMapping TypeName="Models.MESSAGE"><MappingFragment StoreEntitySet="MESSAGES">
             <ScalarProperty Name="MESSAGE_ID" ColumnName="MESSAGE_ID" />
             <ScalarProperty Name="MESSAGE1" ColumnName="MESSAGE" />
-            <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+            <ScalarProperty Name="Sender_UID" ColumnName="Sender_UID" />
             <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
             <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
-            <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+            <ScalarProperty Name="Reciever_UID" ColumnName="Reciever_UID" />
             <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
+            <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
+            <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="OBJECTS"><EntityTypeMapping TypeName="Models.OBJECT"><MappingFragment StoreEntitySet="OBJECTS">
             <ScalarProperty Name="OBJ_ID" ColumnName="OBJ_ID" />
-            <ScalarProperty Name="OBJ_TYPE" ColumnName="OBJ_TYPE" />
-            <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
-            <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
+            <ScalarProperty Name="OBJ_NAME" ColumnName="OBJ_NAME" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="PARTICIPANTS"><EntityTypeMapping TypeName="Models.PARTICIPANT"><MappingFragment StoreEntitySet="PARTICIPANTS">
-            <ScalarProperty Name="TITLE" ColumnName="TITLE" />
-                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
-                <ScalarProperty Name="FAX" ColumnName="FAX" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-                <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
-                <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
-                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
-                <ScalarProperty Name="STATE" ColumnName="STATE" />
-                <ScalarProperty Name="POSTCODE" ColumnName="POSTCODE" />
-                <ScalarProperty Name="CITY" ColumnName="CITY" />
-                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-                <ScalarProperty Name="USER_WEIGHT" ColumnName="USER_WEIGHT" />
-                <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+            <ScalarProperty Name="PARTICIPANT_ID" ColumnName="PARTICIPANT_ID" />
+            <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
             <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
             <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
             <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PARTICIPANT_CUSTOM"><EntityTypeMapping TypeName="Models.PARTICIPANT_CUSTOM"><MappingFragment StoreEntitySet="PARTICIPANT_CUSTOM">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="CUSTOM_FIELD" ColumnName="CUSTOM_FIELD" />
+            <ScalarProperty Name="CUSTOM_VALUE" ColumnName="CUSTOM_VALUE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PARTICIPANT_DATA"><EntityTypeMapping TypeName="Models.PARTICIPANT_DATA"><MappingFragment StoreEntitySet="PARTICIPANT_DATA">
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="PARTICIPANT_ID" ColumnName="PARTICIPANT_ID" />
+            <ScalarProperty Name="USER_WEIGHT" ColumnName="USER_WEIGHT" />
+            <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+            <ScalarProperty Name="NAME" ColumnName="NAME" />
+            <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+            <ScalarProperty Name="CITY" ColumnName="CITY" />
+            <ScalarProperty Name="POSTCODE" ColumnName="POSTCODE" />
+            <ScalarProperty Name="STATE" ColumnName="STATE" />
+            <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+            <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+            <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+            <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+            <ScalarProperty Name="FAX" ColumnName="FAX" />
+            <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+            <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="POLLS"><EntityTypeMapping TypeName="Models.POLL"><MappingFragment StoreEntitySet="POLLS">
             <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
@@ -1169,6 +1347,11 @@
             <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
             <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
             <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="POLL_OBJECTS_DFLT"><EntityTypeMapping TypeName="Models.POLL_OBJECTS_DFLT"><MappingFragment StoreEntitySet="POLL_OBJECTS_DFLT">
+            <ScalarProperty Name="O_ID" ColumnName="O_ID" />
+            <ScalarProperty Name="P_ID" ColumnName="P_ID" />
+            <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="QUESTIONS"><EntityTypeMapping TypeName="Models.QUESTION"><MappingFragment StoreEntitySet="QUESTIONS">
             <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
@@ -1182,6 +1365,11 @@
             <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
             <ScalarProperty Name="POLL_ID" ColumnName="POLL_ID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="QUESTION_OBJECTS"><EntityTypeMapping TypeName="Models.QUESTION_OBJECTS"><MappingFragment StoreEntitySet="QUESTION_OBJECTS">
+            <ScalarProperty Name="O_ID" ColumnName="O_ID" />
+            <ScalarProperty Name="Q_ID" ColumnName="Q_ID" />
+            <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="RESPONSES"><EntityTypeMapping TypeName="Models.RESPONS"><MappingFragment StoreEntitySet="RESPONSES">
             <ScalarProperty Name="RESPONSE_ID" ColumnName="RESPONSE_ID" />
             <ScalarProperty Name="FEEDBACK" ColumnName="FEEDBACK" />
@@ -1190,6 +1378,7 @@
             <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
             <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
             <ScalarProperty Name="ANSWER_ID" ColumnName="ANSWER_ID" />
+            <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="SESSIONS"><EntityTypeMapping TypeName="Models.SESSION"><MappingFragment StoreEntitySet="SESSIONS">
             <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
@@ -1221,17 +1410,6 @@
             <ScalarProperty Name="MODIFIED_AT" ColumnName="MODIFIED_AT" />
             <ScalarProperty Name="SYSADMIN_ID" ColumnName="SYSADMIN_ID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="PARTICIPANT_CUSTOM">
-            <EntityTypeMapping TypeName="Models.PARTICIPANT_CUSTOM">
-              <MappingFragment StoreEntitySet="PARTICIPANT_CUSTOM">
-                <ScalarProperty Name="CUSTOM_VALUE" ColumnName="CUSTOM_VALUE" />
-                <ScalarProperty Name="CUSTOM_FIELD" ColumnName="CUSTOM_FIELD" />
-                <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1253,149 +1431,178 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="DBPOLL">
-        <EntityTypeShape EntityType="Models.ANSWER" Width="1.5" PointX="7.5" PointY="22.25" Height="2.7427376302083317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.ANSWER_HISTORY" Width="1.5" PointX="9.75" PointY="22.375" Height="2.414042968749996" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.ASSIGNEDPOLL" Width="1.5" PointX="8.25" PointY="18.5" Height="1.7566536458333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.MANAGEMENT" Width="1.5" PointX="5.25" PointY="18.5" Height="1.921000976562496" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.MESSAGE" Width="1.5" PointX="5.25" PointY="15.125" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.OBJECT" Width="1.5" PointX="7.5" PointY="25.75" Height="1.7566536458333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.PARTICIPANT" Width="1.5" PointX="10.5" PointY="16.625" Height="4.2218636067708388" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.POLL" Width="1.5" PointX="3" PointY="24.875" Height="3.2357796223958317" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.QUESTION" Width="1.5" PointX="5.25" PointY="23.375" Height="3.0714322916666674" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.RESPONS" Width="1.5" PointX="12.75" PointY="19.375" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.SESSION" Width="1.5" PointX="5.25" PointY="28.25" Height="2.4140429687500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.ANSWER" Width="1.5" PointX="7.5" PointY="32.375" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.ANSWER_HISTORY" Width="1.5" PointX="9.75" PointY="32.5" Height="2.414042968749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.ASSIGNEDPOLL" Width="1.5" PointX="8.25" PointY="21.5" Height="1.7566536458333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.MANAGEMENT" Width="1.5" PointX="8.25" PointY="24.375" Height="1.921000976562496" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.MESSAGE" Width="1.5" PointX="5.25" PointY="20.875" Height="2.907084960937496" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.OBJECT" Width="1.5" PointX="5.25" PointY="36.125" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.PARTICIPANT" Width="1.5" PointX="10.5" PointY="23.25" Height="2.2496956380208317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.PARTICIPANT_CUSTOM" Width="2.375" PointX="15.5" PointY="23.5" Height="1.7566536458333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.PARTICIPANT_DATA" Width="2" PointX="12.75" PointY="22.375" Height="3.893168945312496" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.POLL" Width="1.5" PointX="3" PointY="27.625" Height="3.4001269531250031" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.POLL_OBJECTS_DFLT" Width="1.5" PointX="10.25" PointY="28.5" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.QUESTION" Width="1.5" PointX="5.25" PointY="26.25" Height="3.2357796223958317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.QUESTION_OBJECTS" Width="1.5" PointX="7.5" PointY="28" Height="1.7566536458333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.RESPONS" Width="1.5" PointX="7.5" PointY="17.25" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.SESSION" Width="1.5" PointX="5.25" PointY="32.75" Height="2.2496956380208388" IsExpanded="true" />
         <EntityTypeShape EntityType="Models.SYSADMIN" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9210009765625031" IsExpanded="true" />
-        <EntityTypeShape EntityType="Models.USER" Width="1.5" PointX="0.75" PointY="10.75" Height="4.3862109375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Models.USER" Width="1.5" PointX="0.75" PointY="13.75" Height="4.3862109375000014" IsExpanded="true" />
         <AssociationConnector Association="Models.CSSE3004GG_FK" ManuallyRouted="false">
-          <ConnectorPoint PointX="9" PointY="23.582021484374998" />
-          <ConnectorPoint PointX="9.2916666666666661" PointY="23.582021484374998" />
-          <ConnectorPoint PointX="9.4583333333333339" PointY="23.582021484374998" />
-          <ConnectorPoint PointX="9.75" PointY="23.582021484374998" />
-        </AssociationConnector>
-        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273272" ManuallyRouted="false">
-          <ConnectorPoint PointX="9" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="9.2916666666666661" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="9.4583333333333339" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="11.572916666666666" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="11.739583333333334" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="13.010414166666665" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="13.177080833333333" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="13.5" PointY="24.922140299479164" />
-          <ConnectorPoint PointX="13.5" PointY="21.953390299479167" />
+          <ConnectorPoint PointX="9" PointY="33.707021484375" />
+          <ConnectorPoint PointX="9.75" PointY="33.707021484375" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273256" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="24.183868815104166" />
-          <ConnectorPoint PointX="7.5" PointY="24.183868815104166" />
+          <ConnectorPoint PointX="6.75" PointY="29.485779622395832" />
+          <ConnectorPoint PointX="7.125" PointY="29.860779622395832" />
+          <ConnectorPoint PointX="7.125" PointY="33.664195149739584" />
+          <ConnectorPoint PointX="7.5" PointY="33.664195149739584" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001293084" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="27.839966634114582" />
-          <ConnectorPoint PointX="9.375" PointY="27.839966634114582" />
-          <ConnectorPoint PointX="9.375" PointY="20.256653645833332" />
+          <ConnectorPoint PointX="3.75" PointY="27.625" />
+          <ConnectorPoint PointX="3.75" PointY="24.032084960937496" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="24.032084960937496" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="24.032084960937496" />
+          <ConnectorPoint PointX="7.875" PointY="24.032084960937496" />
+          <ConnectorPoint PointX="7.875" PointY="22.378326822916666" />
+          <ConnectorPoint PointX="8.25" PointY="22.378326822916666" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001293085" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="12.90625" />
-          <ConnectorPoint PointX="5.5104141666666671" PointY="12.90625" />
-          <ConnectorPoint PointX="5.6770808333333331" PointY="12.90625" />
-          <ConnectorPoint PointX="9" PointY="12.90625" />
-          <ConnectorPoint PointX="9" PointY="18.5" />
+          <ConnectorPoint PointX="2.25" PointY="15.46875000011176" />
+          <ConnectorPoint PointX="9.40625" PointY="15.46875000011176" />
+          <ConnectorPoint PointX="9.40625" PointY="21.5" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273235" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.75" PointY="24.875" />
-          <ConnectorPoint PointX="3.75" PointY="19.460500488281248" />
-          <ConnectorPoint PointX="4.0729191666666669" PointY="19.460500488281248" />
-          <ConnectorPoint PointX="4.2395858333333329" PointY="19.460500488281248" />
-          <ConnectorPoint PointX="5.25" PointY="19.460500488281248" />
+          <ConnectorPoint PointX="4.1562525" PointY="27.625" />
+          <ConnectorPoint PointX="4.1562525" PointY="25.28125" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="25.28125" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="25.28125" />
+          <ConnectorPoint PointX="8.25" PointY="25.28125" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273234" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.4140631250000002" PointY="15.1362109375" />
-          <ConnectorPoint PointX="1.4140631250000002" PointY="18.948997744140623" />
-          <ConnectorPoint PointX="1.9639128678385418" PointY="18.948997744140623" />
-          <ConnectorPoint PointX="2.1305795345052085" PointY="18.948997744140623" />
-          <ConnectorPoint PointX="4.0729191666666669" PointY="18.948997744140623" />
-          <ConnectorPoint PointX="4.2395858333333329" PointY="18.948997744140623" />
-          <ConnectorPoint PointX="5.25" PointY="18.948997744140623" />
+          <ConnectorPoint PointX="1.5" PointY="18.136210937500003" />
+          <ConnectorPoint PointX="1.5" PointY="24.7968725" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="24.7968725" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="24.7968725" />
+          <ConnectorPoint PointX="3.2604141666666666" PointY="24.7968725" />
+          <ConnectorPoint PointX="3.4270808333333336" PointY="24.7968725" />
+          <ConnectorPoint PointX="3.6666666666666665" PointY="24.7968725" />
+          <ConnectorPoint PointX="3.8333333333333335" PointY="24.7968725" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="24.7968725" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="24.7968725" />
+          <ConnectorPoint PointX="8.25" PointY="24.7968725" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273281" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.1562525" PointY="24.875" />
-          <ConnectorPoint PointX="4.1562525" PointY="16.414195149739584" />
-          <ConnectorPoint PointX="5.25" PointY="16.414195149739584" />
+          <ConnectorPoint PointX="3.3437475" PointY="27.625" />
+          <ConnectorPoint PointX="3.3437475" PointY="22.328542480468748" />
+          <ConnectorPoint PointX="5.25" PointY="22.328542480468748" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273280" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="14.046876999999995" />
-          <ConnectorPoint PointX="5.5104141666666671" PointY="14.046876999999995" />
-          <ConnectorPoint PointX="5.6770808333333331" PointY="14.046876999999995" />
-          <ConnectorPoint PointX="6" PointY="14.046876999999995" />
-          <ConnectorPoint PointX="6" PointY="15.125" />
+          <ConnectorPoint PointX="1.9062525" PointY="18.136210937500003" />
+          <ConnectorPoint PointX="1.9062525" PointY="21.570518740234373" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="21.570518740234373" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="21.570518740234373" />
+          <ConnectorPoint PointX="5.25" PointY="21.570518740234373" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273282" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="11.796872500000006" />
-          <ConnectorPoint PointX="5.5937475" PointY="11.796872500000006" />
-          <ConnectorPoint PointX="5.5937475" PointY="15.125" />
+          <ConnectorPoint PointX="1.0937475" PointY="18.136210937500003" />
+          <ConnectorPoint PointX="1.0937475" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="1.4166666666666667" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="1.5833333333333333" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="3.2604141666666666" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="3.4270808333333336" PointY="23.086566220703123" />
+          <ConnectorPoint PointX="5.25" PointY="23.086566220703123" />
         </AssociationConnector>
-        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273250" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="26.098216145833334" />
-          <ConnectorPoint PointX="7.5" PointY="26.098216145833334" />
+        <AssociationConnector Association="Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="36.921153157552084" />
+          <ConnectorPoint PointX="11.53125" PointY="36.921153157552084" />
+          <ConnectorPoint PointX="11.53125" PointY="30.256653645833339" />
         </AssociationConnector>
-        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273263" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="29.457021484375" />
-          <ConnectorPoint PointX="11.65625" PointY="29.457021484375" />
-          <ConnectorPoint PointX="11.65625" PointY="20.846863606770839" />
+        <AssociationConnector Association="Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="36.187306692307693" />
+          <ConnectorPoint PointX="7.1875" PointY="35.749806692307693" />
+          <ConnectorPoint PointX="7.1875" PointY="28.878326822916669" />
+          <ConnectorPoint PointX="7.5" PointY="28.878326822916669" />
         </AssociationConnector>
-        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273262" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.7819874023437499" PointY="15.1362109375" />
-          <ConnectorPoint PointX="1.7819874023437499" PointY="18.101695149739584" />
-          <ConnectorPoint PointX="1.9639128678385418" PointY="18.101695149739584" />
-          <ConnectorPoint PointX="2.1305795345052085" PointY="18.101695149739584" />
-          <ConnectorPoint PointX="4.0729191666666669" PointY="18.101695149739584" />
-          <ConnectorPoint PointX="4.2395858333333329" PointY="18.101695149739584" />
-          <ConnectorPoint PointX="8.9166666666666661" PointY="18.101695149739584" />
-          <ConnectorPoint PointX="9.0833333333333339" PointY="18.101695149739584" />
-          <ConnectorPoint PointX="10.5" PointY="18.101695149739584" />
+        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001307248" ManuallyRouted="false">
+          <ConnectorPoint PointX="12" PointY="24.374847819010416" />
+          <ConnectorPoint PointX="12.75" PointY="24.374847819010416" />
+        </AssociationConnector>
+        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001307244" ManuallyRouted="false">
+          <ConnectorPoint PointX="6" PointY="32.75" />
+          <ConnectorPoint PointX="6" PointY="29.735779622395832" />
+          <ConnectorPoint PointX="7" PointY="29.735779622395832" />
+          <ConnectorPoint PointX="7" PointY="24.125" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="24.125" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="24.125" />
+          <ConnectorPoint PointX="10.125" PointY="24.125" />
+          <ConnectorPoint PointX="10.125" PointY="24.374847819010416" />
+          <ConnectorPoint PointX="10.5" PointY="24.374847819010416" />
+        </AssociationConnector>
+        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001307243" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.10937875" PointY="18.136210937500003" />
+          <ConnectorPoint PointX="2.10937875" PointY="23.938334960937496" />
+          <ConnectorPoint PointX="3.2604141666666666" PointY="23.938334960937496" />
+          <ConnectorPoint PointX="3.4270808333333336" PointY="23.938334960937496" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="23.938334960937496" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="23.938334960937496" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="23.938334960937496" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="23.938334960937496" />
+          <ConnectorPoint PointX="10.5" PointY="23.938334960937496" />
+        </AssociationConnector>
+        <AssociationConnector Association="Models.CSSE3004GG_SYS_C001307252" ManuallyRouted="false">
+          <ConnectorPoint PointX="14.75" PointY="24.378326822916666" />
+          <ConnectorPoint PointX="15.5" PointY="24.378326822916666" />
+        </AssociationConnector>
+        <AssociationConnector Association="Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="30.058716634114585" />
+          <ConnectorPoint PointX="5.916666666666667" PointY="30.058716634114585" />
+          <ConnectorPoint PointX="6.083333333333333" PointY="30.058716634114585" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="30.058716634114585" />
+          <ConnectorPoint PointX="7.270833333333333" PointY="30.058716634114585" />
+          <ConnectorPoint PointX="10.25" PointY="30.058716634114585" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273229" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.75" PointY="28.110779622395832" />
-          <ConnectorPoint PointX="3.75" PointY="29.457021484375" />
-          <ConnectorPoint PointX="5.25" PointY="29.457021484375" />
+          <ConnectorPoint PointX="3.75" PointY="31.025126953125003" />
+          <ConnectorPoint PointX="3.75" PointY="33.874847819010419" />
+          <ConnectorPoint PointX="5.25" PointY="33.874847819010419" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273244" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="25.660716145833334" />
-          <ConnectorPoint PointX="5.25" PointY="25.660716145833334" />
+          <ConnectorPoint PointX="4.5" PointY="28.555389811309674" />
+          <ConnectorPoint PointX="5.25" PointY="28.555389811309674" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273223" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.0507790625000002" PointY="15.1362109375" />
-          <ConnectorPoint PointX="1.0507790625000002" PointY="26.492889811197916" />
-          <ConnectorPoint PointX="3" PointY="26.492889811197916" />
+          <ConnectorPoint PointX="1.70312625" PointY="18.136210937500003" />
+          <ConnectorPoint PointX="1.70312625" PointY="29.3250634765625" />
+          <ConnectorPoint PointX="3" PointY="29.3250634765625" />
+        </AssociationConnector>
+        <AssociationConnector Association="Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="28.376663411458335" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="28.376663411458335" />
+          <ConnectorPoint PointX="7.083333333333333" PointY="28.376663411458335" />
+          <ConnectorPoint PointX="7.5" PointY="28.376663411458335" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273273" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="28.8222582421875" />
-          <ConnectorPoint PointX="11.572916666666666" PointY="28.8222582421875" />
-          <ConnectorPoint PointX="11.739583333333334" PointY="28.8222582421875" />
-          <ConnectorPoint PointX="13.0937475" PointY="28.8222582421875" />
-          <ConnectorPoint PointX="13.0937475" PointY="21.953390299479167" />
+          <ConnectorPoint PointX="6.75" PointY="26.251152846153843" />
+          <ConnectorPoint PointX="6.9410744349011209" PointY="26.060078411252722" />
+          <ConnectorPoint PointX="7.0589255650988791" PointY="25.942227281054965" />
+          <ConnectorPoint PointX="7.125" PointY="25.876152846153843" />
+          <ConnectorPoint PointX="7.125" PointY="18.539195149739584" />
+          <ConnectorPoint PointX="7.5" PointY="18.539195149739584" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273271" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.0472462011718751" PointY="15.1362109375" />
-          <ConnectorPoint PointX="2.0472462011718751" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="3.6666666666666665" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="3.8333333333333335" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="4.0729191666666669" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="4.2395858333333329" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="9.2916666666666661" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="9.4583333333333339" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="11.572916666666666" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="11.739583333333334" PointY="21.431376953125003" />
-          <ConnectorPoint PointX="12.75" PointY="21.431376953125003" />
+          <ConnectorPoint PointX="2.25" PointY="17.693105468638244" />
+          <ConnectorPoint PointX="7.5" PointY="17.693105468638244" />
         </AssociationConnector>
         <AssociationConnector Association="Models.CSSE3004GG_SYS_C001273218" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.2819230769230767" PointY="10.75" />
-          <ConnectorPoint PointX="1.2819230769230767" PointY="10.5" />
-          <ConnectorPoint PointX="1.7284615384615383" PointY="10.5" />
-          <ConnectorPoint PointX="1.7284615384615383" PointY="10.75" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="Models.PARTICIPANT_CUSTOM" Width="2.125" PointX="12.75" PointY="16.75" Height="1.9210009765625031" />
-        <AssociationConnector Association="Models.CSSE3004GG_PARTICIPANT_CUSTOM_PARTIC_FK1" >
-          <ConnectorPoint PointX="12" PointY="17.710500488281252" />
-          <ConnectorPoint PointX="12.75" PointY="17.710500488281252" />
+          <ConnectorPoint PointX="1.2819230769230767" PointY="13.75" />
+          <ConnectorPoint PointX="1.2819230769230767" PointY="13.500000000223519" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="13.500000000223519" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="13.75" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

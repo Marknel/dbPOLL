@@ -9,6 +9,7 @@ namespace DBPOLLDemo.Models
     public class participantModel
     {
         private PARTICIPANT part = new PARTICIPANT();
+        private PARTICIPANT_DATA partData = new PARTICIPANT_DATA();
 
         public int userid;
         public int sessionid;
@@ -42,19 +43,19 @@ namespace DBPOLLDemo.Models
             part.USER_ID = this.userid = userid;
             part.SESSION_ID = this.sessionid = sessionid;
             part.CREATED_AT = this.createdat = createdat;
-            part.USER_WEIGHT = this.userweight =  userweight;
-            part.NAME = this.name =  name;
-            part.ADDRESS = this.address = address;
-            part.CITY = this.city = city;
-            part.POSTCODE = this.postcode = postcode;
-            part.STATE = this.state = state;
-            part.COUNTRY = this.country = country;
-            part.DEPARTMENT = this.department = department;
-            part.COMPANY = this.department = company;
-            part.EMAIL = this.email = email;
-            part.FAX = this.fax = fax;
-            part.PHONE = this.phone = phone;
-            part.TITLE = this.title = title;
+            partData.USER_WEIGHT = this.userweight = userweight;
+            partData.NAME = this.name = name;
+            partData.ADDRESS = this.address = address;
+            partData.CITY = this.city = city;
+            partData.POSTCODE = this.postcode = postcode;
+            partData.STATE = this.state = state;
+            partData.COUNTRY = this.country = country;
+            partData.DEPARTMENT = this.department = department;
+            partData.COMPANY = this.department = company;
+            partData.EMAIL = this.email = email;
+            partData.FAX = this.fax = fax;
+            partData.PHONE = this.phone = phone;
+            partData.TITLE = this.title = title;
         
 
         }
@@ -76,25 +77,26 @@ namespace DBPOLLDemo.Models
         public List<participantModel> displayParticipants(int sessionID){
 
             var participants = from part in dbpollContext.PARTICIPANTS
+                               join data in dbpollContext.PARTICIPANT_DATA on part.PARTICIPANT_ID equals data.PARTICIPANT_ID
                                where part.SESSION_ID == sessionID
                                select new participantModel
                                {
                                    userid = part.USER_ID,
                                    sessionid = part.SESSION_ID,
                                    createdat = part.CREATED_AT,
-                                   userweight = (int)part.USER_WEIGHT,
-                                   name = part.NAME,
-                                   address = part.ADDRESS,
-                                   city = part.CITY,
-                                   postcode = part.POSTCODE,
-                                   state = part.STATE,
-                                   country = part.COUNTRY,
-                                   department = part.DEPARTMENT,
-                                   company = part.COMPANY,
-                                   email = part.EMAIL,
-                                   fax = part.FAX,
-                                   phone = part.PHONE,
-                                   title = part.TITLE
+                                   userweight = (int)data.USER_WEIGHT,
+                                   name = data.NAME,
+                                   address = data.ADDRESS,
+                                   city = data.CITY,
+                                   postcode = data.POSTCODE,
+                                   state = data.STATE,
+                                   country = data.COUNTRY,
+                                   department = data.DEPARTMENT,
+                                   company = data.COMPANY,
+                                   email = data.EMAIL,
+                                   fax = data.FAX,
+                                   phone = data.PHONE,
+                                   title = data.TITLE
 
                                };
             return participants.ToList();
@@ -145,6 +147,29 @@ namespace DBPOLLDemo.Models
             }
         }
 
+        public int getMaxParticipantID()
+        {
+            var query = (from part in dbpollContext.PARTICIPANTS
+                         select part.PARTICIPANT_ID);
+            if (query.ToArray().Length == 0)
+            {
+                return 0;
+            }
+            return query.Max<int>();
+        }
+
+        public int getMaxDataID()
+        {
+            var query = (from part in dbpollContext.PARTICIPANT_DATA
+                         select part.DATA_ID);
+            if (query.ToArray().Length == 0)
+            {
+                return 0;
+            }
+
+            return query.Max<int>();
+        }
+
         /// <summary>
         /// Create Participant and try to migrate some details from user table.
         /// </summary>
@@ -156,13 +181,60 @@ namespace DBPOLLDemo.Models
                                 where user.USER_ID == userid
                                 select user).First<USER>();
 
+                var participants = from part in dbpollContext.PARTICIPANTS
+                               join data in dbpollContext.PARTICIPANT_DATA on part.PARTICIPANT_ID equals data.PARTICIPANT_ID
+                               where part.USER_ID == userData.USER_ID
+                               select new participantModel
+                               {
+                                   userweight = (int)data.USER_WEIGHT,
+                                   name = data.NAME,
+                                   address = data.ADDRESS,
+                                   city = data.CITY,
+                                   postcode = data.POSTCODE,
+                                   state = data.STATE,
+                                   country = data.COUNTRY,
+                                   department = data.DEPARTMENT,
+                                   company = data.COMPANY,
+                                   email = data.EMAIL,
+                                   fax = data.FAX,
+                                   phone = data.PHONE,
+                                   title = data.TITLE
 
-                PARTICIPANT part = new PARTICIPANT();
-                part.USER_ID = userid;
-                part.SESSION_ID = sessionid;
-                part.NAME = userData.NAME;
+                               };
 
-                dbpollContext.AddToPARTICIPANTS(part);
+                PARTICIPANT p = new PARTICIPANT();
+                PARTICIPANT_DATA partdata = new PARTICIPANT_DATA();
+
+                p.PARTICIPANT_ID = getMaxParticipantID() + 1;
+                p.USER_ID = userid;
+                p.SESSION_ID = sessionid;
+
+                partdata.DATA_ID = getMaxDataID() + 1;
+                partdata.PARTICIPANT_ID = p.PARTICIPANT_ID;
+                partdata.NAME = userData.NAME;
+
+                // See if we can set data from a previous participant entry
+                if (participants.ToArray().Length > 0)
+                {
+                    participantModel participant = participants.First<participantModel>();
+
+                    partdata.USER_WEIGHT = participant.userweight;
+                    partdata.ADDRESS = participant.address;
+                    partdata.CITY = participant.city;
+                    partdata.POSTCODE = participant.postcode;
+                    partdata.STATE = participant.state;
+                    partdata.COUNTRY = participant.country;
+                    partdata.DEPARTMENT =participant.department;
+                    partdata.COMPANY = partdata.COMPANY;
+                    partdata.EMAIL = partdata.EMAIL;
+                    partdata.FAX = participant.fax;
+                    partdata.PHONE= participant.phone;
+                    partdata.TITLE= participant.title;
+
+                }      
+                
+                dbpollContext.AddToPARTICIPANTS(p);
+                dbpollContext.AddToPARTICIPANT_DATA(partdata);
                 dbpollContext.SaveChanges();
             }
             catch (Exception e)
@@ -232,7 +304,6 @@ namespace DBPOLLDemo.Models
 
                 position++;
             }
-
         }
 
         public void editParticipant(int userid, int sessionid, int? userweight, String name, String address, String city, int? postcode, 
@@ -247,19 +318,27 @@ namespace DBPOLLDemo.Models
 
                 PARTICIPANT part = ParticipantList.First<PARTICIPANT>();
 
-                part.USER_WEIGHT = userweight;
-                part.NAME = name;
-                part.ADDRESS = address;
-                part.CITY = city;
-                part.POSTCODE = postcode;
-                part.STATE = state;
-                part.COUNTRY = country;
-                part.DEPARTMENT = department;
-                part.COMPANY = company;
-                part.EMAIL = email;
-                part.FAX = fax;
-                part.PHONE = phone;
-                part.TITLE = title;
+                var partdataList = from data in dbpollContext.PARTICIPANT_DATA
+                                   where data.PARTICIPANT_ID == part.PARTICIPANT_ID
+                                   select data;
+
+                PARTICIPANT_DATA partData = partdataList.First<PARTICIPANT_DATA>();
+
+                part.MODIFIED_AT = DateTime.Now;
+                partData.USER_WEIGHT = userweight;
+                partData.NAME = name;
+                partData.ADDRESS = address;
+                partData.CITY = city;
+                partData.POSTCODE = postcode;
+                partData.STATE = state;
+                partData.COUNTRY = country;
+                partData.DEPARTMENT = department;
+                partData.COMPANY = company;
+                partData.EMAIL = email;
+                partData.FAX = fax;
+                partData.PHONE = phone;
+                partData.TITLE = title;
+                partData.MODIFIED_AT = DateTime.Now;
 
                 dbpollContext.SaveChanges();
             }
@@ -279,12 +358,23 @@ namespace DBPOLLDemo.Models
         {
             try
             {
+
                 var ParticipantList =
                         from participant in dbpollContext.PARTICIPANTS
                         where participant.SESSION_ID == sessionid && participant.USER_ID == userid
                         select participant;
 
+
                 PARTICIPANT part = ParticipantList.First<PARTICIPANT>();
+
+                var partdataList = from data in dbpollContext.PARTICIPANT_DATA
+                                   where data.PARTICIPANT_ID == part.PARTICIPANT_ID
+                                   select data;
+
+                PARTICIPANT_DATA partData = partdataList.First<PARTICIPANT_DATA>();
+
+
+                partData.PARTICIPANT_ID = null;
 
                 dbpollContext.DeleteObject(part);
                 dbpollContext.SaveChanges();

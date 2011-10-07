@@ -299,16 +299,43 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult TestDevices()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (User_Type.POLL_USER <= (int)Session["user_type"])
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             return View();
         }
 
         public ActionResult RunDevices()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (User_Type.POLL_USER <= (int)Session["user_type"])
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             return View();
         }
 
         public ActionResult AssignPoll(int pollid, String pollname)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (User_Type.POLL_CREATOR <= (int)Session["user_type"])
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             Assign_PollMasters pollMasters = new Assign_PollMasters();
 
             pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);
