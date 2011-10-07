@@ -200,44 +200,6 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
-        //public List<questionModel> displayQuestionsAnswer()
-        //{
-        //    var query = (from q in dbpollContext.QUESTIONS
-        //                 from p in dbpollContext.POLLS
-        //                 from s in dbpollContext.SESSIONS
-        //                 where ((p.POLL_ID==q.POLL_ID) && (s.POLL_ID==p.POLL_ID))
-        //                 orderby p.POLL_ID ascending
-        //                 select new questionModel
-        //                 {
-        //                     //pollid = p.POLL_ID, 
-                             
-        //                     //pollname = p.POLL_NAME,
-        //                     pollname = (String)(from p1 in dbpollContext.POLLS
-        //                                         where (p1.POLL_ID == p.POLL_ID)
-        //                                         select p1.POLL_NAME).Distinct().FirstOrDefault(),
-        //                     questnum = (int)q.NUM,
-        //                     //question = (String)(from q1 in dbpollContext.QUESTIONS
-        //                     //                  where (q1.QUESTION_ID == q.QUESTION_ID)
-        //                     //                  select q1.QUESTION1).Distinct().FirstOrDefault(),
-        //                     question = q.QUESTION1,
-        //                     answer = (String)(from a1 in dbpollContext.ANSWERS
-        //                                       where (a1.QUESTION_ID == q.QUESTION_ID)
-        //                                       select a1.ANSWER1).FirstOrDefault(),
-        //                     //sessionid = (int)(from s2 in dbpollContext.SESSIONS
-        //                     //                  where (s2.POLL_ID == p.POLL_ID
-        //                     //                  select s2.SESSION_ID).Distinct().FirstOrDefault(),)
-        //                     sessionid = s.SESSION_ID,
-        //                     sessionparticipants = (int)(from s1 in dbpollContext.SESSIONS
-        //                                                 from par in dbpollContext.PARTICIPANTS
-        //                                                 where ((s1.POLL_ID == p.POLL_ID)&& (par.SESSION_ID==s1.SESSION_ID))
-        //                                                 select par.USER_ID).Count(),  
-        //                     //answer = a.NUM,
-        //                 }
-        //                );
-
-
-        //    return query.ToList();
-        //}
 
         public List<questionModel> displayQuestionsAnswer()
         {
@@ -360,6 +322,7 @@ namespace DBPOLLDemo.Models
                         {
                             questionid = q.QUESTION_ID, 
                             questiontype = q.QUESTION_TYPE, 
+                            numberofresponses = (int)q.NUMBER_OF_RESPONSES,
                             question = q.QUESTION1, 
                             chartstyle = (int)q.CHART_STYLE,
                             questnum = (int)q.NUM, 

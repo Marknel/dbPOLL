@@ -15,6 +15,7 @@
 
 
     <p class="style1"> <strong>You are now participating in session: <%=Html.Encode(Model.sessionData[0].sessionname) %>
+    
         </strong></p>
 
 
@@ -34,14 +35,18 @@
                     
                 <%=Html.Encode(Model.questionData.question)%>
                 <br />
+                <br />
+                <br />
 
                 <%--if there is answerdata, then it's multiple choice type of question--%>
                 <% 
-           if (Model.answerData.Count() != 0){ %>
+           //if (Model.answerData.Count() != 0){ 
+           
+                if (Model.questionData.questiontype >= 3 && Model.questionData.questiontype <6) {%>
 
                     <%foreach (var answers in Model.answerData)
                         {
-                            int i = 1;
+
                             foreach (var answer in answers)
                             {
 
@@ -49,35 +54,37 @@
                                 { %>
                                 
                                     <% 
-                                        if ((String)Session["selectedAnswer"] != null || (String)Session["selectedAnswer"] != "")
+                                    if ((String)Session["selectedAnswer"] != null || (String)Session["selectedAnswer"] != "")
+                                    { 
+                                        
+                                        if ((String)Session["selectedAnswer"] == answer.answer)
                                         { %>    
-                                        <% 
-                                           if ((String)Session["selectedAnswer"] == answer.answer)
-                                           { %>    
-                                            <center>
-                                                <p>
-                                                    <label>
-                                                    <%=Html.RadioButton("UserAnswer", answer.answerid, true)%>     
-                                                    <%=Html.Encode(answer.answer)%> 
-                                                    </label>
-                                                </p>
-                                            </center>
+
+                                        <center>
+                                            <p>
+                                                <label>
+                                                <%=Html.RadioButton("MCQAnswer", answer.answerid, true)%>     
+                                                <%=Html.Encode(answer.answer)%> 
+                                                </label>
+                                            </p>
+                                        </center>
+
                                         <%} 
                                         else {%>
                                             <center>
                                                 <p>
                                                     <label>
-                                                    <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
+                                                    <%=Html.RadioButton("MCQAnswer", answer.answerid)%>     
                                                     <%=Html.Encode(answer.answer)%> 
                                                     </label>
                                                 </p>
                                             </center>
                                         <%} %>
                                     <%} else {%>
-                                     <center>
+                                    <center>
                                         <p>
                                             <label>
-                                            <%=Html.RadioButton("UserAnswer", answer.answerid)%>     
+                                            <%=Html.RadioButton("MCQAnswer", answer.answerid)%>     
                                             <%=Html.Encode(answer.answer)%> 
                                         
                                             </label>
@@ -94,7 +101,7 @@
 
                 <%} %>
                 <% 
-                else { %>
+                else if (Model.questionData.questiontype <= 2){ %>
                         <center>
                             <br />
                             <br />
@@ -102,28 +109,52 @@
                                 <%=Html.TextArea("ShortQuestionAnswer", (String)Session["shortAnswer"]) %>
                             <%} %>
                         </center>
+                <%} 
+                else if (Model.questionData.questiontype == 6){%>
+
+                <% int numOfPossibleAnswers = (int)ViewData["numOfPossibleAnswers"];
+                   for (int i = 0; i < numOfPossibleAnswers; i++) { 
+                    
+                    %>
+
+                    <center>
+                        <p>
+                            Preference <%=i+1 %>:   <%= Html.DropDownList("RankingAnswerList")%>
+                        </p>
+                    </center>
+                    <%}
+                %>
+
+                
+
                 <%} %>
                     
 
 
             <%= Html.ValidationMessage("webpollingError")%>
 
-            <%  if(currentQuestion == 0)
+
+            
+            <% if (currentQuestion == 0 && (Boolean)Session["endOfQuestion"] == false){%>
+
+                    <button type="submit" name = "button" value="Previous Question" disabled = true> Previous Question </button>
+                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
+
+            <% } else if (currentQuestion == 0 && (Boolean)Session["endOfQuestion"] == true)
 
             { %>
                         <%--this is how to disable a button--%>
                        <%-- <button type="submit" name = "button" value="Next Question" disabled = true> Next Question </button>--%>
 
                     <button type="submit" name = "button" value="Previous Question" disabled = true> Previous Question </button>
-                    <button type="submit" name = "button" value="Next Question"> Next Question </button>
+                    <button type="submit" name = "button" value="Submit Last Answer"> Submit Last Answer </button>
 
-            <% } else if ((Boolean)Session["endOfQuestion"] == true)
+            <% }  else if ((Boolean)Session["endOfQuestion"] == true)
 
             { %>
 
                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
                     <button type="submit" name = "button" value="Submit Last Answer"> Submit Last Answer </button>
-
             <%} else {%>
 
                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>

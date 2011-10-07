@@ -359,6 +359,7 @@ namespace DBPOLLDemo.Controllers
             Session["currentQuestionNumber"] = questnum;
 
 
+
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
             List<List<answerModel>> sorted = new List<List<answerModel>>();
             List<int> questionCheck = new List<int>();
@@ -376,6 +377,7 @@ namespace DBPOLLDemo.Controllers
             pollAndQuestionModel.answerData = sorted;
 
 
+            int selected = 0;
             // To set the first question's radio button to user's previous answer if he's answered it before
             foreach (var answeredquestion in answeredQuestions)
             {
@@ -384,11 +386,18 @@ namespace DBPOLLDemo.Controllers
                     foreach (var a in answer) { 
                         if (answeredquestion.answer == a.answer)
                         {
+                            selected = a.answerid;
                             Session["selectedAnswer"] = answeredquestion.answer;
                         }
 
                     }
                 }
+            }
+
+            if (pollAndQuestionModel.questionData.questiontype == 6)
+            {
+                ViewData["numOfPossibleAnswers"] = pollAndQuestionModel.questionData.numberofresponses;
+                buildSelectList(sorted[0], selected);
             }
             
 
@@ -409,87 +418,112 @@ namespace DBPOLLDemo.Controllers
             int pollid = (int)Session["currentWebpollingPollid"];
             int questnum = (int)Session["currentQuestionNumber"];
             
-
             List<questionModel> allquestion = (List<questionModel>)Session["AllQuestion"];
             int currentquestion = allquestion[questnum].questionid;
 
-
             Session["selectedAnswer"] = "";
-
-
-            // if the user is currently answering a MCQ type
-            if (Request["UserAnswer"] != null )
-            {
-                int selectedAnswer = Convert.ToInt32(Request["UserAnswer"]);
-                AnswerMultipleChoiceQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
-
-
-                List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
-                if (button == "Previous Question")
+            
+            // if the user is currently answering an MCQ 
+            if (allquestion[questnum].questiontype >= 3){
+                // If this is a normal MCQ
+                if (allquestion[questnum].questiontype < 6)
                 {
-                    Session["currentQuestionNumber"] = questnum - 1;
-                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
-                    setNextAnswer(questnum + 1, nextquestion, sessionid, (int)Session["uid"]);
+                    int selectedAnswer = Convert.ToInt32(Request["MCQAnswer"]);
+                    if (selectedAnswer != null)
+                    {
+                        
+                        AnswerMultipleChoiceQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
+
+                        List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+                        if (button == "Previous Question")
+                        {
+                            Session["currentQuestionNumber"] = questnum - 1;
+                            int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                            setNextAnswer(questnum + 1, nextquestion, sessionid, (int)Session["uid"]);
+                        }
+
+                        // if its the last question, then submit/ update answer but stay on the same question
+                        else if (button == "Submit Last Answer")
+                        {
+                            Session["currentQuestionNumber"] = questnum;
+                            Session["selectedAnswer"] = Request["MCQAnswer"];
+                        }
+                        // its the next button
+                        else
+                        {
+                            Session["currentQuestionNumber"] = questnum + 1;
+                            int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                            setNextAnswer(questnum - 1, nextquestion, sessionid, (int)Session["uid"]);
+                        }
+                    }
+
+                    // if the user hasnt answered anything, then display error and ask em to answer it NAO
+                    else
+                    {
+                        String error = "webpollingError" + "," + "Please provide your answer";
+                        TempData["webpollingError"] = error;
+
+                    }
                 }
-
-                // if its the last question, then submit/ update answer but stay on the same question
-                else if (button == "Submit Last Answer")
-                {
-                    Session["currentQuestionNumber"] = questnum;
-                    Session["selectedAnswer"] = Request["UserAnswer"];
-                }
-                // its the next button
-                else
-                {
-                    Session["currentQuestionNumber"] = questnum + 1;
-                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
-                    setNextAnswer(questnum - 1, nextquestion, sessionid, (int)Session["uid"]);
-                }    
-
-            }
-
-            // if the user is currently answering a short answer question type
-            else if (Request["ShortQuestionAnswer"] != "")
-            {
-                String selectedAnswer = Request["ShortQuestionAnswer"];
-                AnswerShortAnswerQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
-
-                List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
-                if (button == "Previous Question")
-                {
-                    Session["currentQuestionNumber"] = questnum - 1;
-                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
-                    setNextAnswer(questnum + 1, nextquestion, sessionid, (int)Session["uid"]);
-                    
-                }
-
-                // if its the last question, then submit/ update answer but stay on the same question
-                else if (button == "Submit Last Answer")
-                {
-                    Session["currentQuestionNumber"] = questnum;
-                    Session["shortAnswer"] = Request["ShortQuestionAnswer"];
-                }
-                // its the next button
-                else
-                {
-                    Session["currentQuestionNumber"] = questnum + 1;
-                    int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
-                    setNextAnswer(questnum - 1, nextquestion, sessionid, (int)Session["uid"]);
-                }    
-            }
-
-            // if the user hasnt answered anything, then display error and ask em to answer it NAO
-            else
-            {
-                String error = "webpollingError" + "," + "Please provide your answer";
-                TempData["webpollingError"] = error;
                 
+                // Else, it must be a ranking MCQ where a number of answers allowed is > 1
+                else if (allquestion[questnum].questiontype == 6) 
+                {
+                    String selectedAnswer = Request["RankingAnswerList"];
+                    if (selectedAnswer != "") 
+                    {
+                    }
+                    
+                
+                }
             }
+            // Then the the user is currently answering a short answer question type
+            else if (allquestion[questnum].questiontype <=2 )
+            {
+                if (Request["ShortQuestionAnswer"] != "")
+                {
+                    String selectedAnswer = Request["ShortQuestionAnswer"];
+                    AnswerShortAnswerQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
+
+                    List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+                    if (button == "Previous Question")
+                    {
+                        Session["currentQuestionNumber"] = questnum - 1;
+                        int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                        setNextAnswer(questnum + 1, nextquestion, sessionid, (int)Session["uid"]);
+                    
+                    }
+
+                    // if its the last question, then submit/ update answer but stay on the same question
+                    else if (button == "Submit Last Answer")
+                    {
+                        Session["currentQuestionNumber"] = questnum;
+                        Session["shortAnswer"] = Request["ShortQuestionAnswer"];
+                    }
+                    // its the next button
+                    else
+                    {
+                        Session["currentQuestionNumber"] = questnum + 1;
+                        int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                        setNextAnswer(questnum - 1, nextquestion, sessionid, (int)Session["uid"]);
+                    }    
+                }
+
+                // if the user hasnt answered anything, then display error and ask em to answer it NAO
+                else
+                {
+                    String error = "webpollingError" + "," + "Please provide your answer";
+                    TempData["webpollingError"] = error;
+
+                }
+            }
+    
 
             return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid });
         }
 
 
+        // Function to either create or update a MCQ of type 3, 4 and 5
         public void AnswerMultipleChoiceQuestion(int selectedAnswer, int sessionid, int userid, int currentquestionid)
         {
 
@@ -534,6 +568,53 @@ namespace DBPOLLDemo.Controllers
 
         }
 
+        // Function to either create or update a MCQ of type 3, 4 and 5
+        public void AnswerRankingQuestion(int selectedAnswer, int sessionid, int userid, int currentquestionid)
+        {
+
+            List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, userid);
+
+            questionModel answeredQuestion = new questionModel();
+
+            foreach (var item in answeredQuestions)
+            {
+                if (item.questionid == currentquestionid)
+                {
+                    answeredQuestion = item;
+                }
+            }
+
+            // If a question has been answered by this user before, then create a new response data
+            if (answeredQuestion.question != null)
+            {
+                int responseId = new responseModel().getResponseId(sessionid, userid, answeredQuestion.answer);
+
+                try
+                {
+                    new responseModel().updateMCQResponse(responseId, selectedAnswer);
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+            // else just update the response for this answer
+            else
+            {
+                try
+                {
+                    new responseModel().createMCQResponse(userid, selectedAnswer, sessionid);
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+
+        }
+
+
+        // Function for creating or updating all type of short answer question
         public void AnswerShortAnswerQuestion(String answer, int sessionid, int userid, int currentquestionid)
         {
 
@@ -579,6 +660,7 @@ namespace DBPOLLDemo.Controllers
 
         }
 
+        
         public void setNextAnswer(int currentQuestionId, int nextQuestionId, int sessionid, int userid)
         {
 
@@ -601,6 +683,53 @@ namespace DBPOLLDemo.Controllers
                 }
             }
 
+        }
+
+        // Function to generate a dropdown list dynamically, and automatically select a value if a user has answered 
+        // this question and the answer is stored in the database
+        private void buildSelectList(List<answerModel> answerList, int selectedAnswer)
+        {
+           
+            List<SelectListItem> ListItems = new List<SelectListItem>();
+            foreach (var answer in answerList){
+                if (answer.answerid == selectedAnswer){
+                    ListItems.Add(new SelectListItem
+                    {
+                        Text = answer.answer,
+                        Value = answer.answerid.ToString(),
+                        Selected = true
+                    });
+                }
+                else
+                {
+                    ListItems.Add(new SelectListItem
+                    {
+                        Text = answer.answer,
+                        Value = answer.answerid.ToString(),
+                    });
+                }
+
+            }
+
+            //ListItems.Add(new SelectListItem
+            //{
+            //    Text = "Poll Master",
+            //    Value = "2",
+            //    Selected = true
+            //});
+            //ListItems.Add(new SelectListItem
+            //{
+            //    Text = "Poll Creator",
+            //    Value = "3"
+            //});
+            //ListItems.Add(new SelectListItem
+            //{
+            //    Text = "Poll Administrator",
+            //    Value = "4"
+            //});
+            //ViewData["USER_TYPE"] = ListItems;
+
+            ViewData["RankingAnswerList"] = ListItems;
         }
 
 

@@ -100,6 +100,31 @@ namespace DBPOLLDemo.Models
             }
         }
 
+        public void createRankingResponse(int userid, int answerid, int sessionid)
+        {
+            try
+            {
+                RESPONS response = new RESPONS();
+
+                response.FEEDBACK = new answerModel().getFeedback(answerid);
+                response.RESPONSE_ID = getMaxResponseID() + 1;
+                response.USER_ID = userid;
+                response.ANSWER_ID = answerid;
+                response.CREATED_AT = DateTime.Now;
+                response.MODIFIED_AT = null;
+                response.SESSION_ID = sessionid;
+                
+
+                dbpollContext.AddToRESPONSES(response);
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
         public void createShortAnswerResponse(String feedback, int userid, int sessionid, int questionid)
         {
             try
@@ -159,6 +184,7 @@ namespace DBPOLLDemo.Models
 
             return query.First();
         }
+
 
     }
 }
