@@ -34,7 +34,7 @@
   
     <h2>
         Poll Masters</h2>
-    <% if (((USER)ViewData["User"]).USER_TYPE > 1)
+    <% if (((USER)ViewData["User"]).USER_TYPE > User_Type.POLL_USER)
            { %>
     <%= Html.ActionLink("Edit My Details", "Edit", "User")%>
     <br />
@@ -43,6 +43,9 @@
     <%= Html.ActionLink("Reports", "Index", "Report")%><br />
     <br />
     <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
+    <br />
+    <br />
+    <%= Html.ActionLink("Run Keypad Poll", "../Poll/RunDevices")%>
     <br />
    
 
@@ -61,7 +64,7 @@
 
     <h2>
         Poll Creators</h2>
-    <% if (((USER)ViewData["User"]).USER_TYPE > 2)
+    <% if (((USER)ViewData["User"]).USER_TYPE > User_Type.POLL_MASTER)
            { %>
     <%--<% Html.RenderPartial("PollsImCreating"); %>--%>
     <% } %>
@@ -70,7 +73,7 @@
 
     <h2>
         Poll Administrators</h2>
-    <% if (((USER)ViewData["User"]).USER_TYPE > 3)
+    <% if (((USER)ViewData["User"]).USER_TYPE > User_Type.POLL_CREATOR)
            { %>
     <% } %>
 </asp:Content>

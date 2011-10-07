@@ -303,10 +303,11 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if (User_Type.POLL_USER <= (int)Session["user_type"])
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
                 return RedirectToAction("Invalid", "Home");
             }
+
 
             return View();
         }
@@ -317,7 +318,8 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if (User_Type.POLL_USER <= (int)Session["user_type"])
+
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
                 return RedirectToAction("Invalid", "Home");
             }

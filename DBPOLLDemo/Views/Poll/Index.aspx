@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.PollAndSessionData>" %>
-
+<%@ Import Namespace="DBPOLLDemo.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
 </asp:Content>
@@ -54,7 +54,7 @@
             </td>
 
             <%  //Check if the user is authorized to assign poll masters
-            if (Int32.Parse(Session["user_type"].ToString()) > 2)
+                if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_CREATOR)
           { %>
             <td nowrap="nowrap">
                 <%= Html.ActionLink("Assign Poll Masters", "AssignPoll", new {pollid=item.pollid, pollname = item.pollname}) %>
@@ -71,14 +71,16 @@
     <p>
 
         <%  //Check if the user is authorized to create polls
-            if (Int32.Parse(Session["user_type"].ToString()) > 2)
+            if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_CREATOR)
           { %>
             <%= Html.ActionLink("Create New Poll", "Create", new { createdby = (int)Session["uid"] })%>
         <%} %>
     </p>
 
     <h2>Session Index </h2>
-
+    <p>
+    <%= Html.ActionLink("Run Keypad Polling Session", "RunDevices") %>
+    </p>
     <table>
         <tr>
             <th class="style2">Actions</th>
@@ -95,7 +97,6 @@
     
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Run", "Run", new {pollid=item.pollid}) %> |
                 <a id="<%=item.sessionid%>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>" onclick="return check(<%=item.sessionid%>);">Delete</a>|
                 <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollid, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
             </td>

@@ -6,8 +6,6 @@ package pollapplet;
 
 import java.sql.*;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,10 +18,9 @@ public class QuestionList {
     public QuestionList() {
     }
 
-    public void loadQuestions(int pollID) {
+    public void loadQuestions(int pollID) throws SQLException {
         Connection con;
         questions = new LinkedList();
-        try {
             // pull all polls for poll master into applet
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             con = DriverManager.getConnection("jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo", "csse3004gg", "groupg");
@@ -59,24 +56,7 @@ public class QuestionList {
                         Integer.parseInt(rset.getString("NUM")),
                         numResp));
             }
-
-            /*for (dbQuestion q : questions){
-            System.out.println(
-            "Question ID: "+q.getQuestionID()+ 
-            " Type: " +q.getQuestionType() +
-            " Question: "+ q.getQuestionText()+
-            " Chart Style: "+q.getChartStyle()+
-            " Short Answer Type: "+q.getShortAnswerType()+
-            " Num in seq: " + q.getNumInSequence());  
-            }*/
-
             stmt.close();
-            //System.out.println ("Ok.");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(PollList.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     /**
@@ -90,14 +70,47 @@ public class QuestionList {
         Connection con;
         // pull all polls for poll master into applet
         DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-        con = DriverManager.getConnection("jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo", "csse3004gg", "groupg");
+        con = DriverManager.getConnection(
+                "jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo",
+                "csse3004gg", "groupg");
 
         Statement stmt = con.createStatement();
         stmt.executeUpdate(
                 "UPDATE SESSIONS"
                 + " SET NEXT_QUESTION = " + NextQuestionID
                 + " WHERE SESSION_ID = " + SessionID);
+        stmt.close();
+    }
 
+    public void openQuestion(int SessionID, int QuestionID) throws SQLException {
+        Connection con;
+        // pull all polls for poll master into applet
+        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        con = DriverManager.getConnection(
+                "jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo",
+                "csse3004gg", "groupg");
+
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(
+                "DELETE FROM CLOSED_QUESTIONS"
+                + " WHERE SESSION_ID = " + SessionID
+                + " AND QUESTION_ID = " + SessionID);
+        stmt.close();
+    }
+
+    public void closeQuestion(int SessionID, int QuestionID) throws SQLException {
+        Connection con;
+        // pull all polls for poll master into applet
+        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        con = DriverManager.getConnection(
+                "jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo",
+                "csse3004gg", "groupg");
+
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(
+                "INSERT INTO CLOSED_QUESTIONS"
+                + " VALUES(" + SessionID + ", " + QuestionID + ")");
+        stmt.close();
     }
 
 // <editor-fold defaultstate="collapsed" desc="Basic dbQuestion class fold. Getter/Setter baby code"> 
