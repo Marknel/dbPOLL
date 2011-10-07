@@ -86,7 +86,7 @@ public class PollApplet extends javax.swing.JApplet {
                 @Override
                 public void run() {
 
-                    Polls.loadPolls(6);
+                    Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
 
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
                     initReceivers();
