@@ -91,10 +91,10 @@
     <Compile Include="Models\answerModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Models\DBPOLLl.Designer.cs">
+    <Compile Include="Models\DBPOLL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBPOLLl.edmx</DependentUpon>
+      <DependentUpon>DBPOLL.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\modelConstants.cs" />
     <Compile Include="Models\objectModel.cs">
@@ -264,9 +264,9 @@
     <None Include="Applets\launch.jnlp" />
     <None Include="Applets\launch2.jnlp" />
     <None Include="Content\Thumbs.db" />
-    <EntityDeploy Include="Models\DBPOLLl.edmx">
+    <EntityDeploy Include="Models\DBPOLL.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBPOLLl.Designer.cs</LastGenOutput>
+      <LastGenOutput>DBPOLL.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>

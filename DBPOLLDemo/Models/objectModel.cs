@@ -14,7 +14,7 @@ namespace DBPOLLDemo.Models
 
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
 
-        public objectModel(int obid, int obtype, String attribute, int questionid)
+      /*  public objectModel(int obid, int obtype, String attribute, int questionid)
         {
             ob.OBJ_ID = this.obid = obid;
             ob.OBJ_TYPE = this.obtype = obtype;
@@ -141,7 +141,6 @@ namespace DBPOLLDemo.Models
             catch (Exception e)
             {
                 throw (e);
-            }
+            }*/
         }
     }
-}

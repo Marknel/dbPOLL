@@ -17,7 +17,7 @@ namespace DBPOLLDemo.Controllers
             }
 
             ViewData["questionid"] = questionid;
-            return View(new objectModel().indexObjects(questionid));
+            return View();//new objectModel().indexObjects(questionid));
         }
 
         //
@@ -36,8 +36,8 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            objectModel ob = new objectModel(objectid);
-            ob.deleteObject();
+            //objectModel ob = new objectModel(objectid);
+            //ob.deleteObject();
 
             return RedirectToAction("Index", "Object", new { questionid = questionid});
         }
@@ -69,7 +69,7 @@ namespace DBPOLLDemo.Controllers
             try
             {
 
-                new objectModel().createObject(obtype, attribute, questionid);
+                //new objectModel().createObject(obtype, attribute, questionid);
 
                 return RedirectToAction("Index", new { questionid = questionid });
             }

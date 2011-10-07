@@ -8,7 +8,7 @@
     <script type="text/javascript" src="http://java.com/js/deployJava.js"></script>
 
     <script type="text/javascript">
-        var attributes = { code: '/Applets/polltestapplet.PollTestApplet', width: 800, height: 600 };
+        var attributes = { code: '/Applets/polltestapplet.PollTestApplet', width: 8100, height: 610 };
         var parameters = { jnlp_href: '/Applets/launch.jnlp'};
 
         deployJava.runApplet(attributes, parameters, '1.6'); 
