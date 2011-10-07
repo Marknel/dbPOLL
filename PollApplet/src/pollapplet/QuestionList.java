@@ -14,9 +14,9 @@ import java.util.logging.Logger;
  * @author 42009432 - Adam Young
  */
 public class QuestionList {
-    
+
     public LinkedList<dbQuestion> questions = new LinkedList();
-    
+
     public QuestionList() {
     }
 
@@ -27,49 +27,49 @@ public class QuestionList {
             // pull all polls for poll master into applet
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             con = DriverManager.getConnection("jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo", "csse3004gg", "groupg");
-            
+
             Statement stmt = con.createStatement();
             ResultSet rset = stmt.executeQuery(
-             "SELECT QUESTION_ID, QUESTION_TYPE, QUESTION, CHART_STYLE, SHORT_ANSWER_TYPE, NUM, NUMBER_OF_RESPONSES"+
-             " FROM QUESTIONS Q"+
-             " WHERE Q.POLL_ID = "+pollID);      
+                    "SELECT QUESTION_ID, QUESTION_TYPE, QUESTION, CHART_STYLE, SHORT_ANSWER_TYPE, NUM, NUMBER_OF_RESPONSES"
+                    + " FROM QUESTIONS Q"
+                    + " WHERE Q.POLL_ID = " + pollID);
 
             while (rset.next()) {
-                int shorttype; 
-                int numResp; 
-                        
-                if(rset.getString("SHORT_ANSWER_TYPE") == null){
+                int shorttype;
+                int numResp;
+
+                if (rset.getString("SHORT_ANSWER_TYPE") == null) {
                     shorttype = -1;
-                }else{
+                } else {
                     shorttype = Integer.parseInt(rset.getString("SHORT_ANSWER_TYPE"));
                 }
-                
-                if(rset.getString("NUMBER_OF_RESPONSES") == null){
+
+                if (rset.getString("NUMBER_OF_RESPONSES") == null) {
                     numResp = -1;
-                }else{
+                } else {
                     numResp = Integer.parseInt(rset.getString("NUMBER_OF_RESPONSES"));
                 }
 
                 questions.add(new dbQuestion(
-                        Integer.parseInt(rset.getString("QUESTION_ID")), 
+                        Integer.parseInt(rset.getString("QUESTION_ID")),
                         Integer.parseInt(rset.getString("QUESTION_TYPE")),
-                        rset.getString("QUESTION"), 
-                        Integer.parseInt(rset.getString("CHART_STYLE")), 
-                        shorttype, 
+                        rset.getString("QUESTION"),
+                        Integer.parseInt(rset.getString("CHART_STYLE")),
+                        shorttype,
                         Integer.parseInt(rset.getString("NUM")),
                         numResp));
             }
-            
-             /*for (dbQuestion q : questions){
-                System.out.println(
-                        "Question ID: "+q.getQuestionID()+ 
-                        " Type: " +q.getQuestionType() +
-                        " Question: "+ q.getQuestionText()+
-                        " Chart Style: "+q.getChartStyle()+
-                        " Short Answer Type: "+q.getShortAnswerType()+
-                        " Num in seq: " + q.getNumInSequence());  
-             }*/
-            
+
+            /*for (dbQuestion q : questions){
+            System.out.println(
+            "Question ID: "+q.getQuestionID()+ 
+            " Type: " +q.getQuestionType() +
+            " Question: "+ q.getQuestionText()+
+            " Chart Style: "+q.getChartStyle()+
+            " Short Answer Type: "+q.getShortAnswerType()+
+            " Num in seq: " + q.getNumInSequence());  
+            }*/
+
             stmt.close();
             //System.out.println ("Ok.");
 
@@ -79,26 +79,47 @@ public class QuestionList {
 
     }
 
-// <editor-fold defaultstate="collapsed" desc="Basic dbQuestion class fold. Getter/Setter baby code"> 
-public class dbQuestion {
-    
-    private int questionID;
-    private int questionType;
-    private String questionText; 
-    private int chartStyle;
-    private int shortAnswerType;
-    private int numInSequence;
-    private int numPossibleAnswers;
+    /**
+     * Sets the database next question value so that synchronous polling can be
+     * performed between applet and web interface.
+     * @param SessionID: Current polling session id
+     * @param NextQuestionID: ID of next question to poll
+     * @throws SQLException on database error
+     */
+    public void setNextQuestion(int SessionID, int NextQuestionID) throws SQLException {
+        Connection con;
+        // pull all polls for poll master into applet
+        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        con = DriverManager.getConnection("jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo", "csse3004gg", "groupg");
 
-    public dbQuestion(int questionId, int questionType, String question, int chartStyle, int shortAnswerType, int numInSequence, int numberOfResponses) {
-        this.questionID = questionId;
-        this.questionType = questionType;
-        this.questionText = question;
-        this.chartStyle = chartStyle;
-        this.shortAnswerType = shortAnswerType;
-        this.numInSequence = numInSequence;
-        this.numPossibleAnswers = numberOfResponses;
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(
+                "UPDATE SESSIONS"
+                + " SET NEXT_QUESTION = " + NextQuestionID
+                + " WHERE SESSION_ID = " + SessionID);
+
     }
+
+// <editor-fold defaultstate="collapsed" desc="Basic dbQuestion class fold. Getter/Setter baby code"> 
+    public class dbQuestion {
+
+        private int questionID;
+        private int questionType;
+        private String questionText;
+        private int chartStyle;
+        private int shortAnswerType;
+        private int numInSequence;
+        private int numPossibleAnswers;
+
+        public dbQuestion(int questionId, int questionType, String question, int chartStyle, int shortAnswerType, int numInSequence, int numberOfResponses) {
+            this.questionID = questionId;
+            this.questionType = questionType;
+            this.questionText = question;
+            this.chartStyle = chartStyle;
+            this.shortAnswerType = shortAnswerType;
+            this.numInSequence = numInSequence;
+            this.numPossibleAnswers = numberOfResponses;
+        }
 
         public int getChartStyle() {
             return chartStyle;
@@ -154,8 +175,7 @@ public class dbQuestion {
 
         public void setNumPossibleAnswers(int numPossibleAnswers) {
             this.numPossibleAnswers = numPossibleAnswers;
-        }     
+        }
     }
 //</editor-fold>  
-
 }

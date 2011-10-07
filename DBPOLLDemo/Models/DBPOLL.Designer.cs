@@ -41,6 +41,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273273", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.QUESTION), "RESPONSES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.RESPONS), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273271", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "RESPONSES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.RESPONS), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273218", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.USER), "USERS1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.USER), true)]
+[assembly: EdmRelationshipAttribute("Models", "CLOSED_QUESTIONS", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.QUESTION), "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.SESSION))]
 
 #endregion
 
@@ -3473,7 +3474,9 @@ namespace DBPOLLDemo.Models
         /// <param name="qUESTION1">Initial value of the QUESTION1 property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
         /// <param name="pOLL_ID">Initial value of the POLL_ID property.</param>
-        public static QUESTION CreateQUESTION(global::System.Int32 qUESTION_ID, global::System.Int32 qUESTION_TYPE, global::System.String qUESTION1, global::System.DateTime cREATED_AT, global::System.Int32 pOLL_ID)
+        /// <param name="qUESTION_OPEN">Initial value of the QUESTION_OPEN property.</param>
+        /// <param name="nEXT_QUESTION">Initial value of the NEXT_QUESTION property.</param>
+        public static QUESTION CreateQUESTION(global::System.Int32 qUESTION_ID, global::System.Int32 qUESTION_TYPE, global::System.String qUESTION1, global::System.DateTime cREATED_AT, global::System.Int32 pOLL_ID, global::System.Int32 qUESTION_OPEN, global::System.Int32 nEXT_QUESTION)
         {
             QUESTION qUESTION = new QUESTION();
             qUESTION.QUESTION_ID = qUESTION_ID;
@@ -3481,6 +3484,8 @@ namespace DBPOLLDemo.Models
             qUESTION.QUESTION1 = qUESTION1;
             qUESTION.CREATED_AT = cREATED_AT;
             qUESTION.POLL_ID = pOLL_ID;
+            qUESTION.QUESTION_OPEN = qUESTION_OPEN;
+            qUESTION.NEXT_QUESTION = nEXT_QUESTION;
             return qUESTION;
         }
 
@@ -3729,6 +3734,54 @@ namespace DBPOLLDemo.Models
         private global::System.Int32 _POLL_ID;
         partial void OnPOLL_IDChanging(global::System.Int32 value);
         partial void OnPOLL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 QUESTION_OPEN
+        {
+            get
+            {
+                return _QUESTION_OPEN;
+            }
+            set
+            {
+                OnQUESTION_OPENChanging(value);
+                ReportPropertyChanging("QUESTION_OPEN");
+                _QUESTION_OPEN = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QUESTION_OPEN");
+                OnQUESTION_OPENChanged();
+            }
+        }
+        private global::System.Int32 _QUESTION_OPEN;
+        partial void OnQUESTION_OPENChanging(global::System.Int32 value);
+        partial void OnQUESTION_OPENChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NEXT_QUESTION
+        {
+            get
+            {
+                return _NEXT_QUESTION;
+            }
+            set
+            {
+                OnNEXT_QUESTIONChanging(value);
+                ReportPropertyChanging("NEXT_QUESTION");
+                _NEXT_QUESTION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NEXT_QUESTION");
+                OnNEXT_QUESTIONChanged();
+            }
+        }
+        private global::System.Int32 _NEXT_QUESTION;
+        partial void OnNEXT_QUESTIONChanging(global::System.Int32 value);
+        partial void OnNEXT_QUESTIONChanged();
 
         #endregion
     
@@ -3834,6 +3887,28 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273273", "RESPONSES", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CLOSED_QUESTIONS", "SESSIONS")]
+        public EntityCollection<SESSION> SESSIONS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SESSION>("Models.CLOSED_QUESTIONS", "SESSIONS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SESSION>("Models.CLOSED_QUESTIONS", "SESSIONS", value);
                 }
             }
         }
@@ -4254,6 +4329,30 @@ namespace DBPOLLDemo.Models
         private Nullable<global::System.Int32> _QUESTION_ID;
         partial void OnQUESTION_IDChanging(Nullable<global::System.Int32> value);
         partial void OnQUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PREFERENCE_NUMBER
+        {
+            get
+            {
+                return _PREFERENCE_NUMBER;
+            }
+            set
+            {
+                OnPREFERENCE_NUMBERChanging(value);
+                ReportPropertyChanging("PREFERENCE_NUMBER");
+                _PREFERENCE_NUMBER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PREFERENCE_NUMBER");
+                OnPREFERENCE_NUMBERChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PREFERENCE_NUMBER;
+        partial void OnPREFERENCE_NUMBERChanging(Nullable<global::System.Int32> value);
+        partial void OnPREFERENCE_NUMBERChanged();
 
         #endregion
     
@@ -4355,13 +4454,15 @@ namespace DBPOLLDemo.Models
         /// <param name="lONGITUDE">Initial value of the LONGITUDE property.</param>
         /// <param name="lATITUDE">Initial value of the LATITUDE property.</param>
         /// <param name="sESSION_TIME">Initial value of the SESSION_TIME property.</param>
-        public static SESSION CreateSESSION(global::System.Int32 sESSION_ID, global::System.Decimal lONGITUDE, global::System.Decimal lATITUDE, global::System.DateTime sESSION_TIME)
+        /// <param name="nEXT_QUESTION">Initial value of the NEXT_QUESTION property.</param>
+        public static SESSION CreateSESSION(global::System.Int32 sESSION_ID, global::System.Decimal lONGITUDE, global::System.Decimal lATITUDE, global::System.DateTime sESSION_TIME, global::System.Int32 nEXT_QUESTION)
         {
             SESSION sESSION = new SESSION();
             sESSION.SESSION_ID = sESSION_ID;
             sESSION.LONGITUDE = lONGITUDE;
             sESSION.LATITUDE = lATITUDE;
             sESSION.SESSION_TIME = sESSION_TIME;
+            sESSION.NEXT_QUESTION = nEXT_QUESTION;
             return sESSION;
         }
 
@@ -4514,6 +4615,30 @@ namespace DBPOLLDemo.Models
         private global::System.DateTime _SESSION_TIME;
         partial void OnSESSION_TIMEChanging(global::System.DateTime value);
         partial void OnSESSION_TIMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NEXT_QUESTION
+        {
+            get
+            {
+                return _NEXT_QUESTION;
+            }
+            set
+            {
+                OnNEXT_QUESTIONChanging(value);
+                ReportPropertyChanging("NEXT_QUESTION");
+                _NEXT_QUESTION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NEXT_QUESTION");
+                OnNEXT_QUESTIONChanged();
+            }
+        }
+        private global::System.Int32 _NEXT_QUESTION;
+        partial void OnNEXT_QUESTIONChanging(global::System.Int32 value);
+        partial void OnNEXT_QUESTIONChanged();
 
         #endregion
     
@@ -4575,6 +4700,28 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<POLL>("Models.CSSE3004GG_SYS_C001273229", "POLLS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CLOSED_QUESTIONS", "QUESTIONS")]
+        public EntityCollection<QUESTION> QUESTIONS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<QUESTION>("Models.CLOSED_QUESTIONS", "QUESTIONS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<QUESTION>("Models.CLOSED_QUESTIONS", "QUESTIONS", value);
                 }
             }
         }

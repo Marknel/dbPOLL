@@ -65,9 +65,6 @@ namespace DBPOLLDemo.Controllers
 
                 return RedirectToAction("Modify", new { sessionid = int.Parse(collection["sessionid"]), sessionname = collection["sessionname"] });
             }
-
-
-
         }
 
         //

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * PollApplet.java
  *
@@ -19,10 +18,13 @@ import com.turningtech.receiver.Receiver;
 import com.turningtech.receiver.ReceiverService;
 import com.turningtech.receiver.ResponseCardLibrary;
 import java.awt.Component;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -86,7 +88,7 @@ public class PollApplet extends javax.swing.JApplet {
                 @Override
                 public void run() {
 
-                    Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
+                   Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
 
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
                     initReceivers();
@@ -728,6 +730,13 @@ private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         QUESTION++;
         detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         selectedQuestion = Questions.questions.get(QUESTION);
+        try {
+            Questions.setNextQuestion(selectedPoll.getSessionId(), 
+                    selectedQuestion.getQuestionID());
+        } catch (SQLException ex) {
+            showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
+        }
         questionText.setText(selectedQuestion.getQuestionText());
         Answers.loadAnswers(selectedQuestion.getQuestionID());
         setAnswers();
