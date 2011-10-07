@@ -377,16 +377,16 @@ namespace DBPOLLDemo.Controllers
             pollAndQuestionModel.answerData = sorted;
 
 
-            int selected = 0;
+            List<int?> selected = new List<int?>();
             // To set the first question's radio button to user's previous answer if he's answered it before
             foreach (var answeredquestion in answeredQuestions)
             {
+                selected = new responseModel().getResponseAnswerIds(sessionid, (int)Session["uid"]);
                 foreach (var answer in sorted)
                 {
                     foreach (var a in answer) { 
                         if (answeredquestion.answer == a.answer)
                         {
-                            selected = a.answerid;
                             Session["selectedAnswer"] = answeredquestion.answer;
                         }
 
@@ -447,6 +447,7 @@ namespace DBPOLLDemo.Controllers
                         {
                             Session["currentQuestionNumber"] = questnum;
                             Session["selectedAnswer"] = Request["MCQAnswer"];
+                            ViewData["completed"] = "Thank you, you have completed all of the questions in this session.";
                         }
                         // its the next button
                         else
@@ -460,7 +461,7 @@ namespace DBPOLLDemo.Controllers
                     // if the user hasnt answered anything, then display error and ask em to answer it NAO
                     else
                     {
-                        String error = "webpollingError" + "," + "Please provide your answer";
+                        String error = "webpollingError" + "," + "Please provide your answer(s)";
                         TempData["webpollingError"] = error;
 
                     }
@@ -470,11 +471,49 @@ namespace DBPOLLDemo.Controllers
                 else if (allquestion[questnum].questiontype == 6) 
                 {
                     String selectedAnswer = Request["RankingAnswerList"];
-                    if (selectedAnswer != "") 
+                    Boolean redundant = isRedundant(selectedAnswer);
+                    Boolean empty = isEmpty(selectedAnswer);
+
+                    if (!redundant && !empty) 
                     {
+                        AnswerRankingQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
+
+                        List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+                        if (button == "Previous Question")
+                        {
+                            Session["currentQuestionNumber"] = questnum - 1;
+                            int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                            setNextAnswer(questnum + 1, nextquestion, sessionid, (int)Session["uid"]);
+                        }
+
+                        // if its the last question, then submit/ update answer but stay on the same question
+                        else if (button == "Submit Last Answer")
+                        {
+                            Session["currentQuestionNumber"] = questnum;
+                            Session["selectedAnswer"] = Request["MCQAnswer"];
+                        }
+                        // its the next button
+                        else
+                        {
+                            Session["currentQuestionNumber"] = questnum + 1;
+                            int nextquestion = allquestion[(int)Session["currentQuestionNumber"]].questionid;
+                            setNextAnswer(questnum - 1, nextquestion, sessionid, (int)Session["uid"]);
+                        }
+                    }
+                    // If any of the inputs are the same value
+                    else if (redundant)
+                    {
+                        String error = "webpollingError" + "," + "Each answer has to be unique";
+                        TempData["webpollingError"] = error;
+
                     }
                     
-                
+                    else 
+                    {
+                        String error = "webpollingError" + "," + "Please provide your answer(s)";
+                        TempData["webpollingError"] = error;
+                    }
+
                 }
             }
             // Then the the user is currently answering a short answer question type
@@ -512,7 +551,7 @@ namespace DBPOLLDemo.Controllers
                 // if the user hasnt answered anything, then display error and ask em to answer it NAO
                 else
                 {
-                    String error = "webpollingError" + "," + "Please provide your answer";
+                    String error = "webpollingError" + "," + "Please provide your answer(s)";
                     TempData["webpollingError"] = error;
 
                 }
@@ -539,7 +578,7 @@ namespace DBPOLLDemo.Controllers
                 }
             }
 
-            // If a question has been answered by this user before, then create a new response data
+            // If a question has been answered by this user before, then update that data
             if (answeredQuestion.question != null)
             {
                 int responseId = new responseModel().getResponseId(sessionid, userid, answeredQuestion.answer);
@@ -553,7 +592,7 @@ namespace DBPOLLDemo.Controllers
                     throw (e);
                 }
             }
-            // else just update the response for this answer
+            // else create a new row
             else
             {
                 try
@@ -568,46 +607,60 @@ namespace DBPOLLDemo.Controllers
 
         }
 
-        // Function to either create or update a MCQ of type 3, 4 and 5
-        public void AnswerRankingQuestion(int selectedAnswer, int sessionid, int userid, int currentquestionid)
+        // Function to either create or update a MCQ of type 6, Ranking Question
+        public void AnswerRankingQuestion(String selectedAnswer, int sessionid, int userid, int currentquestionid)
         {
 
             List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, userid);
 
-            questionModel answeredQuestion = new questionModel();
+            List<String> answeredQuestion = new List<String>();
 
             foreach (var item in answeredQuestions)
             {
                 if (item.questionid == currentquestionid)
                 {
-                    answeredQuestion = item;
+                    answeredQuestion.Add(item.answer);
                 }
             }
 
-            // If a question has been answered by this user before, then create a new response data
-            if (answeredQuestion.question != null)
+             String[] answers = selectedAnswer.Split(',');
+
+
+            // If a question has been answered by this user before, then update that data
+            if (answeredQuestion.Count() != 0)
             {
-                int responseId = new responseModel().getResponseId(sessionid, userid, answeredQuestion.answer);
 
-                try
+               
+                for (int i = 0; i < answers.Count(); i++) 
                 {
-                    new responseModel().updateMCQResponse(responseId, selectedAnswer);
+                    int responseId = new responseModel().getResponseId(sessionid, userid, answeredQuestion[i]);
+                    int preferencenumber = i;
+                    try
+                    {
+                        new responseModel().updateRankingResponse(responseId, Convert.ToInt32(answers[i]), preferencenumber+1);
+                    }
+                    catch (Exception e)
+                    {
+                        throw (e);
+                    }
                 }
-                catch (Exception e)
-                {
-                    throw (e);
-                }
+                
+
             }
-            // else just update the response for this answer
+            // else create a new row
             else
             {
-                try
+                for (int i = 0; i < answers.Count(); i++) 
                 {
-                    new responseModel().createMCQResponse(userid, selectedAnswer, sessionid);
-                }
-                catch (Exception e)
-                {
-                    throw (e);
+                    int preferencenumber = i;
+                    try
+                    {
+                        new responseModel().createRankingResponse(userid, Convert.ToInt32(answers[i]), sessionid, preferencenumber+1);
+                    }
+                    catch (Exception e)
+                    {
+                        throw (e);
+                    }
                 }
             }
 
@@ -630,7 +683,7 @@ namespace DBPOLLDemo.Controllers
                 }
             }
 
-            // If a question has been answered by this user before, then create a new response data
+            // If a question has been answered by this user before, then update that data
             if (answeredQuestion.question != null)
             {
                 int responseId = new responseModel().getResponseId(sessionid, userid, answeredQuestion.answer);
@@ -645,7 +698,7 @@ namespace DBPOLLDemo.Controllers
                     throw (e);
                 }
             }
-            // else just update the response for this answer
+            // else create a new row
             else
             {
                 try
@@ -687,51 +740,81 @@ namespace DBPOLLDemo.Controllers
 
         // Function to generate a dropdown list dynamically, and automatically select a value if a user has answered 
         // this question and the answer is stored in the database
-        private void buildSelectList(List<answerModel> answerList, int selectedAnswer)
+        private void buildSelectList(List<answerModel> answerList, List<int?> selectedAnswer)
         {
            
             List<SelectListItem> ListItems = new List<SelectListItem>();
-            foreach (var answer in answerList){
-                if (answer.answerid == selectedAnswer){
-                    ListItems.Add(new SelectListItem
-                    {
-                        Text = answer.answer,
-                        Value = answer.answerid.ToString(),
-                        Selected = true
-                    });
-                }
-                else
+
+
+            ListItems.Add(new SelectListItem
+            {
+                Text = "",
+                Value = null,
+                Selected = true,
+            });
+
+            foreach (var answer in answerList)
+            {
+                ListItems.Add(new SelectListItem
                 {
-                    ListItems.Add(new SelectListItem
-                    {
-                        Text = answer.answer,
-                        Value = answer.answerid.ToString(),
-                    });
-                }
+                    Text = answer.answer,
+                    Value = answer.answerid.ToString(),
+                });
 
             }
 
-            //ListItems.Add(new SelectListItem
-            //{
-            //    Text = "Poll Master",
-            //    Value = "2",
-            //    Selected = true
-            //});
-            //ListItems.Add(new SelectListItem
-            //{
-            //    Text = "Poll Creator",
-            //    Value = "3"
-            //});
-            //ListItems.Add(new SelectListItem
-            //{
-            //    Text = "Poll Administrator",
-            //    Value = "4"
-            //});
-            //ViewData["USER_TYPE"] = ListItems;
+            int i = 1;
+            ViewData["RankingAnswerHistory"] += "Your previous answers: ";
+            ViewData["RankingAnswerHistory"] += "<br />";
+            foreach (int a in selectedAnswer) 
+            {
+                ViewData["RankingAnswerHistory"] += "Preference " + i + ": ";
+                ViewData["RankingAnswerHistory"] += new answerModel().getFeedback(a);
+                ViewData["RankingAnswerHistory"] += "<br />";
+                i++;
+            }
+
+            ViewData["RankingAnswerHistory"] += "<br />";
+            ViewData["RankingAnswerHistory"] += "Please select your answers again";
+            ViewData["RankingAnswerHistory"] += "<br />";
 
             ViewData["RankingAnswerList"] = ListItems;
         }
 
+
+        public Boolean isRedundant(String answer)
+        {
+            String[] check = answer.Split(',');
+            List<String> used = new List<String>();
+            Boolean result = false;
+            foreach (String item in check)
+            {
+                if (used.Contains(item))
+                {
+                    result = true;
+                }
+                used.Add(item);
+            }
+            return result;
+        }
+
+        public Boolean isEmpty(String answer)
+        {
+            String[] check = answer.Split(',');
+            Boolean result = false;
+            foreach (String item in check)
+            {
+                if (item == "")
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            return result;
+        }
 
     }
 }

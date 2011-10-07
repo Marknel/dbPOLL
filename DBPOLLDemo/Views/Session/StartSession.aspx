@@ -112,30 +112,36 @@
                 <%} 
                 else if (Model.questionData.questiontype == 6){%>
 
-                <% int numOfPossibleAnswers = (int)ViewData["numOfPossibleAnswers"];
-                   for (int i = 0; i < numOfPossibleAnswers; i++) { 
+                <% 
                     
-                    %>
+                    int numOfPossibleAnswers = (int)ViewData["numOfPossibleAnswers"];
+                    for (int i = 0; i < numOfPossibleAnswers; i++) {  %>
 
                     <center>
                         <p>
                             Preference <%=i+1 %>:   <%= Html.DropDownList("RankingAnswerList")%>
                         </p>
+                        <br />
+                        
                     </center>
-                    <%}
-                %>
-
-                
+                    <%}%>
+                 <hr style="width: 431px" />
+                 <center>
+                 <p style="width: 467px"><%= ViewData["RankingAnswerHistory"] %></p>
+                 </center>
 
                 <%} %>
                     
 
-
+            <%= ViewData["completed"]%>
             <%= Html.ValidationMessage("webpollingError")%>
+            <br />
+            <br />
+            <br />
 
 
-            
-            <% if (currentQuestion == 0 && (Boolean)Session["endOfQuestion"] == false){%>
+            <% 
+           if (currentQuestion == 0 && (Boolean)Session["endOfQuestion"] == false){%>
 
                     <button type="submit" name = "button" value="Previous Question" disabled = true> Previous Question </button>
                     <button type="submit" name = "button" value="Next Question"> Next Question </button>
@@ -155,7 +161,8 @@
 
                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
                     <button type="submit" name = "button" value="Submit Last Answer"> Submit Last Answer </button>
-            <%} else {%>
+            <%} else 
+           {%>
 
                     <button type="submit" name = "button" value="Previous Question"> Previous Question </button>
                     <button type="submit" name = "button" value="Next Question"> Next Question </button>
@@ -165,6 +172,8 @@
             </fieldset>
             </div>
 
+            <br />
+            <%= Html.ActionLink("Choose other sessions", "../Session/ViewAvailableSession", new { userid = (int)Session["uid"] })%>
 
     <%} %>
 
