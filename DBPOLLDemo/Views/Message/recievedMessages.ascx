@@ -4,7 +4,7 @@
 <% using (Html.BeginForm())
    {%>
 <fieldset>
-    <legend>Recieved Messages</legend>
+    <legend>Inbox</legend>
     <table>
         <tr>
         
@@ -12,7 +12,7 @@
                 Message
             </th>
             <th nowrap="nowrap">
-                Date sent (created_at)
+                Date sent
             </th>
             <th nowrap="nowrap">
                 Poll
@@ -20,9 +20,9 @@
             <th nowrap="nowrap">
                 Sender
             </th>
-            <th nowrap="nowrap">
+            <%--<th nowrap="nowrap">
                 Reciever
-            </th>
+            </th>--%>
         </tr>
         <%
             DBPOLLDemo.Models.messageModel msgModel = new DBPOLLDemo.Models.messageModel();
@@ -44,9 +44,9 @@
             <td nowrap="nowrap">
                 <%= Html.Encode(item.senderName)%>
             </td>
-            <td nowrap="nowrap">
+<%--            <td nowrap="nowrap">
                 <%= Html.Encode(item.recieverName)%>
-            </td>
+            </td>--%>
         </tr>
         <% } %>
     </table>

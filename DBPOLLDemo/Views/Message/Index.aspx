@@ -8,10 +8,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <h2>
     My Messages</h2>
-
-     <% Html.RenderPartial("sentMessages"); %>
+     <p>
+        <%= Html.ActionLink("Send a private message", "sendPrivateMessage")%>
+    </p>
      <br /><br />
      <% Html.RenderPartial("recievedMessages"); %>
+     <br /><br />
+     <% Html.RenderPartial("sentMessages"); %>
      <br /><br />
      <% Html.RenderPartial("publicMessages"); %>
      <br /><br />
