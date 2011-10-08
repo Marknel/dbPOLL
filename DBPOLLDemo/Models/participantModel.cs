@@ -385,5 +385,54 @@ namespace DBPOLLDemo.Models
                 throw (e);
             }
         }
+
+        // Get a list of countries for all of the participants
+        public List<String> getCountries()
+        { 
+            var query =  (from p in dbpollContext.PARTICIPANT_DATA
+                         select p.COUNTRY).Distinct();
+
+            return query.ToList();
+        }
+
+        public List<String> getState()
+        {
+            var query = (from p in dbpollContext.PARTICIPANT_DATA
+                         select p.STATE).Distinct();
+
+            return query.ToList();
+        }
+
+        public List<String> getCity()
+        {
+            var query = (from p in dbpollContext.PARTICIPANT_DATA
+                         select p.CITY).Distinct();
+
+            return query.ToList();
+        }
+
+        public List<String> getStreet()
+        {
+            var query = (from p in dbpollContext.PARTICIPANT_DATA
+                         select p.ADDRESS).Distinct();
+
+            return query.ToList();
+        }
+
+        public List<String> getPostcode()
+        {
+            var query = (from p in dbpollContext.PARTICIPANT_DATA
+                         select (int)p.POSTCODE).Distinct();
+
+            List<int> postcodes = query.ToList();
+            List<String> postcodeString = new List<String>();
+
+            foreach(int postcode in postcodes){
+                postcodeString.Add(postcode.ToString());
+            }
+
+            return postcodeString;
+        }
+            
     }
 }

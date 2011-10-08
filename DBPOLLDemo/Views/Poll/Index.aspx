@@ -104,7 +104,7 @@
                 <%= Html.Encode(item.sessionName) %>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.poll,lname) %>
+                <%= Html.Encode(item.pollname) %>
             </td>
             <td nowrap="nowrap">
             <%String text = "";

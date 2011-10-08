@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using DBPOLLDemo.Models;
+using System.Text.RegularExpressions;
 
 namespace DBPOLLDemo.Controllers
 {
@@ -11,9 +12,15 @@ namespace DBPOLLDemo.Controllers
     {
         public List<pollModel> sessionData { get; set; }
         public questionModel questionData { get; set; }
-        public List<List<answerModel>> answerData { get; set; }
+        public List<answerModel> answerData { get; set; }
      
     }
+
+    //public class SyncAndAsyncSessions
+    //{
+    //    public List<pollModel> Sync { get; set; }
+    //    public List<pollModel> Async { get; set; }
+    //}
 
     public class SessionController : Controller
     {
@@ -304,14 +311,15 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            //pollModel poll = new pollModel(sessionid, 1);
-            //poll.deleteSession();
+            //List<pollModel> allSessions = new pollModel().displayAssignedSessions(userid);
+            //SyncAndAsyncSessions syncAndAsync = new SyncAndAsyncSessions();
+            //syncAndAsync.Asy
 
             return View(new pollModel().displayAssignedSessions(userid));
             
         }
 
-        public ActionResult StartSession(int sessionid, int pollid)
+        public ActionResult StartAsyncSession(int sessionid, int pollid)
         {
             int questnum = 0;
             
@@ -324,6 +332,7 @@ namespace DBPOLLDemo.Controllers
             if (Session["currentQuestionNumber"] == null || (int)Session["currentWebpollingSessionid"] != sessionid)
             {
                 Session["currentQuestionNumber"] = 0;
+                Session["completed"] = "";
                 questnum = (int)Session["currentQuestionNumber"];
             }
             else 
@@ -362,6 +371,7 @@ namespace DBPOLLDemo.Controllers
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
             List<List<answerModel>> sorted = new List<List<answerModel>>();
+            List<answerModel> s = new List<answerModel>();
             List<int> questionCheck = new List<int>();
             List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, (int)Session["uid"]);
 
@@ -370,18 +380,19 @@ namespace DBPOLLDemo.Controllers
             {
                 if (pollAndQuestionModel.questionData.questionid == answer.questionid && !questionCheck.Contains(pollAndQuestionModel.questionData.questionid))
                 {
-                    sorted.Add(new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid));
+                    //sorted.Add(new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid));
+                    s = new answerModel().displayAnswers(pollAndQuestionModel.questionData.questionid);
                     questionCheck.Add(pollAndQuestionModel.questionData.questionid);
                 }
             }
-            pollAndQuestionModel.answerData = sorted;
+            pollAndQuestionModel.answerData = s;
 
 
             List<int?> selected = new List<int?>();
             // To set the first question's radio button to user's previous answer if he's answered it before
             foreach (var answeredquestion in answeredQuestions)
             {
-                selected = new responseModel().getResponseAnswerIds(sessionid, (int)Session["uid"]);
+                selected = new responseModel().getRankingAnswerIds(sessionid, (int)Session["uid"], pollAndQuestionModel.questionData.questionid);
                 foreach (var answer in sorted)
                 {
                     foreach (var a in answer) { 
@@ -406,7 +417,7 @@ namespace DBPOLLDemo.Controllers
 
         
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult StartSession(String button)
+        public ActionResult StartAsyncSession(String button)
         {
             if (Session["uid"] == null)
             {
@@ -447,7 +458,7 @@ namespace DBPOLLDemo.Controllers
                         {
                             Session["currentQuestionNumber"] = questnum;
                             Session["selectedAnswer"] = Request["MCQAnswer"];
-                            ViewData["completed"] = "Thank you, you have completed all of the questions in this session.";
+                            Session["completed"] = "Thank you, you have completed all of the questions in this session.";
                         }
                         // its the next button
                         else
@@ -491,6 +502,7 @@ namespace DBPOLLDemo.Controllers
                         {
                             Session["currentQuestionNumber"] = questnum;
                             Session["selectedAnswer"] = Request["MCQAnswer"];
+                            Session["completed"] = "Thank you, you have completed all of the questions in this session.";
                         }
                         // its the next button
                         else
@@ -501,7 +513,7 @@ namespace DBPOLLDemo.Controllers
                         }
                     }
                     // If any of the inputs are the same value
-                    else if (redundant)
+                    else if (redundant && !empty)
                     {
                         String error = "webpollingError" + "," + "Each answer has to be unique";
                         TempData["webpollingError"] = error;
@@ -519,9 +531,31 @@ namespace DBPOLLDemo.Controllers
             // Then the the user is currently answering a short answer question type
             else if (allquestion[questnum].questiontype <=2 )
             {
-                if (Request["ShortQuestionAnswer"] != "")
+                Boolean isValid = true;
+                String selectedAnswer = Request["ShortQuestionAnswer"];
+                // If its short answer numeric type only
+                if (selectedAnswer == "")
                 {
-                    String selectedAnswer = Request["ShortQuestionAnswer"];
+                    isValid = false;
+                    String error = "webpollingError" + "," + "Please provide your answer(s)";
+                    TempData["webpollingError"] = error;
+                }
+                else if (allquestion[questnum].questiontype == 1 && !Regex.IsMatch(selectedAnswer, @"^\d+$"))
+                {
+                    isValid = false;
+                    String error = "webpollingError" + "," + "Only numeric answer is allowed";
+                    Session["shortAnswer"] = "";
+                    TempData["webpollingError"] = error;
+                }
+                else if (allquestion[questnum].questiontype == 2 && Regex.IsMatch(selectedAnswer, @"^\d+$"))
+                {
+                    isValid = false;
+                    String error = "webpollingError" + "," + "Only alphanumeric answer is not allowed";
+                    Session["shortAnswer"] = "";
+                    TempData["webpollingError"] = error;
+                }
+                if (isValid)
+                {
                     AnswerShortAnswerQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentquestion);
 
                     List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
@@ -538,6 +572,7 @@ namespace DBPOLLDemo.Controllers
                     {
                         Session["currentQuestionNumber"] = questnum;
                         Session["shortAnswer"] = Request["ShortQuestionAnswer"];
+                        Session["completed"] = "Thank you, you have completed all of the questions in this session.";
                     }
                     // its the next button
                     else
@@ -548,19 +583,214 @@ namespace DBPOLLDemo.Controllers
                     }    
                 }
 
-                // if the user hasnt answered anything, then display error and ask em to answer it NAO
-                else
-                {
-                    String error = "webpollingError" + "," + "Please provide your answer(s)";
-                    TempData["webpollingError"] = error;
-
-                }
             }
     
 
-            return RedirectToAction("StartSession", new { sessionid = sessionid, pollid = pollid });
+            return RedirectToAction("StartAsyncSession", new { sessionid = sessionid, pollid = pollid });
         }
 
+        public ActionResult StartSyncSession(int sessionid, int pollid)
+        {
+
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (TempData["webpollingError"] != null)
+            {
+                String[] error = TempData["webpollingError"].ToString().Split(',');
+                ModelState.AddModelError(error[0], error[1]);
+            }
+    
+            Session["syncSessionId"] = sessionid;
+            Session["syncPollId"] = pollid;
+
+            int userid = (int)Session["uid"];
+            
+            pollModel currentQuestion = new pollModel().displaySessionDetails(sessionid)[0];
+            int currentQuestionid = currentQuestion.currentquestion;
+
+            Session["syncCurrentQuestionId"] = currentQuestionid;
+
+            PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
+            pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
+
+            List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+            pollAndQuestionModel.questionData = new questionModel().getQuestion(currentQuestionid);
+            pollAndQuestionModel.answerData = new answerModel().displayAnswers(currentQuestionid);
+
+            List<answerModel> sorted = pollAndQuestionModel.answerData;
+
+            if (pollAndQuestionModel.questionData.questiontype == 6)
+            {
+                Session["numOfPossibleAnswers"] = pollAndQuestionModel.questionData.numberofresponses;
+                buildPlainSelectList(sorted);
+            }
+
+            return View(pollAndQuestionModel);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult StartSyncSession(String load)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            int userid = (int)Session["uid"];
+            int pollid = (int)Session["syncPollId"];
+
+            int sessionid = (int)Session["syncSessionId"];
+            Session["numOfPossibleAnswers"] = 2;
+
+
+            int currentQuestionid = (int)Session["syncCurrentQuestionId"];
+            Boolean isOpen = true;
+
+            PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
+            pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
+
+            List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+            pollAndQuestionModel.questionData = new questionModel().getQuestion(currentQuestionid);
+            pollAndQuestionModel.answerData = new answerModel().displayAnswers(currentQuestionid);
+
+            if (pollAndQuestionModel.questionData.questiontype >= 3)
+            {
+                // If this is a normal MCQ
+                if (pollAndQuestionModel.questionData.questiontype < 6)
+                {
+                    int selectedAnswer = Convert.ToInt32(Request["MCQAnswer"]);
+                    if (selectedAnswer != null)
+                    {
+                        new responseModel().createMCQResponse(userid, selectedAnswer, sessionid);
+                        //AnswerMultipleChoiceQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentQuestionid);
+                    }
+                    else
+                    {
+                        String error = "webpollingError" + "," + "Please provide your answer(s)";
+                        TempData["webpollingError"] = error;
+
+                    }
+                }
+                else if (pollAndQuestionModel.questionData.questiontype == 6) 
+                {
+                    String selectedAnswer = Request["RankingAnswerList"];
+                    Boolean redundant = isRedundant(selectedAnswer);
+                    Boolean empty = isEmpty(selectedAnswer);
+
+                    if (!redundant && !empty) 
+                    {
+                        String[] answers = selectedAnswer.Split(',');
+                        for (int i = 0; i < answers.Count(); i++)
+                        {
+                            int preferencenumber = i;
+                            try
+                            {
+                                new responseModel().createRankingResponse(userid, Convert.ToInt32(answers[i]), sessionid, preferencenumber + 1);
+                            }
+                            catch (Exception e)
+                            {
+                                throw (e);
+                            }
+                        }
+                    }
+                    // If any of the inputs are the same value
+                    else if (redundant && !empty)
+                    {
+                        String error = "webpollingError" + "," + "Each answer has to be unique";
+                        TempData["webpollingError"] = error;
+
+                    }
+                    
+                    else 
+                    {
+                        String error = "webpollingError" + "," + "Please provide your answer(s)";
+                        TempData["webpollingError"] = error;
+                    }
+
+                }
+                else if (pollAndQuestionModel.questionData.questiontype <= 2)
+                {
+                    Boolean isValid = true;
+                    String selectedAnswer = Request["ShortQuestionAnswer"];
+
+
+                    if (selectedAnswer == "")
+                    {
+                        isValid = false;
+                        String error = "webpollingError" + "," + "Please provide your answer(s)";
+                        TempData["webpollingError"] = error;
+                    }
+                    else if (pollAndQuestionModel.questionData.questiontype == 1 && !Regex.IsMatch(selectedAnswer, @"^\d+$"))
+                    {
+                        isValid = false;
+                        String error = "webpollingError" + "," + "Only numeric answer is allowed";
+                        Session["shortAnswer"] = "";
+                        TempData["webpollingError"] = error;
+                    }
+                    else if (pollAndQuestionModel.questionData.questiontype == 2 && Regex.IsMatch(selectedAnswer, @"^\d+$"))
+                    {
+                        isValid = false;
+                        String error = "webpollingError" + "," + "Only alphanumeric answer is not allowed";
+                        Session["shortAnswer"] = "";
+                        TempData["webpollingError"] = error;
+                    }
+                    if (isValid)
+                    {
+                        AnswerShortAnswerQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentQuestionid);
+                    }
+                    else 
+                    {
+                        RedirectToAction("StartSyncSession", new { sessionid = sessionid  ,pollid = pollid});
+                    }
+                }
+            }
+
+            while (isOpen)
+            {
+                int databaseCurrentQuestion = new pollModel().displaySessionDetails(sessionid)[0].currentquestion;
+                if (currentQuestionid != databaseCurrentQuestion)
+                {
+
+                    pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
+                    pollAndQuestionModel.questionData = new questionModel().getQuestion(databaseCurrentQuestion);
+                    List<answerModel> temp = new answerModel().displayAnswers(databaseCurrentQuestion);
+                    pollAndQuestionModel.answerData = temp;
+                    List<answerModel> sorted = pollAndQuestionModel.answerData;
+                    Session["syncCurrentQuestionId"] = databaseCurrentQuestion;
+
+                    if (pollAndQuestionModel.questionData.questiontype == 6)
+                    {
+                        Session["numOfPossibleAnswers"] = pollAndQuestionModel.questionData.numberofresponses;
+                        buildPlainSelectList(sorted);
+                    }
+
+                    isOpen = new pollModel().isOpen(sessionid);
+                    return View(pollAndQuestionModel);
+                }
+                else if (currentQuestionid == databaseCurrentQuestion)
+                {
+                    isOpen = new pollModel().isOpen(sessionid);
+                }
+
+                if (!isOpen)
+                {
+                    break;
+                }
+                else
+                {
+
+                    System.Threading.Thread.Sleep(200);
+                }
+
+                //return View(pollAndQuestionModel);
+                
+            }
+            // When the session is closed, redirect the user somewhere *sighhhhhhh
+            return RedirectToAction("StartSyncSession");
+        }
 
         // Function to either create or update a MCQ of type 3, 4 and 5
         public void AnswerMultipleChoiceQuestion(int selectedAnswer, int sessionid, int userid, int currentquestionid)
@@ -781,6 +1011,32 @@ namespace DBPOLLDemo.Controllers
             ViewData["RankingAnswerList"] = ListItems;
         }
 
+        private void buildPlainSelectList(List<answerModel> answerList)
+        {
+
+            List<SelectListItem> ListItems = new List<SelectListItem>();
+
+
+            ListItems.Add(new SelectListItem
+            {
+                Text = "",
+                Value = null,
+                Selected = true,
+            });
+
+            foreach (var answer in answerList)
+            {
+                ListItems.Add(new SelectListItem
+                {
+                    Text = answer.answer,
+                    Value = answer.answerid.ToString(),
+                });
+
+            }
+
+
+            ViewData["RankingAnswerList"] = ListItems;
+        }
 
         public Boolean isRedundant(String answer)
         {

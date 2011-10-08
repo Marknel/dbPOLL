@@ -212,14 +212,19 @@ namespace DBPOLLDemo.Models
             return query.First();
         }
 
-
-        public List<int?> getResponseAnswerIds(int sessionid, int userid)
+        // Get the selected answers from response table (ranking type question)
+        public List<int?> getRankingAnswerIds(int sessionid, int userid, int questionid)
         {
             var query = (from r in dbpollContext.RESPONSES
+                         from a in dbpollContext.ANSWERS
+                         from q in dbpollContext.QUESTIONS
                          where
+                            r.ANSWER_ID == a.ANSWER_ID &&
+                            a.QUESTION_ID == q.QUESTION_ID &&
                             r.SESSION_ID == sessionid &&
                             r.USER_ID == userid &&
-                            r.PREFERENCE_NUMBER != null
+                            r.PREFERENCE_NUMBER != null &&
+                            q.QUESTION_ID == questionid
                          orderby r.PREFERENCE_NUMBER ascending
                          select r.ANSWER_ID
                         );
