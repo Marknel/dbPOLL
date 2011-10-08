@@ -95,6 +95,13 @@ namespace DBPOLLDemo.Controllers
             Session["uid"] = null;
             Session["user_type"] = null;
             Session["sysadmin"] = null;
+            Session["currentQuestionNumber"] = null;
+            Session["currentWebpollingSessionid"] = null;
+            Session["currentWebpollingPollid"] = null;
+            Session["AllQuestion"] = null;
+            Session["endOfQuestion"] = null;
+            Session["selectedAnswer"] = null;
+            Session["shortAnswer"] = null;
             Response.Redirect("Index");
         }
 

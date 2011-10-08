@@ -38,13 +38,12 @@ public class Responses {
      * @param sessionID: The current session being polled.
      * @param questionID: The current question for which the responses belong.
      */
-    public void saveResponses(List<Response> responses, int sessionID, int questionID) {
+    public void saveResponses(List<Response> responses, int sessionID, int questionID) throws SQLException {
 
         Answers.loadAnswers(questionID);
 
         Connection con;
         String query = "INSERT ALL\n";
-        try {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             con = DriverManager.getConnection("jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo", "csse3004gg", "groupg");
 
@@ -110,9 +109,5 @@ public class Responses {
             stmt.close();
             System.out.println("Ok.");
             //responses.get(0).
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
     }
 }

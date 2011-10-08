@@ -1,12 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using DBPOLLDemo.Models;
 
 namespace DBPOLLDemo.Controllers
 {
-    public class participantController : Controller
+    public class AssignedAndUnassignedParticipants
+    {
+        public List<participantModel> participants;
+        public List<userModel> unassigned;
+    }
+
+
+    public class ParticipantController : Controller
     {
         //
         // GET: /participant/
@@ -27,79 +33,48 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /participant/Create
 
-        public ActionResult Create()
+        public ActionResult Modify(int sessionid, String sessionname)
         {
-            return View();
+            AssignedAndUnassignedParticipants comp = new AssignedAndUnassignedParticipants();
+            comp.participants = new participantModel().displayParticipants(sessionid);
+            comp.unassigned = new participantModel().displayUnassignedParticipants(sessionid);
+
+            ViewData["sessionid"] = sessionid;
+            ViewData["sessionname"] = sessionname;
+            return View(comp);
         } 
 
         //
         // POST: /participant/Create
-
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Modify(FormCollection collection)
         {
-            try
+            // Check if we are adding participants or updating existing data
+            if (collection["submit"].ToString().Equals("Add Participants"))
             {
-                // TODO: Add insert logic here
+                // Adding new participant(s)
+                new participantModel().createParticipantsFromCollection(collection);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Modify", new { sessionid = int.Parse(collection["sessionid"]), sessionname = collection["sessionname"] });
             }
-            catch
+            else
             {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /participant/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+                // Updating existing data
 
-        //
-        // POST: /participant/Edit/5
+                new participantModel().editParticipantDataFromCollection(collection);
 
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                return RedirectToAction("Modify", new { sessionid = int.Parse(collection["sessionid"]), sessionname = collection["sessionname"] });
             }
         }
 
         //
         // GET: /participant/Delete/5
  
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int userid, int sessionid, String sessionname)
         {
-            return View();
+            new participantModel().deleteParticipant(userid, sessionid);
+            return RedirectToAction("Modify", new { sessionid = sessionid, sessionname = sessionname});
         }
 
-        //
-        // POST: /participant/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -9,9 +9,9 @@ using System.Resources;
 [assembly: AssemblyTitle("DBPOLLDemo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ITEE")]
+[assembly: AssemblyCompany("CSSE3004 Group G")]
 [assembly: AssemblyProduct("DBPOLLDemo")]
-[assembly: AssemblyCopyright("Copyright © ITEE 2011")]
+[assembly: AssemblyCopyright("Copyright © CSSE3004 Group G 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -21,9 +21,6 @@ namespace DBPOLLDemo.Models
         private string Salt;
         public string Reset_Password_Key;
 
-
-
-
         public String name;
         public int usertype;
         public DateTime createdat;
@@ -356,23 +353,23 @@ namespace DBPOLLDemo.Models
         /// <returns></returns>
         public List<userModel> displayUnassignedPollMasterUsers(int pollid)
         {
-            var query2 = from a in dbpollContext.ASSIGNEDPOLLS
+            var assignedUsers = from a in dbpollContext.ASSIGNEDPOLLS
                          where a.POLL_ID == pollid
                          select a.USER_ID;
 
 
-            var query = from q in dbpollContext.USERS
-                        where q.USER_TYPE == User_Type.POLL_MASTER && !query2.Contains(q.USER_ID)
-                        orderby q.CREATED_AT ascending
+            var unassignedUsers = from user in dbpollContext.USERS
+                        where user.USER_TYPE == User_Type.POLL_MASTER && !assignedUsers.Contains(user.USER_ID)
+                        orderby user.CREATED_AT ascending
                         select new userModel
                         {
-                            UserID = q.USER_ID,
-                            UserType = q.USER_TYPE,
-                            username = q.USERNAME,
-                            Name = q.NAME
+                            UserID = user.USER_ID,
+                            UserType = user.USER_TYPE,
+                            username = user.USERNAME,
+                            Name = user.NAME
                         };
 
-            return query.ToList();
+            return unassignedUsers.ToList();
         }
 
         public List<userModel> displayAllUsers()
@@ -463,10 +460,6 @@ namespace DBPOLLDemo.Models
             return hashedPwd;
         }
 
-
-
-
-
         private bool userExist(string email)
         {
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
@@ -477,7 +470,6 @@ namespace DBPOLLDemo.Models
                         where (u.USERNAME == email)
                         select u;
 
-
             if (query.ToArray().Length >= 1)
             {
                 return true;
@@ -486,7 +478,6 @@ namespace DBPOLLDemo.Models
             {
                 return false;
             }
-
         }
 
         private bool sysAdminExist(string email)
@@ -499,7 +490,6 @@ namespace DBPOLLDemo.Models
                         where (u.USERNAME == email)
                         select u;
 
-
             if (query.ToArray().Length >= 1)
             {
                 return true;
@@ -509,7 +499,6 @@ namespace DBPOLLDemo.Models
                 return false;
             }
         }
-
 
         /// <summary>
         /// Returns the user type code for a specified userid. (i.e 1 for poll user)

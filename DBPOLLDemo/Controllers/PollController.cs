@@ -44,7 +44,6 @@ namespace DBPOLLDemo.Controllers
             pollSession.pollData = new pollModel().displayPolls();
             pollSession.sessionData = new pollModel().displayPollSessions();
             
-
             return View(pollSession);
         }
 
@@ -300,16 +299,45 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult TestDevices()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
+
             return View();
         }
 
         public ActionResult RunDevices()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             return View();
         }
 
         public ActionResult AssignPoll(int pollid, String pollname)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (User_Type.POLL_CREATOR <= (int)Session["user_type"])
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             Assign_PollMasters pollMasters = new Assign_PollMasters();
 
             pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);

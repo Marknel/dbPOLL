@@ -5,12 +5,7 @@
 package pollapplet;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import oracle.jdbc.pool.OracleDataSource;
-
 import java.util.LinkedList;
-import javax.swing.DefaultListModel;
 
 /**
  * Contains methods to allow the getting of poll data from database.
@@ -36,10 +31,9 @@ public class PollList {
      * polls List will contain null items if the poll master has not been 
      * assigned to a poll.
      */
-    public void loadPolls(int pollMaster) {
+    public void loadPolls(int pollMaster)throws SQLException {
         Connection con;
         polls = new LinkedList();
-        try {
             // pull all polls for poll master into applet
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             con = DriverManager.getConnection("jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo", "csse3004gg", "groupg");
@@ -66,12 +60,6 @@ public class PollList {
 
             stmt.close();
             //System.out.println("Ok.");
-
-
-        } catch (SQLException ex) {
-            Logger.getLogger(PollList.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
 
     }
 

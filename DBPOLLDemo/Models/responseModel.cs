@@ -34,26 +34,38 @@ namespace DBPOLLDemo.Models
             resp.ANSWER_ID = this.answerid = answerid;
         }
 
-        public responseModel(int responseid, DateTime createdat, DateTime modifiedat, int userid, int answerid)
+        //public responseModel(int responseid, DateTime createdat, DateTime modifiedat, int userid, int answerid)
+        //{
+        //    resp.RESPONSE_ID = this.responseid = responseid;
+        //    resp.CREATED_AT = this.createdat = createdat;
+        //    resp.MODIFIED_AT = this.modifiedat = modifiedat;
+        //    resp.USER_ID = this.userid = userid;
+        //    resp.ANSWER_ID = this.answerid = answerid;
+        //}
+
+        public int getMaxResponseID()
         {
-            resp.RESPONSE_ID = this.responseid = responseid;
-            resp.CREATED_AT = this.createdat = createdat;
-            resp.MODIFIED_AT = this.modifiedat = modifiedat;
-            resp.USER_ID = this.userid = userid;
-            resp.ANSWER_ID = this.answerid = answerid;
+            int query = (from r in dbpollContext.RESPONSES
+                         select r.RESPONSE_ID).Max();
+
+            return query;
         }
 
-        public void createResponse(int responseid, int userid, int answerid)
+
+        public void createMCQResponse(int userid, int answerid, int sessionid)
         {
             try
             {
                 RESPONS response = new RESPONS();
 
-                response.RESPONSE_ID = responseid;
+                response.FEEDBACK = new answerModel().getFeedback(answerid);
+                response.RESPONSE_ID = getMaxResponseID() + 1;
                 response.USER_ID = userid;
                 response.ANSWER_ID = answerid;
                 response.CREATED_AT = DateTime.Now;
                 response.MODIFIED_AT = null;
+                response.SESSION_ID = sessionid;
+                response.PREFERENCE_NUMBER = null;
 
                 dbpollContext.AddToRESPONSES(response);
                 dbpollContext.SaveChanges();
@@ -65,7 +77,7 @@ namespace DBPOLLDemo.Models
             }
         }
 
-        public void updateResponse(int responseid, int userid, int answerid)
+        public void updateMCQResponse(int responseid, int answerid)
         {
             try
             {
@@ -73,10 +85,14 @@ namespace DBPOLLDemo.Models
                                   where r.RESPONSE_ID == responseid
                                   select r;
 
-                RESPONS response = new RESPONS();
 
-                response.FEEDBACK = feedback;
-                response.USER_ID = userid;
+                RESPONS response = getResponse.First<RESPONS>();
+
+                response.RESPONSE_ID = responseid;
+                response.ANSWER_ID = answerid;
+                response.FEEDBACK = new answerModel().getFeedback(answerid);
+                response.MODIFIED_AT = DateTime.Now;
+                dbpollContext.SaveChanges();
 
             }
             catch (Exception e)
@@ -85,5 +101,130 @@ namespace DBPOLLDemo.Models
             }
         }
 
+        public void createRankingResponse(int userid, int answerid, int sessionid, int preferencenumber)
+        {
+            try
+            {
+                RESPONS response = new RESPONS();
+
+                response.FEEDBACK = new answerModel().getFeedback(answerid);
+                response.RESPONSE_ID = getMaxResponseID() + 1;
+                response.USER_ID = userid;
+                response.ANSWER_ID = answerid;
+                response.CREATED_AT = DateTime.Now;
+                response.MODIFIED_AT = null;
+                response.SESSION_ID = sessionid;
+                response.PREFERENCE_NUMBER = preferencenumber;
+                
+
+                dbpollContext.AddToRESPONSES(response);
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void updateRankingResponse(int responseid, int answerid, int preferencenumber)
+        {
+            try
+            {
+                var getResponse = from r in dbpollContext.RESPONSES
+                                  where r.RESPONSE_ID == responseid
+                                  select r;
+
+
+                RESPONS response = getResponse.First<RESPONS>();
+
+                response.RESPONSE_ID = responseid;
+                response.ANSWER_ID = answerid;
+                response.FEEDBACK = new answerModel().getFeedback(answerid);
+                response.MODIFIED_AT = DateTime.Now;
+                response.PREFERENCE_NUMBER = preferencenumber;
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void createShortAnswerResponse(String feedback, int userid, int sessionid, int questionid)
+        {
+            try
+            {
+                RESPONS response = new RESPONS();
+
+                response.FEEDBACK = feedback;
+                response.RESPONSE_ID = getMaxResponseID() + 1;
+                response.USER_ID = userid;
+                response.CREATED_AT = DateTime.Now;
+                response.MODIFIED_AT = null;
+                response.SESSION_ID = sessionid;
+                response.QUESTION_ID = questionid;
+
+                dbpollContext.AddToRESPONSES(response);
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public void updateShortAnswerResponse(int responseid, String feedback)
+        {
+            try
+            {
+                var getResponse = from r in dbpollContext.RESPONSES
+                                  where r.RESPONSE_ID == responseid
+                                  select r;
+
+
+                RESPONS response = getResponse.First<RESPONS>();
+
+                response.RESPONSE_ID = responseid;
+                response.FEEDBACK = feedback;
+                response.MODIFIED_AT = DateTime.Now;
+                dbpollContext.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
+
+        public int getResponseId(int sessionid, int userid, String feedback)
+        {
+            var query = (from r in dbpollContext.RESPONSES
+                         where
+                            r.SESSION_ID == sessionid &&
+                            r.USER_ID == userid &&
+                            r.FEEDBACK == feedback
+                         select r.RESPONSE_ID
+                        );
+
+            return query.First();
+        }
+
+
+        public List<int?> getResponseAnswerIds(int sessionid, int userid)
+        {
+            var query = (from r in dbpollContext.RESPONSES
+                         where
+                            r.SESSION_ID == sessionid &&
+                            r.USER_ID == userid &&
+                            r.PREFERENCE_NUMBER != null
+                         orderby r.PREFERENCE_NUMBER ascending
+                         select r.ANSWER_ID
+                        );
+
+            return query.ToList();
+        }
     }
 }

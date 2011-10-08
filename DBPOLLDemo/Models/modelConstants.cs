@@ -9,6 +9,10 @@ namespace DBPOLLDemo.Models
     {
 
         /// <summary>
+        /// User level -2 in database
+        /// </summary>
+        public const int KEYPAD_USER = -2;
+        /// <summary>
         /// User level 0 in database
         /// </summary>
         public const int SYSTEM_ADMINISTRATOR = 0;

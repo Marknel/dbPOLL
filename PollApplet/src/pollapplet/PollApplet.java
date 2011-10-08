@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  * PollApplet.java
  *
@@ -19,10 +18,13 @@ import com.turningtech.receiver.Receiver;
 import com.turningtech.receiver.ReceiverService;
 import com.turningtech.receiver.ResponseCardLibrary;
 import java.awt.Component;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -85,8 +87,9 @@ public class PollApplet extends javax.swing.JApplet {
 
                 @Override
                 public void run() {
-
-                    Polls.loadPolls(6);
+                    try {
+                        Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
+                    
 
                     ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
                     initReceivers();
@@ -113,12 +116,15 @@ public class PollApplet extends javax.swing.JApplet {
                     selectedQuestion = Questions.questions.get(QUESTION);
                     questionText.setText(selectedQuestion.getQuestionText());
                     Answers.loadAnswers(selectedQuestion.getQuestionID());
-
+                    
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PollApplet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     setAnswers();
                 }
             });
         } catch (Exception ex) {
-            ex.printStackTrace();
+            showError("Fatal Error: Could not Initialise Applet. F5 to continue.", ex);
         }
     }
 
@@ -728,20 +734,38 @@ private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         QUESTION++;
         detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         selectedQuestion = Questions.questions.get(QUESTION);
+        try {
+            Questions.setNextQuestion(selectedPoll.getSessionId(), 
+                    selectedQuestion.getQuestionID());
+        } catch (SQLException ex) {
+            showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
+        }
         questionText.setText(selectedQuestion.getQuestionText());
-        Answers.loadAnswers(selectedQuestion.getQuestionID());
+            try {
+                Answers.loadAnswers(selectedQuestion.getQuestionID());
+            } catch (SQLException ex) {
+                showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
+            }
         setAnswers();
     }
 
 }//GEN-LAST:event_nextQuestionActionPerformed
 
 private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-// TODO add your handling code here:
 
     if (polling == false) {
         detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         startButton.setText("Stop Polling");
         startPollHandler(evt);
+            try {
+                Questions.openQuestion(selectedPoll.getSessionId(), 
+                            selectedQuestion.getQuestionID());
+            } catch (SQLException ex) {
+                showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
+            }
         nextQuestion.setEnabled(false);
         prevQuestion.setEnabled(false);
         polling = true;
@@ -750,14 +774,23 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         try {
             CURRENTRESPONSES = new LinkedList<String>();
 
+            // Close question to polling by applet
             poll.stop();
+            
+            // Close question to polling by synchronous web application
+            Questions.closeQuestion(selectedPoll.getSessionId(), 
+                    selectedQuestion.getQuestionID());
+            
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
             nextQuestion.setEnabled(true);
             prevQuestion.setEnabled(true);
             dbResponses.saveResponses(responseListModel.responses, selectedPoll.getSessionId(), selectedQuestion.getQuestionID());
             responseListModel = new ResponseListModel();
             //responseChart.setSubtitle("Polling Closed");
-        } catch (Exception e) {
+        }catch (SQLException ex){
+            showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
+        }catch (Exception e) {
             showError("Unable to stop poll.", e);
         }
         polling = false;
@@ -765,14 +798,27 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_startButtonActionPerformed
 
 private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevQuestionActionPerformed
-// TODO add your handling code here:
+    
     if (QUESTION <= 0) {
     } else {
         QUESTION--;
         selectedQuestion = Questions.questions.get(QUESTION);
+        try {
+            Questions.setNextQuestion(selectedPoll.getSessionId(), 
+                    selectedQuestion.getQuestionID());
+        } catch (SQLException ex) {
+            showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
+        }
+        
         detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         questionText.setText(selectedQuestion.getQuestionText());
-        Answers.loadAnswers(selectedQuestion.getQuestionID());
+            try {
+                Answers.loadAnswers(selectedQuestion.getQuestionID());
+            } catch (SQLException ex) {
+                showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
+            }
         setAnswers();
     }
 
