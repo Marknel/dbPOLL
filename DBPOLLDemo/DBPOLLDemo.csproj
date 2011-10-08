@@ -105,7 +105,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBPOLL.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\messageModel.cs" />
+    <Compile Include="Models\messageModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\modelConstants.cs" />
     <Compile Include="Models\questionObjectModel.cs">
       <SubType>ASPXCodeBehind</SubType>

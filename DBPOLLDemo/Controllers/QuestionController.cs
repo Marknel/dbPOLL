@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Web.Mvc;
 using DBPOLLDemo.Models;
+
 namespace DBPOLLDemo.Controllers
 {
     public class QuestionController : Controller
@@ -388,8 +390,11 @@ namespace DBPOLLDemo.Controllers
         {
             if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             answerModel a = new answerModel();
 
