@@ -6,19 +6,53 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <% using (Html.BeginForm()){%>
+     <% using (Html.BeginForm()){%>
          <fieldset>
             <legend>Select Type:</legend>
-            <p>
-                <label for="graphType">Graph Type:</label>
-                <select id="graphType" name="graphType">
-                <option value="Bar">Bar</option>
-                <option value="Column">Column</option>
-                </select>
-            </p>
-            <p class="style1"> Note: To generate report with a different chart, please select 
+            
+            <% if ((String)Session["graphType"] != null)
+                {
+                    if ((String)Session["graphType"] == "Bar")
+                    {%>
+                       
+                    <p>
+                        <label for="graphType">Graph Type:</label>
+                        <select id="graphType" name="graphType">
+                        <option value="Bar" selected = true >Bar</option>
+                        <option value="Column">Column</option>
+                        </select>
+                    </p>
+
+                    <% }
+                    else
+                    {%>
+
+                    <p>
+                        <label for="graphType">Graph Type:</label>
+                        <select id="Select1" name="graphType">
+                        <option value="Bar">Bar</option>
+                        <option value="Column" selected = true>Column</option>
+                        </select>
+                    </p>
+                       
+                    <% }
+                    
+               }
+               else 
+               {%>
+                    <p>
+                        <label for="graphType">Graph Type:</label>
+                        <select id="Select1" name="graphType">
+                        <option value="Bar" selected = false>Bar</option>
+                        <option value="Column" selected = false>Column</option>
+                        </select>
+                    </p>
+                
+               <%}%>
+
+            <p style="width: 514px"> Note: To generate report with a different chart, please select 
                 one above. </p>
-            <p class="style1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A default graph will be shown if no value is chosen </p>
+            <p style="width: 360px"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A default graph will be shown if no value is chosen </p>
             <input type="submit" value="Save graph type" />
 
         </fieldset>
@@ -64,11 +98,4 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
-    <style type="text/css">
-        .style1
-        {
-            font-size: x-small;
-            width : 470px;
-        }
-    </style>
-</asp:Content>
+    </asp:Content>

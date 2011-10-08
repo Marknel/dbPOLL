@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.UI.DataVisualization.Charting;
 using DBPOLLDemo.Models;
+using System.Web.UI.WebControls;
 
 
 namespace DBPOLLDemo.Controllers
@@ -167,6 +168,9 @@ namespace DBPOLLDemo.Controllers
             String graphType = (String)Session["graphType"];
 
             Chart chart = new Chart();
+            chart.Width = Unit.Pixel(500);
+            //chart.Height = Unit.Pixel(500);
+            
             chart.BackColor = System.Drawing.Color.LightGoldenrodYellow;
 
             ChartArea ca1 = new ChartArea("ca1");
@@ -178,9 +182,12 @@ namespace DBPOLLDemo.Controllers
             {
                 if (value != null)
                 {
-                    chart.Legends.Add(new Legend(value));
+                    Legend newLegend = new Legend(value);
+                    newLegend.IsTextAutoFit = true;
+                    chart.Legends.Add(newLegend);
+                    //chart.Legends.Add(new Legend(value));
                     chart.Legends[value].DockedToChartArea = "ca1";
-                    chart.Legends[value].IsTextAutoFit = true;
+                    //chart.Legends[value].IsTextAutoFit = true;
 
                     Series series1 = new Series(value);
                     series1.ChartArea = "ca1";
@@ -313,6 +320,32 @@ namespace DBPOLLDemo.Controllers
                     return View();
                 }
             }
+        }
+
+
+        private void buildSelectList(List<String> answerList, String name)
+        {
+
+            List<SelectListItem> ListItems = new List<SelectListItem>();
+
+            ListItems.Add(new SelectListItem
+            {
+                Text = "",
+                Value = null,
+                Selected = true,
+            });
+
+            foreach (var answer in answerList)
+            {
+                ListItems.Add(new SelectListItem
+                {
+                    Text = answer,
+                    Value = answer,
+                });
+
+            }
+
+            ViewData[name] = ListItems;
         }
     }
 }

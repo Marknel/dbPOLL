@@ -159,6 +159,7 @@
     <Content Include="Content\QuestionIndex.jpg" />
     <Content Include="Content\QuestionviewQuestions.jpg" />
     <Content Include="Content\ReportIndex.jpg" />
+    <Content Include="Content\Site.css" />
     <Content Include="Content\technology_to_engage.gif" />
     <Content Include="Content\turningPoint_banner.jpg" />
     <Content Include="Default.aspx" />
@@ -241,7 +242,8 @@
     <Content Include="Views\Report\SessionParticipation.aspx" />
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
-    <Content Include="Views\Session\StartSession.aspx" />
+    <Content Include="Views\Session\StartAsyncSession.aspx" />
+    <Content Include="Views\Session\StartSyncSession.aspx" />
     <Content Include="Views\Session\ViewAvailableSession.aspx" />
     <Content Include="Views\SysAdmin\DeleteConfirm.aspx" />
     <Content Include="Views\SysAdmin\RegisterUser.aspx" />
@@ -254,7 +256,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\Site2.css" />
     <Content Include="Scripts\jquery-1.3.2.js" />
     <Content Include="Scripts\jquery-1.3.2.min.js" />
     <Content Include="Scripts\jquery-1.3.2-vsdoc.js" />

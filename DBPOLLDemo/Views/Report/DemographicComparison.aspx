@@ -17,7 +17,7 @@
                     <%= Html.TextBox("demographic")%><br /> 
                 </p>
 
-
+                
                 <p>
                     <label for="graphType">Graph Type:</label>
                     <select id="graphType" name="graphType">
@@ -27,10 +27,10 @@
                 </p>
 
                 <p>
-                    <label for="includeOrExclude">Graph Type:</label>
+                    <label for="includeOrExclude">Options:</label>
                     <select id="includeOrExclude" name="includeOrExclude">
-                    <option value="Include">Display only data from</option>
-                    <option value="Exclude">Exclude data from</option>
+                    <option value="Include">Display data include</option>
+                    <option value="Exclude">Display data exclude</option>
                     </select>
                 </p>
                
