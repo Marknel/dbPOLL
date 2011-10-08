@@ -344,9 +344,12 @@ namespace DBPOLLDemo.Controllers
             pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);
             pollMasters.unassigned = new userModel().displayUnassignedPollMasterUsers(pollid);
 
-
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;
+
+
+
+
             return View(pollMasters);
         }
 
@@ -361,6 +364,18 @@ namespace DBPOLLDemo.Controllers
             pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);
             pollMasters.unassigned = new userModel().displayUnassignedPollMasterUsers(pollid);
 
+            foreach (int id in selectedObjects)
+            {
+                userModel u = new userModel();
+                u = u.getUser(id);
+                EmailController mail = new EmailController(pollname, u.username);
+
+                string mailSuccess = mail.send();
+                if (!mailSuccess.Equals("Email sent successfully"))
+                {
+                    throw new Exception(mailSuccess);
+                }
+            }
 
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;

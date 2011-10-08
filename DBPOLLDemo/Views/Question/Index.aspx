@@ -22,7 +22,8 @@
                  return true;
              }
          }    
-     </script>   
+     </script>  
+      
     <h2>Questions for Poll: <%=Html.Encode(ViewData["name"]) %></h2>
 
     <table>

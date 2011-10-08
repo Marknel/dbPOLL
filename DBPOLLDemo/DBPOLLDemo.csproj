@@ -179,6 +179,7 @@
     <Content Include="Views\Answer\Edit.aspx" />
     <Content Include="Views\Answer\OpinionScale.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
+    <Content Include="Views\Answer\SevenOpinionScale.aspx" />
     <Content Include="Views\Help\AnswerEdit.aspx" />
     <Content Include="Views\Help\AnswerIndex.aspx" />
     <Content Include="Views\Help\HomeHome.aspx" />

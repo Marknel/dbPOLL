@@ -24,6 +24,7 @@
          }    
      </script> 
 
+
     <h2>Answers for : <%= Html.Encode(ViewData["name"]) %></h2>
 
     <table>
@@ -33,6 +34,7 @@
             <th>Answer</th>
             <th>Weight</th>
             <th>Correct</th>
+            <th>Created On</th>
         </tr>
 
     <% foreach (var item in Model) { %>
@@ -66,7 +68,9 @@
             %>
                 <%= Html.Encode(correct)%>
             </td>
-            
+            <td nowrap="nowrap">
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
+            </td>
         </tr>
     
     <% } %>

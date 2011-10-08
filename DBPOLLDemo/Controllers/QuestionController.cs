@@ -11,7 +11,7 @@ namespace DBPOLLDemo.Controllers
         
         //
         // GET: /Question/
-
+        int pollid;
         /// <summary>
         /// Returns a view listing all the questions associated with a poll.
         /// </summary>
@@ -27,6 +27,8 @@ namespace DBPOLLDemo.Controllers
 
             ViewData["name"] = name;
             ViewData["id"] = id;
+            pollid = id;
+
             return View(new questionModel().displayQuestions(id));
         }
 

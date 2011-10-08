@@ -12,7 +12,8 @@
     <%= Html.ActionLink("Custom Answer", "Create", new { questionid = ViewData["questionid"] })%> <br />
     <%= Html.ActionLink("True/False", "CreateTrueFalse", new { questionid = ViewData["questionid"] })%> <br />
     <%= Html.ActionLink("Yes/No/Abstain", "CreateYesNoAbstain", new { questionid = ViewData["questionid"] })%> <br />
-    <%= Html.ActionLink("Opinion Scale", "OpinionScale", new { questionid = ViewData["questionid"] })%> <br />
+    <%= Html.ActionLink("5 Opinion Scale", "OpinionScale", new { questionid = ViewData["questionid"] })%> <br />
+    <%= Html.ActionLink("7 Opinion Scale", "SevenOpinionScale", new { questionid = ViewData["questionid"] })%> <br />
     </p>
 
     <div>

@@ -31,15 +31,14 @@ namespace DBPOLLDemo.Models
 
         ANSWER_HISTORY a = new ANSWER_HISTORY();
 
-        public answerHistoryModel(int answerhid, String answer, int correct, int weight, int ansnum, int aid)
+        public answerHistoryModel(int answerhid, String answer, int correct, int weight, int ansnum, int aid, DateTime createdat)
         {
-            a.ANSWER_ID = this.answerhid = answerhid;
+            a.ANSWERH_ID = this.answerhid = answerhid;
             a.ANSWER = this.answer = answer;
             a.CORRECT = this.correct = correct;
             a.WEIGHT = this.weight = weight;
             a.NUM = this.ansnum = ansnum;
-            a.CREATED_AT = DateTime.Now;
-            a.MODIFIED_AT = DateTime.Now;
+            a.CREATED_AT = this.createdat = createdat;
             a.ANSWER_ID = this.aid = aid;
 
         }
@@ -67,7 +66,8 @@ namespace DBPOLLDemo.Models
                             correct = (int)a.CORRECT,
                             weight = (int)a.WEIGHT,
                             ansnum = (int)a.NUM,
-                            aid = (int)a.ANSWER_ID
+                            aid = (int)a.ANSWER_ID,
+                            createdat = a.CREATED_AT
                         };
 
             return query.ToList();

@@ -176,6 +176,71 @@
             </p>
              <p style ="color: Red;"><%=ViewData["weighterror4"]%></p>
 
+                         <br />
+            <hr />
+
+                                    <p>
+                <label for="weight">Answer Number:</label>
+                <%= Html.TextBox("ansnum5", "6")%>
+                <%= Html.ValidationMessage("ansum", "*")%>
+            </p>
+            <p style ="color: Red;"><%=ViewData["ansnumerror5"]%></p>
+            <p>
+                <label for="answer">Answer Text:</label>
+                <%= Html.TextBox("answer5")%>
+                <%= Html.ValidationMessage("answer", "*")%>
+            </p>
+            <p style ="color: Red;"><%=ViewData["answererror5"]%></p>
+            <p>
+                <label for="correct">Correct Answer:</label>
+                <select id="Select5" name="correct5">
+                <option value="0">No</option>
+                <option value="1">yes</option>
+                </select>
+                <%= Html.ValidationMessage("correct", "*")%>
+                <%=Html.Hidden("questionid", ViewData["questionid"])%>
+            </p>
+            <p>
+                <label for="weight">Answer Weight:</label>
+                <%= Html.TextBox("weight5")%>
+                <%= Html.ValidationMessage("weight", "*")%>
+            </p>
+             <p style ="color: Red;"><%=ViewData["weighterror5"]%></p>
+
+                         <br />
+            <hr />
+
+                                    <p>
+                <label for="weight">Answer Number:</label>
+                <%= Html.TextBox("ansnum6", "7")%>
+                <%= Html.ValidationMessage("ansum", "*")%>
+            </p>
+            <p style ="color: Red;"><%=ViewData["ansnumerror6"]%></p>
+            <p>
+                <label for="answer">Answer Text:</label>
+                <%= Html.TextBox("answer6")%>
+                <%= Html.ValidationMessage("answer", "*")%>
+            </p>
+            <p style ="color: Red;"><%=ViewData["answererror6"]%></p>
+            <p>
+                <label for="correct">Correct Answer:</label>
+                <select id="Select6" name="correct6">
+                <option value="0">No</option>
+                <option value="1">yes</option>
+                </select>
+                <%= Html.ValidationMessage("correct", "*")%>
+                <%=Html.Hidden("questionid", ViewData["questionid"])%>
+            </p>
+            <p>
+                <label for="weight">Answer Weight:</label>
+                <%= Html.TextBox("weight6")%>
+                <%= Html.ValidationMessage("weight", "*")%>
+            </p>
+             <p style ="color: Red;"><%=ViewData["weighterror6"]%></p>
+
+
+
+
                          <p><%=ViewData["created"]%></p>
             <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
             

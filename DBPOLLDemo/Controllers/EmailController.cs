@@ -24,8 +24,23 @@ namespace DBPOLLDemo.Controllers
             this.password = password;
             this.destAddress = destAddress;
             buildBody();
+
         }
 
+        public EmailController(String pollname, String destAddress)
+        {
+            this.destAddress = destAddress;
+            buildBody1(pollname);
+        }
+
+        private void buildBody1(String pollname)
+        {
+            string Body = @"You have been assigned a new Poll <br /><br />";
+
+            Body += "<strong>" + pollname +"</strong>";
+
+            this.body = Body;
+        }
 
         private void buildBody()
         {

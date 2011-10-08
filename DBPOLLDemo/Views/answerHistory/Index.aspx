@@ -23,9 +23,6 @@
             <th>
                 Created Date
             </th>
-            <th>
-                Modified Date
-            </th>
         </tr>
 
     <% foreach (var item in Model)
@@ -56,11 +53,8 @@
             </td>
 
 
-            <td>
-                <%= Html.Encode(String.Format("{0:g}", item.createdat))%>
-            </td>
-            <td>
-                <%= Html.Encode(String.Format("{0:g}", item.modifiedat))%>
+            <td nowrap="nowrap">
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
             </td>
         </tr>
     
