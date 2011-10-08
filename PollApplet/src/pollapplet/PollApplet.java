@@ -27,7 +27,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.RefineryUtilities;
 import pollapplet.PollList.dbPoll;
 import pollapplet.QuestionList.dbQuestion;
 
@@ -42,7 +44,6 @@ public class PollApplet extends javax.swing.JApplet {
     private Poll poll;
     private ResponseListModel responseListModel = new ResponseListModel();
     private ReceiverListModel receiverListModel = new ReceiverListModel();
-    private DefaultCategoryDataset dataset;
     private Responses dbResponses = new Responses();
     private PollList Polls = new PollList();
     private QuestionList Questions = new QuestionList();
@@ -50,6 +51,7 @@ public class PollApplet extends javax.swing.JApplet {
     private dbPoll selectedPoll;
     private dbQuestion selectedQuestion;
     private boolean polling = false;
+    private DefaultCategoryDataset dataset;
     /**
      * Current Question during polling. (Location in question list)
      */
@@ -88,35 +90,35 @@ public class PollApplet extends javax.swing.JApplet {
                 @Override
                 public void run() {
                     try {
-                        Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
-                    
+                        //Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
+                        Polls.loadPolls(10);
 
-                    ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
-                    initReceivers();
-                    initComponents();
-                    initModel();
+                        ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
+                        initReceivers();
+                        initComponents();
+                        initModel();
 
-                    while (selectedPoll == null) {
-                        selectedPoll = (dbPoll) JOptionPane.showInputDialog(
-                                (Component) Frame,
-                                "Choose Poll & Session:",
-                                "Select a Poll",
-                                JOptionPane.PLAIN_MESSAGE,
-                                null,
-                                Polls.polls.toArray(),
-                                Polls.polls.get(0));
-                        if (selectedPoll == null) {
-                            JOptionPane.showMessageDialog(null, "You must select a poll!", "Poll Error", 1);
+                        while (selectedPoll == null) {
+                            selectedPoll = (dbPoll) JOptionPane.showInputDialog(
+                                    (Component) Frame,
+                                    "Choose Poll & Session:",
+                                    "Select a Poll",
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null,
+                                    Polls.polls.toArray(),
+                                    Polls.polls.get(0));
+                            if (selectedPoll == null) {
+                                JOptionPane.showMessageDialog(null, "You must select a poll!", "Poll Error", 1);
+                            }
                         }
-                    }
 
-                    pollLbl.setText("POLL: " + selectedPoll.getPollName());
-                    Questions.loadQuestions(selectedPoll.getPollId());
+                        pollLbl.setText("POLL: " + selectedPoll.getPollName());
+                        Questions.loadQuestions(selectedPoll.getPollId());
 
-                    selectedQuestion = Questions.questions.get(QUESTION);
-                    questionText.setText(selectedQuestion.getQuestionText());
-                    Answers.loadAnswers(selectedQuestion.getQuestionID());
-                    
+                        selectedQuestion = Questions.questions.get(QUESTION);
+                        questionText.setText(selectedQuestion.getQuestionText());
+                        Answers.loadAnswers(selectedQuestion.getQuestionID());
+
                     } catch (SQLException ex) {
                         Logger.getLogger(PollApplet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -139,6 +141,21 @@ public class PollApplet extends javax.swing.JApplet {
         answer8Text.setText(((Answers.answers.size() >= 8) ? "8. " + Answers.answers.get(7).getAnswerText() : " "));
         answer9Text.setText(((Answers.answers.size() >= 9) ? "9. " + Answers.answers.get(8).getAnswerText() : " "));
         answer10Text.setText(((Answers.answers.size() >= 10) ? "10. " + Answers.answers.get(9).getAnswerText() : ""));
+    }
+
+    public void createTestResponseSet() {
+        responseListModel.add(new Response("00A99A", "1", "1"));
+        responseListModel.add(new Response("00A99A", "2", "2"));
+        responseListModel.add(new Response("00A99A", "3", "3"));
+        responseListModel.add(new Response("00A99A", "4", "3"));
+        responseListModel.add(new Response("00A99A", "5", "3"));
+        responseListModel.add(new Response("00A99A", "6", "1"));
+        responseListModel.add(new Response("00A99A", "7", "2"));
+        responseListModel.add(new Response("00A99A", "8", "2"));
+        responseListModel.add(new Response("00A99A", "9", "1"));
+        responseListModel.add(new Response("00A99A", "10", "1"));
+        responseListModel.add(new Response("00A99A", "11", "1"));
+
     }
 
     private void initReceivers() {
@@ -726,6 +743,120 @@ public class PollApplet extends javax.swing.JApplet {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public int checkExists(int response) {
+        //if the response exists, return 1 else 0
+        int result = ((Answers.answers.size() >= response) ? 1 : 0);
+
+        System.out.println("Result :" + result);
+        return result;
+    }
+
+    public CategoryDataset createGraphDataset() {
+
+        //createTestResponseSet();
+        int answerSize = Answers.answers.size();
+
+        // row keys...
+        String series1 = selectedQuestion.getQuestionText();
+
+        // column keys...
+
+        int[] ResponseTotals = new int[10];
+
+        String category1 = ((answerSize >= 1) ? "1. " + Answers.answers.get(0).getAnswerText() : " ");
+        String category2 = ((answerSize >= 2) ? "2. " + Answers.answers.get(1).getAnswerText() : " ");
+        String category3 = ((answerSize >= 3) ? "3. " + Answers.answers.get(2).getAnswerText() : " ");
+        String category4 = ((answerSize >= 4) ? "4. " + Answers.answers.get(3).getAnswerText() : " ");
+        String category5 = ((answerSize >= 5) ? "5. " + Answers.answers.get(4).getAnswerText() : " ");
+        String category6 = ((answerSize >= 6) ? "6. " + Answers.answers.get(5).getAnswerText() : " ");
+        String category7 = ((answerSize >= 7) ? "7. " + Answers.answers.get(6).getAnswerText() : " ");
+        String category8 = ((answerSize >= 8) ? "8. " + Answers.answers.get(7).getAnswerText() : " ");
+        String category9 = ((answerSize >= 9) ? "9. " + Answers.answers.get(8).getAnswerText() : " ");
+        String category10 = ((answerSize >= 10) ? "10. " + Answers.answers.get(9).getAnswerText() : " ");
+
+        for (Response res : responseListModel.responses) {
+
+            //Check if response is valid to count
+            int response = Integer.parseInt(res.getResponse());
+            if (response <= answerSize) {
+                System.out.println("response :" + response);
+                //Check what to add it to
+                switch (response) {
+                    case 1:
+                        ResponseTotals[0] += checkExists(response);
+                        break;
+                    case 2:
+                        ResponseTotals[1] += checkExists(response);
+                        break;
+                    case 3:
+                        ResponseTotals[2] += checkExists(response);
+                        break;
+                    case 4:
+                        ResponseTotals[3] += checkExists(response);
+                        break;
+                    case 5:
+                        ResponseTotals[4] += checkExists(response);
+                        break;
+                    case 6:
+                        ResponseTotals[5] += checkExists(response);
+                        break;
+                    case 7:
+                        ResponseTotals[6] += checkExists(response);
+                        break;
+                    case 8:
+                        ResponseTotals[7] += checkExists(response);
+                        break;
+                    case 9:
+                        ResponseTotals[8] += checkExists(response);
+                        break;
+                    case 10:
+                        ResponseTotals[9] += checkExists(response);
+                        break;
+                    default:
+                        ;
+                        break;
+                }
+            }
+        }
+
+        // create the dataset...
+        final DefaultCategoryDataset graphDataset = new DefaultCategoryDataset();
+
+        if (answerSize >= 1) {
+            graphDataset.addValue(ResponseTotals[0], series1, category1);
+        }
+        if (answerSize >= 2) {
+            graphDataset.addValue(ResponseTotals[1], series1, category2);
+        }
+        if (answerSize >= 3) {
+            graphDataset.addValue(ResponseTotals[2], series1, category3);
+        }
+        if (answerSize >= 4) {
+            graphDataset.addValue(ResponseTotals[3], series1, category4);
+        }
+        if (answerSize >= 5) {
+            graphDataset.addValue(ResponseTotals[4], series1, category5);
+        }
+        if (answerSize >= 6) {
+            graphDataset.addValue(ResponseTotals[5], series1, category6);
+        }
+        if (answerSize >= 7) {
+            graphDataset.addValue(ResponseTotals[6], series1, category7);
+        }
+        if (answerSize >= 8) {
+            graphDataset.addValue(ResponseTotals[7], series1, category8);
+        }
+        if (answerSize >= 9) {
+            graphDataset.addValue(ResponseTotals[8], series1, category9);
+        }
+        if (answerSize >= 10) {
+            graphDataset.addValue(ResponseTotals[9], series1, category10);
+        }
+
+
+        return graphDataset;
+    }
+
 private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextQuestionActionPerformed
 
     if ((QUESTION + 1) >= Questions.questions.size()) {
@@ -735,22 +866,24 @@ private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
         detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         selectedQuestion = Questions.questions.get(QUESTION);
         try {
-            Questions.setNextQuestion(selectedPoll.getSessionId(), 
+            Questions.setNextQuestion(selectedPoll.getSessionId(),
                     selectedQuestion.getQuestionID());
         } catch (SQLException ex) {
             showError("Fatal Error: Unable to update database. "
                     + "Restart application to resume polling", ex);
         }
         questionText.setText(selectedQuestion.getQuestionText());
-            try {
-                Answers.loadAnswers(selectedQuestion.getQuestionID());
-            } catch (SQLException ex) {
-                showError("Fatal Error: Unable to update database. "
+        try {
+            Answers.loadAnswers(selectedQuestion.getQuestionID());
+        } catch (SQLException ex) {
+            showError("Fatal Error: Unable to update database. "
                     + "Restart application to resume polling", ex);
-            }
+        }
         setAnswers();
     }
 
+//    Questions.setNextQuestion(selectedPoll.getSessionId(),
+     //              0);
 }//GEN-LAST:event_nextQuestionActionPerformed
 
 private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -759,38 +892,48 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         startButton.setText("Stop Polling");
         startPollHandler(evt);
-            try {
-                Questions.openQuestion(selectedPoll.getSessionId(), 
-                            selectedQuestion.getQuestionID());
-            } catch (SQLException ex) {
-                showError("Fatal Error: Unable to update database. "
+        try {
+            Questions.openQuestion(selectedPoll.getSessionId(),
+                    selectedQuestion.getQuestionID());
+        } catch (SQLException ex) {
+            showError("Fatal Error: Unable to update database. "
                     + "Restart application to resume polling", ex);
-            }
+        }
         nextQuestion.setEnabled(false);
         prevQuestion.setEnabled(false);
         polling = true;
     } else {
+
+        createTestResponseSet();
+        Chart demo = new Chart("Chart for Poll: " + selectedPoll.getPollName(), selectedQuestion.getQuestionText(), createGraphDataset(), selectedQuestion.getChartStyle());
+        demo.pack();
+        RefineryUtilities.centerFrameOnScreen(demo);
+        demo.setVisible(true);
+
         startButton.setText("Start Polling");
         try {
             CURRENTRESPONSES = new LinkedList<String>();
 
             // Close question to polling by applet
             poll.stop();
-            
+
             // Close question to polling by synchronous web application
-            Questions.closeQuestion(selectedPoll.getSessionId(), 
+            Questions.closeQuestion(selectedPoll.getSessionId(),
                     selectedQuestion.getQuestionID());
-            
+
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
             nextQuestion.setEnabled(true);
             prevQuestion.setEnabled(true);
+
+
+
             dbResponses.saveResponses(responseListModel.responses, selectedPoll.getSessionId(), selectedQuestion.getQuestionID());
             responseListModel = new ResponseListModel();
             //responseChart.setSubtitle("Polling Closed");
-        }catch (SQLException ex){
-            showError("Fatal Error: Unable to update database. "
-                    + "Restart application to resume polling", ex);
-        }catch (Exception e) {
+            } catch (SQLException ex) {
+               showError("Fatal Error: Unable to update database. "
+                        + "Restart application to resume polling", ex);
+        } catch (Exception e) {
             showError("Unable to stop poll.", e);
         }
         polling = false;
@@ -798,29 +941,31 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_startButtonActionPerformed
 
 private void prevQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevQuestionActionPerformed
-    
+
     if (QUESTION <= 0) {
     } else {
         QUESTION--;
         selectedQuestion = Questions.questions.get(QUESTION);
         try {
-            Questions.setNextQuestion(selectedPoll.getSessionId(), 
+            Questions.setNextQuestion(selectedPoll.getSessionId(),
                     selectedQuestion.getQuestionID());
         } catch (SQLException ex) {
             showError("Fatal Error: Unable to update database. "
                     + "Restart application to resume polling", ex);
         }
-        
+
         detectQuestLbl.setText("" + CURRENTRESPONSES.size());
         questionText.setText(selectedQuestion.getQuestionText());
-            try {
-                Answers.loadAnswers(selectedQuestion.getQuestionID());
-            } catch (SQLException ex) {
-                showError("Fatal Error: Unable to update database. "
+        try {
+            Answers.loadAnswers(selectedQuestion.getQuestionID());
+        } catch (SQLException ex) {
+            showError("Fatal Error: Unable to update database. "
                     + "Restart application to resume polling", ex);
-            }
+        }
         setAnswers();
     }
+
+
 
 }//GEN-LAST:event_prevQuestionActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

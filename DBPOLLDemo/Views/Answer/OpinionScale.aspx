@@ -16,7 +16,7 @@
 
             <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum")%>
+                <%= Html.TextBox("ansnum", 1)%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
             <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
@@ -50,7 +50,7 @@
 
             <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum1")%>
+                <%= Html.TextBox("ansnum1", "2")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
             <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
@@ -85,7 +85,7 @@
 
             <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum2")%>
+                <%= Html.TextBox("ansnum2", "3")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
             <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
@@ -118,7 +118,7 @@
 
                         <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum3")%>
+                <%= Html.TextBox("ansnum3", "4")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
             <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
@@ -150,7 +150,7 @@
 
                         <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum4")%>
+                <%= Html.TextBox("ansnum4", "5")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
             <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>

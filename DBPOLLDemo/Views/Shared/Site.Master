@@ -1,8 +1,9 @@
 <%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 
+<%@ Import Namespace="DBPOLLDemo.Models" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
     <title>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
     </title>
@@ -10,15 +11,18 @@
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body runat="server" id="MyBody">
-<br /><br />
+    <br />
+    <br />
     <div class="title">
-        <asp:Image ID="Image1" runat="server" ImageUrl="~/Content/keepad_logo_head.jpg" 
-            Height="90px"  Style="float: left; padding-left:90px;" />
-        <asp:Image ID="Image2" runat="server" ImageUrl="~/Content/turningPoint_banner.jpg" 
-             AlternateText="TurningPoint Banner" Style="float: right; padding-right:90px;" Height="90px"
-            />
+        <asp:Image ID="Image2" runat="server" ImageUrl="~/Content/turningPoint_banner.jpg"
+            AlternateText="TurningPoint Banner" Style="float: right; padding-right: 20px;"
+            Height="90px" />
     </div>
-    <br /><br /><br /><br /><br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <form id="form1" runat="server">
     <div class="page">
         <div id="header">
@@ -47,37 +51,33 @@
                     <%} %>
                     <%if (Session["uid"] == null || Session["uid"].ToString().Trim() == "")
                       {%>
-                    <%-- <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
-                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
-
-                                    <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
-                                       { %>
-                                        <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
-                                    <% } %>--%>
-                    <%-- <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
-                                    <li><%= Html.ActionLink("View Polls", "Index", "Home")%></li>
-                                    <li><%= Html.ActionLink("Modify Polls", "Index", "Home")%></li> 
-                                    <% if (Session["sysadmin"] == null || Session["sysadmin"] == "false")
-                                       {%>
-                                    <li><%= Html.ActionLink("Help", "Index", "Help")%></li> 
-                                    <% }%>
-                                    <% if (Session["sysadmin"] != null && Session["sysadmin"] != "false")
-                                       { %>
-                                        <li><%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li> 
-                                    <% } %>--%>
                     <%}
                       else
                       {%>
                     <%--Logged in--%>
+                    <% if ((int)Session["user_type"] > 1)
+                       { %>
+                    <li>
+                        <%= Html.ActionLink("Edit My Details", "Edit", "User")%></li>
+                    <% } %>
                     <% if (Session["sysadmin"] == null || Session["sysadmin"] == "false")
                        {%>
                     <%--Not a sysAdmin--%>
+                    <% if ((int)Session["user_type"] > 3)
+                       { %>
+                    <li>
+                        <%= Html.ActionLink("Define new Poll", "Create", "Poll")%></li>
+                    <li>
+                        <%= Html.ActionLink("Reports", "Index", "Report")%></li>
+                    <% } %>
                     <li>
                         <%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
                     <li>
                         <%= Html.ActionLink("Modify Polls", "Index", "Poll")%></li>
                     <% }%>
+                    <li><%= Html.ActionLink("My Messages", "Index", "Message")%></li>
                     <%} %>
+                    
                     <li>
                         <%= Html.ActionLink("Help", "Index", "Help")%></li>
                 </ul>

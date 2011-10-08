@@ -10,7 +10,7 @@
                 Message
             </th>
             <th nowrap="nowrap">
-                Date sent (created_at)
+                Date sent
             </th>
             <th nowrap="nowrap">
                 Poll
@@ -24,7 +24,7 @@
         </tr>
         <%
             DBPOLLDemo.Models.messageModel msgModel = new DBPOLLDemo.Models.messageModel();
-            List<DBPOLLDemo.Models.messageModel> Model = msgModel.publicMessages();
+            List<DBPOLLDemo.Models.messageModel> Model = msgModel.publicMessages((int)Session["uid"]);
             %>
         <% foreach (var item in Model)
            { %>

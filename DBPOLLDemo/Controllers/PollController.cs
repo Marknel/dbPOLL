@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Web.Mvc;
 using DBPOLLDemo.Models;
-using System.Globalization;
+
 
 namespace DBPOLLDemo.Controllers
 {
@@ -364,6 +365,15 @@ namespace DBPOLLDemo.Controllers
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;
             return View(pollMasters);
+        }
+
+        public ActionResult ViewObjects(int pollid, String pollname)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "PollObject", new { pollid, pollname });
         }
 
 

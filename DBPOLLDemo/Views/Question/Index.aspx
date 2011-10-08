@@ -6,7 +6,24 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Questions for Poll: <%= Html.Encode(ViewData["name"]) %></h2>
+     <script type = "text/javascript">
+         // Allows deletion of items to be checked and confimed        
+         var clicked = false;
+         function check(id) {
+             document.getElementById(id + "yes").innerHTML = "Yes";
+             document.getElementById(id + "no").innerHTML = "No";
+             if (clicked != true) {
+                 document.getElementById(id).style.display = "none";
+
+                 clicked = true;
+                 return false;
+             } else {
+                 clicked = false;
+                 return true;
+             }
+         }    
+     </script>   
+    <h2>Questions for Poll: <%=Html.Encode(ViewData["name"]) %></h2>
 
     <table>
         <tr>
@@ -31,10 +48,15 @@
     
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Delete", "Delete", new { questionid = item.questionid, id = ViewData["id"], name = ViewData["name"] })%> |
+
+                <a id= "<%= item.questionid %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>" onclick="return check(<%=item.questionid%>);"> Delete</a> 
+                <a id = "<%= item.questionid + "yes" %>" href="/Question/Delete/<%= ViewData["id"]%>?questionid=<%=item.questionid%>&name=<%= ViewData["name"]%>"></a>
+                <a id = "<%= item.questionid + "no" %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>"></a> |
+
                 <%= Html.ActionLink("Edit", "Edit", new { questionid = item.questionid })%> |
                 <%= Html.ActionLink("View Answers", "Details", new { id = item.questionid, name = item.question })%> |
-                <%= Html.ActionLink("View objects", "../Object/Index", new { questionid = item.questionid})%> 
+                <%= Html.ActionLink("View Objects", "../Object/Index", new { questionid = item.questionid})%> |
+                <%= Html.ActionLink("Run Test", "Test", new { questionid = item.questionid, name = item.question, num_response = item.numberofresponses})%> 
                 
             </td>
             <td nowrap="nowrap">

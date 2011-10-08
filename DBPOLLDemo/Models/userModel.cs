@@ -135,24 +135,12 @@ namespace DBPOLLDemo.Models
             string Salt = "";
             string hshdpwd = "";
 
-            //var query = from u in dbpollContext.USERS
-            //            where (u.USERNAME == username && u.PASSWORD == password)
-            //            select u;
-
-
-            //if (query.ToArray().Length == 1)
-            //{
-            //    return query.ToArray()[0].USER_ID;
-            //}
-            //else
-            //{
-            //    return 0;
-            //}
             userModel user = null;
             try
             {
                 var userList = from u in dbpollContext.USERS
                                where (u.USERNAME == username)
+                               where u.USER_TYPE != -1
                                select new userModel
                                {
                                    UserID = u.USER_ID,
@@ -175,8 +163,6 @@ namespace DBPOLLDemo.Models
                 return user.UserID;
             else
                 return 0;
-
-            //return 10;
         }
 
         public int verify_as_sys_admin(string username, string password)
@@ -618,5 +604,24 @@ namespace DBPOLLDemo.Models
             SYSADMIN sysadmin = query.First();
             return sysadmin;
         }
+
+
+
+        public List<userModel> getUserList()
+        {
+            var query = from u in dbpollContext.USERS
+                        orderby u.NAME ascending
+                        select new userModel
+                        {
+                            name = u.NAME,
+                            UserID = u.USER_ID
+                        };
+
+            return query.ToList();
+        }
+
+
+
+
     }
 }

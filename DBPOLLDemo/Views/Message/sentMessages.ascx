@@ -10,14 +10,14 @@
                 Message
             </th>
             <th nowrap="nowrap">
-                Date sent (created_at)
+                Date sent
             </th>
             <th nowrap="nowrap">
                 Poll
             </th>
-            <th nowrap="nowrap">
+           <%-- <th nowrap="nowrap">
                 Sender
-            </th>
+            </th>--%>
             <th nowrap="nowrap">
                 Reciever
             </th>
@@ -38,9 +38,9 @@
             <td nowrap="nowrap">
                 <%= Html.Encode(item.poll_ID)%>
             </td>
-            <td nowrap="nowrap">
+<%--            <td nowrap="nowrap">
                 <%= Html.Encode(item.senderName)%>
-            </td>
+            </td>--%>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.recieverName)%>
             </td>

@@ -33,6 +33,7 @@ namespace DBPOLLDemo.Controllers
 
         private void buildSelectList()
         {
+            int userType = (int)Session["user_type"];
 
             userModel user = new userModel();
             var userDetails = user.get_details((int)Session["uid"]);
@@ -44,22 +45,23 @@ namespace DBPOLLDemo.Controllers
                 Text = "Poll User",
                 Value = "1"
             });
-            ListItems.Add(new SelectListItem
+            if (userType > 2)
             {
-                Text = "Poll Master",
-                Value = "2",
-                Selected = true
-            });
-            ListItems.Add(new SelectListItem
+                ListItems.Add(new SelectListItem
+                {
+                    Text = "Poll Master",
+                    Value = "2",
+                    Selected = true
+                });
+            }
+            if (userType > 3)
             {
-                Text = "Poll Creator",
-                Value = "3"
-            });
-            ListItems.Add(new SelectListItem
-            {
-                Text = "Poll Administrator",
-                Value = "4"
-            });
+                ListItems.Add(new SelectListItem
+                {
+                    Text = "Poll Creator",
+                    Value = "3"
+                });
+            }
             ViewData["USER_TYPE"] = ListItems;
         }
 

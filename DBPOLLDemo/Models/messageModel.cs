@@ -35,7 +35,8 @@ namespace DBPOLLDemo.Models
         public int poll_ID;
         public int question_ID;
 
-
+        //USER1 == sender
+        //USER == reciever
 
         public messageModel()
         {
@@ -48,7 +49,7 @@ namespace DBPOLLDemo.Models
             return query + 1;
         }
 
-        public bool sendMessage(string message, int sender, int pollID, int reciever)
+        public bool sendMessage(string message, int sender, int reciever)
         {
             try
             {
@@ -58,8 +59,8 @@ namespace DBPOLLDemo.Models
                 msg.MESSAGE1 = message;
                 msg.CREATED_AT = DateTime.Now;
                 msg.Sender_UID = sender;
-                msg.POLL_ID = pollID;
                 msg.Reciever_UID = reciever;
+                msg.POLL_ID = 0;
 
                 dbpollContext.AddToMESSAGES(msg);
                 dbpollContext.SaveChanges();
@@ -73,9 +74,18 @@ namespace DBPOLLDemo.Models
 
         public bool sendFeedback(string message, int sender, int pollID, int question_ID)
         {
+            //to call render partial 'sendFeedback'
+            //and use these lines on form submit
+
+            //int uid = (int)Session["uid"];
+            //string message = Request["msg"].ToString();
+            //messageModel msgModel = new messageModel();
+            //msgModel.sendFeedback(message, uid, pollid, questnum);
+
+
             //do query for the assigned poll master(s) using the pollID
             var query = from q in dbpollContext.ASSIGNEDPOLLS
-                        where q.POLL_ID == poll_ID
+                        where q.POLL_ID == pollID
                         select new userModel
                         {
                             UserID = (int)q.USER_ID
@@ -147,10 +157,10 @@ namespace DBPOLLDemo.Models
                             Message = q.MESSAGE1,
                             Created_at = q.CREATED_AT,
                             Modified_at = (DateTime)q.MODIFIED_AT,
-                            sender_UID = q.sender.USER_ID,
+                            sender_UID = q.USER1.USER_ID,
                             poll_ID = q.POLL_ID,
-                            senderName = q.sender.NAME,
-                            recieverName = q.reciever.NAME
+                            senderName = q.USER1.NAME,
+                            recieverName = q.USER.NAME
                         };
 
             return query.ToList();
@@ -167,19 +177,20 @@ namespace DBPOLLDemo.Models
                             Message = q.MESSAGE1,
                             Created_at = q.CREATED_AT,
                             Modified_at = (DateTime)q.MODIFIED_AT,
-                            sender_UID = q.sender.USER_ID,
+                            sender_UID = q.USER1.USER_ID,
                             poll_ID = q.POLL_ID,
-                            senderName = q.sender.NAME,
-                            recieverName = q.reciever.NAME
+                            senderName = q.USER1.NAME,
+                            recieverName = q.USER.NAME
                         };
 
             return query.ToList();
         }
 
-        public List<messageModel> publicMessages()
+        public List<messageModel> publicMessages(int userID)
         {
             var query = from q in dbpollContext.MESSAGES
-                        where q.Reciever_UID == 0
+                        join p in dbpollContext.PARTICIPANTS on q.SESSION_ID equals p.SESSION_ID
+                        where p.USER_ID == userID
                         orderby q.CREATED_AT ascending
                         select new messageModel
                         {
@@ -187,10 +198,10 @@ namespace DBPOLLDemo.Models
                             Message = q.MESSAGE1,
                             Created_at = q.CREATED_AT,
                             Modified_at = (DateTime)q.MODIFIED_AT,
-                            sender_UID = q.sender.USER_ID,
+                            sender_UID = q.USER1.USER_ID,
                             poll_ID = q.POLL_ID,
-                            senderName = q.sender.NAME,
-                            recieverName = q.reciever.NAME
+                            senderName = q.USER1.NAME,
+                            recieverName = q.USER.NAME
                         };
 
             return query.ToList();

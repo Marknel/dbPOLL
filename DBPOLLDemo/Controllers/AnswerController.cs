@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Web.Mvc;
 using DBPOLLDemo.Models;
-
-using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
 {
@@ -22,6 +22,7 @@ namespace DBPOLLDemo.Controllers
 
             ViewData["name"] = name;
             ViewData["questionid"] = id;
+            
 
             return View(new answerModel().displayAnswers(id));
         }
@@ -29,14 +30,14 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Answer/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, String name)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            return RedirectToAction("Index", "answerHistory", new { id, name });
         }
 
         public ActionResult Delete(int answerid, int questionid, String name)
@@ -95,6 +96,23 @@ namespace DBPOLLDemo.Controllers
             culture.DateTimeFormat.ShortTimePattern = string.Empty;
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+
+            
+            answerModel a = new answerModel();
+            questionModel q = new questionModel();
+            q = q.getQuestion(questionid);
+
+            int type = q.questiontype;
+
+            List<answerModel> list = a.displayAnswers(questionid);
+
+            if (list.Count >= 10 && (q.questiontype == 3 || q.questiontype == 4 || q.questiontype == 5 || q.questiontype == 6))
+            {
+                ViewData["mastererror"] = "This Multiple Choice Question is at the limit of 10 answers. Please remove a previous answer before creating another.";
+                ViewData["questionid"] = questionid;
+                return View();
+            } 
+            
 
             if (!int.TryParse(weight, out weightInt) || weight == null)
             {
@@ -416,28 +434,33 @@ namespace DBPOLLDemo.Controllers
                 ViewData["ansnumerror"] = "Answer Number must contain a number!";
             }
 
-
             CultureInfo culture = new CultureInfo("en-AU");
             culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
             culture.DateTimeFormat.ShortTimePattern = string.Empty;
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-
             
             try
             {
-                // TODO: Add update logic here
-               new answerModel().updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
+               answerModel a = new answerModel();
+               a = a.getAnswer(answerid);
 
-               answerModel a = new answerModel().getAnswer(answerid);
+               /* Create a record of the old answer in the Answer History table */
+               new answerHistoryModel(answerid).createAnswerHistory(a.answerid, a.answer, a.correct, a.weight, a.ansnum);
 
-                //return RedirectToAction("Index", "Answer", new { id = questionid });
-                return View(a);
+               /* Update the answer*/
+               a.updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
+
+               ViewData["questionid"] = questionid;
+
+               ViewData["edited"] = "Updated Answer: " + answer;
+               return View(a);
             }
             catch(Exception e)
             {
                 ViewData["weighterror"] = "OMG THERE IS AN ERROR "+ e.Message;
                 answerModel a = new answerModel().getAnswer(answerid);
+                ViewData["questionid"] = questionid;
                 return View(a);
             }
         }
