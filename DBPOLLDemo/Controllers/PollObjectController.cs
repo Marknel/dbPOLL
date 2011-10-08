@@ -72,11 +72,41 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+
+
+            ViewData["pollid"] = pollid;
+
+            pollObjectModel ob = new pollObjectModel();
+
+            if (ob.getObject(obtype).obid != -1)
+            {
+                ViewData["created"] = "This object already exists.";
+                return View();
+            }
+
+
+
             try
             {
-                new pollObjectModel().createObject(obtype, attribute, pollid);
+                switch (obtype)
+                {
+                    case 1:
+                        ViewData["created"] = "Added a Countdown Timer";
+                        break;
+                    case 2:
+                        ViewData["created"] = "Added a Response Counter";
+                        break;
+                    case 3:
+                        ViewData["created"] = "Added a Correct Answer Indicator";
+                        break;
+                    default:
+                        break;
+                }
+                pollObjectModel po = new pollObjectModel();
+                po.createObject(obtype, attribute, pollid);
 
-                return RedirectToAction("Index", new { pollid = pollid });
+                //return RedirectToAction("Index", new { pollid = pollid });
+                return View();
             }
             catch (Exception e)
             {

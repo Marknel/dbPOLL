@@ -25,10 +25,10 @@ namespace DBPOLLDemo.Controllers
 
             answerHistoryModel a = new answerHistoryModel();
             List<answerHistoryModel> list = a.displayAnswerHistory(id);
-
+            ViewData["name"] = name;
             if (list.Count > 0)
             {
-                ViewData["name"] = name;
+                
                 return View(list);
             }
             else 

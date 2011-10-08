@@ -49,20 +49,21 @@ namespace DBPOLLDemo.Models
 
             return query.ToList();
         }
-        /**
+
         public questionObjectModel getObject(int id)
         {
             var query = from o in dbpollContext.QUESTION_OBJECTS
                         where o.O_ID == id
                         select new questionObjectModel
                         {
-                            obid = o.OBJ_ID,
+                            obid = o.O_ID,
                             attribute = o.ATTRIBUTE
                         };
-
+            if (query.Count() == 0) {
+                return new questionObjectModel(-1);
+            }
             return query.First();
         }
-        **/
 
         public int getMaxID()
         {

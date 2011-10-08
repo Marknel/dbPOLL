@@ -7,7 +7,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Index <%= ViewData["error1"]%></h2>
-
+    <% if (Model.Count() == 0)
+       {%>
+        <p style ="color: Red;"><%=ViewData["message"]%></p>
+    <%} %>
+    <%else
+        { %>
     <table>
         <tr>
             <th></th>
@@ -19,7 +24,8 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model) { %>
+    <% foreach (var item in Model)
+       { %>
     
         <tr>
             <td>
@@ -27,33 +33,33 @@
             </td>
             <td>
             <%
-            string test;
-            switch (item.obid)       
-                  {         
-                     case 1:
-                          test = "Countdown Timer";
-                        break;                  
-                     case 2:            
-                        test = "Response Counter";
-                        break;           
-                     case 3:
-                        test = "Correct Answer Indicator";
-                        break;       
-                     default:            
-                        test ="";         
-                        break;      
-                   }
+        string test;
+        switch (item.obid)
+        {
+            case 1:
+                test = "Countdown Timer";
+                break;
+            case 2:
+                test = "Response Counter";
+                break;
+            case 3:
+                test = "Correct Answer Indicator";
+                break;
+            default:
+                test = "";
+                break;
+        }
            %>
                  <%=Html.Encode(test)%>
 
             </td>
             <td>
-                <%= Html.Encode(item.attribute) %>
+                <%= Html.Encode(item.attribute)%>
             </td>
         </tr>
     
     <% } %>
-
+    <%} %>
     </table>
 
     <p>

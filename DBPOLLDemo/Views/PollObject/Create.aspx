@@ -31,6 +31,7 @@
                 <%= Html.TextBox("attribute")%>
                 <%= Html.ValidationMessage("attribute", "*")%>
             </p>
+            <p><%= ViewData["created"] %></p>
             <p>
                 <input type="submit" value="Create" />
             </p>

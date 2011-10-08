@@ -376,12 +376,13 @@ namespace DBPOLLDemo.Controllers
             {
                 questionModel q = new questionModel();
                 q.updateQuestion(questionid, questiontype, question, chartstyle, num, pollid);
-                
+                ViewData["edited"] = "Updated Quesiton: " + question;
                 return View(new questionModel().getQuestion(questionid));
             }
             catch(Exception e)
             {
                 ViewData["quest"] = "ERROR: " + e.Message;
+                
                 return View();
             }
         }

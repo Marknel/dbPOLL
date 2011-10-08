@@ -84,6 +84,7 @@
  
                 <%= Html.Hidden("pollid", Model.pollid)%>
             </p>
+            <p><%=ViewData["edited"]%></p>
             <p>
                 <input type="submit" value="Save Changes" />
             </p>
