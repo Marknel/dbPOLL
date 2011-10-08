@@ -14,6 +14,15 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Logon", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_USER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+            if (Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             userModel user = new userModel();
             if (Session["sysadmin"].Equals("false"))
             {
@@ -32,6 +41,11 @@ namespace DBPOLLDemo.Controllers
         }
 
         public ActionResult Logon()
+        {
+            return View();
+        }
+
+        public ActionResult Invalid()
         {
             return View();
         }

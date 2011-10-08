@@ -31,7 +31,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult sendFeedback(string message)
+        public ActionResult sendFeedback(string message, int pollID, int questID)
         {
             // Basic check to see if the user is Authenticated.
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
@@ -39,9 +39,9 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
             int uid = (int)Session["uid"];
-            int pollID = (int)Session["pollID"];
+
             messageModel msg = new messageModel();
-            //msg.sendFeedback(message, uid, pollID);
+            msg.sendFeedback(message, uid, pollID, questID);
 
 
 
@@ -51,12 +51,65 @@ namespace DBPOLLDemo.Controllers
         }
 
 
-        public ActionResult replyConfirm()
+        public ActionResult sendPrivateMessage()
         {
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
+            buildSelectList();
+            return View();
+        }
+
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult sendPrivateMessage(string msg, int USER_LIST)
+        {
+            // Basic check to see if the user is Authenticated.
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                buildSelectList();
+                return RedirectToAction("Index", "Home");
+            }
+            int uid = (int)Session["uid"];
+
+            messageModel messageModel = new messageModel();
+            messageModel.sendMessage(msg, uid, USER_LIST);
+
+
+
+
+
+            return RedirectToAction("sendMessageSuccess");
+        }
+
+        private void buildSelectList()
+        {
+
+            userModel userModel = new userModel();
+            List<userModel> userList = userModel.getUserList();
+
+            List<SelectListItem> ListItems = new List<SelectListItem>();
+
+            foreach (userModel user in userList)
+            {
+                ListItems.Add(new SelectListItem
+                {
+                    Text = user.name,
+                    Value = user.UserID.ToString(),
+                });
+            }
+            ViewData["USER_LIST"] = ListItems;
+        }
+
+        public ActionResult sendMessageSuccess()
+        {
+            // Basic check to see if the user is Authenticated.
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
     }

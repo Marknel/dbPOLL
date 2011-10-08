@@ -90,9 +90,11 @@ first child of the left and right table columns */
 page width. Or, you can specify an exact pixel width. */
 .page
 {
-    width: 90%;
+   /* width: 90%;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;*/
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #header
@@ -240,7 +242,7 @@ table
 {
   border: solid 1px #E0F4A4;
   border-collapse: collapse;
-  table-layout:auto
+  /*table-layout:auto;*/
 }
 
 table td 
@@ -273,7 +275,10 @@ table th
 
 #menucontainer
 {
+	/*color:Red;
+    width: 900px;*/
     width: 1024px;
+    height: 10px;
     margin-top:40px;
 }
 

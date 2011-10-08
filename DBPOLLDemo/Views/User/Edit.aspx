@@ -37,8 +37,5 @@
     <%
         }%>
     <%= Html.ActionLink("Change Password", "ChangePassword", "User")%>
-    <hr />
-    <div>
-        <%=Html.ActionLink("Back to User List", "Index")%>
-    </div>
+    
 </asp:Content>

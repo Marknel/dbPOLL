@@ -9,15 +9,16 @@ namespace DBPOLLDemo.Controllers
 {
     public class SysAdminController : Controller
     {
-        //
-        // GET: /SysAdmin/
-
         public ActionResult Index()
         {
             // Basic check to see if the user is Authenticated.
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             
             return View(new userModel().displayPollAdminUsers());
@@ -26,9 +27,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult DeleteConfirm(int UserID)
         {
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             ViewData["delID"] = UserID;
             return View();
@@ -36,9 +41,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult DeleteSuccess(int UserID)
         {
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             userModel q = new userModel(UserID);
@@ -49,9 +58,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult SysAdmin()
         {
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             return View(new userModel().displayPollAdminUsers());
         }
@@ -63,9 +76,13 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Edit(int UserID)
         {
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             return View(new userModel().getUser(UserID));
         }
@@ -78,9 +95,13 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int UserID, string expiry, string name, string email)
         {
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
@@ -153,9 +174,13 @@ namespace DBPOLLDemo.Controllers
         public ActionResult RegisterUser()
         {
             // Basic check to see if the user is Authenticated.
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             return View();
         }
@@ -175,9 +200,13 @@ namespace DBPOLLDemo.Controllers
         public ActionResult RegisterUser(String name, String email, string expiry)
         {
             // Basic check to see if the user is Authenticated.
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             bool errorspresent = false;
             int SysAdmin_ID = (int)Session["uid"];
@@ -267,9 +296,13 @@ namespace DBPOLLDemo.Controllers
         public ActionResult RegisterUserSuccess()
         {
             // Basic check to see if the user is Authenticated.
-            if (!Session["sysadmin"].ToString().Equals("true") || Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             return View();

@@ -1,17 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	User Account Created
+	Send Message
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-        <h2>User Account Created</h2>
+        <h2>Send Message</h2>
     <p>
-        User account has been created successfully.
+        Message has been sent successfully.
     </p>
     <p>
-        <%=Html.ActionLink("Back to home", "Index")%>
+        <%=Html.ActionLink("Back to messages", "Index")%>
     </p>
 </asp:Content>
 
