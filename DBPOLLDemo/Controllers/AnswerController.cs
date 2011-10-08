@@ -452,6 +452,8 @@ namespace DBPOLLDemo.Controllers
                a.updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
 
                ViewData["questionid"] = questionid;
+
+               ViewData["edited"] = "Updated Answer: " + answer;
                return View(a);
             }
             catch(Exception e)

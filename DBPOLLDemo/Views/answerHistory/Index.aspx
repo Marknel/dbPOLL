@@ -7,7 +7,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Answer History for : <%= Html.Encode(ViewData["name"]) %></h2>
-
+    <% if (Model.Count() == 0)
+       {%>
+        <p style ="color: Red;"><%=ViewData["message"]%></p>
+    <%} %>
+    <%else
+        { %>
     <table>
         <tr>
             <th>Actions</th>
@@ -23,22 +28,23 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model) { %>
+    <% foreach (var item in Model)
+       { %>
     
         <tr>
             <td>
-                <%: Html.ActionLink("Revert", "Revert", new { answerid = item.aid, answer = item.answer, correct = item.correct, weight = item.weight, ansnum = item.ansnum }) %> | 
+                <%: Html.ActionLink("Revert", "Revert", new { answerid = item.aid, answer = item.answer, correct = item.correct, weight = item.weight, ansnum = item.ansnum })%> | 
                 <%: Html.ActionLink("Delete", "Delete", new { aid = item.aid, ahid = item.answerhid })%>
             </td>
             <td>
-                <%: item.ansnum %>
+                <%: item.ansnum%>
             </td>
             <td>
-                <%: item.answer %>
+                <%: item.answer%>
             </td>
 
             <td>
-                <%: item.weight %>
+                <%: item.weight%>
             </td>
 
             <td>
@@ -51,15 +57,15 @@
 
 
             <td>
-                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdat))%>
             </td>
             <td>
-                <%= Html.Encode(String.Format("{0:g}", item.modifiedat)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.modifiedat))%>
             </td>
         </tr>
     
     <% } %>
-
+<% } %>
     </table>
 
 </asp:Content>

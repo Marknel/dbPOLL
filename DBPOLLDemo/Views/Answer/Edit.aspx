@@ -47,6 +47,7 @@
              <%=Html.Hidden("questionid", ViewData["questionid"])%>
              <%=Html.Hidden("answerid", Model.answerid)%>
              <%=Html.Hidden("createdat", Model.createdat)%>
+             <p><%=ViewData["edited"]%></p>
             <p>
                 <input type="submit" value="Save" />
             </p>

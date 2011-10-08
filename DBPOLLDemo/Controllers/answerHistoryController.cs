@@ -22,8 +22,20 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["name"] = name;
-            return View(new answerHistoryModel().displayAnswerHistory(id));
+
+            answerHistoryModel a = new answerHistoryModel();
+            List<answerHistoryModel> list = a.displayAnswerHistory(id);
+
+            if (list.Count > 0)
+            {
+                ViewData["name"] = name;
+                return View(list);
+            }
+            else 
+            {
+                ViewData["message"] = "There are no previous versions of this answer.";
+                return View(list);
+            }
         }
 
 
