@@ -18,14 +18,16 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Answer/
 
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, String name)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            ViewData["name"] = name;
             ViewData["questionid"] = id;
+            
 
             return View(new answerModel().displayAnswers(id));
         }
@@ -33,14 +35,14 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /Answer/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, String name)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Index", "answerHistory", new { id });
+            return RedirectToAction("Index", "answerHistory", new { id, name });
         }
 
         public ActionResult Delete(int answerid, int questionid, String name)
@@ -96,6 +98,23 @@ namespace DBPOLLDemo.Controllers
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
+
+            
+            answerModel a = new answerModel();
+            questionModel q = new questionModel();
+            q = q.getQuestion(questionid);
+
+            int type = q.questiontype;
+
+            List<answerModel> list = a.displayAnswers(questionid);
+
+            if (list.Count >= 10 && (q.questiontype == 3 || q.questiontype == 4 || q.questiontype == 5 || q.questiontype == 6))
+            {
+                ViewData["mastererror"] = "This Multiple Choice Question is at the limit of 10 answers. Please remove a previous answer before creating another.";
+                ViewData["questionid"] = questionid;
+                return View();
+            } 
+            
 
             if (!int.TryParse(weight, out weightInt) || weight == null)
             {
@@ -411,15 +430,16 @@ namespace DBPOLLDemo.Controllers
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
             ci = new CultureInfo("en-AU");
-
             
             try
             {
                answerModel a = new answerModel();
                a = a.getAnswer(answerid);
 
-               new answerHistoryModel(answerid).createAnswerHistory(a.answer, a.correct, a.weight, a.ansnum);
+               /* Create a record of the old answer in the Answer History table */
+               new answerHistoryModel(answerid).createAnswerHistory(a.answerid, a.answer, a.correct, a.weight, a.ansnum);
 
+               /* Update the answer*/
                a.updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
 
                ViewData["questionid"] = questionid;

@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.PollAndSessionData>" %>
+<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.PollAndSessionData>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
@@ -35,26 +35,27 @@
     <% foreach (var item in Model.pollData) { %>    
         <tr>
             <td nowrap="nowrap">
-                <a id= "<%=item.pollID%>" href="/Poll/Index/" onclick="return check(<%=item.pollID%>);"> Delete</a> 
-                <a id = "<%= item.pollID + "yes" %>" href="/Poll/Delete?pollid=<%=item.pollID%>"></a>
-                <a id = "<%= item.pollID + "no" %>" href="/Poll/Index/"></a> |
+                <a id= "<%=item.pollid%>" href="/Poll/Index/" onclick="return check(<%=item.pollid%>);"> Delete</a> 
+                <a id = "<%= item.pollid + "yes" %>" href="/Poll/Delete?pollid=<%=item.pollid%>"></a>
+                <a id = "<%= item.pollid + "no" %>" href="/Poll/Index/"></a> |
                
-                <%= Html.ActionLink("Edit", "Edit", new {name=item.Name, id = item.pollID}) %> |
-                <%= Html.ActionLink("View Questions", "Details", new {id=item.pollID, name=item.Name})%> |
-                <%= Html.ActionLink("Create New Session", "CreateSession", new {pollID = item.pollID, pollName = item.pollname})%>
+                <%= Html.ActionLink("Edit", "Edit", new {name=item.pollname, id = item.pollid}) %> |
+                <%= Html.ActionLink("View Questions", "Details", new {id=item.pollid, name=item.pollname})%> |
+                <%= Html.ActionLink("View Default Objects", "../PollObject/Index", new { pollid = item.pollid, pollname = item.pollname })%> |
+                <%= Html.ActionLink("Create New Session", "CreateSession", new {pollID = item.pollname, pollName = item.pollname})%>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.Name) %>
+                <%= Html.Encode(item.pollname) %>
             </td>
               <td nowrap="nowrap">
-                <%= Html.Encode(String.Format("{0:g}", item.CreateDate)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdAt)) %>
             </td>
 
             <%  //Check if the user is authorized to assign poll masters
             if (Int32.Parse(Session["user_type"].ToString()) > 2)
           { %>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Assign Poll Masters", "AssignPoll", new {pollid=item.pollID, pollname = item.pollname}) %>
+                <%= Html.ActionLink("Assign Poll Masters", "AssignPoll", new {pollid=item.pollid, pollname = item.pollname}) %>
             </td>
             <%} %>
 
@@ -96,13 +97,13 @@
                 <a id = "<%= item.sessionid + "syes" %>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>"></a>
                 <a id = "<%= item.sessionid + "sno" %>" href="/Poll/Index/"></a> |
 
-                <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollID, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
+                <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollid, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.sessionName) %>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.Name) %>
+                <%= Html.Encode(item.pollname) %>
             </td>
         </tr>
     

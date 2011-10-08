@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.questionObjectModel>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.pollObjectModel>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
@@ -23,7 +23,7 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Delete", "Delete", new { objectid = item.obid, questionid = ViewData["questionid"] })%>
+                <%= Html.ActionLink("Delete", "Delete", new { objectid = item.obid, pollid = ViewData["pollid"] })%>
             </td>
             <td>
             <%
@@ -57,7 +57,7 @@
     </table>
 
     <p>
-        <%= Html.ActionLink("Create New Object", "Create", new { questionid = ViewData["questionid"] })%>
+        <%= Html.ActionLink("Create New Object", "Create", new { pollid = ViewData["pollid"] })%>
     </p>
 
 </asp:Content>

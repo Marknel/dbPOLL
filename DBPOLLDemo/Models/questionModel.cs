@@ -490,5 +490,15 @@ namespace DBPOLLDemo.Models
                 throw (e);
             }
         }
+
+        public void createDefaultObjects(int pollid, int questionid) {
+            pollObjectModel po = new pollObjectModel();
+            questionObjectModel qo = new questionObjectModel();
+            List<pollObjectModel> list = po.indexObjects(pollid);
+
+            foreach (pollObjectModel p in list) {
+                qo.createObject(p.obid, p.attribute, questionid);
+            }
+        }
     }
 }

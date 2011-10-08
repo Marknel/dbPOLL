@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.questionModel>>" %>
+<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.questionModel>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	questionDetails
@@ -23,7 +23,7 @@
              }
          }    
      </script>   
-    <h2>Questions for Poll: <%= Html.Encode(ViewData["name"]) %></h2>
+    <h2>Questions for Poll: <%=Html.Encode(ViewData["name"]) %></h2>
 
     <table>
         <tr>
@@ -49,25 +49,26 @@
         <tr>
             <td nowrap="nowrap">
      
-                <a id= "<%= item.QuestionID %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>" onclick="return check(<%=item.QuestionID%>);"> Delete</a> 
-                <a id = "<%= item.QuestionID + "yes" %>" href="/Question/Delete/<%= ViewData["id"]%>?questionid=<%=item.QuestionID%>&name=<%= ViewData["name"]%>"></a>
-                <a id = "<%= item.QuestionID + "no" %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>"></a> |
+                <a id= "<%= item.questionid %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>" onclick="return check(<%=item.questionid%>);"> Delete</a> 
+                <a id = "<%= item.questionid + "yes" %>" href="/Question/Delete/<%= ViewData["id"]%>?questionid=<%=item.questionid%>&name=<%= ViewData["name"]%>"></a>
+                <a id = "<%= item.questionid + "no" %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>"></a> |
 
-                <%= Html.ActionLink("Edit", "Edit", new { questionid = item.QuestionID })%> |
-                <%= Html.ActionLink("View Answers", "Details", new { id = item.QuestionID, name = item.Question })%> |
-                <%= Html.ActionLink("View objects", "../Object/Index", new { questionid = item.QuestionID})%> 
+                <%= Html.ActionLink("Edit", "Edit", new { questionid = item.questionid })%> |
+                <%= Html.ActionLink("View Answers", "Details", new { id = item.questionid, name = item.question })%> |
+                <%= Html.ActionLink("View Objects", "../Object/Index", new { questionid = item.questionid})%> |
+                <%= Html.ActionLink("Run Test", "Test", new { questionid = item.questionid, name = item.question, num_response = item.numberofresponses})%> 
                 
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.questnum) %>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.Question) %>
+                <%= Html.Encode(item.question) %>
             </td>
             <td nowrap="nowrap">
                 <%  
                 string test;
-                switch(item.QuestionType)       
+                switch(item.questiontype)       
                   {         
                      case 1:   
                         test = "Short Answer: Numeric Responses Only";
@@ -95,7 +96,7 @@
                  <%=Html.Encode(test)%>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(String.Format("{0:g}", item.QuestionCreated)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
             </td>
             
             

@@ -77,6 +77,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
+    <Compile Include="Controllers\PollObjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
@@ -95,13 +96,16 @@
     <Compile Include="Models\answerHistoryModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Models\pollObjectModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\DBPOLL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBPOLL.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\modelConstants.cs" />
-    <Compile Include="Models\objectModel.cs">
+    <Compile Include="Models\questionObjectModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\pollModel.cs">
@@ -182,9 +186,12 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Home\PollsIManage.ascx" />
     <Content Include="Views\Home\PollsImCreating.ascx" />
+    <Content Include="Views\PollObject\Create.aspx" />
+    <Content Include="Views\PollObject\Index.aspx" />
     <Content Include="Views\Poll\answerDetails.aspx" />
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
+    <Content Include="Views\Question\Test.aspx" />
     <Content Include="Views\Session\Create.aspx" />
     <Content Include="Views\Poll\Edit.aspx" />
     <Content Include="Views\Session\Edit.aspx" />

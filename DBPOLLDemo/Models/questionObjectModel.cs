@@ -16,70 +16,65 @@ using System.Globalization;
 
 namespace DBPOLLDemo.Models
 {
-    public class objectModel : System.Web.UI.Page
+    public class questionObjectModel : System.Web.UI.Page
     {
-        private OBJECT ob = new OBJECT();
+
+        private QUESTION_OBJECTS ob = new QUESTION_OBJECTS();
         public int obid;
-        public int obtype;
-        public String attribute;
         public int questionid;
+        public String attribute;
 
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
 
-        public objectModel(int obid, int obtype, String attribute, int questionid)
+        public questionObjectModel(int obid, String attribute)
         {
-            ob.OBJ_ID = this.obid = obid;
-            ob.OBJ_TYPE = this.obtype = obtype;
+            ob.O_ID = this.obid = obid;
             ob.ATTRIBUTE = this.attribute = attribute;
-            ob.QUESTION_ID = this.questionid = questionid;
         }
 
         /// <summary>
         /// Empty Constructor for object model. Used to call methods.
         /// </summary>
-        public objectModel(){}
+        public questionObjectModel(){}
 
-        public objectModel(int obid)
+        public questionObjectModel(int obid)
         {
-            ob.OBJ_ID = this.obid = obid;
+            ob.O_ID = this.obid = obid;
         }
 
-        public objectModel(int obtype, String attribute, int questionid)
+        public questionObjectModel(String attribute)
         {
-            ob.OBJ_TYPE = this.obtype = obtype;
             ob.ATTRIBUTE = this.attribute = attribute;
-            ob.QUESTION_ID = this.questionid = questionid;
         }
 
-        public List<objectModel> indexObjects(int questionid)
+        public List<questionObjectModel> indexObjects(int questionid)
         {
-            var query = from o in dbpollContext.OBJECTS
-                        where o.QUESTION_ID == questionid
-                        orderby o.OBJ_ID ascending
-                        select new objectModel
+            var query = from o in dbpollContext.QUESTION_OBJECTS
+                        where o.Q_ID == questionid 
+                        orderby o.O_ID ascending
+                        select new questionObjectModel
                         {
-                            obid = o.OBJ_ID,
-                            obtype = o.OBJ_TYPE,
+                            obid = o.O_ID,
                             attribute = o.ATTRIBUTE,
-                            questionid = o.QUESTION_ID
+                            questionid = o.Q_ID
                         };
 
             return query.ToList();
         }
-
-        public objectModel getObject(int id)
+        /**
+        public questionObjectModel getObject(int id)
         {
-            var query = from o in dbpollContext.OBJECTS
-                        where o.OBJ_ID== id
-                        select new objectModel
+            var query = from o in dbpollContext.QUESTION_OBJECTS
+                        where o.O_ID == id
+                        select new questionObjectModel
                         {
                             obid = o.OBJ_ID,
-                            obtype = o.OBJ_ID,
                             attribute = o.ATTRIBUTE
                         };
 
             return query.First();
         }
+        **/
 
         public int getMaxID()
         {
@@ -94,16 +89,15 @@ namespace DBPOLLDemo.Models
         {
             try
             {
+                QUESTION_OBJECTS qo = new QUESTION_OBJECTS();
 
-                OBJECT o = new OBJECT();
+                qo.O_ID = obtype;
+                qo.ATTRIBUTE = attribute;
+                qo.Q_ID = questionid;
 
-                o.OBJ_ID = getMaxID() + 1;
-                o.OBJ_TYPE = obtype;
-                o.ATTRIBUTE = attribute;
+                dbpollContext.AddToQUESTION_OBJECTS(qo);
 
-                dbpollContext.AddToOBJECTS(o);
-
-                dbpollContext.SaveChanges();
+                int status = dbpollContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -116,14 +110,13 @@ namespace DBPOLLDemo.Models
             try
             {
                 var oList =
-                from o in dbpollContext.OBJECTS
-                where o.OBJ_ID == obid
+                from o in dbpollContext.QUESTION_OBJECTS
+                where o.O_ID == obid
                 select o;
 
-                OBJECT ob = oList.First<OBJECT>();
+               QUESTION_OBJECTS ob = oList.First<QUESTION_OBJECTS>();
 
-                ob.OBJ_ID = getMaxID() + 1;
-                ob.OBJ_TYPE = obtype;
+                ob.O_ID = getMaxID() + 1;
                 ob.ATTRIBUTE = attribute;
 
                 dbpollContext.SaveChanges();
@@ -140,11 +133,11 @@ namespace DBPOLLDemo.Models
             try
             {
                 var oList =
-                from o in dbpollContext.OBJECTS
-                where o.OBJ_ID == obid
+                from o in dbpollContext.QUESTION_OBJECTS
+                where o.O_ID == obid
                 select o;
 
-                OBJECT ob = oList.First<OBJECT>();
+                QUESTION_OBJECTS ob = oList.First<QUESTION_OBJECTS>();
 
                 dbpollContext.DeleteObject(ob);
 

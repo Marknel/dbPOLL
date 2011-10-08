@@ -328,6 +328,15 @@ namespace DBPOLLDemo.Controllers
             return View(pollMasters);
         }
 
+        public ActionResult ViewObjects(int pollid, String pollname)
+        {
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "PollObject", new { pollid, pollname });
+        }
+
 
         public ActionResult UnassignPollUser(int pollid, String pollname, int userid)
         {

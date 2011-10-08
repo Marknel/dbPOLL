@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using DBPOLLDemo.Models;
 
+using System.Threading;
+using System.Globalization;
+
 namespace DBPOLLDemo.Controllers
 {
     public class answerHistoryController : Controller
@@ -13,100 +16,43 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /answerHistory/
 
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, String name)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            ViewData["name"] = name;
             return View(new answerHistoryModel().displayAnswerHistory(id));
         }
 
-        //
-        // GET: /answerHistory/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Revert(int answerid, String answer, int correct, String weight, string ansnum)
         {
-            return View();
+            if (Session["uid"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            answerModel a = new answerModel();
+            a = a.getAnswer(answerid);
+
+            /* Create a record of the old answer in the Answer History table */
+            new answerHistoryModel(answerid).createAnswerHistory(a.answerid, a.answer, a.correct, a.weight, a.ansnum);
+
+            /* Update the answer*/
+            a.updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
+            a = a.getAnswer(answerid);
+            return RedirectToAction("Index", "answerHistory", new { id = a.answerid, name = a.answer } );
         }
 
-        //
-        // GET: /answerHistory/Create
-
-        public ActionResult Create()
+        public ActionResult Delete(int aid, int ahid) 
         {
-            return View();
-        } 
+            new answerHistoryModel(ahid).deleteAnswerHistory();
 
-        //
-        // POST: /answerHistory/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /answerHistory/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /answerHistory/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /answerHistory/Delete/5
- 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /answerHistory/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            answerModel a = new answerModel();
+            a = a.getAnswer(aid);
+            return RedirectToAction("Index", "answerHistory", new { id = a.answerid, name = a.answer });
         }
     }
+  
 }

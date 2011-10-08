@@ -45,7 +45,7 @@
             <a id = "<%= item.answerid + "no" %>" href="/Answer/Index/<%=ViewData["questionid"]%>"></a> |
 
                 <%= Html.ActionLink("Edit", "Edit", new { answerid = item.answerid, questionid = ViewData["questionid"] })%> | 
-                <%= Html.ActionLink("View Answer History", "Details", new {id=item.answerid})%>
+                <%= Html.ActionLink("View Answer History", "Details", new {id = item.answerid, name = item.answer})%>
             </td>
             
             <td>

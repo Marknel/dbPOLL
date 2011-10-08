@@ -21,14 +21,14 @@ namespace DBPOLLDemo.Controllers
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, String name)
         {
             if (Session["uid"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-
+            ViewData["name"] = name;
             ViewData["id"] = id;
             return View(new questionModel().displayQuestions(id));
         }
@@ -137,8 +137,8 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            return RedirectToAction("Index", "Answer", new{id, name});
+            ViewData["name"] = name;
+            return RedirectToAction("Index", "Answer", new {id, name});
         }
 
 
@@ -240,7 +240,10 @@ namespace DBPOLLDemo.Controllers
                 try
                 {
                     //Build question  (Autoid, short answer type = 1, question text from form, date, pollid from poll it is created it
-                    new questionModel().createQuestion(shortanswertype, question, chartstyle, numInt, pollid);
+                    questionModel q = new questionModel();
+                    q.createQuestion(shortanswertype, question, chartstyle, numInt, pollid);
+                    q.createDefaultObjects(pollid, q.getMaxID());
+
                     ViewData["created"] = "Created Question: " + question;
                     return View();
                 }
@@ -269,7 +272,7 @@ namespace DBPOLLDemo.Controllers
         // POST: /Question/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateMultipleChoice(String num,int questiontype, String question, int chartstyle, int pollid)
+        public ActionResult CreateMultipleChoice(String num, int questiontype, String question, int chartstyle, int pollid)
         {
             if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
 
@@ -277,6 +280,7 @@ namespace DBPOLLDemo.Controllers
             ci = new CultureInfo("en-AU");
             int numInt = 0;
             bool errorspresent = false;
+
 
             if (question == "")
             {
@@ -301,7 +305,9 @@ namespace DBPOLLDemo.Controllers
                 try
                 {
 
-                    new questionModel().createQuestion(questiontype, question, chartstyle, numInt, pollid);
+                    questionModel q = new questionModel();
+                    q.createQuestion(questiontype, question, chartstyle, numInt, pollid);
+                    q.createDefaultObjects(pollid, q.getMaxID());
 
                     ViewData["id"] = pollid;
                     ViewData["created"] = "Created Question: " + question;
@@ -359,9 +365,41 @@ namespace DBPOLLDemo.Controllers
             }
             catch(Exception e)
             {
-                ViewData["quest"] = "ERROR: "+ e.Message;
+                ViewData["quest"] = "ERROR: " + e.Message;
                 return View();
             }
+        }
+
+        public ActionResult Test(int questionid, String name, int num_response)
+        {
+            if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
+
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            ci = new CultureInfo("en-AU");
+
+            answerModel a = new answerModel();
+
+            List<answerModel> list = a.displayAnswers(questionid);
+
+            if (list.Count < 1) {
+                   ViewData["message"] = "This question does not have any answers, create a question and try again.";
+                return View(list);
+            }
+
+            ViewData["name"] = name;
+            ViewData["qid"] = questionid;
+            ViewData["num"] = num_response;
+            return View(list);
+        }
+
+        public ActionResult Keypad(int qid)
+        {
+            return View();
+        }
+
+        public ActionResult Result(int aid)
+        {
+            return View();
         }
     }
 }
