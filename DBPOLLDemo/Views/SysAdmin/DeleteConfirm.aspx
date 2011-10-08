@@ -7,7 +7,7 @@
     <p>
         Are you sure you want to delete this user?
         <br />
-        <%= Html.ActionLink("Yes I want to delete the user", "Delete", new { UserID = ViewData["delID"] })%>
+        <%= Html.ActionLink("Yes I want to delete the user", "DeleteSuccess", new { UserID = ViewData["delID"] })%>
         <br />
         <br />
         <%= Html.ActionLink("No I do not want to delete the user", "Index")%>

@@ -1,5 +1,7 @@
 <%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Controllers.PollAndSessionData>" %>
 
+<%@ Import Namespace="DBPOLLDemo.Models" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
 </asp:Content>
@@ -31,6 +33,7 @@
             <th nowrap="nowrap">Actions</th>
              <th nowrap="nowrap">Poll Name</th>
              <th nowrap="nowrap">Creation Date</th>
+             <th></th>
         </tr>
     <% foreach (var item in Model.pollData) { %>    
         <tr>
@@ -52,7 +55,7 @@
             </td>
 
             <%  //Check if the user is authorized to assign poll masters
-            if (Int32.Parse(Session["user_type"].ToString()) > 2)
+                if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_CREATOR)
           { %>
             <td nowrap="nowrap">
                 <%= Html.ActionLink("Assign Poll Masters", "AssignPoll", new {pollid=item.pollid, pollname = item.pollname}) %>
@@ -69,19 +72,23 @@
     <p>
 
         <%  //Check if the user is authorized to create polls
-            if (Int32.Parse(Session["user_type"].ToString()) > 2)
+            if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_CREATOR)
           { %>
             <%= Html.ActionLink("Create New Poll", "Create", new { createdby = (int)Session["uid"] })%>
         <%} %>
     </p>
 
     <h2>Session Index </h2>
-
+    <p>
+    <%= Html.ActionLink("Run Keypad Polling Session", "RunDevices") %>
+    </p>
     <table>
         <tr>
             <th class="style2">Actions</th>
              <th class="style2">Session Name</th>
              <th class="style2">Poll Name</th>
+             <th class="style2">Participant List</th>
+             <th></th>
         </tr>
 
     <% foreach (var item in Model.sessionData)
@@ -91,7 +98,6 @@
     
         <tr>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Run", "Run", new {sessionid = item.sessionid}) %> |
 
                 <a id= "<%= item.sessionid + "s"%>" href="/Poll/Index/" onclick="return check(<%=item.sessionid + "s"%>);">Delete</a> 
                 <a id = "<%= item.sessionid + "syes" %>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>"></a>
@@ -105,11 +111,16 @@
             <td nowrap="nowrap">
                 <%= Html.Encode(item.pollname) %>
             </td>
+            <td nowrap="nowrap">
+            <%String text = "";
+            if(item.sessionParticipantList){text = "Edit Participant List";
+            }else{text = "Create Participant List"; } 
+            %>
+                <%= Html.ActionLink(text, "../Participant/Modify", new { sessionid = item.sessionid, sessionname = item.sessionName })%>
+            </td>
         </tr>
     
     <% } %>
 
     </table>
 </asp:Content>
-
-

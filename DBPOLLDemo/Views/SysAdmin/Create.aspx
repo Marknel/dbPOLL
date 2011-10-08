@@ -38,6 +38,6 @@
     </fieldset>
     <% } %>
     <p>
-        <%= Html.ActionLink("Back to Poll Administrator List", "Index")%>
+        <%= Html.ActionLink("Back to Poll Administrator List", "SysAdmin")%>
     </p>
 </asp:content>

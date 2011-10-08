@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
@@ -11,7 +11,8 @@
     <p> 
     <%-- <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />--%>
     <%= Html.ActionLink("Session History Report", "../Report/SessionHistoryReport") %> <br />
-    <%= Html.ActionLink("Statistical Report", "../Report/StatisticalReport")%> <br />
+    <%= Html.ActionLink("Statistical Report", "../Report/ViewAllPoll")%> <br />
+    <%= Html.ActionLink("Demographic Comparison Report", "../Report/DemographicComparison")%> <br />
     
     <%= Html.ActionLink("Session Participation Report", "../Report/SessionParticipation")%> <br />
     

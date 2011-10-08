@@ -1,37 +1,69 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
-
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	dbPOLL Login
+<%@ Import Namespace="DBPOLLDemo.Models" %>
+<asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
+    DBPOLL Home Page
 </asp:Content>
-
-
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<!-- 'Inherits="System.Web.Mvc.ViewPage<DBPOLLContext.USER>" -->
-    <h2>Login</h2>
-
-    <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
-
-    <% using (Html.BeginForm("Login","Index", FormMethod.Post)) {%>
-
-        <fieldset>
-            <legend>Please Login</legend>
-            <p>
-                <label for="USERNAME">Username:</label>
-                <%= Html.TextBox("USERNAME") %>
-                <%= Html.ValidationMessage("USERNAME", "*") %>
-            </p>
-            <p>
-                <label for="PASSWORD">Password:</label>
-                <%= Html.Password("PASSWORD") %>
-                <%= Html.ValidationMessage("PASSWORD", "*") %>
-            </p>
-            <p style ="color: Red;"><%= Html.Encode(ViewData["Message"]) %></p>
-            <p>
-                <input type="submit" value="Login" />
-            </p>
-        </fieldset>
-
-<% } %>
+<asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>
+        <%= Html.Encode(ViewData["Message"])%></h2>
+    <h3>
+        Account</h3>
+    <% if ((int)Session["user_type"] > 1)
+       { %>
+    <%= Html.ActionLink("Edit My Details", "Edit", "User")%>
+    <br />
+    <br />
+    <% } %>
+    <%= Html.ActionLink("Change Password", "ChangePassword", "User")%>
+    <br />
+    <br />
+    <%= Html.ActionLink("My Messages", "Index", "Message")%>
+    <br />
+    <br />
+    <hr />
+    <br />
+    <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = ((USER)ViewData["User"]).USER_ID })%>
+    <%-- <h2>
+        Poll Masters</h2>--%>
+    <% if ((int)Session["user_type"] > 1)
+       { %>
+    <br />
+    <br />
+    <%= Html.ActionLink("Create New User", "RegisterUser", "User")%>
+    <br />
+    <br />
+    <hr />
+    <h3>
+        Administer Poll</h3>
+    <%= Html.ActionLink("View Polls and Questions", "viewPolls", "Poll")%>
+    <%--<%= Html.ActionLink("View Polls and Questions", "../Poll/viewPolls")%>--%>
+    <br />
+    <br />
+    <%= Html.ActionLink("Edit Create and Delete Polls", "Index", "Poll")%>
+    <br />
+    <br />
+    <% if ((int)Session["user_type"] > 2)
+       { %>
+    <%= Html.ActionLink("Create Questions", "Create", "Question")%>
+    <br />
+    <br />
+    <% } %>
+    <%--   <h2>
+        Poll Administrators</h2>--%>
+    <% if ((int)Session["user_type"] > 3)
+       { %>
+    <%= Html.ActionLink("Define new Poll", "Create", "Poll")%>
+    <br />
+    <br />
+    <% } %>
+    <hr />
+    <br />
+    <%= Html.ActionLink("Reports", "Index", "Report")%>
+    <br />
+    <br />
+    <% } %>
+    <%--  <h2>
+        Poll Creators</h2>--%>
+    <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
 </asp:Content>
-

@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.questionModel>>" %>
+<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.questionModel>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	questionDetails
@@ -58,12 +58,12 @@
                 <%= Html.Encode(item.questnum) %>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.Question) %>
+                <%= Html.Encode(item.question) %>
             </td>
             <td nowrap="nowrap">
            <%  
                 string test;
-                switch(item.QuestionType)       
+                switch(item.questiontype)       
                   {         
                      case 1:   
                         test = "Short Answer: Numeric Responses Only";
@@ -92,7 +92,7 @@
            
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(String.Format("{0:g}", item.QuestionCreated)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
             </td>
             
             
@@ -103,7 +103,7 @@
     </table>
 <% } %>
    <p>
-        <%= Html.ActionLink("Back to Menu", "../Home/Home") %>
+        <%= Html.ActionLink("Back to Menu", "../Home/Index") %>
     </p>
     
 

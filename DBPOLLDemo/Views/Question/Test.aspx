@@ -24,7 +24,7 @@
                         <% i++; %>
                         <%= Html.ActionLink(item.ansnum.ToString(), "Edit", new { id = item.answerid })%>
 
-                        <%= Html.Encode(item.Answer)%>
+                        <%= Html.Encode(item.answer)%>
 
                         <br />
             <% } %>

@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using DBPOLLDemo.Models;
-using System.Threading;
 using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
@@ -48,7 +44,6 @@ namespace DBPOLLDemo.Controllers
             pollSession.pollData = new pollModel().displayPolls();
             pollSession.sessionData = new pollModel().displayPollSessions();
             
-
             return View(pollSession);
         }
 
@@ -59,15 +54,23 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+
             return View(new pollModel().displayPolls());
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult viewPolls(String date1, String date2)
         {
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             bool valid = true;
             DateTime startdate;
@@ -100,7 +103,6 @@ namespace DBPOLLDemo.Controllers
                     ViewData["date2"] = "Please Enter a correct Date";
                 }
                 valid = false;
-                
             }
 
             if (valid == false)
@@ -272,9 +274,11 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
-            Thread.CurrentThread.CurrentCulture = ci;
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             try
             {
@@ -295,11 +299,45 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult TestDevices()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
+
+            return View();
+        }
+
+        public ActionResult RunDevices()
+        {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             return View();
         }
 
         public ActionResult AssignPoll(int pollid, String pollname)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (User_Type.POLL_CREATOR <= (int)Session["user_type"])
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             Assign_PollMasters pollMasters = new Assign_PollMasters();
 
             pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);

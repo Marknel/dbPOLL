@@ -415,6 +415,7 @@ public class PollTestApplet extends javax.swing.JApplet {
         responseTable = new javax.swing.JTable();
         testingInfoLabel = new javax.swing.JLabel();
 
+        MasterPanel.setMaximumSize(new java.awt.Dimension(800, 600));
         MasterPanel.setPreferredSize(new java.awt.Dimension(800, 600));
 
         titleLabel.setFont(new java.awt.Font("Tahoma", 0, 28));

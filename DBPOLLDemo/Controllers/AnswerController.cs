@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using DBPOLLDemo.Models;
 
-using System.Threading;
 using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
@@ -96,8 +91,11 @@ namespace DBPOLLDemo.Controllers
             int ansnumInt = 0;
 
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             
             answerModel a = new answerModel();
@@ -182,8 +180,11 @@ namespace DBPOLLDemo.Controllers
             int ansnumInt = 0;
 
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             if (!int.TryParse(weight, out weightInt) || !int.TryParse(weight1, out weightInt) || weight == null || weight1 == null)
             {
@@ -253,8 +254,11 @@ namespace DBPOLLDemo.Controllers
             int ansnumInt = 0;
 
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             if (!int.TryParse(weight, out weightInt) || !int.TryParse(weight1, out weightInt) || 
                 !int.TryParse(weight2, out weightInt) || weight == null || weight1 == null || weight2 == null)
@@ -326,10 +330,13 @@ namespace DBPOLLDemo.Controllers
             bool errorspresent = false;
             int weightInt = 0;
             int ansnumInt = 0;
-            
 
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             if (!int.TryParse(weight, out weightInt) || !int.TryParse(weight1, out weightInt) ||
                 !int.TryParse(weight2, out weightInt) || !int.TryParse(weight3, out weightInt) ||
@@ -427,9 +434,11 @@ namespace DBPOLLDemo.Controllers
                 ViewData["ansnumerror"] = "Answer Number must contain a number!";
             }
 
-
-            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
-            ci = new CultureInfo("en-AU");
+            CultureInfo culture = new CultureInfo("en-AU");
+            culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
+            culture.DateTimeFormat.ShortTimePattern = string.Empty;
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
             
             try
             {

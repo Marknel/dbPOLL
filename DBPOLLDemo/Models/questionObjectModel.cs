@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Data;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-using DBPOLLDemo.Models;
-using System.Threading;
-using System.Globalization;
 
 namespace DBPOLLDemo.Models
 {
@@ -35,7 +23,7 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// Empty Constructor for object model. Used to call methods.
         /// </summary>
-        public questionObjectModel(){}
+        public questionObjectModel() { }
 
         public questionObjectModel(int obid)
         {
@@ -50,7 +38,7 @@ namespace DBPOLLDemo.Models
         public List<questionObjectModel> indexObjects(int questionid)
         {
             var query = from o in dbpollContext.QUESTION_OBJECTS
-                        where o.Q_ID == questionid 
+                        where o.Q_ID == questionid
                         orderby o.O_ID ascending
                         select new questionObjectModel
                         {
@@ -78,7 +66,7 @@ namespace DBPOLLDemo.Models
 
         public int getMaxID()
         {
-            int query = (from o 
+            int query = (from o
                          in dbpollContext.OBJECTS
                          select o.OBJ_ID).Max();
 
@@ -114,7 +102,7 @@ namespace DBPOLLDemo.Models
                 where o.O_ID == obid
                 select o;
 
-               QUESTION_OBJECTS ob = oList.First<QUESTION_OBJECTS>();
+                QUESTION_OBJECTS ob = oList.First<QUESTION_OBJECTS>();
 
                 ob.O_ID = getMaxID() + 1;
                 ob.ATTRIBUTE = attribute;
@@ -125,7 +113,7 @@ namespace DBPOLLDemo.Models
             {
                 throw (e);
             }
-            
+
         }
 
         public void deleteObject()

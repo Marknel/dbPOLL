@@ -46,7 +46,7 @@
             <% } %>
         </table>
         <p>
-            <%= Html.ActionLink("Create new Poll Administrator", "Create")%>
+            <%= Html.ActionLink("Create new Poll Administrator", "RegisterUser")%>
         </p>
         <p>
         <%= Html.ActionLink("System Utilisation Report", "../Report/SystemUtilisationReport")%> <br />

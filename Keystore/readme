@@ -1,0 +1,6 @@
+----- dbpoll keystore -----
+
+Keystore password = groupg
+
+key alias = dbpoll
+key password = groupg

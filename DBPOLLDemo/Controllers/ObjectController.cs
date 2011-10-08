@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using DBPOLLDemo.Models;
-using System.Threading;
-using System.Globalization;
 
 namespace DBPOLLDemo.Controllers
 {
@@ -45,6 +39,7 @@ namespace DBPOLLDemo.Controllers
             questionObjectModel ob = new questionObjectModel(objectid);
             ob.deleteObject();
 
+
             return RedirectToAction("Index", "Object", new { questionid = questionid});
         }
 
@@ -76,6 +71,7 @@ namespace DBPOLLDemo.Controllers
             {
 
                 new questionObjectModel().createObject(obtype, attribute, questionid);
+
 
                 return RedirectToAction("Index", new { questionid = questionid });
             }

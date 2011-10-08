@@ -18,9 +18,8 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_FK", "ANSWERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.ANSWER), "ANSWER_HISTORY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ANSWER_HISTORY), true)]
-[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273272", "ANSWERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.ANSWER), "RESPONSES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.RESPONS), true)]
-[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273256", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.QUESTION), "ANSWERS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ANSWER), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_FK", "ANSWERS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.ANSWER), "ANSWER_HISTORY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ANSWER_HISTORY), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273256", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.QUESTION), "ANSWERS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ANSWER), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001293084", "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.POLL), "ASSIGNEDPOLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ASSIGNEDPOLL), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001293085", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.USER), "ASSIGNEDPOLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.ASSIGNEDPOLL), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273235", "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.POLL), "MANAGEMENTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.MANAGEMENT), true)]
@@ -28,15 +27,21 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273281", "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.POLL), "MESSAGES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.MESSAGE), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273280", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "MESSAGES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.MESSAGE), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273282", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "MESSAGES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.MESSAGE), true)]
-[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273250", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.QUESTION), "OBJECTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.OBJECT), true)]
-[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273263", "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.SESSION), "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT), true)]
-[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273262", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "OBJECTS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.OBJECT), "POLL_OBJECTS_DFLT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.POLL_OBJECTS_DFLT), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "OBJECTS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.OBJECT), "QUESTION_OBJECTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.QUESTION_OBJECTS), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001307248", "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.PARTICIPANT), "PARTICIPANT_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT_DATA), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001307244", "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.SESSION), "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001307243", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "PARTICIPANTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001307252", "PARTICIPANT_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.PARTICIPANT_DATA), "PARTICIPANT_CUSTOM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.PARTICIPANT_CUSTOM), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.POLL), "POLL_OBJECTS_DFLT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.POLL_OBJECTS_DFLT), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273229", "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.POLL), "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.SESSION), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273244", "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.POLL), "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.QUESTION), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273223", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "POLLS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.POLL), true)]
-[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273273", "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.SESSION), "RESPONSES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.RESPONS), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.QUESTION), "QUESTION_OBJECTS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.QUESTION_OBJECTS), true)]
+[assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273273", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.QUESTION), "RESPONSES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.RESPONS), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273271", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DBPOLLDemo.Models.USER), "RESPONSES", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.RESPONS), true)]
 [assembly: EdmRelationshipAttribute("Models", "CSSE3004GG_SYS_C001273218", "USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DBPOLLDemo.Models.USER), "USERS1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.USER), true)]
+[assembly: EdmRelationshipAttribute("Models", "CLOSED_QUESTIONS", "QUESTIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.QUESTION), "SESSIONS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DBPOLLDemo.Models.SESSION))]
 
 #endregion
 
@@ -203,6 +208,38 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<PARTICIPANT_CUSTOM> PARTICIPANT_CUSTOM
+        {
+            get
+            {
+                if ((_PARTICIPANT_CUSTOM == null))
+                {
+                    _PARTICIPANT_CUSTOM = base.CreateObjectSet<PARTICIPANT_CUSTOM>("PARTICIPANT_CUSTOM");
+                }
+                return _PARTICIPANT_CUSTOM;
+            }
+        }
+        private ObjectSet<PARTICIPANT_CUSTOM> _PARTICIPANT_CUSTOM;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PARTICIPANT_DATA> PARTICIPANT_DATA
+        {
+            get
+            {
+                if ((_PARTICIPANT_DATA == null))
+                {
+                    _PARTICIPANT_DATA = base.CreateObjectSet<PARTICIPANT_DATA>("PARTICIPANT_DATA");
+                }
+                return _PARTICIPANT_DATA;
+            }
+        }
+        private ObjectSet<PARTICIPANT_DATA> _PARTICIPANT_DATA;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<POLL> POLLS
         {
             get
@@ -219,6 +256,22 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<POLL_OBJECTS_DFLT> POLL_OBJECTS_DFLT
+        {
+            get
+            {
+                if ((_POLL_OBJECTS_DFLT == null))
+                {
+                    _POLL_OBJECTS_DFLT = base.CreateObjectSet<POLL_OBJECTS_DFLT>("POLL_OBJECTS_DFLT");
+                }
+                return _POLL_OBJECTS_DFLT;
+            }
+        }
+        private ObjectSet<POLL_OBJECTS_DFLT> _POLL_OBJECTS_DFLT;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<QUESTION> QUESTIONS
         {
             get
@@ -231,6 +284,22 @@ namespace DBPOLLDemo.Models
             }
         }
         private ObjectSet<QUESTION> _QUESTIONS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<QUESTION_OBJECTS> QUESTION_OBJECTS
+        {
+            get
+            {
+                if ((_QUESTION_OBJECTS == null))
+                {
+                    _QUESTION_OBJECTS = base.CreateObjectSet<QUESTION_OBJECTS>("QUESTION_OBJECTS");
+                }
+                return _QUESTION_OBJECTS;
+            }
+        }
+        private ObjectSet<QUESTION_OBJECTS> _QUESTION_OBJECTS;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -356,6 +425,22 @@ namespace DBPOLLDemo.Models
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the PARTICIPANT_CUSTOM EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPARTICIPANT_CUSTOM(PARTICIPANT_CUSTOM pARTICIPANT_CUSTOM)
+        {
+            base.AddObject("PARTICIPANT_CUSTOM", pARTICIPANT_CUSTOM);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PARTICIPANT_DATA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPARTICIPANT_DATA(PARTICIPANT_DATA pARTICIPANT_DATA)
+        {
+            base.AddObject("PARTICIPANT_DATA", pARTICIPANT_DATA);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the POLLS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToPOLLS(POLL pOLL)
@@ -364,11 +449,27 @@ namespace DBPOLLDemo.Models
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the POLL_OBJECTS_DFLT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPOLL_OBJECTS_DFLT(POLL_OBJECTS_DFLT pOLL_OBJECTS_DFLT)
+        {
+            base.AddObject("POLL_OBJECTS_DFLT", pOLL_OBJECTS_DFLT);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the QUESTIONS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToQUESTIONS(QUESTION qUESTION)
         {
             base.AddObject("QUESTIONS", qUESTION);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the QUESTION_OBJECTS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToQUESTION_OBJECTS(QUESTION_OBJECTS qUESTION_OBJECTS)
+        {
+            base.AddObject("QUESTION_OBJECTS", qUESTION_OBJECTS);
         }
     
         /// <summary>
@@ -427,14 +528,12 @@ namespace DBPOLLDemo.Models
         /// <param name="aNSWER_ID">Initial value of the ANSWER_ID property.</param>
         /// <param name="aNSWER1">Initial value of the ANSWER1 property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
-        /// <param name="qUESTION_ID">Initial value of the QUESTION_ID property.</param>
-        public static ANSWER CreateANSWER(global::System.Int32 aNSWER_ID, global::System.String aNSWER1, global::System.DateTime cREATED_AT, global::System.Int32 qUESTION_ID)
+        public static ANSWER CreateANSWER(global::System.Int32 aNSWER_ID, global::System.String aNSWER1, global::System.DateTime cREATED_AT)
         {
             ANSWER aNSWER = new ANSWER();
             aNSWER.ANSWER_ID = aNSWER_ID;
             aNSWER.ANSWER1 = aNSWER1;
             aNSWER.CREATED_AT = cREATED_AT;
-            aNSWER.QUESTION_ID = qUESTION_ID;
             return aNSWER;
         }
 
@@ -615,9 +714,9 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 QUESTION_ID
+        public Nullable<global::System.Int32> QUESTION_ID
         {
             get
             {
@@ -632,8 +731,8 @@ namespace DBPOLLDemo.Models
                 OnQUESTION_IDChanged();
             }
         }
-        private global::System.Int32 _QUESTION_ID;
-        partial void OnQUESTION_IDChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _QUESTION_ID;
+        partial void OnQUESTION_IDChanging(Nullable<global::System.Int32> value);
         partial void OnQUESTION_IDChanged();
 
         #endregion
@@ -658,28 +757,6 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ANSWER_HISTORY>("Models.CSSE3004GG_FK", "ANSWER_HISTORY", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273272", "RESPONSES")]
-        public EntityCollection<RESPONS> RESPONSES
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273272", "RESPONSES");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273272", "RESPONSES", value);
                 }
             }
         }
@@ -741,14 +818,12 @@ namespace DBPOLLDemo.Models
         /// <param name="aNSWERH_ID">Initial value of the ANSWERH_ID property.</param>
         /// <param name="aNSWER">Initial value of the ANSWER property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
-        /// <param name="aNSWER_ID">Initial value of the ANSWER_ID property.</param>
-        public static ANSWER_HISTORY CreateANSWER_HISTORY(global::System.Int32 aNSWERH_ID, global::System.String aNSWER, global::System.DateTime cREATED_AT, global::System.Int32 aNSWER_ID)
+        public static ANSWER_HISTORY CreateANSWER_HISTORY(global::System.Int32 aNSWERH_ID, global::System.String aNSWER, global::System.DateTime cREATED_AT)
         {
             ANSWER_HISTORY aNSWER_HISTORY = new ANSWER_HISTORY();
             aNSWER_HISTORY.ANSWERH_ID = aNSWERH_ID;
             aNSWER_HISTORY.ANSWER = aNSWER;
             aNSWER_HISTORY.CREATED_AT = cREATED_AT;
-            aNSWER_HISTORY.ANSWER_ID = aNSWER_ID;
             return aNSWER_HISTORY;
         }
 
@@ -929,9 +1004,9 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 ANSWER_ID
+        public Nullable<global::System.Int32> ANSWER_ID
         {
             get
             {
@@ -946,8 +1021,8 @@ namespace DBPOLLDemo.Models
                 OnANSWER_IDChanged();
             }
         }
-        private global::System.Int32 _ANSWER_ID;
-        partial void OnANSWER_IDChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _ANSWER_ID;
+        partial void OnANSWER_IDChanging(Nullable<global::System.Int32> value);
         partial void OnANSWER_IDChanged();
 
         #endregion
@@ -1404,17 +1479,17 @@ namespace DBPOLLDemo.Models
         /// Create a new MESSAGE object.
         /// </summary>
         /// <param name="mESSAGE_ID">Initial value of the MESSAGE_ID property.</param>
-        /// <param name="cREATED_BY">Initial value of the CREATED_BY property.</param>
+        /// <param name="sender_UID">Initial value of the Sender_UID property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
-        /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
+        /// <param name="reciever_UID">Initial value of the Reciever_UID property.</param>
         /// <param name="pOLL_ID">Initial value of the POLL_ID property.</param>
-        public static MESSAGE CreateMESSAGE(global::System.Int32 mESSAGE_ID, global::System.Int32 cREATED_BY, global::System.DateTime cREATED_AT, global::System.Int32 uSER_ID, global::System.Int32 pOLL_ID)
+        public static MESSAGE CreateMESSAGE(global::System.Int32 mESSAGE_ID, global::System.Int32 sender_UID, global::System.DateTime cREATED_AT, global::System.Int32 reciever_UID, global::System.Int32 pOLL_ID)
         {
             MESSAGE mESSAGE = new MESSAGE();
             mESSAGE.MESSAGE_ID = mESSAGE_ID;
-            mESSAGE.CREATED_BY = cREATED_BY;
+            mESSAGE.Sender_UID = sender_UID;
             mESSAGE.CREATED_AT = cREATED_AT;
-            mESSAGE.USER_ID = uSER_ID;
+            mESSAGE.Reciever_UID = reciever_UID;
             mESSAGE.POLL_ID = pOLL_ID;
             return mESSAGE;
         }
@@ -1478,24 +1553,24 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 CREATED_BY
+        public global::System.Int32 Sender_UID
         {
             get
             {
-                return _CREATED_BY;
+                return _Sender_UID;
             }
             set
             {
-                OnCREATED_BYChanging(value);
-                ReportPropertyChanging("CREATED_BY");
-                _CREATED_BY = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATED_BY");
-                OnCREATED_BYChanged();
+                OnSender_UIDChanging(value);
+                ReportPropertyChanging("Sender_UID");
+                _Sender_UID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Sender_UID");
+                OnSender_UIDChanged();
             }
         }
-        private global::System.Int32 _CREATED_BY;
-        partial void OnCREATED_BYChanging(global::System.Int32 value);
-        partial void OnCREATED_BYChanged();
+        private global::System.Int32 _Sender_UID;
+        partial void OnSender_UIDChanging(global::System.Int32 value);
+        partial void OnSender_UIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1550,24 +1625,24 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 USER_ID
+        public global::System.Int32 Reciever_UID
         {
             get
             {
-                return _USER_ID;
+                return _Reciever_UID;
             }
             set
             {
-                OnUSER_IDChanging(value);
-                ReportPropertyChanging("USER_ID");
-                _USER_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("USER_ID");
-                OnUSER_IDChanged();
+                OnReciever_UIDChanging(value);
+                ReportPropertyChanging("Reciever_UID");
+                _Reciever_UID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Reciever_UID");
+                OnReciever_UIDChanged();
             }
         }
-        private global::System.Int32 _USER_ID;
-        partial void OnUSER_IDChanging(global::System.Int32 value);
-        partial void OnUSER_IDChanged();
+        private global::System.Int32 _Reciever_UID;
+        partial void OnReciever_UIDChanging(global::System.Int32 value);
+        partial void OnReciever_UIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1592,6 +1667,54 @@ namespace DBPOLLDemo.Models
         private global::System.Int32 _POLL_ID;
         partial void OnPOLL_IDChanging(global::System.Int32 value);
         partial void OnPOLL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> QUESTION_ID
+        {
+            get
+            {
+                return _QUESTION_ID;
+            }
+            set
+            {
+                OnQUESTION_IDChanging(value);
+                ReportPropertyChanging("QUESTION_ID");
+                _QUESTION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QUESTION_ID");
+                OnQUESTION_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _QUESTION_ID;
+        partial void OnQUESTION_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnQUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SESSION_ID
+        {
+            get
+            {
+                return _SESSION_ID;
+            }
+            set
+            {
+                OnSESSION_IDChanging(value);
+                ReportPropertyChanging("SESSION_ID");
+                _SESSION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SESSION_ID");
+                OnSESSION_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SESSION_ID;
+        partial void OnSESSION_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnSESSION_IDChanged();
 
         #endregion
     
@@ -1728,16 +1851,10 @@ namespace DBPOLLDemo.Models
         /// Create a new OBJECT object.
         /// </summary>
         /// <param name="oBJ_ID">Initial value of the OBJ_ID property.</param>
-        /// <param name="oBJ_TYPE">Initial value of the OBJ_TYPE property.</param>
-        /// <param name="aTTRIBUTE">Initial value of the ATTRIBUTE property.</param>
-        /// <param name="qUESTION_ID">Initial value of the QUESTION_ID property.</param>
-        public static OBJECT CreateOBJECT(global::System.Int32 oBJ_ID, global::System.Int32 oBJ_TYPE, global::System.String aTTRIBUTE, global::System.Int32 qUESTION_ID)
+        public static OBJECT CreateOBJECT(global::System.Int32 oBJ_ID)
         {
             OBJECT oBJECT = new OBJECT();
             oBJECT.OBJ_ID = oBJ_ID;
-            oBJECT.OBJ_TYPE = oBJ_TYPE;
-            oBJECT.ATTRIBUTE = aTTRIBUTE;
-            oBJECT.QUESTION_ID = qUESTION_ID;
             return oBJECT;
         }
 
@@ -1774,74 +1891,26 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 OBJ_TYPE
+        public global::System.String OBJ_NAME
         {
             get
             {
-                return _OBJ_TYPE;
+                return _OBJ_NAME;
             }
             set
             {
-                OnOBJ_TYPEChanging(value);
-                ReportPropertyChanging("OBJ_TYPE");
-                _OBJ_TYPE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("OBJ_TYPE");
-                OnOBJ_TYPEChanged();
+                OnOBJ_NAMEChanging(value);
+                ReportPropertyChanging("OBJ_NAME");
+                _OBJ_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OBJ_NAME");
+                OnOBJ_NAMEChanged();
             }
         }
-        private global::System.Int32 _OBJ_TYPE;
-        partial void OnOBJ_TYPEChanging(global::System.Int32 value);
-        partial void OnOBJ_TYPEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String ATTRIBUTE
-        {
-            get
-            {
-                return _ATTRIBUTE;
-            }
-            set
-            {
-                OnATTRIBUTEChanging(value);
-                ReportPropertyChanging("ATTRIBUTE");
-                _ATTRIBUTE = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("ATTRIBUTE");
-                OnATTRIBUTEChanged();
-            }
-        }
-        private global::System.String _ATTRIBUTE;
-        partial void OnATTRIBUTEChanging(global::System.String value);
-        partial void OnATTRIBUTEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 QUESTION_ID
-        {
-            get
-            {
-                return _QUESTION_ID;
-            }
-            set
-            {
-                OnQUESTION_IDChanging(value);
-                ReportPropertyChanging("QUESTION_ID");
-                _QUESTION_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("QUESTION_ID");
-                OnQUESTION_IDChanged();
-            }
-        }
-        private global::System.Int32 _QUESTION_ID;
-        partial void OnQUESTION_IDChanging(global::System.Int32 value);
-        partial void OnQUESTION_IDChanged();
+        private global::System.String _OBJ_NAME;
+        partial void OnOBJ_NAMEChanging(global::System.String value);
+        partial void OnOBJ_NAMEChanged();
 
         #endregion
     
@@ -1853,34 +1922,40 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273250", "QUESTIONS")]
-        public QUESTION QUESTION
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "POLL_OBJECTS_DFLT")]
+        public EntityCollection<POLL_OBJECTS_DFLT> POLL_OBJECTS_DFLT
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273250", "QUESTIONS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273250", "QUESTIONS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<QUESTION> QUESTIONReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273250", "QUESTIONS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<POLL_OBJECTS_DFLT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "POLL_OBJECTS_DFLT");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273250", "QUESTIONS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<POLL_OBJECTS_DFLT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "POLL_OBJECTS_DFLT", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "QUESTION_OBJECTS")]
+        public EntityCollection<QUESTION_OBJECTS> QUESTION_OBJECTS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<QUESTION_OBJECTS>("Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "QUESTION_OBJECTS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<QUESTION_OBJECTS>("Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "QUESTION_OBJECTS", value);
                 }
             }
         }
@@ -1901,12 +1976,14 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// Create a new PARTICIPANT object.
         /// </summary>
+        /// <param name="pARTICIPANT_ID">Initial value of the PARTICIPANT_ID property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
         /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
         /// <param name="sESSION_ID">Initial value of the SESSION_ID property.</param>
-        public static PARTICIPANT CreatePARTICIPANT(global::System.DateTime cREATED_AT, global::System.Int32 uSER_ID, global::System.Int32 sESSION_ID)
+        public static PARTICIPANT CreatePARTICIPANT(global::System.Int32 pARTICIPANT_ID, global::System.DateTime cREATED_AT, global::System.Int32 uSER_ID, global::System.Int32 sESSION_ID)
         {
             PARTICIPANT pARTICIPANT = new PARTICIPANT();
+            pARTICIPANT.PARTICIPANT_ID = pARTICIPANT_ID;
             pARTICIPANT.CREATED_AT = cREATED_AT;
             pARTICIPANT.USER_ID = uSER_ID;
             pARTICIPANT.SESSION_ID = sESSION_ID;
@@ -1915,6 +1992,33 @@ namespace DBPOLLDemo.Models
 
         #endregion
         #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PARTICIPANT_ID
+        {
+            get
+            {
+                return _PARTICIPANT_ID;
+            }
+            set
+            {
+                if (_PARTICIPANT_ID != value)
+                {
+                    OnPARTICIPANT_IDChanging(value);
+                    ReportPropertyChanging("PARTICIPANT_ID");
+                    _PARTICIPANT_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PARTICIPANT_ID");
+                    OnPARTICIPANT_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PARTICIPANT_ID;
+        partial void OnPARTICIPANT_IDChanging(global::System.Int32 value);
+        partial void OnPARTICIPANT_IDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1967,7 +2071,7 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 USER_ID
         {
@@ -1977,14 +2081,11 @@ namespace DBPOLLDemo.Models
             }
             set
             {
-                if (_USER_ID != value)
-                {
-                    OnUSER_IDChanging(value);
-                    ReportPropertyChanging("USER_ID");
-                    _USER_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("USER_ID");
-                    OnUSER_IDChanged();
-                }
+                OnUSER_IDChanging(value);
+                ReportPropertyChanging("USER_ID");
+                _USER_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("USER_ID");
+                OnUSER_IDChanged();
             }
         }
         private global::System.Int32 _USER_ID;
@@ -1994,7 +2095,7 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 SESSION_ID
         {
@@ -2004,26 +2105,373 @@ namespace DBPOLLDemo.Models
             }
             set
             {
-                if (_SESSION_ID != value)
-                {
-                    OnSESSION_IDChanging(value);
-                    ReportPropertyChanging("SESSION_ID");
-                    _SESSION_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("SESSION_ID");
-                    OnSESSION_IDChanged();
-                }
+                OnSESSION_IDChanging(value);
+                ReportPropertyChanging("SESSION_ID");
+                _SESSION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SESSION_ID");
+                OnSESSION_IDChanged();
             }
         }
         private global::System.Int32 _SESSION_ID;
         partial void OnSESSION_IDChanging(global::System.Int32 value);
         partial void OnSESSION_IDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307248", "PARTICIPANT_DATA")]
+        public EntityCollection<PARTICIPANT_DATA> PARTICIPANT_DATA
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PARTICIPANT_DATA>("Models.CSSE3004GG_SYS_C001307248", "PARTICIPANT_DATA");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PARTICIPANT_DATA>("Models.CSSE3004GG_SYS_C001307248", "PARTICIPANT_DATA", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307244", "SESSIONS")]
+        public SESSION SESSION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001307244", "SESSIONS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001307244", "SESSIONS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SESSION> SESSIONReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001307244", "SESSIONS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001307244", "SESSIONS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307243", "USERS")]
+        public USER USER
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001307243", "USERS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001307243", "USERS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<USER> USERReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001307243", "USERS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<USER>("Models.CSSE3004GG_SYS_C001307243", "USERS", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Models", Name="PARTICIPANT_CUSTOM")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PARTICIPANT_CUSTOM : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PARTICIPANT_CUSTOM object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
+        public static PARTICIPANT_CUSTOM CreatePARTICIPANT_CUSTOM(global::System.Int32 id, global::System.Int32 dATA_ID)
+        {
+            PARTICIPANT_CUSTOM pARTICIPANT_CUSTOM = new PARTICIPANT_CUSTOM();
+            pARTICIPANT_CUSTOM.ID = id;
+            pARTICIPANT_CUSTOM.DATA_ID = dATA_ID;
+            return pARTICIPANT_CUSTOM;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DATA_ID
+        {
+            get
+            {
+                return _DATA_ID;
+            }
+            set
+            {
+                OnDATA_IDChanging(value);
+                ReportPropertyChanging("DATA_ID");
+                _DATA_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATA_ID");
+                OnDATA_IDChanged();
+            }
+        }
+        private global::System.Int32 _DATA_ID;
+        partial void OnDATA_IDChanging(global::System.Int32 value);
+        partial void OnDATA_IDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> USER_WEIGHT
+        public global::System.String CUSTOM_FIELD
+        {
+            get
+            {
+                return _CUSTOM_FIELD;
+            }
+            set
+            {
+                OnCUSTOM_FIELDChanging(value);
+                ReportPropertyChanging("CUSTOM_FIELD");
+                _CUSTOM_FIELD = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CUSTOM_FIELD");
+                OnCUSTOM_FIELDChanged();
+            }
+        }
+        private global::System.String _CUSTOM_FIELD;
+        partial void OnCUSTOM_FIELDChanging(global::System.String value);
+        partial void OnCUSTOM_FIELDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CUSTOM_VALUE
+        {
+            get
+            {
+                return _CUSTOM_VALUE;
+            }
+            set
+            {
+                OnCUSTOM_VALUEChanging(value);
+                ReportPropertyChanging("CUSTOM_VALUE");
+                _CUSTOM_VALUE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CUSTOM_VALUE");
+                OnCUSTOM_VALUEChanged();
+            }
+        }
+        private global::System.String _CUSTOM_VALUE;
+        partial void OnCUSTOM_VALUEChanging(global::System.String value);
+        partial void OnCUSTOM_VALUEChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307252", "PARTICIPANT_DATA")]
+        public PARTICIPANT_DATA PARTICIPANT_DATA
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT_DATA>("Models.CSSE3004GG_SYS_C001307252", "PARTICIPANT_DATA").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT_DATA>("Models.CSSE3004GG_SYS_C001307252", "PARTICIPANT_DATA").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PARTICIPANT_DATA> PARTICIPANT_DATAReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT_DATA>("Models.CSSE3004GG_SYS_C001307252", "PARTICIPANT_DATA");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PARTICIPANT_DATA>("Models.CSSE3004GG_SYS_C001307252", "PARTICIPANT_DATA", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Models", Name="PARTICIPANT_DATA")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PARTICIPANT_DATA : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PARTICIPANT_DATA object.
+        /// </summary>
+        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
+        public static PARTICIPANT_DATA CreatePARTICIPANT_DATA(global::System.Int32 dATA_ID)
+        {
+            PARTICIPANT_DATA pARTICIPANT_DATA = new PARTICIPANT_DATA();
+            pARTICIPANT_DATA.DATA_ID = dATA_ID;
+            return pARTICIPANT_DATA;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DATA_ID
+        {
+            get
+            {
+                return _DATA_ID;
+            }
+            set
+            {
+                if (_DATA_ID != value)
+                {
+                    OnDATA_IDChanging(value);
+                    ReportPropertyChanging("DATA_ID");
+                    _DATA_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DATA_ID");
+                    OnDATA_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DATA_ID;
+        partial void OnDATA_IDChanging(global::System.Int32 value);
+        partial void OnDATA_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PARTICIPANT_ID
+        {
+            get
+            {
+                return _PARTICIPANT_ID;
+            }
+            set
+            {
+                OnPARTICIPANT_IDChanging(value);
+                ReportPropertyChanging("PARTICIPANT_ID");
+                _PARTICIPANT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PARTICIPANT_ID");
+                OnPARTICIPANT_IDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PARTICIPANT_ID;
+        partial void OnPARTICIPANT_IDChanging(Nullable<global::System.Int32> value);
+        partial void OnPARTICIPANT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> USER_WEIGHT
         {
             get
             {
@@ -2038,9 +2486,321 @@ namespace DBPOLLDemo.Models
                 OnUSER_WEIGHTChanged();
             }
         }
-        private Nullable<global::System.Decimal> _USER_WEIGHT;
-        partial void OnUSER_WEIGHTChanging(Nullable<global::System.Decimal> value);
+        private Nullable<global::System.Int32> _USER_WEIGHT;
+        partial void OnUSER_WEIGHTChanging(Nullable<global::System.Int32> value);
         partial void OnUSER_WEIGHTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TITLE
+        {
+            get
+            {
+                return _TITLE;
+            }
+            set
+            {
+                OnTITLEChanging(value);
+                ReportPropertyChanging("TITLE");
+                _TITLE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TITLE");
+                OnTITLEChanged();
+            }
+        }
+        private global::System.String _TITLE;
+        partial void OnTITLEChanging(global::System.String value);
+        partial void OnTITLEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NAME
+        {
+            get
+            {
+                return _NAME;
+            }
+            set
+            {
+                OnNAMEChanging(value);
+                ReportPropertyChanging("NAME");
+                _NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NAME");
+                OnNAMEChanged();
+            }
+        }
+        private global::System.String _NAME;
+        partial void OnNAMEChanging(global::System.String value);
+        partial void OnNAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ADDRESS
+        {
+            get
+            {
+                return _ADDRESS;
+            }
+            set
+            {
+                OnADDRESSChanging(value);
+                ReportPropertyChanging("ADDRESS");
+                _ADDRESS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ADDRESS");
+                OnADDRESSChanged();
+            }
+        }
+        private global::System.String _ADDRESS;
+        partial void OnADDRESSChanging(global::System.String value);
+        partial void OnADDRESSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CITY
+        {
+            get
+            {
+                return _CITY;
+            }
+            set
+            {
+                OnCITYChanging(value);
+                ReportPropertyChanging("CITY");
+                _CITY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CITY");
+                OnCITYChanged();
+            }
+        }
+        private global::System.String _CITY;
+        partial void OnCITYChanging(global::System.String value);
+        partial void OnCITYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> POSTCODE
+        {
+            get
+            {
+                return _POSTCODE;
+            }
+            set
+            {
+                OnPOSTCODEChanging(value);
+                ReportPropertyChanging("POSTCODE");
+                _POSTCODE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("POSTCODE");
+                OnPOSTCODEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _POSTCODE;
+        partial void OnPOSTCODEChanging(Nullable<global::System.Int32> value);
+        partial void OnPOSTCODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STATE
+        {
+            get
+            {
+                return _STATE;
+            }
+            set
+            {
+                OnSTATEChanging(value);
+                ReportPropertyChanging("STATE");
+                _STATE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STATE");
+                OnSTATEChanged();
+            }
+        }
+        private global::System.String _STATE;
+        partial void OnSTATEChanging(global::System.String value);
+        partial void OnSTATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COUNTRY
+        {
+            get
+            {
+                return _COUNTRY;
+            }
+            set
+            {
+                OnCOUNTRYChanging(value);
+                ReportPropertyChanging("COUNTRY");
+                _COUNTRY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COUNTRY");
+                OnCOUNTRYChanged();
+            }
+        }
+        private global::System.String _COUNTRY;
+        partial void OnCOUNTRYChanging(global::System.String value);
+        partial void OnCOUNTRYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DEPARTMENT
+        {
+            get
+            {
+                return _DEPARTMENT;
+            }
+            set
+            {
+                OnDEPARTMENTChanging(value);
+                ReportPropertyChanging("DEPARTMENT");
+                _DEPARTMENT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DEPARTMENT");
+                OnDEPARTMENTChanged();
+            }
+        }
+        private global::System.String _DEPARTMENT;
+        partial void OnDEPARTMENTChanging(global::System.String value);
+        partial void OnDEPARTMENTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COMPANY
+        {
+            get
+            {
+                return _COMPANY;
+            }
+            set
+            {
+                OnCOMPANYChanging(value);
+                ReportPropertyChanging("COMPANY");
+                _COMPANY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COMPANY");
+                OnCOMPANYChanged();
+            }
+        }
+        private global::System.String _COMPANY;
+        partial void OnCOMPANYChanging(global::System.String value);
+        partial void OnCOMPANYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EMAIL
+        {
+            get
+            {
+                return _EMAIL;
+            }
+            set
+            {
+                OnEMAILChanging(value);
+                ReportPropertyChanging("EMAIL");
+                _EMAIL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EMAIL");
+                OnEMAILChanged();
+            }
+        }
+        private global::System.String _EMAIL;
+        partial void OnEMAILChanging(global::System.String value);
+        partial void OnEMAILChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> FAX
+        {
+            get
+            {
+                return _FAX;
+            }
+            set
+            {
+                OnFAXChanging(value);
+                ReportPropertyChanging("FAX");
+                _FAX = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FAX");
+                OnFAXChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _FAX;
+        partial void OnFAXChanging(Nullable<global::System.Int32> value);
+        partial void OnFAXChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PHONE
+        {
+            get
+            {
+                return _PHONE;
+            }
+            set
+            {
+                OnPHONEChanging(value);
+                ReportPropertyChanging("PHONE");
+                _PHONE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PHONE");
+                OnPHONEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PHONE;
+        partial void OnPHONEChanging(Nullable<global::System.Int32> value);
+        partial void OnPHONEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> MODIFIED_AT
+        {
+            get
+            {
+                return _MODIFIED_AT;
+            }
+            set
+            {
+                OnMODIFIED_ATChanging(value);
+                ReportPropertyChanging("MODIFIED_AT");
+                _MODIFIED_AT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MODIFIED_AT");
+                OnMODIFIED_ATChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _MODIFIED_AT;
+        partial void OnMODIFIED_ATChanging(Nullable<global::System.DateTime> value);
+        partial void OnMODIFIED_ATChanged();
 
         #endregion
     
@@ -2052,16 +2812,16 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273263", "SESSIONS")]
-        public SESSION SESSION
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307248", "PARTICIPANTS")]
+        public PARTICIPANT PARTICIPANT
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273263", "SESSIONS").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307248", "PARTICIPANTS").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273263", "SESSIONS").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307248", "PARTICIPANTS").Value = value;
             }
         }
         /// <summary>
@@ -2069,17 +2829,17 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<SESSION> SESSIONReference
+        public EntityReference<PARTICIPANT> PARTICIPANTReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273263", "SESSIONS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307248", "PARTICIPANTS");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273263", "SESSIONS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307248", "PARTICIPANTS", value);
                 }
             }
         }
@@ -2090,34 +2850,18 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273262", "USERS")]
-        public USER USER
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307252", "PARTICIPANT_CUSTOM")]
+        public EntityCollection<PARTICIPANT_CUSTOM> PARTICIPANT_CUSTOM
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001273262", "USERS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001273262", "USERS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<USER> USERReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<USER>("Models.CSSE3004GG_SYS_C001273262", "USERS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PARTICIPANT_CUSTOM>("Models.CSSE3004GG_SYS_C001307252", "PARTICIPANT_CUSTOM");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<USER>("Models.CSSE3004GG_SYS_C001273262", "USERS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PARTICIPANT_CUSTOM>("Models.CSSE3004GG_SYS_C001307252", "PARTICIPANT_CUSTOM", value);
                 }
             }
         }
@@ -2424,6 +3168,28 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLL_OBJECTS_DFLT")]
+        public EntityCollection<POLL_OBJECTS_DFLT> POLL_OBJECTS_DFLT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<POLL_OBJECTS_DFLT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLL_OBJECTS_DFLT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<POLL_OBJECTS_DFLT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLL_OBJECTS_DFLT", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273229", "SESSIONS")]
         public EntityCollection<SESSION> SESSIONS
         {
@@ -2506,6 +3272,193 @@ namespace DBPOLLDemo.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Models", Name="POLL_OBJECTS_DFLT")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class POLL_OBJECTS_DFLT : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new POLL_OBJECTS_DFLT object.
+        /// </summary>
+        /// <param name="o_ID">Initial value of the O_ID property.</param>
+        /// <param name="p_ID">Initial value of the P_ID property.</param>
+        public static POLL_OBJECTS_DFLT CreatePOLL_OBJECTS_DFLT(global::System.Int32 o_ID, global::System.Int32 p_ID)
+        {
+            POLL_OBJECTS_DFLT pOLL_OBJECTS_DFLT = new POLL_OBJECTS_DFLT();
+            pOLL_OBJECTS_DFLT.O_ID = o_ID;
+            pOLL_OBJECTS_DFLT.P_ID = p_ID;
+            return pOLL_OBJECTS_DFLT;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 O_ID
+        {
+            get
+            {
+                return _O_ID;
+            }
+            set
+            {
+                if (_O_ID != value)
+                {
+                    OnO_IDChanging(value);
+                    ReportPropertyChanging("O_ID");
+                    _O_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("O_ID");
+                    OnO_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _O_ID;
+        partial void OnO_IDChanging(global::System.Int32 value);
+        partial void OnO_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 P_ID
+        {
+            get
+            {
+                return _P_ID;
+            }
+            set
+            {
+                if (_P_ID != value)
+                {
+                    OnP_IDChanging(value);
+                    ReportPropertyChanging("P_ID");
+                    _P_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("P_ID");
+                    OnP_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _P_ID;
+        partial void OnP_IDChanging(global::System.Int32 value);
+        partial void OnP_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ATTRIBUTE
+        {
+            get
+            {
+                return _ATTRIBUTE;
+            }
+            set
+            {
+                OnATTRIBUTEChanging(value);
+                ReportPropertyChanging("ATTRIBUTE");
+                _ATTRIBUTE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ATTRIBUTE");
+                OnATTRIBUTEChanged();
+            }
+        }
+        private global::System.String _ATTRIBUTE;
+        partial void OnATTRIBUTEChanging(global::System.String value);
+        partial void OnATTRIBUTEChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "OBJECTS")]
+        public OBJECT OBJECT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<OBJECT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "OBJECTS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<OBJECT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "OBJECTS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<OBJECT> OBJECTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<OBJECT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "OBJECTS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<OBJECT>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_OBJECTS_FK1", "OBJECTS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLLS")]
+        public POLL POLL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<POLL>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLLS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<POLL>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLLS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<POLL> POLLReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<POLL>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLLS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<POLL>("Models.CSSE3004GG_POLL_OBJECTS_DFLT_POLLS_FK1", "POLLS", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="Models", Name="QUESTION")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -2521,7 +3474,9 @@ namespace DBPOLLDemo.Models
         /// <param name="qUESTION1">Initial value of the QUESTION1 property.</param>
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
         /// <param name="pOLL_ID">Initial value of the POLL_ID property.</param>
-        public static QUESTION CreateQUESTION(global::System.Int32 qUESTION_ID, global::System.Int32 qUESTION_TYPE, global::System.String qUESTION1, global::System.DateTime cREATED_AT, global::System.Int32 pOLL_ID)
+        /// <param name="qUESTION_OPEN">Initial value of the QUESTION_OPEN property.</param>
+        /// <param name="nEXT_QUESTION">Initial value of the NEXT_QUESTION property.</param>
+        public static QUESTION CreateQUESTION(global::System.Int32 qUESTION_ID, global::System.Int32 qUESTION_TYPE, global::System.String qUESTION1, global::System.DateTime cREATED_AT, global::System.Int32 pOLL_ID, global::System.Int32 qUESTION_OPEN, global::System.Int32 nEXT_QUESTION)
         {
             QUESTION qUESTION = new QUESTION();
             qUESTION.QUESTION_ID = qUESTION_ID;
@@ -2529,6 +3484,8 @@ namespace DBPOLLDemo.Models
             qUESTION.QUESTION1 = qUESTION1;
             qUESTION.CREATED_AT = cREATED_AT;
             qUESTION.POLL_ID = pOLL_ID;
+            qUESTION.QUESTION_OPEN = qUESTION_OPEN;
+            qUESTION.NEXT_QUESTION = nEXT_QUESTION;
             return qUESTION;
         }
 
@@ -2777,6 +3734,54 @@ namespace DBPOLLDemo.Models
         private global::System.Int32 _POLL_ID;
         partial void OnPOLL_IDChanging(global::System.Int32 value);
         partial void OnPOLL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 QUESTION_OPEN
+        {
+            get
+            {
+                return _QUESTION_OPEN;
+            }
+            set
+            {
+                OnQUESTION_OPENChanging(value);
+                ReportPropertyChanging("QUESTION_OPEN");
+                _QUESTION_OPEN = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QUESTION_OPEN");
+                OnQUESTION_OPENChanged();
+            }
+        }
+        private global::System.Int32 _QUESTION_OPEN;
+        partial void OnQUESTION_OPENChanging(global::System.Int32 value);
+        partial void OnQUESTION_OPENChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NEXT_QUESTION
+        {
+            get
+            {
+                return _NEXT_QUESTION;
+            }
+            set
+            {
+                OnNEXT_QUESTIONChanging(value);
+                ReportPropertyChanging("NEXT_QUESTION");
+                _NEXT_QUESTION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NEXT_QUESTION");
+                OnNEXT_QUESTIONChanged();
+            }
+        }
+        private global::System.Int32 _NEXT_QUESTION;
+        partial void OnNEXT_QUESTIONChanging(global::System.Int32 value);
+        partial void OnNEXT_QUESTIONChanged();
 
         #endregion
     
@@ -2800,28 +3805,6 @@ namespace DBPOLLDemo.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ANSWER>("Models.CSSE3004GG_SYS_C001273256", "ANSWERS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273250", "OBJECTS")]
-        public EntityCollection<OBJECT> OBJECTS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<OBJECT>("Models.CSSE3004GG_SYS_C001273250", "OBJECTS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<OBJECT>("Models.CSSE3004GG_SYS_C001273250", "OBJECTS", value);
                 }
             }
         }
@@ -2863,6 +3846,259 @@ namespace DBPOLLDemo.Models
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTION_OBJECTS")]
+        public EntityCollection<QUESTION_OBJECTS> QUESTION_OBJECTS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<QUESTION_OBJECTS>("Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTION_OBJECTS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<QUESTION_OBJECTS>("Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTION_OBJECTS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273273", "RESPONSES")]
+        public EntityCollection<RESPONS> RESPONSES
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273273", "RESPONSES");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273273", "RESPONSES", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CLOSED_QUESTIONS", "SESSIONS")]
+        public EntityCollection<SESSION> SESSIONS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SESSION>("Models.CLOSED_QUESTIONS", "SESSIONS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SESSION>("Models.CLOSED_QUESTIONS", "SESSIONS", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Models", Name="QUESTION_OBJECTS")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class QUESTION_OBJECTS : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new QUESTION_OBJECTS object.
+        /// </summary>
+        /// <param name="o_ID">Initial value of the O_ID property.</param>
+        /// <param name="q_ID">Initial value of the Q_ID property.</param>
+        public static QUESTION_OBJECTS CreateQUESTION_OBJECTS(global::System.Int32 o_ID, global::System.Int32 q_ID)
+        {
+            QUESTION_OBJECTS qUESTION_OBJECTS = new QUESTION_OBJECTS();
+            qUESTION_OBJECTS.O_ID = o_ID;
+            qUESTION_OBJECTS.Q_ID = q_ID;
+            return qUESTION_OBJECTS;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 O_ID
+        {
+            get
+            {
+                return _O_ID;
+            }
+            set
+            {
+                if (_O_ID != value)
+                {
+                    OnO_IDChanging(value);
+                    ReportPropertyChanging("O_ID");
+                    _O_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("O_ID");
+                    OnO_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _O_ID;
+        partial void OnO_IDChanging(global::System.Int32 value);
+        partial void OnO_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Q_ID
+        {
+            get
+            {
+                return _Q_ID;
+            }
+            set
+            {
+                if (_Q_ID != value)
+                {
+                    OnQ_IDChanging(value);
+                    ReportPropertyChanging("Q_ID");
+                    _Q_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Q_ID");
+                    OnQ_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Q_ID;
+        partial void OnQ_IDChanging(global::System.Int32 value);
+        partial void OnQ_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ATTRIBUTE
+        {
+            get
+            {
+                return _ATTRIBUTE;
+            }
+            set
+            {
+                OnATTRIBUTEChanging(value);
+                ReportPropertyChanging("ATTRIBUTE");
+                _ATTRIBUTE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ATTRIBUTE");
+                OnATTRIBUTEChanged();
+            }
+        }
+        private global::System.String _ATTRIBUTE;
+        partial void OnATTRIBUTEChanging(global::System.String value);
+        partial void OnATTRIBUTEChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "OBJECTS")]
+        public OBJECT OBJECT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<OBJECT>("Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "OBJECTS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<OBJECT>("Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "OBJECTS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<OBJECT> OBJECTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<OBJECT>("Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "OBJECTS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<OBJECT>("Models.CSSE3004GG_QUESTION_OBJECTS_OBJECTS_FK1", "OBJECTS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTIONS")]
+        public QUESTION QUESTION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTIONS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTIONS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<QUESTION> QUESTIONReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTIONS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<QUESTION>("Models.CSSE3004GG_QUESTION_OBJECTS_QUESTION_FK1", "QUESTIONS", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -2885,8 +4121,7 @@ namespace DBPOLLDemo.Models
         /// <param name="cREATED_AT">Initial value of the CREATED_AT property.</param>
         /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
         /// <param name="sESSION_ID">Initial value of the SESSION_ID property.</param>
-        /// <param name="aNSWER_ID">Initial value of the ANSWER_ID property.</param>
-        public static RESPONS CreateRESPONS(global::System.Int32 rESPONSE_ID, global::System.String fEEDBACK, global::System.DateTime cREATED_AT, global::System.Int32 uSER_ID, global::System.Int32 sESSION_ID, global::System.Int32 aNSWER_ID)
+        public static RESPONS CreateRESPONS(global::System.Int32 rESPONSE_ID, global::System.String fEEDBACK, global::System.DateTime cREATED_AT, global::System.Int32 uSER_ID, global::System.Int32 sESSION_ID)
         {
             RESPONS rESPONS = new RESPONS();
             rESPONS.RESPONSE_ID = rESPONSE_ID;
@@ -2894,7 +4129,6 @@ namespace DBPOLLDemo.Models
             rESPONS.CREATED_AT = cREATED_AT;
             rESPONS.USER_ID = uSER_ID;
             rESPONS.SESSION_ID = sESSION_ID;
-            rESPONS.ANSWER_ID = aNSWER_ID;
             return rESPONS;
         }
 
@@ -3051,9 +4285,9 @@ namespace DBPOLLDemo.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 ANSWER_ID
+        public Nullable<global::System.Int32> ANSWER_ID
         {
             get
             {
@@ -3068,9 +4302,57 @@ namespace DBPOLLDemo.Models
                 OnANSWER_IDChanged();
             }
         }
-        private global::System.Int32 _ANSWER_ID;
-        partial void OnANSWER_IDChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _ANSWER_ID;
+        partial void OnANSWER_IDChanging(Nullable<global::System.Int32> value);
         partial void OnANSWER_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> QUESTION_ID
+        {
+            get
+            {
+                return _QUESTION_ID;
+            }
+            set
+            {
+                OnQUESTION_IDChanging(value);
+                ReportPropertyChanging("QUESTION_ID");
+                _QUESTION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QUESTION_ID");
+                OnQUESTION_IDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _QUESTION_ID;
+        partial void OnQUESTION_IDChanging(Nullable<global::System.Int32> value);
+        partial void OnQUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PREFERENCE_NUMBER
+        {
+            get
+            {
+                return _PREFERENCE_NUMBER;
+            }
+            set
+            {
+                OnPREFERENCE_NUMBERChanging(value);
+                ReportPropertyChanging("PREFERENCE_NUMBER");
+                _PREFERENCE_NUMBER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PREFERENCE_NUMBER");
+                OnPREFERENCE_NUMBERChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PREFERENCE_NUMBER;
+        partial void OnPREFERENCE_NUMBERChanging(Nullable<global::System.Int32> value);
+        partial void OnPREFERENCE_NUMBERChanged();
 
         #endregion
     
@@ -3082,16 +4364,16 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273272", "ANSWERS")]
-        public ANSWER ANSWER
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273273", "QUESTIONS")]
+        public QUESTION QUESTION
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273272", "ANSWERS").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273273", "QUESTIONS").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273272", "ANSWERS").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273273", "QUESTIONS").Value = value;
             }
         }
         /// <summary>
@@ -3099,55 +4381,17 @@ namespace DBPOLLDemo.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<ANSWER> ANSWERReference
+        public EntityReference<QUESTION> QUESTIONReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273272", "ANSWERS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273273", "QUESTIONS");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ANSWER>("Models.CSSE3004GG_SYS_C001273272", "ANSWERS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273273", "SESSIONS")]
-        public SESSION SESSION
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273273", "SESSIONS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273273", "SESSIONS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<SESSION> SESSIONReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273273", "SESSIONS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SESSION>("Models.CSSE3004GG_SYS_C001273273", "SESSIONS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<QUESTION>("Models.CSSE3004GG_SYS_C001273273", "QUESTIONS", value);
                 }
             }
         }
@@ -3210,13 +4454,15 @@ namespace DBPOLLDemo.Models
         /// <param name="lONGITUDE">Initial value of the LONGITUDE property.</param>
         /// <param name="lATITUDE">Initial value of the LATITUDE property.</param>
         /// <param name="sESSION_TIME">Initial value of the SESSION_TIME property.</param>
-        public static SESSION CreateSESSION(global::System.Int32 sESSION_ID, global::System.Decimal lONGITUDE, global::System.Decimal lATITUDE, global::System.DateTime sESSION_TIME)
+        /// <param name="nEXT_QUESTION">Initial value of the NEXT_QUESTION property.</param>
+        public static SESSION CreateSESSION(global::System.Int32 sESSION_ID, global::System.Decimal lONGITUDE, global::System.Decimal lATITUDE, global::System.DateTime sESSION_TIME, global::System.Int32 nEXT_QUESTION)
         {
             SESSION sESSION = new SESSION();
             sESSION.SESSION_ID = sESSION_ID;
             sESSION.LONGITUDE = lONGITUDE;
             sESSION.LATITUDE = lATITUDE;
             sESSION.SESSION_TIME = sESSION_TIME;
+            sESSION.NEXT_QUESTION = nEXT_QUESTION;
             return sESSION;
         }
 
@@ -3369,6 +4615,30 @@ namespace DBPOLLDemo.Models
         private global::System.DateTime _SESSION_TIME;
         partial void OnSESSION_TIMEChanging(global::System.DateTime value);
         partial void OnSESSION_TIMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NEXT_QUESTION
+        {
+            get
+            {
+                return _NEXT_QUESTION;
+            }
+            set
+            {
+                OnNEXT_QUESTIONChanging(value);
+                ReportPropertyChanging("NEXT_QUESTION");
+                _NEXT_QUESTION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NEXT_QUESTION");
+                OnNEXT_QUESTIONChanged();
+            }
+        }
+        private global::System.Int32 _NEXT_QUESTION;
+        partial void OnNEXT_QUESTIONChanging(global::System.Int32 value);
+        partial void OnNEXT_QUESTIONChanged();
 
         #endregion
     
@@ -3380,18 +4650,18 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273263", "PARTICIPANTS")]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307244", "PARTICIPANTS")]
         public EntityCollection<PARTICIPANT> PARTICIPANTS
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001273263", "PARTICIPANTS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307244", "PARTICIPANTS");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001273263", "PARTICIPANTS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307244", "PARTICIPANTS", value);
                 }
             }
         }
@@ -3440,18 +4710,18 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273273", "RESPONSES")]
-        public EntityCollection<RESPONS> RESPONSES
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CLOSED_QUESTIONS", "QUESTIONS")]
+        public EntityCollection<QUESTION> QUESTIONS
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273273", "RESPONSES");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<QUESTION>("Models.CLOSED_QUESTIONS", "QUESTIONS");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RESPONS>("Models.CSSE3004GG_SYS_C001273273", "RESPONSES", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<QUESTION>("Models.CLOSED_QUESTIONS", "QUESTIONS", value);
                 }
             }
         }
@@ -4055,18 +5325,18 @@ namespace DBPOLLDemo.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001273262", "PARTICIPANTS")]
+        [EdmRelationshipNavigationPropertyAttribute("Models", "CSSE3004GG_SYS_C001307243", "PARTICIPANTS")]
         public EntityCollection<PARTICIPANT> PARTICIPANTS
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001273262", "PARTICIPANTS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307243", "PARTICIPANTS");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001273262", "PARTICIPANTS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PARTICIPANT>("Models.CSSE3004GG_SYS_C001307243", "PARTICIPANTS", value);
                 }
             }
         }

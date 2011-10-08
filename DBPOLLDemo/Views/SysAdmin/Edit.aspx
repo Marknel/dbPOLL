@@ -6,7 +6,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Edit User:</h2>
-    <%= Html.ValidationSummary("Edit was unsuccessful. Please correct the errors and try again.") %>
     <% using (Html.BeginForm())
        {%>
     <fieldset>
@@ -19,29 +18,31 @@
             <label for="Name">
                 Name:</label>
             <%= Html.TextBox("Name", Model.Name)%>
-            <%= Html.ValidationMessage("Name", "*")%>
+            <p style="color: Red;">
+                <%=ViewData["nameError"]%></p>
         </p>
         <p>
-            <label for="Expires_At">
-                Expiry date (dd/mm/yyyy):</label>
-            <%= Html.TextBox("Expires_At", Model.Expires_At)%>
-            <%= Html.ValidationMessage("Expiry date", "*")%>
+            <label for="expiry">
+                Number of months for account to be valid (if left blank will be 12 months):</label>
+            <%= Html.TextBox("expiry", Model.monthsLeft)%>
+            <p style="color: Red;">
+                <%=ViewData["expiryError"]%></p>
         </p>
         <p>
-            <label for="username">
+            <label for="email">
                 Email:</label>
-            <%= Html.TextBox("username", Model.username)%>
-            <%= Html.ValidationMessage("Username", "*")%>
+            <%= Html.TextBox("email", Model.username)%>
+            <p style="color: Red;">
+                <%=ViewData["emailError"]%></p>
         </p>
-        <p>
-            <%=ViewData["edited"]%></p>
+        <p style="color: Red;">
+                <%=ViewData["edited"]%></p>
         <p>
             <input type="submit" value="Save Changes" />
         </p>
-
     </fieldset>
-    <%--</form>--%>
-    <% } %>
+    <%
+        }%>
     <div>
         <%=Html.ActionLink("Back to User List", "Index")%>
     </div>

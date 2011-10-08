@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DBPOLLDemo.Controllers
@@ -61,12 +58,7 @@ namespace DBPOLLDemo.Controllers
             if (MyReferrer.Contains("Report")) url = "ReportIndex";          
             
             return View(url);
-            
-                        
-                       
- 
         }
-
 
         //  
         // Link to different Help View

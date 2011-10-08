@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.pollModel>>" %>
+<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.pollModel>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
@@ -55,13 +55,13 @@
     
         <tr>
             <td>
-                <%= Html.ActionLink("Search Questions", "../Question/viewQuestions", new {pollid=item.pollID})%>
+                <%= Html.ActionLink("Search Questions", "../Question/viewQuestions", new {pollid=item.pollid})%>
             </td>
             <td>
-                <%= Html.Encode(item.Name) %>
+                <%= Html.Encode(item.pollname) %>
             </td>
               <td>
-                <%= Html.Encode(String.Format("{0:g}", item.CreateDate)) %>
+                <%= Html.Encode(String.Format("{0:g}", item.createdAt))%>
             </td>
         </tr>
     
@@ -70,7 +70,7 @@
     </table>
 <% } %>
     <p>
-        <%= Html.ActionLink("Back to Menu", "../Home/Home") %>
+        <%= Html.ActionLink("Back to Menu", "../Home/Index") %>
     </p>
     
 

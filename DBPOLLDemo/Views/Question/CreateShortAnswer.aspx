@@ -1,73 +1,8 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.QUESTION>" %>
+<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.QUESTION>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Create Short Answer Question
 </asp:Content>
-
-<asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
-
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style type="text/css">
-  html { height: 100% }
-  body { height: 100%; margin: 0; padding: 0 }
-  #map_canvas { height: 100% }
-</style>
-<script type="text/javascript"
-    src="http://maps.googleapis.com/maps/api/js?sensor=false">
-</script>
-<script type="text/javascript">
-    var map;
-    var marker = null;
-    function initialize() {
-        // Map is centered over brisbane
-        var latlng = new google.maps.LatLng(-27.28, 153.01);
-        var myOptions = {
-            zoom: 9,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-
-         google.maps.event.addListener(map, 'click', function(event) {
-         placeMarker(event.latLng);
-     });
-     
-    }
-
-    //As there is only one point. Returns the Geogrpahical Location of the poll to a createpoll / update poll 
-    function getPollLocation() {
-        if (marker = null) {
-            return null;
-        } else {return marker.getPosition;}
-    }
-
-    // Adds a marker or moves the markers position on the map.
-    function placeMarker(location) {
-        if (marker == null) {
-            marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-        } else {
-            marker.setPosition(location);
-        }
-    }
-
-</script>
-
-<script runat="server" language="C#">
-void Page_Load(object source, EventArgs e){
-        HtmlGenericControl body = (HtmlGenericControl)
-        Page.Master.FindControl("MyBody");
-        body.Attributes.Add("onload", "initialize()");
-
-    } 
-    </script>
-
-
-</asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
 
@@ -79,8 +14,6 @@ void Page_Load(object source, EventArgs e){
         %>
     <%using (Html.BeginForm())
       {%>
-
-      
     
         <fieldset>
             <legend>New Question</legend>
@@ -119,11 +52,6 @@ void Page_Load(object source, EventArgs e){
                 <%= Html.ValidationMessage("chartstyle", "*")%>
             </p>
             <p><%=ViewData["created"]%></p>
-
-    <!--start of map modifications
-                This is here just for testing. move to Poll views once created.   -->
-    <div id="map_canvas" style="width:360px; height:200px"></div>
-     <!--end of map modifications  -->
 
             <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
             <p>

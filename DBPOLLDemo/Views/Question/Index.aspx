@@ -48,7 +48,7 @@
     
         <tr>
             <td nowrap="nowrap">
-     
+
                 <a id= "<%= item.questionid %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>" onclick="return check(<%=item.questionid%>);"> Delete</a> 
                 <a id = "<%= item.questionid + "yes" %>" href="/Question/Delete/<%= ViewData["id"]%>?questionid=<%=item.questionid%>&name=<%= ViewData["name"]%>"></a>
                 <a id = "<%= item.questionid + "no" %>" href="/Question/Index/<%= ViewData["id"]%>?name=<%= ViewData["name"]%>"></a> |
