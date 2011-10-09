@@ -24,7 +24,7 @@
                 <%=ViewData["msgError"]%></p>
         </p>
         <p>
-            <%= Html.DropDownList("USER_LIST")%>
+            <%= Html.DropDownList("USER_LIST")%> (Select 'PUBLIC MESSAGE' to send a public message)
         </p>
         <p style="color: Red;">
             <%=ViewData["edited"]%></p>

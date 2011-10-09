@@ -9,14 +9,14 @@
 <h2>
     My Messages</h2>
      <p>
-        <%= Html.ActionLink("Send a private message", "sendPrivateMessage")%>
+        <%= Html.ActionLink("Send a message to another user", "sendPrivateMessage")%>
     </p>
      <br /><br />
      <% Html.RenderPartial("recievedMessages"); %>
      <br /><br />
-     <% Html.RenderPartial("sentMessages"); %>
-     <br /><br />
      <% Html.RenderPartial("publicMessages"); %>
+     <br /><br />
+     <% Html.RenderPartial("sentMessages"); %>     
      <br /><br />
      
 

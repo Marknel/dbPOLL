@@ -613,7 +613,7 @@ namespace DBPOLLDemo.Models
                         orderby u.NAME ascending
                         select new userModel
                         {
-                            name = u.NAME,
+                            name = u.NAME + ":\t" + u.USERNAME,
                             UserID = u.USER_ID
                         };
 

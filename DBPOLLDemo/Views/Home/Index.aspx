@@ -23,9 +23,7 @@
     <br />
     <hr />
     <br />
-    <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = ((USER)ViewData["User"]).USER_ID })%>
-    <%-- <h2>
-        Poll Masters</h2>--%>
+    <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = (int)Session["uid"] })%>
     <% if ((int)Session["user_type"] > 1)
        { %>
     <br />
@@ -33,11 +31,13 @@
     <%= Html.ActionLink("Create New User", "RegisterUser", "User")%>
     <br />
     <br />
+    <%= Html.ActionLink("Reports", "Index", "Report")%>
+    <br />
+    <br />
     <hr />
     <h3>
         Administer Poll</h3>
     <%= Html.ActionLink("View Polls and Questions", "viewPolls", "Poll")%>
-    <%--<%= Html.ActionLink("View Polls and Questions", "../Poll/viewPolls")%>--%>
     <br />
     <br />
     <%= Html.ActionLink("Edit Create and Delete Polls", "Index", "Poll")%>
@@ -49,8 +49,6 @@
     <br />
     <br />
     <% } %>
-    <%--   <h2>
-        Poll Administrators</h2>--%>
     <% if ((int)Session["user_type"] > 3)
        { %>
     <%= Html.ActionLink("Define new Poll", "Create", "Poll")%>
@@ -59,11 +57,8 @@
     <% } %>
     <hr />
     <br />
-    <%= Html.ActionLink("Reports", "Index", "Report")%>
-    <br />
-    <br />
     <% } %>
-    <%--  <h2>
-        Poll Creators</h2>--%>
+    <br />
+    <br />
     <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
 </asp:Content>

@@ -168,6 +168,12 @@ namespace DBPOLLDemo.Controllers
                 return View();
             }
 
+            if (newPassword == null || newPassword.Equals(""))
+            {
+                ViewData["confirmPassword"] = "Please enter a new Password!";
+                return View();
+            }
+
             //confirm current password is correct
             userModel user = new userModel();
             var userDetails = user.get_details(uid);

@@ -73,6 +73,13 @@ namespace DBPOLLDemo.Controllers
             }
             int uid = (int)Session["uid"];
 
+            if (msg.Equals(""))
+            {
+                ViewData["edited"] = "Please do not send blank messages";
+                buildSelectList();
+                return View();
+            }
+
             messageModel messageModel = new messageModel();
             messageModel.sendMessage(msg, uid, USER_LIST);
 
