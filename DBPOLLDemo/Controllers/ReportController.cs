@@ -367,6 +367,15 @@ namespace DBPOLLDemo.Controllers
                     twoModels.data1 = new questionModel().includeDemographicQuestions(demographic);
                     twoModels.data2 = new questionModel().includeDemographicQuestions(demographic);
 
+                    if (twoModels.data1.Count() == 0)
+                    {
+                        ViewData["error"] = "Your search returns no result. Please try again.";
+                    }
+                    else
+                    {
+                        ViewData["error"] = "";
+                    }
+
                     return View(twoModels);
                 }
 
@@ -384,6 +393,16 @@ namespace DBPOLLDemo.Controllers
                 {
                     twoModels.data1 = new questionModel().excludeDemographicQuestions(demographic);
                     twoModels.data2 = new questionModel().excludeDemographicQuestions(demographic);
+
+                    if (twoModels.data1.Count() == 0)
+                    {
+                        ViewData["error"] = "Your search returns no result. Please try again.";
+                    }
+
+                    else
+                    {
+                        ViewData["error"] = "";
+                    }
 
                     return View(twoModels);
                 }

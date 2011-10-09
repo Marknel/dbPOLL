@@ -1036,6 +1036,7 @@ namespace DBPOLLDemo.Controllers
 
             List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, userid);
             List<questionModel> answeredQuestions2 = new questionModel().GetAnsweredShortAnswerQuestions(currentQuestionId, userid);
+            Session["shortAnswer"] = "";
 
             foreach (var answeredquestion in answeredQuestions)
             {
