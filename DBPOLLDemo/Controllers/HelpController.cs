@@ -72,6 +72,8 @@ namespace DBPOLLDemo.Controllers
             if (MyReferrer.Contains("/User/ChangePassword")) url = "UserChangePassword";
             if (MyReferrer.Contains("/User/Edit")) url = "UserEdit";
             if (MyReferrer.Contains("/User/RegisterUser")) url = "UserRegisterUser";
+            if (MyReferrer.Contains("/Message")) url = "Message";
+            
 
 
             //if (MyReferrer.Contains("/User/ChangePassword ")) url = "UserChangePassword";

@@ -224,7 +224,18 @@
               NavigateUrl="/Help/Site?idi=UserChangePassword "
               Text="   Change Password " 
               Expanded="False" ImageUrl="../../Content/help_manual.png" />
-              </asp:TreeNode>    
+              </asp:TreeNode>   
+          
+            <asp:TreeNode Value="Message" 
+              NavigateUrl="/Help/Site?idi=Message "
+              Text="  Message Help " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" >
+
+            <asp:TreeNode Value="Message" 
+              NavigateUrl="/Help/Site?idi=Message "
+              Text="  Message " 
+              Expanded="False" ImageUrl="../../Content/help_manual.png" />
+              </asp:TreeNode> 
 
               </asp:TreeNode>    
                
