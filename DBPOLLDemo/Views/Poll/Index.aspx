@@ -38,7 +38,7 @@
                 Creation Date
             </th>
             <%  //Check if the user is authorized to assign poll masters
-                if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_CREATOR)
+                if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_MASTER)
                 { %>
             <th>
             </th>
@@ -66,10 +66,18 @@
                 <%= Html.Encode(String.Format("{0:g}", item.createdAt)) %>
             </td>
             <%  //Check if the user is authorized to assign poll masters
-                if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_CREATOR)
+
+                if (Int32.Parse(Session["user_type"].ToString()) == User_Type.POLL_ADMINISTRATOR)
                 { %>
             <td nowrap="nowrap">
-                <%= Html.ActionLink("Assign Poll Masters", "AssignPoll", new {pollid=item.pollid, pollname = item.pollname}) %>
+                <%= Html.ActionLink("Assign Poll Creator", "AssignPollCreator", new {pollid=item.pollid, pollname = item.pollname}) %>
+            </td>
+            <% } %>
+            <% 
+                if (Int32.Parse(Session["user_type"].ToString()) >= User_Type.POLL_CREATOR)
+                { %>
+            <td nowrap="nowrap">
+                <%= Html.ActionLink(" Assign Poll Masters", "AssignPollMaster", new {pollid=item.pollid, pollname = item.pollname}) %>
             </td>
             <%} %>
         </tr>

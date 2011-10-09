@@ -6,6 +6,17 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+<%--    <script type="text/javascript">
+
+    myInterval = setInterval(function () {
+        $.get('/Session/caniseethegraph', function(data) {
+        if(data == "True") {window.open("http://www.google.com");}
+        });
+    }
+
+    </script>--%>
+
+
     <h2>StartSyncSession</h2>
 
     <% using (Html.BeginForm())
@@ -69,13 +80,23 @@
                 
 
             <%} %>
-                    
+
+            <%= Session["wait"]%>
+            <%= Html.ValidationMessage("webpollingError")%>
+            <br />
+            <br />
+
             <button type="submit" name = "button" value="load"> Submit Answer </button>
 
             <br />
             <br />
             <br />
 
+            <center>
+                <% Html.RenderPartial("../Message/sendFeedback"); %>
+            </center>
+            <br />    
+                    
             </fieldset>
     <%} %>
 

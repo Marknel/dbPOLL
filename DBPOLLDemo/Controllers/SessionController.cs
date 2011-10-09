@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web.Mvc;
 using DBPOLLDemo.Models;
 using System.Text.RegularExpressions;
+using System.Web.UI.DataVisualization.Charting;
+using System.Web.UI.WebControls;
 
 namespace DBPOLLDemo.Controllers
 {
@@ -13,7 +15,15 @@ namespace DBPOLLDemo.Controllers
         public List<pollModel> sessionData { get; set; }
         public questionModel questionData { get; set; }
         public List<answerModel> answerData { get; set; }
-     
+        public List<answerModel> responseData { get; set; }
+    }
+
+    public class PollAnswerAndSession
+    {
+        public List<pollModel> sessionData { get; set; }
+        public List<questionModel> questionData { get; set; }
+        public List<List<answerModel>> answerData { get; set; }
+        public List<List<int>> responseData { get; set; }
     }
 
     //public class SyncAndAsyncSessions
@@ -81,22 +91,26 @@ namespace DBPOLLDemo.Controllers
             {
                 if (!Decimal.TryParse(latitudeBox, out parsedLatitude))
                 {
-                    ViewData["latBox"] = "field is not a valid latitude";
+                    //ViewData["latBox"] = "field is not a valid latitude";
+                    ModelState.AddModelError("latBox", "field is not a valid latitude");
                     valid = false;
                 }
                 else if (!latRange.Contains((int)parsedLatitude))
                 {
-                    ViewData["latBox"] = "Latitude is not between -90" + (char)176 + " and 90" + (char)176;
+                    //ViewData["latBox"] = "Latitude is not between -90" + (char)176 + " and 90" + (char)176;
+                    ModelState.AddModelError("latBox", "Latitude is not between -90" + (char)176 + " and 90" + (char)176);
                     valid = false;
                 }
                 if (!Decimal.TryParse(longitudeBox, out parsedLongitude))
                 {
-                    ViewData["longBox"] = "field is not a valid longitude";
+                    //ViewData["longBox"] = "field is not a valid longitude";
+                    ModelState.AddModelError("longBox", "field is not a valid longitude");
                     valid = false;
                 }
                 else if (!longRange.Contains((int)parsedLongitude))
                 {
-                    ViewData["longBox"] = "Longitude is not between -180" + (char)176 + " and 180" + (char)176;
+                    //ViewData["longBox"] = "Longitude is not between -180" + (char)176 + " and 180" + (char)176;
+                    ModelState.AddModelError("longBox", "Longitude is not between -180" + (char)176 + " and 180" + (char)176);
                     valid = false;
                 }
             }
@@ -106,18 +120,21 @@ namespace DBPOLLDemo.Controllers
 
                 if (time == "" || time == null)
                 {
-                    ViewData["date1"] = "Above field must contain a date";
+                    //ViewData["date1"] = "Above field must contain a date";
+                    ModelState.AddModelError("date1", "Above field must contain a date");
                 }
                 else
                 {
-                    ViewData["date1"] = "Please Enter a correct Date";
+                    //ViewData["date1"] = "Please Enter a correct Date";
+                    ModelState.AddModelError("date1", "Please Enter a correct Date");
                 }
                 valid = false;
             }
 
             if (parsedDate < DateTime.Now)
             {
-                ViewData["date1"] = "Date incorrectly in the past.";
+                //ViewData["date1"] = "Date incorrectly in the past.";
+                ModelState.AddModelError("date1", "Date incorrectly in the past.");
                 valid = false;
             }
 
@@ -314,7 +331,7 @@ namespace DBPOLLDemo.Controllers
             //List<pollModel> allSessions = new pollModel().displayAssignedSessions(userid);
             //SyncAndAsyncSessions syncAndAsync = new SyncAndAsyncSessions();
             //syncAndAsync.Asy
-
+            Session["showGraph"] = false;
             return View(new pollModel().displayAssignedSessions(userid));
             
         }
@@ -370,7 +387,6 @@ namespace DBPOLLDemo.Controllers
 
 
             List<answerModel> unsorted = new answerModel().getPollAnswers(pollid);
-            List<List<answerModel>> sorted = new List<List<answerModel>>();
             List<answerModel> s = new List<answerModel>();
             List<int> questionCheck = new List<int>();
             List<questionModel> answeredQuestions = new questionModel().GetAnsweredMCQQuestions(sessionid, (int)Session["uid"]);
@@ -393,22 +409,20 @@ namespace DBPOLLDemo.Controllers
             foreach (var answeredquestion in answeredQuestions)
             {
                 selected = new responseModel().getRankingAnswerIds(sessionid, (int)Session["uid"], pollAndQuestionModel.questionData.questionid);
-                foreach (var answer in sorted)
-                {
-                    foreach (var a in answer) { 
-                        if (answeredquestion.answer == a.answer)
-                        {
-                            Session["selectedAnswer"] = answeredquestion.answer;
-                        }
-
+                
+                foreach (var a in s) { 
+                    if (answeredquestion.answer == a.answer)
+                    {
+                        Session["selectedAnswer"] = answeredquestion.answer;
                     }
+
                 }
             }
 
             if (pollAndQuestionModel.questionData.questiontype == 6)
             {
                 ViewData["numOfPossibleAnswers"] = pollAndQuestionModel.questionData.numberofresponses;
-                buildSelectList(sorted[0], selected);
+                buildSelectList(s, selected);
             }
             
 
@@ -431,6 +445,15 @@ namespace DBPOLLDemo.Controllers
             
             List<questionModel> allquestion = (List<questionModel>)Session["AllQuestion"];
             int currentquestion = allquestion[questnum].questionid;
+
+
+            //int uid = (int)Session["uid"];
+            //string message = Request["msg"].ToString();
+            //if (!message.Equals(""))
+            //{
+            //    messageModel msgModel = new messageModel();
+            //    msgModel.sendFeedback(message, uid, pollid, currentquestion);
+            //}
 
             Session["selectedAnswer"] = "";
             
@@ -602,7 +625,8 @@ namespace DBPOLLDemo.Controllers
                 String[] error = TempData["webpollingError"].ToString().Split(',');
                 ModelState.AddModelError(error[0], error[1]);
             }
-    
+
+            
             Session["syncSessionId"] = sessionid;
             Session["syncPollId"] = pollid;
 
@@ -639,6 +663,7 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+
             int userid = (int)Session["uid"];
             int pollid = (int)Session["syncPollId"];
 
@@ -648,6 +673,14 @@ namespace DBPOLLDemo.Controllers
 
             int currentQuestionid = (int)Session["syncCurrentQuestionId"];
             Boolean isOpen = true;
+
+            int uid = (int)Session["uid"];
+            string message = Request["msg"].ToString();
+            if (!message.Equals(""))
+            {
+                messageModel msgModel = new messageModel();
+                msgModel.sendFeedback(message, uid, pollid, currentQuestionid);
+            }
 
             PollAndQuestions pollAndQuestionModel = new PollAndQuestions();
             pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
@@ -662,16 +695,16 @@ namespace DBPOLLDemo.Controllers
                 if (pollAndQuestionModel.questionData.questiontype < 6)
                 {
                     int selectedAnswer = Convert.ToInt32(Request["MCQAnswer"]);
-                    if (selectedAnswer != null)
+                    if (selectedAnswer != 0)
                     {
                         new responseModel().createMCQResponse(userid, selectedAnswer, sessionid);
-                        //AnswerMultipleChoiceQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentQuestionid);
+                       
                     }
                     else
                     {
                         String error = "webpollingError" + "," + "Please provide your answer(s)";
                         TempData["webpollingError"] = error;
-
+                        return RedirectToAction("StartSyncSession", new { sessionid = sessionid, pollid = pollid });
                     }
                 }
                 else if (pollAndQuestionModel.questionData.questiontype == 6) 
@@ -701,78 +734,101 @@ namespace DBPOLLDemo.Controllers
                     {
                         String error = "webpollingError" + "," + "Each answer has to be unique";
                         TempData["webpollingError"] = error;
-
+                        return RedirectToAction("StartSyncSession", new { sessionid = sessionid, pollid = pollid });
                     }
                     
                     else 
                     {
                         String error = "webpollingError" + "," + "Please provide your answer(s)";
                         TempData["webpollingError"] = error;
+                        return RedirectToAction("StartSyncSession", new { sessionid = sessionid, pollid = pollid });
                     }
 
-                }
-                else if (pollAndQuestionModel.questionData.questiontype <= 2)
-                {
-                    Boolean isValid = true;
-                    String selectedAnswer = Request["ShortQuestionAnswer"];
-
-
-                    if (selectedAnswer == "")
-                    {
-                        isValid = false;
-                        String error = "webpollingError" + "," + "Please provide your answer(s)";
-                        TempData["webpollingError"] = error;
-                    }
-                    else if (pollAndQuestionModel.questionData.questiontype == 1 && !Regex.IsMatch(selectedAnswer, @"^\d+$"))
-                    {
-                        isValid = false;
-                        String error = "webpollingError" + "," + "Only numeric answer is allowed";
-                        Session["shortAnswer"] = "";
-                        TempData["webpollingError"] = error;
-                    }
-                    else if (pollAndQuestionModel.questionData.questiontype == 2 && Regex.IsMatch(selectedAnswer, @"^\d+$"))
-                    {
-                        isValid = false;
-                        String error = "webpollingError" + "," + "Only alphanumeric answer is not allowed";
-                        Session["shortAnswer"] = "";
-                        TempData["webpollingError"] = error;
-                    }
-                    if (isValid)
-                    {
-                        AnswerShortAnswerQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentQuestionid);
-                    }
-                    else 
-                    {
-                        RedirectToAction("StartSyncSession", new { sessionid = sessionid  ,pollid = pollid});
-                    }
                 }
             }
+            else if (pollAndQuestionModel.questionData.questiontype <= 2)
+            {
+                Boolean isValid = true;
+                String selectedAnswer = Request["ShortQuestionAnswer"];
+
+
+                if (selectedAnswer == "" || selectedAnswer == null)
+                {
+                    isValid = false;
+                    String error = "webpollingError" + "," + "Please provide your answer(s)";
+                    TempData["webpollingError"] = error;
+                    return RedirectToAction("StartSyncSession", new { sessionid = sessionid, pollid = pollid });
+                }
+                else if (pollAndQuestionModel.questionData.questiontype == 1 && !Regex.IsMatch(selectedAnswer, @"^\d+$"))
+                {
+                    isValid = false;
+                    String error = "webpollingError" + "," + "Only numeric answer is allowed";
+                    Session["shortAnswer"] = "";
+                    TempData["webpollingError"] = error;
+                    return RedirectToAction("StartSyncSession", new { sessionid = sessionid, pollid = pollid });
+                }
+                else if (pollAndQuestionModel.questionData.questiontype == 2 && Regex.IsMatch(selectedAnswer, @"^\d+$"))
+                {
+                    isValid = false;
+                    String error = "webpollingError" + "," + "Only alphanumeric answer is not allowed";
+                    Session["shortAnswer"] = "";
+                    TempData["webpollingError"] = error;
+                    return RedirectToAction("StartSyncSession", new { sessionid = sessionid, pollid = pollid });
+                }
+                if (isValid)
+                {
+                    AnswerShortAnswerQuestion(selectedAnswer, sessionid, (int)Session["uid"], currentQuestionid);
+                }
+                else 
+                {
+                    return RedirectToAction("StartSyncSession", new { sessionid = sessionid  ,pollid = pollid});
+                }
+            }
+            
 
             while (isOpen)
             {
                 int databaseCurrentQuestion = new pollModel().displaySessionDetails(sessionid)[0].currentquestion;
+                // If the poll is closed by Poll Master, redirect them to a thank you page.
                 if (currentQuestionid != databaseCurrentQuestion)
                 {
 
-                    pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
-                    pollAndQuestionModel.questionData = new questionModel().getQuestion(databaseCurrentQuestion);
-                    List<answerModel> temp = new answerModel().displayAnswers(databaseCurrentQuestion);
-                    pollAndQuestionModel.answerData = temp;
-                    List<answerModel> sorted = pollAndQuestionModel.answerData;
-                    Session["syncCurrentQuestionId"] = databaseCurrentQuestion;
-
-                    if (pollAndQuestionModel.questionData.questiontype == 6)
+                    if (databaseCurrentQuestion == 0)
                     {
-                        Session["numOfPossibleAnswers"] = pollAndQuestionModel.questionData.numberofresponses;
-                        buildPlainSelectList(sorted);
-                    }
+                        isOpen = false;
 
-                    isOpen = new pollModel().isOpen(sessionid);
-                    return View(pollAndQuestionModel);
+                    }
+                    //else if (databaseCurrentQuestion == -1)
+                    //{
+                    //    Session["showGraph"] = true;
+                    //    //Response.Write("<SCRIPT LANGUAGE=\"JavaScript\">\n");
+                    //    //Response.Write("window.open( \"\/PopUp\/Popup.html\", \"\", \"width=300, height=100\")");
+                    //    //Response.Write("<\/script>");
+                    //}
+                    else
+                    {
+                        Session["showGraph"] = false;
+                        pollAndQuestionModel.sessionData = new pollModel().displaySessionDetails(sessionid);
+                        pollAndQuestionModel.questionData = new questionModel().getQuestion(databaseCurrentQuestion);
+                        List<answerModel> temp = new answerModel().displayAnswers(databaseCurrentQuestion);
+                        pollAndQuestionModel.answerData = temp;
+                        List<answerModel> sorted = pollAndQuestionModel.answerData;
+                        Session["syncCurrentQuestionId"] = databaseCurrentQuestion;
+
+                        if (pollAndQuestionModel.questionData.questiontype == 6)
+                        {
+                            Session["numOfPossibleAnswers"] = pollAndQuestionModel.questionData.numberofresponses;
+                            buildPlainSelectList(sorted);
+                        }
+
+                        isOpen = new pollModel().isOpen(sessionid);
+                        return View(pollAndQuestionModel);
+                    }
                 }
                 else if (currentQuestionid == databaseCurrentQuestion)
                 {
                     isOpen = new pollModel().isOpen(sessionid);
+                    // This doesnt get displayed - 8 October
                 }
 
                 if (!isOpen)
@@ -789,7 +845,7 @@ namespace DBPOLLDemo.Controllers
                 
             }
             // When the session is closed, redirect the user somewhere *sighhhhhhh
-            return RedirectToAction("StartSyncSession");
+            return RedirectToAction("ConfirmationPage", new { sessionid = sessionid, pollid = pollid });
         }
 
         // Function to either create or update a MCQ of type 3, 4 and 5
@@ -835,6 +891,39 @@ namespace DBPOLLDemo.Controllers
                 }
             }
 
+        }
+
+        public ActionResult ConfirmationPage(int sessionid, int pollid)
+        {
+            PollAnswerAndSession pollAndQuestion = new PollAnswerAndSession();
+
+            List<questionModel> tempList = new questionModel().displayQuestionsFromAPoll(pollid);
+
+            pollAndQuestion.sessionData = new pollModel().displaySessionDetails(sessionid);
+            pollAndQuestion.questionData = tempList;
+            List<List<answerModel>> sorted = new List<List<answerModel>>();
+            List<int> questionCheck = new List<int>();
+
+
+            List<List<int>> orderedResponses = new List<List<int>>();
+
+            foreach (var item in pollAndQuestion.questionData)
+            {
+                List<answerModel> test = new answerModel().displayAnswers(item.questionid);
+                sorted.Add(test);
+                List<int> unorderedResponses = new List<int>();
+                foreach (var answer in test)
+                {
+                    unorderedResponses.Add(new responseModel().countResponse(answer.answerid));
+                }
+                orderedResponses.Add(unorderedResponses);
+            }
+
+            pollAndQuestion.answerData = sorted;
+            pollAndQuestion.responseData = orderedResponses;
+            
+
+            return View(pollAndQuestion);
         }
 
         // Function to either create or update a MCQ of type 6, Ranking Question
@@ -1064,12 +1153,69 @@ namespace DBPOLLDemo.Controllers
                 {
                     result = true;
                 }
-                else
-                {
-                    result = false;
-                }
             }
             return result;
+        }
+
+
+        public Boolean caniseethegraph()
+        {
+            if (Session["showGraph"] == null) 
+            {
+                Session["showGraph"] = false;
+            }
+            return (Boolean)Session["showGraph"];
+        }
+
+        public ActionResult TwoDimensionalChart(String chartParameter)
+        {
+            // Grace: you need two parameters of: x axis = answer choices eg: brisbane, perth, sydney
+            // y axis: those answers values
+
+            String[] xValues = chartParameter.Split(',')[0].Split('/');
+            String[] y = chartParameter.Split(',')[1].Split('/');
+
+            int[] yValues = new int[chartParameter.Split(',')[1].Count() / 2 + 1];
+
+            int newCounter = 0;
+
+            foreach (String item in y)
+            {
+                yValues[newCounter] = Convert.ToInt32(item);
+                newCounter++;
+            }
+
+            Chart chart = new Chart();
+            chart.BackColor = System.Drawing.Color.Transparent;
+            chart.Width = Unit.Pixel(500);
+            chart.BackColor = System.Drawing.Color.LightGoldenrodYellow;
+
+            Series series1 = new Series("Series1");
+            series1.ChartArea = "ca1";
+            series1.ChartType = SeriesChartType.Column;
+            series1.Font = new System.Drawing.Font("Verdana", 8.25f, System.Drawing.FontStyle.Regular);
+            int i = 0;
+            foreach (int value in yValues)
+            {
+                series1.Points.Add(new DataPoint
+                {
+                    AxisLabel = xValues[i],
+                    YValues = new double[] { value }
+                });
+                i++;
+            }
+            chart.Series.Add(series1);
+
+            ChartArea ca1 = new ChartArea("ca1");
+            ca1.BackColor = System.Drawing.Color.Transparent;
+            chart.ChartAreas.Add(ca1);
+            using (var ms = new System.IO.MemoryStream())
+            {
+                chart.SaveImage(ms, ChartImageFormat.Png);
+                ms.Seek(0, System.IO.SeekOrigin.Begin);
+
+                return File(ms.ToArray(), "image/png");
+            }
         }
 
     }

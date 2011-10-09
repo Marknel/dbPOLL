@@ -186,6 +186,7 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Chart(String chartParameter)
         {
+
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
@@ -194,12 +195,6 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Invalid", "Home");
             }
-            //String[] sessionValues = chartParameter.Split(',')[0];
-
-            //int[] sessionValues = (int[])Session["sValues"];
-            //String[] sessionLists = (String[])Session["sLists"];
-            //String[] answerLists = (String[])Session["aList"];
-
 
             int newCounter = 0;
             int[] sessionValues = new int[chartParameter.Split(',')[0].Count() / 2 + 1];
