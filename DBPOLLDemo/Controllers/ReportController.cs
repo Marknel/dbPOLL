@@ -146,14 +146,6 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Chart(String chartParameter)
         {
-
-            //String[] sessionValues = chartParameter.Split(',')[0];
-
-            //int[] sessionValues = (int[])Session["sValues"];
-            //String[] sessionLists = (String[])Session["sLists"];
-            //String[] answerLists = (String[])Session["aList"];
-
-
             int newCounter = 0;
             int[] sessionValues = new int[chartParameter.Split(',')[0].Count() / 2 + 1];
             String[] temp = chartParameter.Split(',')[0].Split('/');

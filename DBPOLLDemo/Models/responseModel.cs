@@ -13,6 +13,7 @@ namespace DBPOLLDemo.Models
         public DateTime modifiedat;
         public int userid;
         public int answerid;
+        public int sessionid;
         private DBPOLLEntities dbpollContext = new DBPOLLEntities();
 
         RESPONS resp = new RESPONS();
@@ -75,7 +76,7 @@ namespace DBPOLLDemo.Models
             {
                 throw (e);
             }
-        }
+            }
 
         public void updateMCQResponse(int responseid, int answerid)
         {
@@ -230,6 +231,15 @@ namespace DBPOLLDemo.Models
                         );
 
             return query.ToList();
+        }
+
+        public int countResponse(int answerid)
+        { 
+            var query = (from r in dbpollContext.RESPONSES
+                         where r.ANSWER_ID == answerid
+                         select r.USER_ID).Count();
+
+            return query;
         }
     }
 }

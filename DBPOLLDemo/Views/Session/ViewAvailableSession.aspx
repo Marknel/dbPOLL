@@ -5,7 +5,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Sessions Available</h2>
+    <h2>Sessions you have been invited to</h2>
 
 
     <% 

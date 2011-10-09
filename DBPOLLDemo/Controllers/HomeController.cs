@@ -102,6 +102,7 @@ namespace DBPOLLDemo.Controllers
             Session["endOfQuestion"] = null;
             Session["selectedAnswer"] = null;
             Session["shortAnswer"] = null;
+            Session["showGraph"] = false;
             Response.Redirect("Index");
         }
 

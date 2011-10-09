@@ -135,6 +135,8 @@
             <br />
             <br />
 
+<%--            <% Html.RenderPartial("sendFeedback"); %>
+            <br />     --%>
 
             <% 
            if (currentQuestion == 0 && (Boolean)Session["endOfQuestion"] == false){%>

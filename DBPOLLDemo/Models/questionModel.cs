@@ -577,7 +577,7 @@ namespace DBPOLLDemo.Models
         {
             var query = (from q in dbpollContext.QUESTIONS
                         where q.POLL_ID == poll
-                        orderby q.CREATED_AT ascending
+                        orderby q.QUESTION_ID ascending
                         select new questionModel
                         {
                             pollid = q.POLL_ID,
@@ -586,7 +586,7 @@ namespace DBPOLLDemo.Models
                             questiontype = q.QUESTION_TYPE,
                             createdat = q.CREATED_AT,
                             questnum = (int)q.NUM
-                        }).OrderBy(q => q.questnum);
+                        }).OrderBy(q => q.questnum).Distinct();
 
             return query.ToList();
         }
