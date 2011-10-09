@@ -41,8 +41,6 @@
             <th nowrap="nowrap">
                 Date Question Created
             </th>
-            
-            
         </tr>
 
     <% foreach (var item in Model) { %>

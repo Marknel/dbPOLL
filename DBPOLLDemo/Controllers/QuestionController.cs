@@ -188,7 +188,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -211,7 +211,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -234,7 +234,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -259,7 +259,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -320,7 +320,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult CreateMultipleChoice(int pollid)
         {
-            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             ViewData["id"] = pollid;
             return View();
@@ -336,7 +343,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -408,7 +415,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -428,7 +435,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -496,7 +503,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Invalid", "Home");
             }
-
+            ViewData["qid"] = qid;
             return View();
         }
 

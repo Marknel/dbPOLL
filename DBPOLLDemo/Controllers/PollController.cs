@@ -162,7 +162,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -195,7 +195,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -209,7 +209,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -224,7 +224,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -258,7 +258,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -277,7 +277,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -303,7 +303,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -327,7 +327,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -391,7 +391,8 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if (User_Type.POLL_CREATOR > (int)Session["user_type"])
+
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -415,7 +416,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -465,7 +466,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }

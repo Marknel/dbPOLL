@@ -69,7 +69,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\answerHistoryController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -224,6 +226,7 @@
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\RunDevices.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
+    <Content Include="Views\Question\Keypad.aspx" />
     <Content Include="Views\Question\Test.aspx" />
     <Content Include="Views\Report\DemographicComparison.aspx" />
     <Content Include="Views\Report\OneStatisticalReport.aspx" />

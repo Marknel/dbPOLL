@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.jfree.data.category.CategoryDataset;
@@ -52,6 +50,7 @@ public class PollApplet extends javax.swing.JApplet {
     private dbQuestion selectedQuestion;
     private boolean polling = false;
     private DefaultCategoryDataset dataset;
+    int testQuestion = 0;
     /**
      * Current Question during polling. (Location in question list)
      */
@@ -90,37 +89,53 @@ public class PollApplet extends javax.swing.JApplet {
                 @Override
                 public void run() {
                     try {
-                        //Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
-                        Polls.loadPolls(10);
+                        
+                        
+                        if(getParameter("quest_id") != null){
+                            testQuestion = Integer.parseInt(getParameter("quest_id"));                        
+                        }
+                        //testQuestion = 1;
+                        //Polls.loadPolls(10);
 
                         ResponseCardLibrary.initializeLicense("University of Queensland", "24137BBFEEEA9C7F5D65B2432F10F960");
                         initReceivers();
                         initComponents();
                         initModel();
 
-                        while (selectedPoll == null) {
-                            selectedPoll = (dbPoll) JOptionPane.showInputDialog(
-                                    (Component) Frame,
-                                    "Choose Poll & Session:",
-                                    "Select a Poll",
-                                    JOptionPane.PLAIN_MESSAGE,
-                                    null,
-                                    Polls.polls.toArray(),
-                                    Polls.polls.get(0));
-                            if (selectedPoll == null) {
-                                JOptionPane.showMessageDialog(null, "You must select a poll!", "Poll Error", 1);
+                        if (testQuestion == 0) {
+                            Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
+                            
+                            
+                            while (selectedPoll == null) {
+                                selectedPoll = (dbPoll) JOptionPane.showInputDialog(
+                                        (Component) Frame,
+                                        "Choose Poll & Session:",
+                                        "Select a Poll",
+                                        JOptionPane.PLAIN_MESSAGE,
+                                        null,
+                                        Polls.polls.toArray(),
+                                        Polls.polls.get(0));
+                                if (selectedPoll == null) {
+                                    JOptionPane.showMessageDialog(null, "You must select a poll!", "Poll Error", 1);
+                                }
                             }
-                        }
 
-                        pollLbl.setText("POLL: " + selectedPoll.getPollName());
-                        Questions.loadQuestions(selectedPoll.getPollId());
+                            pollLbl.setText("POLL: " + selectedPoll.getPollName());
+
+                            Questions.loadQuestions(selectedPoll.getPollId());
+                        } else {
+
+                            pollLbl.setText("Dummy Poll: Testing Question");
+                            Questions.loadTestQuestion(testQuestion);
+
+                        }
 
                         selectedQuestion = Questions.questions.get(QUESTION);
                         questionText.setText(selectedQuestion.getQuestionText());
                         Answers.loadAnswers(selectedQuestion.getQuestionID());
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(PollApplet.class.getName()).log(Level.SEVERE, null, ex);
+                        showError("Fatal Error: Could not Connect to database. F5 to continue.", ex);
                     }
                     setAnswers();
                 }
@@ -883,7 +898,7 @@ private void nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     }
 
 //    Questions.setNextQuestion(selectedPoll.getSessionId(),
-     //              0);
+    //              0);
 }//GEN-LAST:event_nextQuestionActionPerformed
 
 private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -893,8 +908,11 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         startButton.setText("Stop Polling");
         startPollHandler(evt);
         try {
+            if (testQuestion == 0) {
             Questions.openQuestion(selectedPoll.getSessionId(),
                     selectedQuestion.getQuestionID());
+            
+            }
         } catch (SQLException ex) {
             showError("Fatal Error: Unable to update database. "
                     + "Restart application to resume polling", ex);
@@ -904,8 +922,14 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         polling = true;
     } else {
 
+        
         createTestResponseSet();
-        Chart demo = new Chart("Chart for Poll: " + selectedPoll.getPollName(), selectedQuestion.getQuestionText(), createGraphDataset(), selectedQuestion.getChartStyle());
+        Chart demo;
+        if (testQuestion == 0) {
+            demo = new Chart("Chart for Poll: " + selectedPoll.getPollName(), selectedQuestion.getQuestionText(), createGraphDataset(), selectedQuestion.getChartStyle());
+        }else{
+            demo = new Chart("Chart for Poll: " + "Dummy Poll", selectedQuestion.getQuestionText(), createGraphDataset(), selectedQuestion.getChartStyle());   
+        }
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
@@ -918,21 +942,23 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             poll.stop();
 
             // Close question to polling by synchronous web application
+            
+            if (testQuestion == 0) {
             Questions.closeQuestion(selectedPoll.getSessionId(),
                     selectedQuestion.getQuestionID());
-
+            }
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
             nextQuestion.setEnabled(true);
             prevQuestion.setEnabled(true);
 
-
-
-            dbResponses.saveResponses(responseListModel.responses, selectedPoll.getSessionId(), selectedQuestion.getQuestionID());
+            if (testQuestion == 0) {
+                dbResponses.saveResponses(responseListModel.responses, selectedPoll.getSessionId(), selectedQuestion.getQuestionID());
+            }
             responseListModel = new ResponseListModel();
             //responseChart.setSubtitle("Polling Closed");
-            } catch (SQLException ex) {
-               showError("Fatal Error: Unable to update database. "
-                        + "Restart application to resume polling", ex);
+        } catch (SQLException ex) {
+            showError("Fatal Error: Unable to update database. "
+                    + "Restart application to resume polling", ex);
         } catch (Exception e) {
             showError("Unable to stop poll.", e);
         }

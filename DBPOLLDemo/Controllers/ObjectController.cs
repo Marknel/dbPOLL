@@ -13,10 +13,15 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index(int questionid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             questionObjectModel qo = new questionObjectModel();
             List<questionObjectModel> list = qo.indexObjects(questionid);
 
@@ -31,16 +36,27 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Details(int id)
         {
-
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
            
             return View();
         }
 
         public ActionResult Delete(int objectid, int questionid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             questionObjectModel ob = new questionObjectModel(objectid);
             ob.deleteObject();
@@ -54,10 +70,16 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Create(int questionid)
         {
-            if (Session["uid"] == null)
+
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             ViewData["questionid"] = questionid;
             return View();
         } 
@@ -68,9 +90,13 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(int obtype, String attribute, int questionid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             ViewData["questionid"] = questionid;
@@ -114,6 +140,8 @@ namespace DBPOLLDemo.Controllers
  
         public ActionResult Edit(int id)
         {
+
+
             return View();
         }
 
@@ -123,6 +151,15 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             try
             {
                 // TODO: Add update logic here

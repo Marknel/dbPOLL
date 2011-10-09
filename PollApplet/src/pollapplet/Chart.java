@@ -102,8 +102,8 @@ public class Chart extends ApplicationFrame {
 
         // set up gradient paints for series...
         final GradientPaint gp0 = new GradientPaint(
-                0.0f, 0.0f, Color.blue,
-                0.0f, 0.0f, Color.lightGray);
+                0.0f, 0.0f, Color.BLUE,
+                0.0f, 0.0f, Color.BLUE);
         final GradientPaint gp1 = new GradientPaint(
                 0.0f, 0.0f, Color.green,
                 0.0f, 0.0f, Color.lightGray);
@@ -162,7 +162,6 @@ public class Chart extends ApplicationFrame {
         return chart;
         
     }
-    
     
     private JFreeChart createLineChart(final CategoryDataset dataset, String title) {
         
@@ -285,7 +284,7 @@ public class Chart extends ApplicationFrame {
 
         // set up gradient paints for series...
         final GradientPaint gp0 = new GradientPaint(
-                0.0f, 0.0f, Color.blue,
+                0.0f, 0.0f, Color.GREEN.darker(),
                 0.0f, 0.0f, Color.lightGray);
         final GradientPaint gp1 = new GradientPaint(
                 0.0f, 0.0f, Color.green,
