@@ -391,7 +391,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if (User_Type.POLL_CREATOR <= (int)Session["user_type"])
+            if (User_Type.POLL_CREATOR > (int)Session["user_type"])
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -403,8 +403,6 @@ namespace DBPOLLDemo.Controllers
 
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;
-
-
 
 
             return View(pollMasters);
@@ -434,8 +432,8 @@ namespace DBPOLLDemo.Controllers
                 userModel u = new userModel();
                 u = u.getUser(id);
                 EmailController mail = new EmailController(pollname, u.username);
-
-                string mailSuccess = mail.send();
+                
+                string mailSuccess = mail.send1();
                 if (!mailSuccess.Equals("Email sent successfully"))
                 {
                     throw new Exception(mailSuccess);
