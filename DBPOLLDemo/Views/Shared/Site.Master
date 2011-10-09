@@ -56,26 +56,32 @@
                       else
                       {%>
                     <%--Logged in--%>
-                    <li>
-                        <%= Html.ActionLink("Messages", "Index", "Message")%></li>
-                         <li>
-                           <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = (int)Session["uid"] })%></li>
-                    <% if ((int)Session["user_type"] > 1)
-                       { %>
-                    <li>
-                        <%= Html.ActionLink("Edit My Details", "Edit", "User")%></li>
-                    <li>
-                        <%= Html.ActionLink("Reports", "Index", "Report")%></li>
-                    <% } %>
                     <% if (Session["sysadmin"] == null || Session["sysadmin"] == "false")
                        {%>
                     <%--Not a sysAdmin--%>
-                        <% if ((int)Session["user_type"] > 3)
+                        <li>
+                            <%= Html.ActionLink("Messages", "Index", "Message")%></li>
+                        <li>
+                            <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = (int)Session["uid"] })%></li>
+
+                        <% if ((int)Session["user_type"] > 1)
                            { %>
                                 <li>
-                                    <%= Html.ActionLink("Define Poll", "Create", "Poll")%></li>
+                                    <%= Html.ActionLink("Edit My Details", "Edit", "User")%></li>
                                 <li>
-                                    <%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
+                                    <%= Html.ActionLink("Reports", "Index", "Report")%></li>
+                                    <li>
+                                <%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>    
+                        <% } %>
+                        <% if ((int)Session["user_type"] > 2)
+                           { %>
+                            
+                        <% } %>
+                        <% if ((int)Session["user_type"] > 3)
+                            { %>
+                            <li>
+                                <%= Html.ActionLink("Define Poll", "Create", "Poll")%></li>
+                            
                         <% } %>
                     <% }%>
                     <%} %>
