@@ -36,7 +36,7 @@ namespace DBPOLLDemo.Controllers
             }
             
             // string[] aurl = MyReferrer.Split('/');
-            string url="index";
+            string url="Site";
             
             // if (MyReferrer == "/") return new RedirectResult(Request.UrlReferrer.ToString());
             
@@ -60,7 +60,7 @@ namespace DBPOLLDemo.Controllers
             if (MyReferrer.Contains("/Question/viewQuestions")) url = "QuestionviewQuestions";
             if (MyReferrer.Contains("/Question/Create")) url = "QuestionCreate";
             if (MyReferrer == "/Report" | MyReferrer.Contains("/Report/Index")) url = "ReportIndex";
-            if (MyReferrer.Contains("/Report/SessionHistoryReport")) url = "SessionHistoryReport";
+            if (MyReferrer.Contains("/Report/SessionHistoryReport")) url = "ReportSessionHistoryReport";
             if (MyReferrer.Contains("/Report/OneStatisticalReport")) url = "ReportOneStatisticalReport";
             if (MyReferrer.Contains("/Report/ViewAllPoll")) url = "ReportOneStatisticalReport";
             if (MyReferrer.Contains("/Report/DemographicComparison")) url = "ReportDemographicComparison";
