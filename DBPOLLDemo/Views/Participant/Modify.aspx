@@ -32,7 +32,7 @@
         <% foreach (var par in Model.participants) { %>
         <tr>
          <td class="style2">
-           <%= Html.ActionLink("X", "Delete", new { userid = par.userid, sessionid = ViewData["sessionid"], sessionname = ViewData["sessionname"] })%>
+           <%= Html.ActionLink("Delete", "Delete", new { userid = par.userid, sessionid = ViewData["sessionid"], sessionname = ViewData["sessionname"] })%>
             </td>
             <td>
             <%= par.userid%>

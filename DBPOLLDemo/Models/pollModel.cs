@@ -189,11 +189,11 @@ namespace DBPOLLDemo.Models
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
             int userID = (int)Session["uid"];
-            
+            int user_type = Int32.Parse(Session["user_type"].ToString());
             
 
             List<POLL> pollList = new List<POLL>();
-            if (Int32.Parse(Session["user_type"].ToString()) >= User_Type.POLL_CREATOR)
+            if (user_type == User_Type.POLL_ADMINISTRATOR)
             {
 
 
@@ -212,7 +212,7 @@ namespace DBPOLLDemo.Models
                 return query.ToList();
 
             }
-            else if (Int32.Parse(Session["user_type"].ToString()) >= User_Type.POLL_MASTER)
+            else if (user_type == User_Type.POLL_MASTER || user_type == User_Type.POLL_CREATOR)
             {
                 var q2 = from a in dbpollContext.ASSIGNEDPOLLS
                          where a.USER_ID == userID
@@ -438,15 +438,15 @@ namespace DBPOLLDemo.Models
         }
 
         /// <summary>
-        /// Call to assign a poll to a particualar poll master.
+        /// Call to assign a poll to a particualar user.
         /// </summary>
         /// <param name="pollid"></param>
         /// <param name="userid"></param>
-        public void assignPoll(int pollid, int[] pollMasterId)
+        public void assignPoll(int pollid, int[] pollUserId)
         {
             try
             {
-                foreach (int id in pollMasterId)
+                foreach (int id in pollUserId)
             {
 
                 ASSIGNEDPOLL assignment = new ASSIGNEDPOLL();
@@ -464,7 +464,7 @@ namespace DBPOLLDemo.Models
             }
         }
 
-        public void unassignPollMaster(int pollid, int userid){
+        public void unassignPoll(int pollid, int userid){
 
             try
             {
@@ -485,7 +485,6 @@ namespace DBPOLLDemo.Models
 
 
         }
-
 
         public void createPoll(String pollName, int createdBy, Nullable<DateTime> expiresat)
         {

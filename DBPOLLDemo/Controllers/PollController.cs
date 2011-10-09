@@ -384,7 +384,74 @@ namespace DBPOLLDemo.Controllers
             return View();
         }
 
-        public ActionResult AssignPoll(int pollid, String pollname)
+        public ActionResult AssignPollCreator(int pollid, String pollname)
+        {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
+            Assign_PollMasters pollMasters = new Assign_PollMasters();
+
+            pollMasters.assigned = new userModel().displayAssignedUsers(pollid, User_Type.POLL_CREATOR);
+            pollMasters.unassigned = new userModel().displayUnassignedUsers(pollid, User_Type.POLL_CREATOR);
+
+            ViewData["pollid"] = pollid;
+            ViewData["pollname"] = pollname;
+
+            return View(pollMasters);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult AssignPollCreator(int pollid, int[] selectedObjects, String pollname)
+        {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
+            String errorString = "";
+
+            new pollModel().assignPoll(pollid, selectedObjects);
+
+            Assign_PollMasters pollMasters = new Assign_PollMasters();
+
+            pollMasters.assigned = new userModel().displayAssignedUsers(pollid, User_Type.POLL_CREATOR);
+            pollMasters.unassigned = new userModel().displayUnassignedUsers(pollid, User_Type.POLL_CREATOR);
+
+                foreach (int id in selectedObjects)
+                {
+                    userModel u = new userModel();
+                    u = u.getUser(id);
+                    EmailController mail = new EmailController(pollname, u.username);
+
+                    string mailSuccess = mail.send1();
+                    if (!mailSuccess.Equals("Email sent successfully"))
+                    {
+                        errorString += u.username + "\n";
+                        //throw new Exception(mailSuccess);
+                    }
+                }
+
+            if(errorString.Length != 0)
+                ViewData["emailError"] = "Could not send email to following Users: \n" + errorString;
+
+
+            ViewData["pollid"] = pollid;
+            ViewData["pollname"] = pollname;
+            return View(pollMasters);
+        }
+
+        public ActionResult AssignPollMaster(int pollid, String pollname)
         {
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
@@ -398,8 +465,8 @@ namespace DBPOLLDemo.Controllers
 
             Assign_PollMasters pollMasters = new Assign_PollMasters();
 
-            pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);
-            pollMasters.unassigned = new userModel().displayUnassignedPollMasterUsers(pollid);
+            pollMasters.assigned = new userModel().displayAssignedUsers(pollid, User_Type.POLL_MASTER);
+            pollMasters.unassigned = new userModel().displayUnassignedUsers(pollid, User_Type.POLL_MASTER);
 
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;
@@ -409,7 +476,7 @@ namespace DBPOLLDemo.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult AssignPoll(int pollid, int[] selectedObjects, String pollname)
+        public ActionResult AssignPollMaster(int pollid, int[] selectedObjects, String pollname)
         {
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
@@ -420,12 +487,15 @@ namespace DBPOLLDemo.Controllers
                 return RedirectToAction("Invalid", "Home");
             }
 
+
+
             new pollModel().assignPoll(pollid, selectedObjects);
 
+            String errorString = "";
             Assign_PollMasters pollMasters = new Assign_PollMasters();
 
-            pollMasters.assigned = new userModel().displayAssignedPollMasterUsers(pollid);
-            pollMasters.unassigned = new userModel().displayUnassignedPollMasterUsers(pollid);
+            pollMasters.assigned = new userModel().displayAssignedUsers(pollid, User_Type.POLL_MASTER);
+            pollMasters.unassigned = new userModel().displayUnassignedUsers(pollid, User_Type.POLL_MASTER);
 
             foreach (int id in selectedObjects)
             {
@@ -436,9 +506,13 @@ namespace DBPOLLDemo.Controllers
                 string mailSuccess = mail.send1();
                 if (!mailSuccess.Equals("Email sent successfully"))
                 {
-                    throw new Exception(mailSuccess);
+                    errorString += u.username + "\n";
+                    //throw new Exception(mailSuccess);
                 }
             }
+
+            if (errorString.Length != 0)
+                ViewData["emailError"] = "Could not send email to following Users: \n" + errorString;
 
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;
@@ -469,7 +543,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Invalid", "Home");
             }
-            new pollModel().unassignPollMaster(pollid, userid);
+            new pollModel().unassignPoll(pollid, userid);
 
             return RedirectToAction("AssignPoll", "Poll", new {pollid = pollid, pollname = pollname });
         }
