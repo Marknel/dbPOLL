@@ -26,12 +26,6 @@ namespace DBPOLLDemo.Controllers
         public List<List<int>> responseData { get; set; }
     }
 
-    //public class SyncAndAsyncSessions
-    //{
-    //    public List<pollModel> Sync { get; set; }
-    //    public List<pollModel> Async { get; set; }
-    //}
-
     public class SessionController : Controller
     {
 
@@ -98,19 +92,16 @@ namespace DBPOLLDemo.Controllers
             {
                 if (!Decimal.TryParse(latitudeBox, out parsedLatitude))
                 {
-                    //ViewData["latBox"] = "field is not a valid latitude";
                     ModelState.AddModelError("latBox", "field is not a valid latitude");
                     valid = false;
                 }
                 else if (!latRange.Contains((int)parsedLatitude))
                 {
-                    //ViewData["latBox"] = "Latitude is not between -90" + (char)176 + " and 90" + (char)176;
                     ModelState.AddModelError("latBox", "Latitude is not between -90" + (char)176 + " and 90" + (char)176);
                     valid = false;
                 }
                 if (!Decimal.TryParse(longitudeBox, out parsedLongitude))
                 {
-                    //ViewData["longBox"] = "field is not a valid longitude";
                     ModelState.AddModelError("longBox", "field is not a valid longitude");
                     valid = false;
                 }
@@ -121,27 +112,35 @@ namespace DBPOLLDemo.Controllers
                     valid = false;
                 }
             }
+            else
+            {
+                ModelState.AddModelError("latBox", "Please fill in both latitude and longitude or select a location from the map");
+                valid = false;
+            }
+
 
             if (!DateTime.TryParse(time, out parsedDate))
             {
 
                 if (time == "" || time == null)
                 {
-                    //ViewData["date1"] = "Above field must contain a date";
-                    ModelState.AddModelError("date1", "Above field must contain a date");
+                    ModelState.AddModelError("date1", "Please enter a date");
                 }
                 else
                 {
-                    //ViewData["date1"] = "Please Enter a correct Date";
                     ModelState.AddModelError("date1", "Please Enter a correct Date");
                 }
                 valid = false;
             }
-
-            if (parsedDate < DateTime.Now)
+            else if (parsedDate < DateTime.Now)
             {
-                //ViewData["date1"] = "Date incorrectly in the past.";
-                ModelState.AddModelError("date1", "Date incorrectly in the past.");
+                ModelState.AddModelError("date1", "Date entered incorrectly in the past.");
+                valid = false;
+            }
+
+            if (name.Equals(""))
+            {
+                ModelState.AddModelError("name1", "Please enter a session name");
                 valid = false;
             }
 
@@ -151,7 +150,6 @@ namespace DBPOLLDemo.Controllers
                 ViewData["pollName"] = pollName;
                 return View();
             }
-            
 
             if (valid == true)
             {

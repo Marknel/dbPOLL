@@ -128,9 +128,7 @@
             </th>
             <th class="style2">
                 Participant List
-            </th>
-            <th>
-            </th>
+            </th>          
         </tr>
         <% foreach (var item in Model.sessionData)
            { 
