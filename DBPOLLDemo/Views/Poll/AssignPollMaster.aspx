@@ -19,7 +19,7 @@
         <% foreach (var o in Model.assigned) { %>
         <tr>
          <td class="style2">
-           <%= Html.ActionLink("X", "UnassignPollUser", new {pollname = ViewData["pollname"], userid = o.UserID, pollid = ViewData["pollid"]})%>
+           <%= Html.ActionLink("X", "UnassignUser", new {pollname = ViewData["pollname"], userid = o.UserID, pollid = ViewData["pollid"]})%>
             </td>
             <td>
             <%= o.UserID %>
@@ -34,6 +34,8 @@
         <%}%>
         </table>
 
+
+<h3><%=ViewData["emailError"] %></h3>
     <h3>Poll Masters Unassigned to: <%=ViewData["pollname"] %></h3>
     <table>
     <tr>

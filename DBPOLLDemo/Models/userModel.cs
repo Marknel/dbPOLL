@@ -323,7 +323,7 @@ namespace DBPOLLDemo.Models
         /// </summary>
         /// <param name="pollid"></param>
         /// <returns></returns>
-        public List<userModel> displayAssignedPollMasterUsers(int pollid)
+        public List<userModel> displayAssignedUsers(int pollid, int usertype)
         {
             var query2 = from a in dbpollContext.ASSIGNEDPOLLS
                          where a.POLL_ID == pollid
@@ -331,7 +331,7 @@ namespace DBPOLLDemo.Models
 
 
             var query = from q in dbpollContext.USERS
-                        where q.USER_TYPE == User_Type.POLL_MASTER && query2.Contains(q.USER_ID)
+                        where q.USER_TYPE == usertype && query2.Contains(q.USER_ID)
                         orderby q.CREATED_AT ascending
                         select new userModel
                         {
@@ -351,7 +351,7 @@ namespace DBPOLLDemo.Models
         /// </summary>
         /// <param name="pollid"></param>
         /// <returns></returns>
-        public List<userModel> displayUnassignedPollMasterUsers(int pollid)
+        public List<userModel> displayUnassignedUsers(int pollid, int usertype)
         {
             var assignedUsers = from a in dbpollContext.ASSIGNEDPOLLS
                          where a.POLL_ID == pollid
@@ -359,7 +359,7 @@ namespace DBPOLLDemo.Models
 
 
             var unassignedUsers = from user in dbpollContext.USERS
-                        where user.USER_TYPE == User_Type.POLL_MASTER && !assignedUsers.Contains(user.USER_ID)
+                                  where user.USER_TYPE == usertype && !assignedUsers.Contains(user.USER_ID)
                         orderby user.CREATED_AT ascending
                         select new userModel
                         {
