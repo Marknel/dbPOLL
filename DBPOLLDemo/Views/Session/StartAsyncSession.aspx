@@ -101,7 +101,8 @@
                         <center>
                             <br />
                             <br />
-                            <% if ((String)Session["shortAnswer"] != null || (String)Session["shortAnswer"] != "") { %>
+                            <% 
+                                if ((String)Session["shortAnswer"] != null || (String)Session["shortAnswer"] != "") { %>
                                 <%=Html.TextArea("ShortQuestionAnswer", (String)Session["shortAnswer"]) %>
                             <%} %>
                         </center>
