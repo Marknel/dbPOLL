@@ -43,6 +43,12 @@
             <th>
             </th>
             <%} %>
+            <%  //Check if the user is authorized to assign poll masters
+                if (Int32.Parse(Session["user_type"].ToString()) > User_Type.POLL_CREATOR)
+                { %>
+            <th>
+            </th>
+            <%} %>
         </tr>
         <% foreach (var item in Model.pollData)
            { %>
