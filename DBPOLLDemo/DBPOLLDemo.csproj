@@ -39,7 +39,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data.Oracle, Version=6.30.196.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Linq, Version=2.50.29.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="Devart.Data.Oracle.Linq, Version=2.50.29.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -70,13 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AnswerController.cs" />
-    <Compile Include="Controllers\answerHistoryController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ObjectController.cs" />
-    <Compile Include="Controllers\PollObjectController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\PollController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -91,13 +89,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\answerModel.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Models\answerHistoryModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Models\pollObjectModel.cs">
+    <Compile Include="Models\answerModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\DBPOLL.Designer.cs">
@@ -109,14 +104,17 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\modelConstants.cs" />
-    <Compile Include="Models\questionObjectModel.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Models\participantModel.cs" />
     <Compile Include="Models\pollModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Models\pollObjectModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\questionModel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Models\questionObjectModel.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\responseModel.cs">
@@ -137,6 +135,7 @@
     <Content Include="Content\AnswerEdit.jpg" />
     <Content Include="Content\AnswerIndex.jpg" />
     <Content Include="Content\Back.jpg" />
+    <Content Include="Content\print3.css" />
     <Content Include="Content\f_keepad.gif" />
     <Content Include="Content\Help.css" />
     <Content Include="Content\helpbook.gif" />
@@ -159,7 +158,6 @@
     <Content Include="Content\QuestionIndex.jpg" />
     <Content Include="Content\QuestionviewQuestions.jpg" />
     <Content Include="Content\ReportIndex.jpg" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\technology_to_engage.gif" />
     <Content Include="Content\turningPoint_banner.jpg" />
     <Content Include="Default.aspx" />
@@ -172,7 +170,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
-    <Content Include="Views\answerHistory\Index.aspx" />
     <Content Include="Views\Answer\Create.aspx" />
     <Content Include="Views\Answer\CreateMethod.aspx" />
     <Content Include="Views\Answer\CreateTrueFalse.aspx" />
@@ -180,7 +177,6 @@
     <Content Include="Views\Answer\Edit.aspx" />
     <Content Include="Views\Answer\OpinionScale.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
-    <Content Include="Views\Answer\SevenOpinionScale.aspx" />
     <Content Include="Views\Help\AnswerEdit.aspx" />
     <Content Include="Views\Help\AnswerIndex.aspx" />
     <Content Include="Views\Help\HomeHome.aspx" />
@@ -199,8 +195,6 @@
     <Content Include="Views\Help\Site.aspx" />
     <Content Include="Views\Home\PollsIManage.ascx" />
     <Content Include="Views\Home\PollsImCreating.ascx" />
-    <Content Include="Views\PollObject\Create.aspx" />
-    <Content Include="Views\PollObject\Index.aspx" />
     <Content Include="Views\Home\ResetPassword.aspx" />
     <Content Include="Views\Message\Index.aspx" />
     <Content Include="Views\Message\publicMessages.ascx" />
@@ -214,7 +208,6 @@
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\RunDevices.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
-    <Content Include="Views\Question\Test.aspx" />
     <Content Include="Views\Report\DemographicComparison.aspx" />
     <Content Include="Views\Report\OneStatisticalReport.aspx" />
     <Content Include="Views\Report\ViewAllPoll.aspx" />
@@ -242,8 +235,7 @@
     <Content Include="Views\Report\SessionParticipation.aspx" />
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
-    <Content Include="Views\Session\StartAsyncSession.aspx" />
-    <Content Include="Views\Session\StartSyncSession.aspx" />
+    <Content Include="Views\Session\StartSession.aspx" />
     <Content Include="Views\Session\ViewAvailableSession.aspx" />
     <Content Include="Views\SysAdmin\DeleteConfirm.aspx" />
     <Content Include="Views\SysAdmin\RegisterUser.aspx" />
@@ -256,6 +248,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery-1.3.2.js" />
     <Content Include="Scripts\jquery-1.3.2.min.js" />
     <Content Include="Scripts\jquery-1.3.2-vsdoc.js" />

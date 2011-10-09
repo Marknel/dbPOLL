@@ -4639,6 +4639,30 @@ namespace DBPOLLDemo.Models
         private global::System.Int32 _NEXT_QUESTION;
         partial void OnNEXT_QUESTIONChanging(global::System.Int32 value);
         partial void OnNEXT_QUESTIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SYNC_TYPE
+        {
+            get
+            {
+                return _SYNC_TYPE;
+            }
+            set
+            {
+                OnSYNC_TYPEChanging(value);
+                ReportPropertyChanging("SYNC_TYPE");
+                _SYNC_TYPE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SYNC_TYPE");
+                OnSYNC_TYPEChanged();
+            }
+        }
+        private global::System.String _SYNC_TYPE;
+        partial void OnSYNC_TYPEChanging(global::System.String value);
+        partial void OnSYNC_TYPEChanged();
 
         #endregion
     

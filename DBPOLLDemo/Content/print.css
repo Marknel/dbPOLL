@@ -1,0 +1,49 @@
+﻿/* Remove unwanted elements */
+#header, #nav, .noprint, #footer
+{
+display: none;
+}
+
+/* Ensure the content spans the full width */
+#container, #container2, #content
+{
+width: 100%; margin: 0; float: none;
+}
+
+/* Change text colour to black (useful for light text on a dark background) */
+.lighttext
+{
+color: #000
+}
+
+/* Improve colour contrast of links */
+a:link, a:visited
+{
+color: #781351
+}
+
+
+table
+{
+	border-style:solid;
+	border-width: 1px;
+	border-color: Black;
+}
+
+table td
+{
+	padding: 5px;
+	border-style:solid;
+	border-width: 1px;
+	border-color: Black;
+}
+
+table th
+{
+	padding: 6px 5px;
+	text-align: left;
+	background-color: #E0F4A4;
+	border-style:solid;
+	border-width: 1px;
+	border-color: Black;
+}

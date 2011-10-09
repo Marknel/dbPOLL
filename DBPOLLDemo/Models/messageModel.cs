@@ -33,6 +33,8 @@ namespace DBPOLLDemo.Models
         public string senderName;
         public string recieverName;
         public int poll_ID;
+        public string pollName;
+        public string question;
         public int question_ID;
 
         //USER1 == sender
@@ -106,8 +108,7 @@ namespace DBPOLLDemo.Models
                     msg.Reciever_UID = usr.UserID;
                     msg.POLL_ID = pollID;
                     msg.QUESTION_ID = question_ID;
-
-
+                    
                     dbpollContext.AddToMESSAGES(msg);
                     dbpollContext.SaveChanges();
                 }
@@ -159,10 +160,16 @@ namespace DBPOLLDemo.Models
                             Modified_at = (DateTime)q.MODIFIED_AT,
                             sender_UID = q.USER1.USER_ID,
                             poll_ID = q.POLL_ID,
+                            pollName = q.POLL.POLL_NAME,
+                            //question = new questionModel((int)q.QUESTION_ID).question.ToString(),
                             senderName = q.USER1.NAME,
                             recieverName = q.USER.NAME
                         };
 
+
+
+
+            
             return query.ToList();
         }
 
@@ -179,6 +186,7 @@ namespace DBPOLLDemo.Models
                             Modified_at = (DateTime)q.MODIFIED_AT,
                             sender_UID = q.USER1.USER_ID,
                             poll_ID = q.POLL_ID,
+                            pollName = q.POLL.POLL_NAME,
                             senderName = q.USER1.NAME,
                             recieverName = q.USER.NAME
                         };
