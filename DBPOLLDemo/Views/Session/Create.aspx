@@ -101,23 +101,24 @@ void Page_Load(object source, EventArgs e){
 
     <h2>Create New Session for <%=ViewData["pollName"] %></h2>
 
-    <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
-
+<%--    <%= Html.ValidationSummary("Create was unsuccessful. Please correct the errors and try again.") %>
+--%>
     <% using (Html.BeginForm("CreateSession","Poll", FormMethod.Post)) {%>
 
         <fieldset>
             <legend>Session Data</legend>
             <p>
                 <label for="SESSIONNAME">Session Name:</label>
-
                 <%= Html.TextBox("name") %>
+                <%= Html.ValidationMessage("name1")%>
 
             </p>
+
+            <p style="width: 608px" class="style1"> Note: Time format: MM/DD/YYYY 12:00 </p>
             <p>
-                <label for="SESSIONTIME">Session Time:</label>
+                <label for="SESSIONTIME">Session Date and time:</label>
 
                 <%= Html.TextBox("time") %>
-                <%--<%= ViewData["date1"] %>--%>
                 <%= Html.ValidationMessage("date1")%>
 
             </p>
@@ -127,7 +128,6 @@ void Page_Load(object source, EventArgs e){
                 <label for="Longitude">Session Longitude :</label>
 
                 <%= Html.TextBox("longitudeBox") %>
-                <%--<%= ViewData["longBox"] %>--%>
                 <%= Html.ValidationMessage("longBox")%>
 
             </p>
@@ -136,8 +136,7 @@ void Page_Load(object source, EventArgs e){
                 <label for="Latitude">Session Latitiude:</label>
 
                 <%= Html.TextBox("latitudeBox") %>
-               <%-- <%= ViewData["latBox"] %>--%>
-               <%= Html.ValidationMessage("latBox")%>
+                <%= Html.ValidationMessage("latBox")%>
 
             </p>
             <p>
