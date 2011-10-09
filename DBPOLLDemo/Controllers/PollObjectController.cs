@@ -100,8 +100,6 @@ namespace DBPOLLDemo.Controllers
                 return View();
             }
 
-
-
             try
             {
                 switch (obtype)
