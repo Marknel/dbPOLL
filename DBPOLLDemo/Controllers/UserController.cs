@@ -20,10 +20,13 @@ namespace DBPOLLDemo.Controllers
         // This function displays the user creation screen
         public ActionResult RegisterUser()
         {
-            // Basic check to see if the user is Authenticated.
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             buildSelectList();
@@ -74,11 +77,20 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             bool errorspresent = false;
             // VALIDATE FORM DATA!
             if (name == null || name == "")
             {
                 ViewData["nameError"] = "Above field must contain a name!";
+                errorspresent = true;
+            }
+            else if (name.Length > 64)
+            {
+                ViewData["nameError"] = "Name is too long, maximum length allowed is 64 characters";
                 errorspresent = true;
             }
             //if (email == null || System.Text.RegularExpressions.Regex.IsMatch(email, @"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=
@@ -88,7 +100,11 @@ namespace DBPOLLDemo.Controllers
                 ViewData["emailError"] = "Above field must contain a valid email address!";
                 errorspresent = true;
             }
-
+            else if (email.Length > 64)
+            {
+                ViewData["emailError"] = "Email address is too long, maximum length allowed is 64 characters";
+                errorspresent = true;
+            }
             if (errorspresent)
             {
                 buildSelectList();
@@ -129,9 +145,13 @@ namespace DBPOLLDemo.Controllers
         public ActionResult RegisterUserSuccess()
         {
             // Basic check to see if the user is Authenticated.
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             return View();
@@ -173,6 +193,11 @@ namespace DBPOLLDemo.Controllers
                 ViewData["confirmPassword"] = "Please enter a new Password!";
                 return View();
             }
+            else if (newPassword.Length > 64)
+            {
+                ViewData["confirmPassword"] = "New password is too long";
+                return View();
+            }
 
             //confirm current password is correct
             userModel user = new userModel();
@@ -209,6 +234,10 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_USER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             int UserID = (int)Session["uid"];
             return View(new userModel().getUser(UserID));
         }
@@ -224,6 +253,10 @@ namespace DBPOLLDemo.Controllers
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_USER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             CultureInfo ci = Thread.CurrentThread.CurrentCulture;
