@@ -34,6 +34,12 @@
     <%= Html.ActionLink("Reports", "Index", "Report")%>
     <br />
     <br />
+    <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
+    <br />
+    <br />
+    <%= Html.ActionLink("Run Devices", "../Poll/RunDevices")%>
+    <br />
+    <br />
     <hr />
     <h3>
         Administer Poll</h3>
@@ -60,5 +66,5 @@
     <% } %>
     <br />
     <br />
-    <%= Html.ActionLink("Test Recievers", "../Poll/TestDevices")%>
+    
 </asp:Content>

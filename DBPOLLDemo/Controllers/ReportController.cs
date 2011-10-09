@@ -40,9 +40,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult SystemUtilisationReport()
         {
-            if (Session["sysadmin"] != "true")
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (!Session["sysadmin"].ToString().Equals("true"))
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             return View(new userModel().displayAllUsers());
         }

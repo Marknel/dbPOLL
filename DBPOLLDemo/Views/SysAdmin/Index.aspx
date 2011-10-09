@@ -19,10 +19,16 @@
                     UserID
                 </th>
                 <th nowrap="nowrap">
-                    UserName
+                    Email Address
                 </th>
                 <th nowrap="nowrap">
                     Name
+                </th>
+                <th nowrap="nowrap">
+                    Expires At
+                </th>
+                <th nowrap="nowrap">
+                    Last Modified
                 </th>
             </tr>
             <% foreach (var item in Model)
@@ -41,6 +47,12 @@
                 </td>
                 <td nowrap="nowrap">
                     <%= Html.Encode(item.Name)%>
+                </td>
+                <td nowrap="nowrap">
+                    <%= Html.Encode(item.Expires_At)%>
+                </td>
+                <td nowrap="nowrap">
+                    <%= Html.Encode(item.modifiedat)%>
                 </td>
             </tr>
             <% } %>

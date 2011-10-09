@@ -28,7 +28,7 @@ namespace DBPOLLDemo.Models
         public String createdby;
         public string sysAdmin;
 
-        public DateTime expiredat;
+        //public DateTime expiredat;
         public int UserID;
         public int UserType;
         public string Name;
@@ -64,10 +64,9 @@ namespace DBPOLLDemo.Models
                             UserID = q.USER_ID,
                             UserType = q.USER_TYPE,
                             username = q.USERNAME,
-                            Name = q.NAME
-                            //SysAdmin_ID = q.SYSADMIN_ID,
-                            //Created_By = q.CREATED_BY,
-                            //Expires_At = q.EXPIRES_AT
+                            Name = q.NAME,
+                            modifiedat = (DateTime)q.MODIFIED_AT,
+                            Expires_At = (DateTime)q.EXPIRES_AT
                         };
 
             return query.ToList();
@@ -235,7 +234,8 @@ namespace DBPOLLDemo.Models
                             where (u.USERNAME == username)
                             select new userModel
                             {
-                                UserID = u.USER_ID
+                                UserID = u.USER_ID,
+                                Expires_At = (DateTime)u.EXPIRES_AT
                             };
 
                 user = query.ToList()[0];
@@ -245,7 +245,6 @@ namespace DBPOLLDemo.Models
             {
                 return 0;
             }
-
         }
 
         public void updateUser(int UserID, DateTime Expires_At, string Name, string username)
@@ -354,20 +353,20 @@ namespace DBPOLLDemo.Models
         public List<userModel> displayUnassignedPollMasterUsers(int pollid)
         {
             var assignedUsers = from a in dbpollContext.ASSIGNEDPOLLS
-                         where a.POLL_ID == pollid
-                         select a.USER_ID;
+                                where a.POLL_ID == pollid
+                                select a.USER_ID;
 
 
             var unassignedUsers = from user in dbpollContext.USERS
-                        where user.USER_TYPE == User_Type.POLL_MASTER && !assignedUsers.Contains(user.USER_ID)
-                        orderby user.CREATED_AT ascending
-                        select new userModel
-                        {
-                            UserID = user.USER_ID,
-                            UserType = user.USER_TYPE,
-                            username = user.USERNAME,
-                            Name = user.NAME
-                        };
+                                  where user.USER_TYPE == User_Type.POLL_MASTER && !assignedUsers.Contains(user.USER_ID)
+                                  orderby user.CREATED_AT ascending
+                                  select new userModel
+                                  {
+                                      UserID = user.USER_ID,
+                                      UserType = user.USER_TYPE,
+                                      username = user.USERNAME,
+                                      Name = user.NAME
+                                  };
 
             return unassignedUsers.ToList();
         }
@@ -380,7 +379,7 @@ namespace DBPOLLDemo.Models
             List<USER> userList = new List<USER>();
             var query = from u in dbpollContext.USERS
                         where (u.USER_TYPE >= 0)
-                        orderby u.USER_TYPE
+                        orderby u.USER_TYPE descending
                         select new userModel
                         {
                             name = u.NAME,
@@ -393,7 +392,7 @@ namespace DBPOLLDemo.Models
                             sysAdmin = (String)(from s1 in dbpollContext.SYSADMINS
                                                 where (s1.SYSADMINS_ID == u.SYSADMIN_ID)
                                                 select s1.NAME).FirstOrDefault(),
-                            expiredat = (DateTime)u.EXPIRES_AT,
+                            Expires_At = (DateTime)u.EXPIRES_AT,
 
                         };
             return query.ToList();
