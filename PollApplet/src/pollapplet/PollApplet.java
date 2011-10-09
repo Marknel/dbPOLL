@@ -106,7 +106,7 @@ public class PollApplet extends javax.swing.JApplet {
                         initModel();
 
                         if (testQuestion == 0) {
-                            Polls.loadPolls(8);
+                            Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
 
                             while (selectedPoll == null) {
                                 selectedPoll = (dbPoll) JOptionPane.showInputDialog(
