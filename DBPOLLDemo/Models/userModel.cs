@@ -611,6 +611,7 @@ namespace DBPOLLDemo.Models
         public List<userModel> getUserList()
         {
             var query = from u in dbpollContext.USERS
+                        where u.NAME != "PUBLIC MESSAGE"
                         orderby u.NAME ascending
                         select new userModel
                         {

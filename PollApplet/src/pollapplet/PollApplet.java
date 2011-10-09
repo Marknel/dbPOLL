@@ -18,6 +18,8 @@ import com.turningtech.receiver.Receiver;
 import com.turningtech.receiver.ReceiverService;
 import com.turningtech.receiver.ResponseCardLibrary;
 import java.awt.Component;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.RefineryUtilities;
@@ -89,10 +92,10 @@ public class PollApplet extends javax.swing.JApplet {
                 @Override
                 public void run() {
                     try {
-                        
-                        
-                        if(getParameter("quest_id") != null){
-                            testQuestion = Integer.parseInt(getParameter("quest_id"));                        
+
+
+                        if (getParameter("quest_id") != null) {
+                            testQuestion = Integer.parseInt(getParameter("quest_id"));
                         }
                         //testQuestion = 1;
                         //Polls.loadPolls(10);
@@ -104,7 +107,7 @@ public class PollApplet extends javax.swing.JApplet {
 
                         if (testQuestion == 0) {
                             Polls.loadPolls(Integer.parseInt(getParameter("poll_master")));
-                                    
+
                             while (selectedPoll == null) {
                                 selectedPoll = (dbPoll) JOptionPane.showInputDialog(
                                         (Component) Frame,
@@ -137,6 +140,10 @@ public class PollApplet extends javax.swing.JApplet {
                         showError("Fatal Error: Could not Connect to database. F5 to continue.", ex);
                     }
                     setAnswers();
+                    if (testQuestion != 0) {
+                        nextQuestion.setEnabled(false);
+                        prevQuestion.setEnabled(false);
+                    }
                 }
             });
         } catch (Exception ex) {
@@ -907,31 +914,38 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
         startButton.setText("Stop Polling");
         startPollHandler(evt);
         try {
-            if (testQuestion == 0) {
-            Questions.openQuestion(selectedPoll.getSessionId(),
-                    selectedQuestion.getQuestionID());
-            
+            if (testQuestion != 0) {
+                Questions.openQuestion(selectedPoll.getSessionId(),
+                        selectedQuestion.getQuestionID());
+
             }
         } catch (SQLException ex) {
             showError("Fatal Error: Unable to update database. "
                     + "Restart application to resume polling", ex);
         }
-        nextQuestion.setEnabled(false);
-        prevQuestion.setEnabled(false);
+        if (testQuestion != 0) {
+            nextQuestion.setEnabled(false);
+            prevQuestion.setEnabled(false);
+        }
         polling = true;
     } else {
+        
+        
+
+        //createTestResponseSet();
+        final Chart demo;
 
         
-        createTestResponseSet();
-        Chart demo;
-        if (testQuestion == 0) {
+        if (testQuestion != 0) {
             demo = new Chart("Chart for Poll: " + selectedPoll.getPollName(), selectedQuestion.getQuestionText(), createGraphDataset(), selectedQuestion.getChartStyle());
-        }else{
-            demo = new Chart("Chart for Poll: " + "Dummy Poll", selectedQuestion.getQuestionText(), createGraphDataset(), selectedQuestion.getChartStyle());   
+        } else {
+            demo = new Chart("Chart for Poll: " + "Dummy Poll", selectedQuestion.getQuestionText(), createGraphDataset(), selectedQuestion.getChartStyle());
         }
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
+        
         demo.setVisible(true);
+        demo.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         startButton.setText("Start Polling");
         try {
@@ -941,16 +955,18 @@ private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
             poll.stop();
 
             // Close question to polling by synchronous web application
-            
-            if (testQuestion == 0) {
-            Questions.closeQuestion(selectedPoll.getSessionId(),
-                    selectedQuestion.getQuestionID());
+
+            if (testQuestion != 0) {
+                Questions.closeQuestion(selectedPoll.getSessionId(),
+                        selectedQuestion.getQuestionID());
             }
             testingInfoLabel.setText("Testing has finished. Please wait for instruction");
-            nextQuestion.setEnabled(true);
-            prevQuestion.setEnabled(true);
 
-            if (testQuestion == 0) {
+            if (testQuestion != 0) {
+                nextQuestion.setEnabled(true);
+                prevQuestion.setEnabled(true);
+            }
+            if (testQuestion != 0) {
                 dbResponses.saveResponses(responseListModel.responses, selectedPoll.getSessionId(), selectedQuestion.getQuestionID());
             }
             responseListModel = new ResponseListModel();

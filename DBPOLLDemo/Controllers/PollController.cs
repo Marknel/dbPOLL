@@ -533,7 +533,7 @@ namespace DBPOLLDemo.Controllers
         }
 
 
-        public ActionResult UnassignPollUser(int pollid, String pollname, int userid)
+        public ActionResult UnassignPollUser(int pollid, String pollname, int userid, bool master)
         {
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
@@ -545,7 +545,10 @@ namespace DBPOLLDemo.Controllers
             }
             new pollModel().unassignPoll(pollid, userid);
 
-            return RedirectToAction("AssignPoll", "Poll", new {pollid = pollid, pollname = pollname });
+            if(master)
+                return RedirectToAction("AssignPollMaster", "Poll", new { pollid = pollid, pollname = pollname });
+            return RedirectToAction("AssignPollCreator", "Poll", new {pollid = pollid, pollname = pollname });
         }
+
     }
 }
