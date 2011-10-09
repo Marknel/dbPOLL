@@ -1,4 +1,5 @@
-<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<DBPOLLDemo.Models.objectModel>" %>
+<%@ Page Title="" Language="C#" Culture="en-AU" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.questionObjectModel>>" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Create
@@ -31,6 +32,7 @@
                 <%= Html.TextBox("attribute")%>
                 <%= Html.ValidationMessage("attribute", "*")%>
             </p>
+            <p><%= ViewData["created"] %></p>
             <p>
                 <input type="submit" value="Create" />
             </p>

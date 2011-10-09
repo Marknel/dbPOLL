@@ -16,7 +16,7 @@
 
             <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum")%>
+                <%= Html.TextBox("ansnum", "1")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
             <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
@@ -50,16 +50,16 @@
 
             <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum1")%>
+                <%= Html.TextBox("ansnum1", "2")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
-            <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
+            <p style ="color: Red;"><%=ViewData["ansnumerror1"]%></p>
             <p>
                 <label for="answer">Answer Text:</label>
                 <%= Html.TextBox("answer1", "no")%>
                 <%= Html.ValidationMessage("answer", "*")%>
             </p>
-            <p style ="color: Red;"><%=ViewData["answererror"]%></p>
+            <p style ="color: Red;"><%=ViewData["answererror1"]%></p>
             <p>
                 <label for="correct">Correct Answer:</label>
                 <select id="Select1" name="correct1">
@@ -74,7 +74,7 @@
                 <%= Html.TextBox("weight1")%>
                 <%= Html.ValidationMessage("weight", "*")%>
             </p>
-             <p style ="color: Red;"><%=ViewData["weighterror"]%></p>
+             <p style ="color: Red;"><%=ViewData["weighterror1"]%></p>
 
 
 
@@ -85,16 +85,16 @@
 
             <p>
                 <label for="weight">Answer Number:</label>
-                <%= Html.TextBox("ansnum2")%>
+                <%= Html.TextBox("ansnum2", "3")%>
                 <%= Html.ValidationMessage("ansum", "*")%>
             </p>
-            <p style ="color: Red;"><%=ViewData["ansnumerror"]%></p>
+            <p style ="color: Red;"><%=ViewData["ansnumerror2"]%></p>
             <p>
                 <label for="answer">Answer Text:</label>
                 <%= Html.TextBox("answer2", "abstain")%>
                 <%= Html.ValidationMessage("answer", "*")%>
             </p>
-            <p style ="color: Red;"><%=ViewData["answererror"]%></p>
+            <p style ="color: Red;"><%=ViewData["answererror2"]%></p>
             <p>
                 <label for="correct">Correct Answer:</label>
                 <select id="Select2" name="correct2">
@@ -111,7 +111,7 @@
             </p>
 
 
-            <p style ="color: Red;"><%=ViewData["weighterror"]%></p>
+            <p style ="color: Red;"><%=ViewData["weighterror2"]%></p>
             <p><%=ViewData["created"]%></p>
             <p style ="color: Red;"><%=ViewData["mastererror"]%></p>
             

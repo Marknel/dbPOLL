@@ -23,28 +23,29 @@ namespace DBPOLLDemo.Models
         public int weight;
         public int ansnum;
         public int updatedto;
+        public int aid;
         public DateTime createdat;
         public DateTime modifiedat;
         public int questionid;
         private DBPOLLEntities dbpollContext = new DBPOLLEntities(); // ADO.NET data Context.
 
-        ANSWER a = new ANSWER();
+        ANSWER_HISTORY a = new ANSWER_HISTORY();
 
-        public answerHistoryModel(int answerhid, String answer, int correct, int weight, int ansnum)
+        public answerHistoryModel(int answerhid, String answer, int correct, int weight, int ansnum, int aid, DateTime createdat)
         {
-            a.ANSWER_ID = this.answerhid = answerhid;
-            a.ANSWER1 = this.answer = answer;
+            a.ANSWERH_ID = this.answerhid = answerhid;
+            a.ANSWER = this.answer = answer;
             a.CORRECT = this.correct = correct;
             a.WEIGHT = this.weight = weight;
             a.NUM = this.ansnum = ansnum;
-            a.CREATED_AT = DateTime.Now;
-            a.MODIFIED_AT = DateTime.Now;
+            a.CREATED_AT = this.createdat = createdat;
+            a.ANSWER_ID = this.aid = aid;
 
         }
 
         public answerHistoryModel(int answerhid)
         {
-            a.ANSWER_ID = this.answerhid = answerhid;
+            a.ANSWERH_ID = this.answerhid = answerhid;
         }
 
         public answerHistoryModel()
@@ -64,7 +65,9 @@ namespace DBPOLLDemo.Models
                             answer = a.ANSWER,
                             correct = (int)a.CORRECT,
                             weight = (int)a.WEIGHT,
-                            ansnum = (int)a.NUM
+                            ansnum = (int)a.NUM,
+                            aid = (int)a.ANSWER_ID,
+                            createdat = a.CREATED_AT
                         };
 
             return query.ToList();
@@ -96,7 +99,7 @@ namespace DBPOLLDemo.Models
             return query;
         }
 
-        public void createAnswerHistory(String answer, int correct, int weight, int ansnum)
+        public void createAnswerHistory(int answerid, String answer, int correct, int weight, int ansnum)
         {
             try
             {
@@ -110,9 +113,10 @@ namespace DBPOLLDemo.Models
                 a.NUM = ansnum;
                 a.CREATED_AT = DateTime.Now;
                 a.MODIFIED_AT = DateTime.Now;
+                a.ANSWER_ID = answerid;
 
                 dbpollContext.AddToANSWER_HISTORY(a);
-                dbpollContext.SaveChanges();
+                int status = dbpollContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -126,12 +130,12 @@ namespace DBPOLLDemo.Models
             {
                 var answerList =
                 from answers in dbpollContext.ANSWER_HISTORY
-                where answers.ANSWER_ID == this.answerhid
+                where answers.ANSWERH_ID == this.answerhid
                 select answers;
 
-                ANSWER_HISTORY a = answerList.FirstOrDefault<ANSWER_HISTORY>();
+                ANSWER_HISTORY ah = answerList.FirstOrDefault<ANSWER_HISTORY>();
                 
-                dbpollContext.DeleteObject(a);
+                dbpollContext.DeleteObject(ah);
                 dbpollContext.SaveChanges();
             }
             catch (Exception e)

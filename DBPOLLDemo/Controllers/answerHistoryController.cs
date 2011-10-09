@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using DBPOLLDemo.Models;
 
+using System.Threading;
+using System.Globalization;
+
 namespace DBPOLLDemo.Controllers
 {
     public class answerHistoryController : Controller
@@ -13,100 +16,73 @@ namespace DBPOLLDemo.Controllers
         //
         // GET: /answerHistory/
 
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            return View(new answerHistoryModel().displayAnswerHistory(id));
-        }
-
-        //
-        // GET: /answerHistory/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /answerHistory/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /answerHistory/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                return RedirectToAction("Invalid", "Home");
             }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /answerHistory/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        //
-        // POST: /answerHistory/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            answerHistoryModel a = new answerHistoryModel();
+            List<answerHistoryModel> list = a.displayAnswerHistory(id);
+            ViewData["name"] = name;
+            if (list.Count > 0)
             {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
+                
+                return View(list);
             }
-            catch
+            else 
             {
-                return View();
+                ViewData["message"] = "There are no previous versions of this answer.";
+                return View(list);
             }
         }
 
-        //
-        // GET: /answerHistory/Delete/5
- 
-        public ActionResult Delete(int id)
+
+        public ActionResult Revert(int answerid, String answer, int correct, String weight, string ansnum)
         {
-            return View();
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+            
+            answerModel a = new answerModel();
+            a = a.getAnswer(answerid);
+
+            /* Create a record of the old answer in the Answer History table */
+            new answerHistoryModel(answerid).createAnswerHistory(a.answerid, a.answer, a.correct, a.weight, a.ansnum);
+
+            /* Update the answer*/
+            a.updateAnswer(answerid, answer, correct, int.Parse(weight), int.Parse(ansnum));
+            a = a.getAnswer(answerid);
+            return RedirectToAction("Index", "answerHistory", new { id = a.answerid, name = a.answer } );
         }
 
-        //
-        // POST: /answerHistory/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int aid, int ahid) 
         {
-            try
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
-            catch
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
-                return View();
+                return RedirectToAction("Invalid", "Home");
             }
+
+            new answerHistoryModel(ahid).deleteAnswerHistory();
+
+            answerModel a = new answerModel();
+            a = a.getAnswer(aid);
+            return RedirectToAction("Index", "answerHistory", new { id = a.answerid, name = a.answer });
         }
     }
+  
 }

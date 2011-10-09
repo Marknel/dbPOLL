@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.ANSWER_HISTORY>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<DBPOLLDemo.Models.answerHistoryModel>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Index
@@ -6,81 +6,65 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Index</h2>
-
+    <h2>Answer History for : <%= Html.Encode(ViewData["name"]) %></h2>
+    <% if (Model.Count() == 0)
+       {%>
+        <p style ="color: Red;"><%=ViewData["message"]%></p>
+    <%} %>
+    <%else
+        { %>
     <table>
         <tr>
-            <th></th>
+            <th>Actions</th>
+            <th>Number</th>
+            <th>Answer</th>
+            <th>Weight</th>
+            <th>Correct</th>
             <th>
-                ANSWERH_ID
-            </th>
-            <th>
-                ANSWER
-            </th>
-            <th>
-                CORRECT
-            </th>
-            <th>
-                WEIGHT
-            </th>
-            <th>
-                NUM
-            </th>
-            <th>
-                CREATED_AT
-            </th>
-            <th>
-                MODIFIED_AT
-            </th>
-            <th>
-                ANSWER_ID
+                Created Date
             </th>
         </tr>
 
-    <% foreach (var item in Model) { %>
+    <% foreach (var item in Model)
+       { %>
     
         <tr>
             <td>
-                <%: Html.ActionLink("Edit", "Edit", new { id=item.ANSWERH_ID }) %> |
-                <%: Html.ActionLink("Details", "Details", new { id=item.ANSWERH_ID })%> |
-                <%: Html.ActionLink("Delete", "Delete", new { id=item.ANSWERH_ID })%>
+                <%: Html.ActionLink("Revert", "Revert", new { answerid = item.aid, answer = item.answer, correct = item.correct, weight = item.weight, ansnum = item.ansnum })%> | 
+                <%: Html.ActionLink("Delete", "Delete", new { aid = item.aid, ahid = item.answerhid })%>
             </td>
             <td>
-                <%: item.ANSWERH_ID %>
+                <%: item.ansnum%>
             </td>
             <td>
-                <%: item.ANSWER %>
+                <%: item.answer%>
             </td>
+
             <td>
-                <%: item.CORRECT %>
+                <%: item.weight%>
             </td>
+
             <td>
-                <%: item.WEIGHT %>
+                <%String correct;
+                  if (item.correct == 0) { correct = ""; }
+                  else { correct = "Yes"; }
+            %>
+                <%= Html.Encode(correct)%>
             </td>
-            <td>
-                <%: item.NUM %>
-            </td>
-            <td>
-                <%: String.Format("{0:g}", item.CREATED_AT) %>
-            </td>
-            <td>
-                <%: String.Format("{0:g}", item.MODIFIED_AT) %>
-            </td>
-            <td>
-                <%: item.ANSWER_ID %>
+
+
+            <td nowrap="nowrap">
+                <%= Html.Encode(String.Format("{0:g}", item.createdat)) %>
             </td>
         </tr>
     
     <% } %>
-
+<% } %>
     </table>
-
-    <p>
-        <%: Html.ActionLink("Create New", "Create") %>
-    </p>
 
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
+
 

@@ -45,7 +45,7 @@ height: 100%;
 }
 
 hr{
-size: 1;
+
 color: #1BA1CD;
 width: 100%;
 }
@@ -54,7 +54,7 @@ pics.a{
 border-style: none;
 border-width: 0px;
 padding: 0;
-color: none;
+
 text-decoration: none;
 }
 
@@ -86,7 +86,7 @@ font-family: Georgia;
 
 #content h3
 {
-color: white;
+color: black;
 font-family: Georgia;
 }
 
@@ -107,20 +107,15 @@ padding-bottom: 10px;
 }
 
 #content a:hover{
-color: white;
+color: black;
 }
 
 #footer
 {
 font-family: Georgia;
 width: 100%
-height: auto;
-float: bottom;
-border-top-color: #E2E2E2;
-border-top-style: dotted;
-border-top-width: 1px;
-position: relative;
-top: 50px;
+
+
 }
 
 #footer ul{

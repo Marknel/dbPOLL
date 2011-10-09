@@ -20,6 +20,8 @@ namespace DBPOLLDemo.Models
         public String createdmaster;
         public String createdcreator1;
         public String sessionName;
+        public String syncType;
+        public int currentquestion;
         public bool sessionParticipantList;
         public int total;
 
@@ -587,6 +589,8 @@ namespace DBPOLLDemo.Models
                              sessionname = s.SESSION_NAME,
                              pollname = poll.POLL_NAME,
                              expiresat = poll.EXPIRES_AT,
+                             currentquestion = s.NEXT_QUESTION,
+                             syncType = s.SYNC_TYPE,
                          }
 
                 ).Distinct();
@@ -608,13 +612,29 @@ namespace DBPOLLDemo.Models
                              pollname = p.POLL_NAME,
                              sessionid = s.SESSION_ID,
                              sessionname = s.SESSION_NAME,
-                             expiresat = poll.EXPIRES_AT,
-                             
+                             expiresat = p.EXPIRES_AT,
+                             currentquestion = s.NEXT_QUESTION,
                          }
 
                 ).Distinct();
             
             return query.ToList();
         }
+
+        public Boolean isOpen(int sessionid)
+        {
+            var query = (from s in dbpollContext.SESSIONS
+                         where s.SESSION_ID == sessionid &&
+                         s.NEXT_QUESTION != 0
+                         select s.SESSION_ID
+                        );
+
+            if (query.FirstOrDefault() == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        
     }
 }
