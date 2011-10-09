@@ -178,12 +178,15 @@
     <Content Include="Views\Answer\Edit.aspx" />
     <Content Include="Views\Answer\OpinionScale.aspx" />
     <Content Include="Views\Answer\Index.aspx" />
+    <Content Include="Views\Answer\SevenOpinionScale.aspx" />
     <Content Include="Views\Help\AnswerEdit.aspx" />
     <Content Include="Views\Help\AnswerIndex.aspx" />
     <Content Include="Views\Help\HomeHome.aspx" />
     <Content Include="Views\Help\Index.aspx" />
     <Content Include="Views\Help\ObjectIndex.aspx" />
+    <Content Include="Views\Help\PollAssignPoll.aspx" />
     <Content Include="Views\Help\PollIndex.aspx" />
+    <Content Include="Views\Help\PollRunDevices.aspx" />
     <Content Include="Views\Help\PollTestDevices.aspx" />
     <Content Include="Views\Help\PollViewPolls.aspx" />
     <Content Include="Views\Help\QuestionCreate.aspx" />
@@ -192,8 +195,20 @@
     <Content Include="Views\Help\QuestionEdit.aspx" />
     <Content Include="Views\Help\QuestionIndex.aspx" />
     <Content Include="Views\Help\QuestionviewQuestions.aspx" />
+    <Content Include="Views\Help\ReportDemographicComparison.aspx" />
     <Content Include="Views\Help\ReportIndex.aspx" />
+    <Content Include="Views\Help\ReportOneStatisticalReport.aspx" />
+    <Content Include="Views\Help\ReportSessionHistoryReport.aspx" />
+    <Content Include="Views\Help\ReportSessionParticipation.aspx" />
+    <Content Include="Views\Help\SessionCreate.aspx" />
+    <Content Include="Views\Help\SessionEdit.aspx" />
     <Content Include="Views\Help\Site.aspx" />
+    <Content Include="Views\Help\UserChangePassword.aspx" />
+    <Content Include="Views\Help\UserEdit.aspx" />
+    <Content Include="Views\Help\UserRegisterUser.aspx" />
+    <Content Include="Views\Home\Home.aspx" />
+    <Content Include="Views\Home\Invalid.aspx" />
+    <Content Include="Views\Home\Login.aspx" />
     <Content Include="Views\Home\PollsIManage.ascx" />
     <Content Include="Views\Home\PollsImCreating.ascx" />
     <Content Include="Views\Home\ResetPassword.aspx" />
@@ -209,6 +224,7 @@
     <Content Include="Views\Poll\AssignPoll.aspx" />
     <Content Include="Views\Poll\RunDevices.aspx" />
     <Content Include="Views\Poll\Create.aspx" />
+    <Content Include="Views\Question\Test.aspx" />
     <Content Include="Views\Report\DemographicComparison.aspx" />
     <Content Include="Views\Report\OneStatisticalReport.aspx" />
     <Content Include="Views\Report\ViewAllPoll.aspx" />
@@ -236,8 +252,12 @@
     <Content Include="Views\Report\SessionParticipation.aspx" />
     <Content Include="Views\Report\StatisticalReport.aspx" />
     <Content Include="Views\Report\SystemUtilisationReport.aspx" />
+    <Content Include="Views\Session\StartAsyncSession.aspx" />
     <Content Include="Views\Session\StartSession.aspx" />
+    <Content Include="Views\Session\StartSyncSession.aspx" />
     <Content Include="Views\Session\ViewAvailableSession.aspx" />
+    <Content Include="Views\SysAdmin\Create.aspx" />
+    <Content Include="Views\SysAdmin\Delete.aspx" />
     <Content Include="Views\SysAdmin\DeleteConfirm.aspx" />
     <Content Include="Views\SysAdmin\RegisterUser.aspx" />
     <Content Include="Views\SysAdmin\DeleteSuccess.aspx" />
@@ -245,6 +265,7 @@
     <Content Include="Views\SysAdmin\Index.aspx" />
     <Content Include="Views\SysAdmin\RegisterUserSuccess.aspx" />
     <Content Include="Views\User\Edit.aspx" />
+    <Content Include="Views\User\New.aspx" />
     <Content Include="Views\User\RegisterUserSuccess.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -281,6 +302,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBPOLL.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Views\Shared\Blank.Master" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />

@@ -56,7 +56,6 @@ public class Chart extends ApplicationFrame {
             chart = createVerticalBarChart(dataset, graphTitle);
             
         }
-        
         //final JFreeChart chart = createVerticalBarChart(dataset, graphTitle);
         final ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(800, 600));
