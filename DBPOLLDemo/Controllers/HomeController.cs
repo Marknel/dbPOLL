@@ -20,6 +20,7 @@ namespace DBPOLLDemo.Controllers
             }
             if (Session["sysadmin"].ToString().Equals("true"))
             {
+
                 return RedirectToAction("Invalid", "Home");
             }
 
@@ -59,6 +60,14 @@ namespace DBPOLLDemo.Controllers
             if (authenticated != 0)
             {
                 user = user.getUser(authenticated);
+                if (user.Expires_At != new DateTime())
+                {
+                    if (user.Expires_At.CompareTo(DateTime.Now) < 0)
+                    {
+                        ViewData["Message"] = "User account has expired";
+                        return View();
+                    }
+                }
                 Session["user_type"] = type;
                 Session["sysadmin"] = "false";
                 if (user.Reset_Password_Key != null && user.Reset_Password_Key.Equals("Created"))

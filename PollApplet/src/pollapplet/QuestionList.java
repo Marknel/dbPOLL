@@ -59,6 +59,48 @@ public class QuestionList {
             stmt.close();
     }
 
+    
+    public void loadTestQuestion(int QuestionID) throws SQLException {
+        Connection con;
+        questions = new LinkedList();
+            // pull all polls for poll master into applet
+            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+            con = DriverManager.getConnection("jdbc:oracle:thin:@oracle.students.itee.uq.edu.au:1521:iteeo", "csse3004gg", "groupg");
+
+            Statement stmt = con.createStatement();
+            ResultSet rset = stmt.executeQuery(
+                    "SELECT QUESTION_ID, QUESTION_TYPE, QUESTION, CHART_STYLE, SHORT_ANSWER_TYPE, NUM, NUMBER_OF_RESPONSES"
+                    + " FROM QUESTIONS Q"
+                    + " WHERE Q.QUESTION_ID = " + QuestionID);
+
+            while (rset.next()) {
+                int shorttype;
+                int numResp;
+
+                if (rset.getString("SHORT_ANSWER_TYPE") == null) {
+                    shorttype = -1;
+                } else {
+                    shorttype = Integer.parseInt(rset.getString("SHORT_ANSWER_TYPE"));
+                }
+
+                if (rset.getString("NUMBER_OF_RESPONSES") == null) {
+                    numResp = -1;
+                } else {
+                    numResp = Integer.parseInt(rset.getString("NUMBER_OF_RESPONSES"));
+                }
+
+                questions.add(new dbQuestion(
+                        Integer.parseInt(rset.getString("QUESTION_ID")),
+                        Integer.parseInt(rset.getString("QUESTION_TYPE")),
+                        rset.getString("QUESTION"),
+                        Integer.parseInt(rset.getString("CHART_STYLE")),
+                        shorttype,
+                        Integer.parseInt(rset.getString("NUM")),
+                        numResp));
+            }
+            stmt.close();
+    }
+    
     /**
      * Sets the database next question value so that synchronous polling can be
      * performed between applet and web interface.

@@ -18,9 +18,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index(int id, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             answerHistoryModel a = new answerHistoryModel();
@@ -41,10 +45,15 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Revert(int answerid, String answer, int correct, String weight, string ansnum)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+            
             answerModel a = new answerModel();
             a = a.getAnswer(answerid);
 
@@ -59,6 +68,15 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Delete(int aid, int ahid) 
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             new answerHistoryModel(ahid).deleteAnswerHistory();
 
             answerModel a = new answerModel();

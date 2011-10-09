@@ -17,29 +17,30 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index(int pollid, String pollname)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             ViewData["pollid"] = pollid;
             ViewData["pollname"] = pollname;
             return View(new pollObjectModel().indexObjects(pollid));
         }
-
-        //
-        // GET: /Object/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        
+       
         public ActionResult Delete(int objectid, int pollid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             pollObjectModel ob = new pollObjectModel(objectid);
@@ -53,9 +54,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Create(int pollid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             ViewData["pollid"] = pollid;
             return View();
@@ -67,9 +72,13 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(int obtype, String attribute, int pollid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
 
@@ -78,13 +87,11 @@ namespace DBPOLLDemo.Controllers
 
             pollObjectModel ob = new pollObjectModel();
 
-            if (ob.getObject(obtype).obid != -1)
+            if (ob.getObject(obtype, pollid).obid != -1)
             {
                 ViewData["created"] = "This object already exists.";
                 return View();
             }
-
-
 
             try
             {
@@ -115,30 +122,5 @@ namespace DBPOLLDemo.Controllers
             }
         }
 
-        //
-        // GET: /Object/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Object/Edit/5
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

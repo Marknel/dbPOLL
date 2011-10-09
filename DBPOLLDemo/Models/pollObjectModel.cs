@@ -62,10 +62,10 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
-        public pollObjectModel getObject(int id)
+        public pollObjectModel getObject(int id, int pollid)
         {
             var query = from o in dbpollContext.POLL_OBJECTS_DFLT
-                        where o.O_ID == id
+                        where o.O_ID == id && o.P_ID == pollid
                         select new pollObjectModel
                         {
                             obid = o.O_ID,

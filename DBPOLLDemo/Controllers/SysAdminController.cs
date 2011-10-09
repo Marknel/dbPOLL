@@ -19,8 +19,7 @@ namespace DBPOLLDemo.Controllers
             if (!Session["sysadmin"].ToString().Equals("true"))
             {
                 return RedirectToAction("Invalid", "Home");
-            }
-            
+            }            
             return View(new userModel().displayPollAdminUsers());
         }
 

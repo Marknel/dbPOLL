@@ -20,10 +20,15 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Index(int id, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
 
             ViewData["name"] = name;
             ViewData["id"] = id;
@@ -37,16 +42,20 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult viewQuestions(int pollid)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             CultureInfo culture = new CultureInfo("en-AU");
             culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
             culture.DateTimeFormat.ShortTimePattern = string.Empty;
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-
-            if (Session["uid"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             if (pollid == 0)
             {
@@ -61,6 +70,15 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult viewQuestions(int pollid, String date1, String date2)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             bool valid = true;
             DateTime startdate;
             DateTime enddate;
@@ -140,10 +158,15 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Details(int id, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             ViewData["name"] = name;
             return RedirectToAction("Index", "Answer", new {id, name});
         }
@@ -161,10 +184,13 @@ namespace DBPOLLDemo.Controllers
         public ActionResult Delete(int questionid, int id, String name)
         {
 
-            // Basic check to see if the user is Authenticated.
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
 
@@ -181,7 +207,14 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Create(int pollid, String name)
         {
-            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
 
             ViewData["name"] = name;
@@ -197,7 +230,14 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult CreateShortAnswer(int pollid)
         {
-            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             ViewData["id"] = pollid;
             return View();
@@ -215,7 +255,14 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateShortAnswer(int shortanswertype, String num, String question, int chartstyle, int pollid)
         {
-            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             // Allows insertion of Australian formatted dates
             CultureInfo culture = new CultureInfo("en-AU");
@@ -273,7 +320,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult CreateMultipleChoice(int pollid)
         {
-            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             ViewData["id"] = pollid;
             return View();
@@ -285,7 +339,14 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateMultipleChoice(String num, int questiontype, String question, int chartstyle, int pollid)
         {
-            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             CultureInfo culture = new CultureInfo("en-AU");
             culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
@@ -350,9 +411,13 @@ namespace DBPOLLDemo.Controllers
         /// <returns></returns>
         public ActionResult Edit(int questionid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             return View(new questionModel().getQuestion(questionid));
@@ -366,7 +431,14 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int questionid, int questiontype, String question, int chartstyle, int num, DateTime createdat, int pollid)
         {
-            if (Session["uid"] == null){return RedirectToAction("Index", "Home");}
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             CultureInfo culture = new CultureInfo("en-AU");
             culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
@@ -391,7 +463,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Test(int questionid, String name, int num_response)
         {
-            if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             CultureInfo culture = new CultureInfo("en-AU");
             culture.DateTimeFormat.ShortDatePattern = "d/M/yyyy";
@@ -416,11 +495,29 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Keypad(int qid)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+            ViewData["qid"] = qid;
             return View();
         }
 
         public ActionResult Result(int aid)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             return View();
         }
     }
