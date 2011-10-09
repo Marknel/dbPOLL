@@ -219,6 +219,7 @@
     <Content Include="Views\Message\sendFeedback.ascx" />
     <Content Include="Views\Message\sendMessageSuccess.aspx" />
     <Content Include="Views\Message\sendPrivateMessage.aspx" />
+    <Content Include="Views\Message\sendPublicMessage.aspx" />
     <Content Include="Views\Message\sentMessages.ascx" />
     <Content Include="Views\Participant\Modify.aspx" />
     <Content Include="Views\PollObject\Create.aspx" />

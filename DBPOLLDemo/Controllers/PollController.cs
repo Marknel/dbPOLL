@@ -547,5 +547,6 @@ namespace DBPOLLDemo.Controllers
 
             return RedirectToAction("AssignPoll", "Poll", new {pollid = pollid, pollname = pollname });
         }
+
     }
 }
