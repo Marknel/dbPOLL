@@ -94,7 +94,7 @@ namespace DBPOLLDemo.Controllers
 
             pollObjectModel ob = new pollObjectModel();
 
-            if (ob.getObject(obtype).obid != -1)
+            if (ob.getObject(obtype, pollid).obid != -1)
             {
                 ViewData["created"] = "This object already exists.";
                 return View();

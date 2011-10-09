@@ -77,6 +77,7 @@
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\PollController.cs" />
+    <Compile Include="Controllers\PollObjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
