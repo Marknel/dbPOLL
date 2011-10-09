@@ -43,7 +43,9 @@
                        { %>
                     <%--SysAdmin Only--%>
                     <li>
-                        <%= Html.ActionLink("System Administrator", "Index", "SysAdmin")%></li>
+                        <%= Html.ActionLink("System Administrator Home", "Index", "SysAdmin")%></li>
+                        <li>
+                        <%= Html.ActionLink("Create Poll Administrator", "RegisterUser", "SysAdmin")%></li>
                     <% }
                        else
                        {%>
@@ -68,8 +70,7 @@
                            { %>
                                 <li>
                                     <%= Html.ActionLink("Edit My Details", "Edit", "User")%></li>
-                                <li>
-                                    <%= Html.ActionLink("Reports", "Index", "Report")%></li>
+                                
                                     <li>
                                 <%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>    
                         <% } %>
@@ -81,12 +82,18 @@
                             { %>
                             <li>
                                 <%= Html.ActionLink("Define Poll", "Create", "Poll")%></li>
+                                <li>
+                                    <%= Html.ActionLink("Reports", "Index", "Report")%></li>
                             
+                        <% } %>
+                        <% if ((int)Session["user_type"] > 1)
+                            { %>
+                            <li>
+                        <%= Html.ActionLink("Help", "Index", "Help")%></li>
                         <% } %>
                     <% }%>
                     <%} %>
-                    <li>
-                        <%= Html.ActionLink("Help", "Index", "Help")%></li>
+                    
                 </ul>
             </div>
         </div>
