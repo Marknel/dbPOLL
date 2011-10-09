@@ -15,9 +15,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Index(int id, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             ViewData["questionname"] = name;
@@ -31,9 +35,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Details(int id, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             return RedirectToAction("Index", "answerHistory", new { id, name });
@@ -41,9 +49,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Delete(int answerid, int questionid, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             answerModel a = new answerModel(answerid);
@@ -53,7 +65,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult CreateMethod(int questionid, String name)
         {
-            if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             ViewData["name"] = name;
             ViewData["questionid"] = questionid;
@@ -65,9 +84,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Create(int questionid, String name)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
 
             ViewData["name"] = name;
@@ -81,10 +104,15 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(String answer, int correct, String weight, int questionid, string ansnum)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             bool errorspresent = false;
             int weightInt = 0;
             int ansnumInt = 0;
@@ -161,7 +189,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult CreateTrueFalse(int questionid)
         {
-            if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             ViewData["questionid"] = questionid;
             return View();
@@ -170,9 +205,13 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateTrueFalse(String answer, int correct, String weight, int questionid, string ansnum, String answer1, int correct1, String weight1, string ansnum1)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             bool errorspresent = false;
             int weightInt = 0;
@@ -267,7 +306,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult CreateYesNoAbstain(int questionid)
         {
-            if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             ViewData["questionid"] = questionid;
             return View();
@@ -277,9 +323,13 @@ namespace DBPOLLDemo.Controllers
         public ActionResult CreateYesNoAbstain(String answer, int correct, String weight, int questionid, String ansnum, String answer1, int correct1, String weight1, String ansnum1, 
             String answer2, int correct2, String weight2, String ansnum2)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             bool errorspresent = false;
             int weightInt = 0;
@@ -403,9 +453,13 @@ namespace DBPOLLDemo.Controllers
             String answer2, int correct2, String weight2, String ansnum2, String answer3, int correct3, String weight3, String ansnum3,
             String answer4, int correct4, String weight4, String ansnum4)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             bool errorspresent = false;
             int weightInt = 0;
@@ -549,7 +603,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult SevenOpinionScale(int questionid)
         {
-            if (Session["uid"] == null) { return RedirectToAction("Index", "Home"); }
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
 
             ViewData["questionid"] = questionid;
             return View();
@@ -562,9 +623,13 @@ namespace DBPOLLDemo.Controllers
             String answer5, int correct5, String weight5, String ansnum5,
             String answer6, int correct6, String weight6, String ansnum6)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             bool errorspresent = false;
             int weightInt = 0;
@@ -742,9 +807,13 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Edit(int answerid, int questionid)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             ViewData["questionid"] = questionid;
             return View(new answerModel().getAnswer(answerid));
@@ -756,9 +825,13 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int answerid, String answer, int correct, String weight, int questionid, String ansnum)
         {
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
             }
             int weightInt = 0;
             int ansnumInt = 0;
