@@ -76,12 +76,13 @@ namespace DBPOLLDemo.Controllers
             ViewData["questionid"] = questionid;
 
             questionObjectModel ob = new questionObjectModel();
-            if (ob.getObject(obtype).obid != -1) {
+            int a = ob.getObject(obtype, questionid).obid;
+            if (ob.getObject(obtype, questionid).obid != -1)
+            {
                 ViewData["created"] = "This object already exists.";
                 return View();
             }
 
-            
             try
             {
                 switch (obtype)

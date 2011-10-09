@@ -13,8 +13,6 @@
 
     <% using (Html.BeginForm()) {%>
 
-
-
         <fieldset>
             <legend>New Object</legend>
             <p>

@@ -45,7 +45,7 @@
                 <%= Html.ActionLink("Edit", "Edit", new {name=item.pollname, id = item.pollid}) %> |
                 <%= Html.ActionLink("View Questions", "Details", new {id=item.pollid, name=item.pollname})%> |
                 <%= Html.ActionLink("View Default Objects", "../PollObject/Index", new { pollid = item.pollid, pollname = item.pollname })%> |
-                <%= Html.ActionLink("Create New Session", "CreateSession", new {pollID = item.pollname, pollName = item.pollname})%>
+                <%= Html.ActionLink("Create New Session", "CreateSession", new {pollID = item.pollid, pollName = item.pollname})%>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.pollname) %>

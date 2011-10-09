@@ -50,10 +50,10 @@ namespace DBPOLLDemo.Models
             return query.ToList();
         }
 
-        public questionObjectModel getObject(int id)
+        public questionObjectModel getObject(int id, int questionid)
         {
             var query = from o in dbpollContext.QUESTION_OBJECTS
-                        where o.O_ID == id
+                        where o.O_ID == id && o.Q_ID == questionid
                         select new questionObjectModel
                         {
                             obid = o.O_ID,
