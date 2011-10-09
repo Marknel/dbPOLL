@@ -10,6 +10,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GradientPaint;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -30,7 +33,7 @@ import org.jfree.ui.ApplicationFrame;
  * A simple demonstration application showing how to create a bar chart.
  *
  */
-public class Chart extends ApplicationFrame {
+public class Chart extends JFrame {
 
     /**
      * Creates a new demo instance.
@@ -40,9 +43,10 @@ public class Chart extends ApplicationFrame {
     public Chart(final String title, String graphTitle, CategoryDataset dataset, int chartType) {
 
         super(title);
+        
 
         //final CategoryDataset dataset = createDataset();
-        JFreeChart chart;
+        final JFreeChart chart;
         if(chartType == 1){
             chart = createHorizontalBarChart(dataset, graphTitle);
             
@@ -59,6 +63,10 @@ public class Chart extends ApplicationFrame {
         //final JFreeChart chart = createVerticalBarChart(dataset, graphTitle);
         final ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(800, 600));
+        
+
+     
+        
         setContentPane(chartPanel);
 
     }
@@ -68,7 +76,7 @@ public class Chart extends ApplicationFrame {
     private JFreeChart createHorizontalBarChart(final CategoryDataset dataset, String title) {
 
         // create the chart...
-        JFreeChart chart = ChartFactory.createBarChart(
+        final JFreeChart chart = ChartFactory.createBarChart(
                 title, // chart title
                 "Category", // domain axis label
                 "Value", // range axis label
@@ -250,7 +258,7 @@ public class Chart extends ApplicationFrame {
     private JFreeChart createVerticalBarChart(final CategoryDataset dataset, String title) {
 
         // create the chart...
-        JFreeChart chart = ChartFactory.createBarChart(
+        final JFreeChart chart = ChartFactory.createBarChart(
                 title, // chart title
                 "Category", // domain axis label
                 "Value", // range axis label
