@@ -29,16 +29,17 @@
 </div> <!-- end of navwrapper div -->
 	<div id="contentwrapper">
 		<div id="content">
-		<a name="top"></a>
-		<h2>Test Devices Help</h2><hr />
+		
+		<h2>Session Create Help</h2><hr />
 		    <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">This component tests 
-                receivers, RF Channels and keypads.<b><o:p></o:p></b></span></p>
-		    <p class="MsoNormal">
-                &nbsp;</p>
+                In this page user can add session data such as session name ,time ,longitude 
+                and latitiude for a poll.</p>
+            <p class="MsoNormal">
+                <o:p></o:p>
+            </p>
             <p>
 		
-    <img src="../../Content/PollTestDevices.jpg" width="800" />
+    <img src="../../Content/SessionCreate.jpg" width="800" />
 		
 		</div> <!-- end of content div-->
 	</div> <!-- end of contentwrapper div-->
