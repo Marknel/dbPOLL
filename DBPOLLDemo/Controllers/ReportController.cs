@@ -34,7 +34,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -57,7 +57,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult StatisticalReport()
         {
-
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             TwoQuestionModels twoModels = new TwoQuestionModels();
 
             twoModels.data1 = new questionModel().displayQuestionsAnswer();
@@ -68,6 +75,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult OneStatisticalReport(int pollID)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             //return View(new questionModel().displayOneQuestionAnswer(pollID));
 
             TwoQuestionModels twoModels = new TwoQuestionModels();
@@ -80,17 +95,34 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult SessionHistoryReport()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             return View(new pollModel().displayAllPolls());
         }
 
         public ActionResult SessionParticipation()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             return View(new questionModel().displayAttendance());
         }
 
         //[AcceptVerbs(HttpVerbs.Post)]
         public void StatisticalReportExport()
         {
+
             Export(new questionModel().displayQuestionsAnswer());
         }
 
@@ -154,7 +186,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult Chart(String chartParameter)
         {
-
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             //String[] sessionValues = chartParameter.Split(',')[0];
 
             //int[] sessionValues = (int[])Session["sValues"];
@@ -252,6 +291,14 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult ViewAllPoll()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             // need an if statement, check if the current user is only poll master, then he could
             // only see a list of polls he manages. Else if user == higher level eg poll admin, he
             // is able to see ALL POLL
@@ -268,6 +315,14 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult ViewAllPoll(String graphType)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             // need an if statement, check if the current user is only poll master, then he could
             // only see a list of polls he manages. Else if user == higher level eg poll admin, he
             // is able to see ALL POLL
@@ -282,13 +337,28 @@ namespace DBPOLLDemo.Controllers
 
         public ActionResult DemographicComparison()
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             return View();
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult DemographicComparison(String demographic, String graphType, String includeOrExclude)
         {
-
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
             TwoQuestionModels twoModels = new TwoQuestionModels();
 
             Session["graphType"] = graphType;
