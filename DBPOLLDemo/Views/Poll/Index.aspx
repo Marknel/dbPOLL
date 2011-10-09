@@ -140,6 +140,8 @@
                     Delete</a> <a id="<%= item.sessionid + "syes" %>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>">
                     </a><a id="<%= item.sessionid + "sno" %>" href="/Poll/Index/"></a>|
                 <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollid, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
+            |
+                <%= Html.ActionLink("Send Public Message", "sendPublicMessage", "Message", new { session_ID = item.sessionid }, "")%>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.sessionName) %>

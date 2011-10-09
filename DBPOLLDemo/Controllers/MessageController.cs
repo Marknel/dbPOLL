@@ -75,6 +75,12 @@ namespace DBPOLLDemo.Controllers
                 buildSelectList();
                 return View();
             }
+            else if (msg.Length > 255)
+            {
+                ViewData["edited"] = "Message is too long, maximimum length allowed is 255";
+                buildSelectList();
+                return View();
+            }
 
             messageModel messageModel = new messageModel();
             messageModel.sendMessage(msg, uid, USER_LIST);
@@ -110,6 +116,48 @@ namespace DBPOLLDemo.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult sendPublicMessage(int session_ID)
+        {        
+            // Basic check to see if the user is Authenticated.
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Session["session_ID"] = session_ID;
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult sendPublicMessage(string msg)
+        {
+            // Basic check to see if the user is Authenticated.
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                buildSelectList();
+                return RedirectToAction("Index", "Home");
+            }
+            int uid = (int)Session["uid"];
+
+            if (msg.Equals(""))
+            {
+                ViewData["edited"] = "Please do not send blank messages";
+                return View();
+            }
+            else if (msg.Length > 255)
+            {
+                ViewData["edited"] = "Message is too long, maximimum length allowed is 255";
+                return View();
+            }
+
+            int session_ID = (int)Session["session_ID"];
+
+            messageModel messageModel = new messageModel();
+            messageModel.sendPublicMessage(msg, uid, session_ID);
+
+            return RedirectToAction("sendMessageSuccess");
         }
     }
 }

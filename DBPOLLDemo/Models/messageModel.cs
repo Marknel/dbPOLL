@@ -32,7 +32,7 @@ namespace DBPOLLDemo.Models
         public int sender_UID;
         public string senderName;
         public string recieverName;
-        public int poll_ID;
+        public int session_ID;
         public string pollName;
         public string question;
         public int question_ID;
@@ -120,7 +120,7 @@ namespace DBPOLLDemo.Models
             return true;
         }
 
-        public bool sendPublicMessage(string message, int sender, int pollID, int question_ID)
+        public bool sendPublicMessage(string message, int sender, int session_ID)
         {
             try
             {
@@ -131,10 +131,8 @@ namespace DBPOLLDemo.Models
                 msg.CREATED_AT = DateTime.Now;
                 msg.Sender_UID = sender;
                 msg.Reciever_UID = 0;
-                msg.POLL_ID = pollID;
-                msg.QUESTION_ID = question_ID;
-
-
+                msg.SESSION_ID = session_ID;
+                
                 dbpollContext.AddToMESSAGES(msg);
                 dbpollContext.SaveChanges();
             }
@@ -159,7 +157,7 @@ namespace DBPOLLDemo.Models
                             Created_at = q.CREATED_AT,
                             Modified_at = (DateTime)q.MODIFIED_AT,
                             sender_UID = q.USER1.USER_ID,
-                            poll_ID = q.POLL_ID,
+                            session_ID = (int)q.SESSION_ID,
                             pollName = q.POLL.POLL_NAME,
                             //question = new questionModel((int)q.QUESTION_ID).question.ToString(),
                             senderName = q.USER1.NAME,
@@ -185,7 +183,7 @@ namespace DBPOLLDemo.Models
                             Created_at = q.CREATED_AT,
                             Modified_at = (DateTime)q.MODIFIED_AT,
                             sender_UID = q.USER1.USER_ID,
-                            poll_ID = q.POLL_ID,
+                            session_ID = (int)q.SESSION_ID,
                             pollName = q.POLL.POLL_NAME,
                             senderName = q.USER1.NAME,
                             recieverName = q.USER.NAME
@@ -196,20 +194,23 @@ namespace DBPOLLDemo.Models
 
         public List<messageModel> publicMessages(int userID)
         {
-            var query = from q in dbpollContext.MESSAGES
-                        join p in dbpollContext.PARTICIPANTS on q.SESSION_ID equals p.SESSION_ID
+            var query = from m in dbpollContext.MESSAGES
+                        join s in dbpollContext.SESSIONS on m.SESSION_ID equals s.SESSION_ID
+                        join p in dbpollContext.PARTICIPANTS on m.SESSION_ID equals p.SESSION_ID
+                        
+                        
                         where p.USER_ID == userID
-                        orderby q.CREATED_AT ascending
+                        orderby m.CREATED_AT ascending
                         select new messageModel
                         {
-                            MessageID = q.MESSAGE_ID,
-                            Message = q.MESSAGE1,
-                            Created_at = q.CREATED_AT,
-                            Modified_at = (DateTime)q.MODIFIED_AT,
-                            sender_UID = q.USER1.USER_ID,
-                            poll_ID = q.POLL_ID,
-                            senderName = q.USER1.NAME,
-                            recieverName = q.USER.NAME
+                            MessageID = m.MESSAGE_ID,
+                            Message = m.MESSAGE1,
+                            Created_at = m.CREATED_AT,
+                            Modified_at = (DateTime)m.MODIFIED_AT,
+                            sender_UID = m.USER1.USER_ID,
+                            session_ID = (int)m.SESSION_ID,
+                            senderName = m.USER1.NAME,
+                            recieverName = m.USER.NAME
                         };
 
             return query.ToList();

@@ -1,13 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<List<DBPOLLDemo.Models.messageModel>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
-<%@ Import Namespace="DBPOLLDemo.Controllers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Send Private Message
+	Send Public Message
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <h2>
-        Send Private Message:</h2>
+        Send Public Message:</h2>
     <% using (Html.BeginForm())
        {%>
     <fieldset>
@@ -23,9 +22,6 @@
             <p style="color: Red;">
                 <%=ViewData["msgError"]%></p>
         </p>
-        <p>
-            <%= Html.DropDownList("USER_LIST")%>
-        </p>
         <p style="color: Red;">
             <%=ViewData["edited"]%></p>
         <p>
@@ -35,7 +31,7 @@
     <%
         }%>
     <p>
-        <%=Html.ActionLink("Back to messages", "Index")%>
+        <%=Html.ActionLink("Back to polls", "Index")%>
     </p>
 </asp:Content>
 

@@ -13,7 +13,7 @@
                 Date sent
             </th>
             <th nowrap="nowrap">
-                Poll
+                Session
             </th>
             <th nowrap="nowrap">
                 Sender
@@ -36,7 +36,7 @@
                 <%= Html.Encode(item.Created_at)%>
             </td>
             <td nowrap="nowrap">
-                <%= Html.Encode(item.poll_ID)%>
+                <%= Html.Encode(item.session_ID)%>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.senderName)%>
