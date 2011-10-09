@@ -30,8 +30,7 @@ namespace DBPOLLDemo.Controllers
     public class PollController : Controller
     {
         private DBPOLLEntities db = new DBPOLLEntities(); // ADO.NET data Context.
-        //
-        // GET: /Main/
+
 
         public ActionResult Index()
         {
@@ -162,7 +161,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            if ((int)Session["user_type"] < User_Type.POLL_ADMINISTRATOR)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -195,7 +194,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -209,7 +208,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
                 return RedirectToAction("Invalid", "Home");
             }
@@ -224,7 +223,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
                 return RedirectToAction("Invalid", "Home");
             }

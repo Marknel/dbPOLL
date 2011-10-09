@@ -43,10 +43,6 @@ namespace DBPOLLDemo.Controllers
             messageModel msg = new messageModel();
             msg.sendFeedback(message, uid, pollID, questID);
 
-
-
-
-
             return RedirectToAction("RegisterUserSuccess", "User");
         }
 
@@ -83,10 +79,6 @@ namespace DBPOLLDemo.Controllers
             messageModel messageModel = new messageModel();
             messageModel.sendMessage(msg, uid, USER_LIST);
 
-
-
-
-
             return RedirectToAction("sendMessageSuccess");
         }
 
@@ -112,7 +104,7 @@ namespace DBPOLLDemo.Controllers
         public ActionResult sendMessageSuccess()
         {
             // Basic check to see if the user is Authenticated.
-            if (Session["uid"] == null)
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
             {
                 return RedirectToAction("Index", "Home");
             }
