@@ -207,7 +207,6 @@
     <Content Include="Views\Help\UserChangePassword.aspx" />
     <Content Include="Views\Help\UserEdit.aspx" />
     <Content Include="Views\Help\UserRegisterUser.aspx" />
-    <Content Include="Views\Home\Home.aspx" />
     <Content Include="Views\Home\Invalid.aspx" />
     <Content Include="Views\Home\Login.aspx" />
     <Content Include="Views\Home\PollsIManage.ascx" />

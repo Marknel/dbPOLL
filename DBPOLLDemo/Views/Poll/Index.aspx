@@ -62,8 +62,11 @@
                 <%= Html.ActionLink("View Questions", "Details", new {id=item.pollid, name=item.pollname})%>
                 |
                 <%= Html.ActionLink("View Default Objects", "../PollObject/Index", new { pollid = item.pollid, pollname = item.pollname })%>
-                |
+                <% 
+                    if (Int32.Parse(Session["user_type"].ToString()) >= User_Type.POLL_CREATOR)
+                    { %>|
                 <%= Html.ActionLink("Create New Session", "CreateSession", new {pollID = item.pollid, pollName = item.pollname})%>
+                <%} %>
             </td>
             <td nowrap="nowrap">
                 <%= Html.Encode(item.pollname) %>
@@ -128,7 +131,7 @@
             </th>
             <th class="style2">
                 Participant List
-            </th>          
+            </th>
         </tr>
         <% foreach (var item in Model.sessionData)
            { 
@@ -140,7 +143,7 @@
                     Delete</a> <a id="<%= item.sessionid + "syes" %>" href="/Poll/DeleteSession?sessionid=<%=item.sessionid%>">
                     </a><a id="<%= item.sessionid + "sno" %>" href="/Poll/Index/"></a>|
                 <%= Html.ActionLink("Edit", "EditSession", new {sessionname=item.sessionName, pollid = item.pollid, sessionid = item.sessionid, longitude = item.longitude, latitude = item.latitude, time = item.time}) %>
-            |
+                |
                 <%= Html.ActionLink("Send Public Message", "sendPublicMessage", "Message", new { session_ID = item.sessionid }, "")%>
             </td>
             <td nowrap="nowrap">

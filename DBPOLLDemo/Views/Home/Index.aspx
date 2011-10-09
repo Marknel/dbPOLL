@@ -52,8 +52,8 @@
     <% if ((int)Session["user_type"] > 2)
        { %>
 <%--    <%= Html.ActionLink("Create Questions", "Create", "Question")%>--%>
-    <br />
-    <br />
+    <%--<br />
+    <br />--%>
     <% } %>
     <% if ((int)Session["user_type"] > 3)
        { %>
