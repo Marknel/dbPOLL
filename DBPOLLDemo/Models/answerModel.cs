@@ -253,6 +253,7 @@ namespace DBPOLLDemo.Models
                         a.QUESTION_ID == q.QUESTION_ID &&
                         q.POLL_ID == p.POLL_ID &&
                         p.POLL_ID == pollid
+                        orderby q.QUESTION_ID ascending
                         select new answerModel
                         {
                             answerid = a.ANSWER_ID,

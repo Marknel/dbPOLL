@@ -31,22 +31,6 @@ namespace DBPOLLDemo.Controllers
             return View(list);
         }
 
-        //
-        // GET: /Object/Details/5
-
-        public ActionResult Details(int id)
-        {
-            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
-            {
-                return RedirectToAction("Invalid", "Home");
-            }
-           
-            return View();
-        }
 
         public ActionResult Delete(int objectid, int questionid)
         {
@@ -84,9 +68,7 @@ namespace DBPOLLDemo.Controllers
             return View();
         } 
 
-        //
-        // POST: /Object/Create
-
+ 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(int obtype, String attribute, int questionid)
         {
@@ -135,41 +117,6 @@ namespace DBPOLLDemo.Controllers
             }
         }
 
-        //
-        // GET: /Object/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-
-
-            return View();
-        }
-
-        //
-        // POST: /Object/Edit/5
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
-            {
-                return RedirectToAction("Invalid", "Home");
-            }
-
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+     
     }
 }

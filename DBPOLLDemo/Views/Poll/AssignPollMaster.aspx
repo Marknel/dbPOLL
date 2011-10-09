@@ -19,7 +19,7 @@
         <% foreach (var o in Model.assigned) { %>
         <tr>
          <td class="style2">
-           <%= Html.ActionLink("X", "UnassignUser", new {pollname = ViewData["pollname"], userid = o.UserID, pollid = ViewData["pollid"]})%>
+           <%= Html.ActionLink("Delete", "UnassignPollUser", new {pollname = ViewData["pollname"], userid = o.UserID, pollid = ViewData["pollid"]})%>
             </td>
             <td>
             <%= o.UserID %>

@@ -57,15 +57,6 @@ namespace DBPOLLDemo.Controllers
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
 
-            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
-            {
-                return RedirectToAction("Invalid", "Home");
-            }
-
             if (pollid == 0)
             {
                 return View(new questionModel().displayAllQuestions());
@@ -79,6 +70,15 @@ namespace DBPOLLDemo.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult viewQuestions(int pollid, String date1, String date2)
         {
+            if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
+            {
+                return RedirectToAction("Invalid", "Home");
+            }
+
             bool valid = true;
             DateTime startdate;
             DateTime enddate;
@@ -188,7 +188,7 @@ namespace DBPOLLDemo.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            if ((int)Session["user_type"] < User_Type.POLL_CREATOR)
+            if ((int)Session["user_type"] < User_Type.POLL_MASTER)
             {
                 return RedirectToAction("Invalid", "Home");
             }

@@ -11,6 +11,10 @@
   html { height: 100% }
   body { height: 100%; margin: 0; padding: 0 }
   #map_canvas { height: 100% }
+    .style1
+    {
+        font-size: x-small;
+    }
 </style>
 <script type="text/javascript"
     src="http://maps.googleapis.com/maps/api/js?sensor=false">
@@ -113,22 +117,27 @@ void Page_Load(object source, EventArgs e){
                 <label for="SESSIONTIME">Session Time:</label>
 
                 <%= Html.TextBox("time") %>
-                <%= ViewData["date1"] %>
+                <%--<%= ViewData["date1"] %>--%>
+                <%= Html.ValidationMessage("date1")%>
 
             </p>
 
+            <p style="width: 608px" class="style1"> Note: Valid longitude is between -180" and 180" </p>
             <p>
-                <label for="Longitude">Session Longitude:</label>
+                <label for="Longitude">Session Longitude :</label>
 
                 <%= Html.TextBox("longitudeBox") %>
-                <%= ViewData["longBox"] %>
+                <%--<%= ViewData["longBox"] %>--%>
+                <%= Html.ValidationMessage("longBox")%>
 
             </p>
+            <p style="width: 608px" class="style1"> Note: Valid latitude is between -90" and 90" </p>
             <p>
                 <label for="Latitude">Session Latitiude:</label>
 
                 <%= Html.TextBox("latitudeBox") %>
-                <%= ViewData["latBox"] %>
+               <%-- <%= ViewData["latBox"] %>--%>
+               <%= Html.ValidationMessage("latBox")%>
 
             </p>
             <p>

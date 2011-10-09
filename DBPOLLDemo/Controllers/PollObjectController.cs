@@ -30,15 +30,8 @@ namespace DBPOLLDemo.Controllers
             ViewData["pollname"] = pollname;
             return View(new pollObjectModel().indexObjects(pollid));
         }
-
-        //
-        // GET: /Object/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        
+       
         public ActionResult Delete(int objectid, int pollid)
         {
             if (Session["uid"] == null || Session["uid"].ToString().Equals(""))
@@ -129,30 +122,5 @@ namespace DBPOLLDemo.Controllers
             }
         }
 
-        //
-        // GET: /Object/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Object/Edit/5
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
