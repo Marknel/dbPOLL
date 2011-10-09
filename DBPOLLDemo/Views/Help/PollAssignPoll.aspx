@@ -29,16 +29,15 @@
 </div> <!-- end of navwrapper div -->
 	<div id="contentwrapper">
 		<div id="content">
-		<a name="top"></a>
-		<h2>Test Devices Help</h2><hr />
-		    <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">This component tests 
-                receivers, RF Channels and keypads.<b><o:p></o:p></b></span></p>
-		    <p class="MsoNormal">
-                &nbsp;</p>
-            <p>
 		
-    <img src="../../Content/PollTestDevices.jpg" width="800" />
+		<h2>Assign Poll Masters Help</h2><hr />
+		    <p class="MsoNormal">
+                Poll masters can be assigned to a poll in this page. 
+                Select poll master(s) and 
+                then click on <b>Assign Poll Masters</b>.</p>
+		<p> &nbsp;<p>
+		
+    <img src="../../Content/PollAssignPoll.jpg" width="800" />
 		
 		</div> <!-- end of content div-->
 	</div> <!-- end of contentwrapper div-->

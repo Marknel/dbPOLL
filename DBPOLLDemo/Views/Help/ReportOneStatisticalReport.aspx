@@ -30,17 +30,20 @@
 	<div id="contentwrapper">
 		<div id="content">
 		<a name="top"></a>
-		<h2>Test Devices Help</h2><hr />
-		    <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">This component tests 
-                receivers, RF Channels and keypads.<b><o:p></o:p></b></span></p>
-		    <p class="MsoNormal">
-                &nbsp;</p>
-            <p>
+		<h2>Statistical Report Help</h2><hr />
+            <p class="MsoNormal">
+                Reports consists the raw data accumulation and also a graphical representation 
+                in the form of a chart<o:p></o:p></p>
+            <p class="MsoNormal">
+                The users are able to generate a report for a specific poll or all poll in bar 
+                or column format</p>
+		    <p>
 		
-    <img src="../../Content/PollTestDevices.jpg" width="800" />
+    &nbsp;<p>
 		
-		</div> <!-- end of content div-->
+    <img src="../../Content/ReportViewAllPoll.jpg" width="800" /><p>
+		
+    <img src="../../Content/ReportOneStatisticalReport.jpg" width="800" /></div> <!-- end of content div-->
 	</div> <!-- end of contentwrapper div-->
 </div> <!-- end of wrapper div -->
 

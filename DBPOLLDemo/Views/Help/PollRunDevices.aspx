@@ -30,15 +30,13 @@
 	<div id="contentwrapper">
 		<div id="content">
 		<a name="top"></a>
-		<h2>Test Devices Help</h2><hr />
+		<h2>Run Devices Help</h2><hr />
 		    <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">This component tests 
-                receivers, RF Channels and keypads.<b><o:p></o:p></b></span></p>
-		    <p class="MsoNormal">
-                &nbsp;</p>
-            <p>
+                In this page users can start poling and answer questions by keypads for a test.<span lang="EN-US" style="mso-ansi-language:EN-US"> <o:p></o:p></span>
+            </p>
+		<p> &nbsp;<p>
 		
-    <img src="../../Content/PollTestDevices.jpg" width="800" />
+    <img src="../../Content/PollRunDevices.jpg" width="800" />
 		
 		</div> <!-- end of content div-->
 	</div> <!-- end of contentwrapper div-->

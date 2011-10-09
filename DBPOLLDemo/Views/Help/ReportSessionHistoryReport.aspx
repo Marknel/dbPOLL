@@ -30,15 +30,17 @@
 	<div id="contentwrapper">
 		<div id="content">
 		<a name="top"></a>
-		<h2>Test Devices Help</h2><hr />
-		    <p class="MsoNormal">
-                <span lang="EN-US" style="mso-ansi-language:EN-US">This component tests 
-                receivers, RF Channels and keypads.<b><o:p></o:p></b></span></p>
-		    <p class="MsoNormal">
-                &nbsp;</p>
-            <p>
+		<h2>Session History Report Help</h2><hr />
+            <p class="MsoNormal">
+                This report includes the detail of Poll Users participated each poll, the 
+                geographical location of the poll on a google map and the dates and times the 
+                polls were conducted. The reports will also show the details of the Poll Master 
+                and Poll Creator that was assigned to each poll.<o:p></o:p></p>
+            <p class="MsoNormal">
+                <o:p></o:p></p>
+		    <p>
 		
-    <img src="../../Content/PollTestDevices.jpg" width="800" />
+    <img src="../../Content/ReportSessionHistoryReport.jpg" width="800" />
 		
 		</div> <!-- end of content div-->
 	</div> <!-- end of contentwrapper div-->
