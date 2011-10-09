@@ -57,7 +57,7 @@
                       {%>
                     <%--Logged in--%>
                     <li>
-                        <%= Html.ActionLink("My Messages", "Index", "Message")%></li>
+                        <%= Html.ActionLink("Messages", "Index", "Message")%></li>
                          <li>
                            <%= Html.ActionLink("Answer Poll", "../Session/ViewAvailableSession", new { userid = (int)Session["uid"] })%></li>
                     <% if ((int)Session["user_type"] > 1)
@@ -73,7 +73,7 @@
                         <% if ((int)Session["user_type"] > 3)
                            { %>
                                 <li>
-                                    <%= Html.ActionLink("Define new Poll", "Create", "Poll")%></li>
+                                    <%= Html.ActionLink("Define Poll", "Create", "Poll")%></li>
                                 <li>
                                     <%= Html.ActionLink("View Polls", "viewPolls", "Poll")%></li>
                         <% } %>
